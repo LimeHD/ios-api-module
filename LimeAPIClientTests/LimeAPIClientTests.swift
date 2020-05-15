@@ -12,19 +12,19 @@ import XCTest
 class LimeAPIClientTests: XCTestCase {
     var sut = LimeAPIClient.self
     
-    func test_request_emptyUrl_callsCompletionWithFailure() throws {
-        let result = self.runRequest(String.self, url: "")
-        
-        XCTAssertTrue(result.calledCompletion)
-        XCTAssertNil(result.data)
-        let actualError = try XCTUnwrap(result.error as? ApiError)
-        XCTAssertEqual(actualError, ApiError.emptyUrl)
-        XCTAssertNotNil(actualError.localizedDescription)
+    func test_request_emptyUrl_callsCompletionWithFailure() {
+        self.runRequest(String.self, url: "") { (calledCompletion, data, error) in
+            XCTAssertTrue(calledCompletion)
+            XCTAssertNil(data)
+            let actualError = try XCTUnwrap(error as? ApiError)
+            XCTAssertEqual(actualError, ApiError.emptyUrl)
+            XCTAssertNotNil(actualError.localizedDescription)
+        }
     }
     
-    typealias RequestResults<T: Decodable> = (calledCompletion: Bool, data: T?, error: Error?)
+    typealias RequestResults<T: Decodable> = (_ calledCompletion: Bool, _ data: T?, _ error: Error?) throws -> Void
     
-    func runRequest<T: Decodable>(_ type: T.Type, url: String) -> RequestResults<T> {
+    func runRequest<T: Decodable>(_ type: T.Type, url: String, comletion: @escaping RequestResults<T>) {
         var calledCompletion = false
         var receivedData: T? = nil
         var receivedError: Error? = nil
@@ -38,20 +38,19 @@ class LimeAPIClientTests: XCTestCase {
             case .failure(let error):
                 receivedError = error
             }
+            
+            try? comletion(calledCompletion, receivedData, receivedError)
         }
-        
-        return (calledCompletion, receivedData, receivedError)
     }
     
-    func test_request_inValidUrl_callsCompletionWithFailure() throws {
+    func test_request_inValidUrl_callsCompletionWithFailure() {
         let url = "]ч"
-        
-        let result = self.runRequest(String.self, url: url)
-        
-        XCTAssertTrue(result.calledCompletion)
-        XCTAssertNil(result.data)
-        let actualError = try XCTUnwrap(result.error as? ApiError)
-        XCTAssertEqual(actualError, ApiError.invalidUrl(url))
-        XCTAssertNotNil(actualError.localizedDescription)
+        self.runRequest(String.self, url: url) { (calledCompletion, data, error) in
+            XCTAssertTrue(calledCompletion)
+            XCTAssertNil(data)
+            let actualError = try XCTUnwrap(error as? ApiError)
+            XCTAssertEqual(actualError, ApiError.invalidUrl(url))
+            XCTAssertNotNil(actualError.localizedDescription)
+        }
     }
 }
