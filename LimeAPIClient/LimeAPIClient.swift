@@ -51,12 +51,19 @@ public final class LimeAPIClient {
             switch result {
             case .success(let result):
                 LimeAPIClient.log(url, message: result.statusCode)
+                
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let parser = JSONParser(decoder)
-                let jsonAPIObjects = parser.decode(JSONAPIObject<T>.self, result.data)
-                let channels = jsonAPIObjects
-                print(jsonAPIObjects)
+                
+                let result = parser.decode(JSONAPIObject<T>.self, result.data)
+                switch result {
+                case .success(let data):
+                    completion(.success(data.data))
+                case .failure(let error):
+                    LimeAPIClient.log(url, message: error.localizedDescription)
+                    completion(.failure(error))
+                }
             case .failure(let error):
                 LimeAPIClient.log(url, message: error.localizedDescription)
                 completion(.failure(error))

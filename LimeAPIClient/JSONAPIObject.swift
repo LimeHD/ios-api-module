@@ -9,11 +9,5 @@
 import Foundation
 
 struct JSONAPIObject<T: Decodable>: Decodable {
-    let data: [JSONAPIData<T>]
-}
-
-struct JSONAPIData<T: Decodable>: Decodable {
-    let id: String
-    let type: String
-    let attributes: T
+    let data: T
 }
