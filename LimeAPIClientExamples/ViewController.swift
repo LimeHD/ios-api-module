@@ -23,6 +23,16 @@ class ViewController: UIViewController {
                 print(error)
             }
         }
+        
+        // Пример запроса на получение списка каналов
+        LimeAPIClient.request([Channel].self, url: CHANNELS_URL, endPoint: .channels) { (result) in
+            switch result {
+            case .success(let channels):
+                print(channels)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
 }
