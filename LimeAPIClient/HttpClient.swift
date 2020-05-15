@@ -29,7 +29,7 @@ enum HttpError: Error, LocalizedError, Equatable {
 }
 
 class HttpClient {
-    typealias httpResult = (Result<Data, Error>) -> Void
+    typealias httpResult = (Result<(data: Data, statusCode: String), Error>) -> Void
     
     let session: URLSession
     
@@ -40,45 +40,31 @@ class HttpClient {
     func getJSON(with request: URLRequest, completion: @escaping httpResult) {
         let task = self.session.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                self.log(request, message: error.localizedDescription)
                 completion(.failure(error))
                 return
             }
             
             guard let data = data else {
                 let error = HttpError.emptyData
-                self.log(request, message: error.localizedDescription)
                 completion(.failure(error))
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 let error = HttpError.unknownResponse
-                self.log(request, message: error.localizedDescription)
                 completion(.failure(error))
                 return
             }
             
             if (200...299).contains(httpResponse.statusCode) {
-                self.log(request, message: httpResponse.localizedStatusCode)
-                completion(.success(data))
+                let success = (data: data, statusCode: httpResponse.localizedStatusCode)
+                completion(.success(success))
             } else {
                 let error = HttpError.wrongStatusCode(httpResponse.localizedStatusCode)
-                self.log(request, message: error.localizedDescription)
                 completion(.failure(error))
             }
         }
         
         task.resume()
-    }
-    
-    private func log(_ request: URLRequest, message: String) {
-        let path: String
-        if let url = request.url {
-            path = "\(url)"
-        } else {
-            path = "nil url"
-        }
-        print("\(module)\n\(path)\n\(message)")
     }
 }

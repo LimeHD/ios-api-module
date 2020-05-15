@@ -10,12 +10,56 @@ import Foundation
 
 let module = NSStringFromClass(LimeAPIClient.self).components(separatedBy:".")[0]
 
-public final class LimeAPIClient {
-    static public func getTestChannels(url: String) {
-        guard let url = URL(string: url) else { return }
-        let request = URLRequest(url: url, endPoint: .testChannels)
-        HttpClient(URLSession.shared).getJSON(with: request) { (result) in
-            
+enum ApiError: Error, LocalizedError, Equatable {
+    case emptyUrl
+    case invalidUrl(_ url: String)
+    
+    var errorDescription: String? {
+        switch self {
+        case .emptyUrl:
+            let key = "Отсутствует url"
+            return NSLocalizedString(key, comment: key)
+        case .invalidUrl(let url):
+            let url = url.isEmpty ? "(отсутствует)" : url
+            let key = "Не допустимое значение url: \(url)"
+            return NSLocalizedString(key, comment: "Не допустимое url")
         }
+    }
+}
+
+public typealias ApiResult<T: Decodable> = (Result<T, Error>) -> Void
+
+public final class LimeAPIClient {
+    static public func request<T: Decodable>(_ type: T.Type, url: String, endPoint: EndPoint, completion: @escaping ApiResult<T>) {
+        let url = url.trimmingCharacters(in: .whitespacesAndNewlines)
+        if url.isEmpty {
+            let error = ApiError.emptyUrl
+            LimeAPIClient.log(url, message: error.localizedDescription)
+            completion(.failure(error))
+            return
+        }
+        
+        guard let requestUrl = URL(string: url) else {
+            let error = ApiError.invalidUrl(url)
+            LimeAPIClient.log(url, message: error.localizedDescription)
+            completion(.failure(error))
+            return
+        }
+        
+        let request = URLRequest(url: requestUrl, endPoint: endPoint)
+        HttpClient(URLSession.shared).getJSON(with: request) { (result) in
+            switch result {
+            case .success(let data):
+                LimeAPIClient.log(url, message: data.statusCode)
+            case .failure(let error):
+                LimeAPIClient.log(url, message: error.localizedDescription)
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    private static func log(_ url: String, message: String) {
+        let url = url.isEmpty ? "(пустое значение ulr)" : url
+        print("\(module)\n\(url)\n\(message)")
     }
 }

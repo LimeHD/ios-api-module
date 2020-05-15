@@ -15,7 +15,7 @@ class HttpClientTests: XCTestCase {
     var url: URL {
         let path = "https://limehd.tv/"
         guard let url = URL(string: path) else {
-            fatalError("Error: \(Self.self).\(#function) wrong url path: \(path)")
+            fatalError("Error: \(Self.self).\(#function) invalid url: \(path)")
         }
         return url
     }
@@ -29,6 +29,7 @@ class HttpClientTests: XCTestCase {
     }
     
     override func tearDown() {
+        self.request = nil
         self.session = nil
         self.sut = nil
         super.tearDown()
@@ -38,7 +39,7 @@ class HttpClientTests: XCTestCase {
         XCTAssertEqual(self.sut.session, session)
     }
     
-    func test_getJSON_notValidUrl_callsCompletionWithFailure() {
+    func test_getJSON_inValidUrl_callsCompletionWithFailure() {
         self.request.url = nil
         self.sut.getJSON(with: request) { _ in }
         
@@ -73,11 +74,11 @@ class HttpClientTests: XCTestCase {
         XCTAssertEqual(actualError, expectedError)
     }
     
-    typealias getJSONResults = (calledCompletion: Bool, data: Data?, error: Error?)
+    typealias getJSONResults = (calledCompletion: Bool, data: (Data, String)?, error: Error?)
     
     func runGetJSONWith(data: Data? = nil, _ response: HTTPURLResponse? = nil, _ error: Error? = nil) -> getJSONResults {
         var calledCompletion = false
-        var receivedData: Data? = nil
+        var receivedData: (Data, String)? = nil
         var receivedError: Error? = nil
         
         self.sut.getJSON(with: self.request) { (result) in
