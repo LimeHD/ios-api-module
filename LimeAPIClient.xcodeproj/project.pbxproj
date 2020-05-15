@@ -28,6 +28,9 @@
 		4E75B1BB246E67150061E143 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BA246E67150061E143 /* Device.swift */; };
 		4E75B1BD246E67AD0061E143 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BC246E67AD0061E143 /* App.swift */; };
 		4E75B1BF246E77300061E143 /* ApiURLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BE246E77300061E143 /* ApiURLS.swift */; };
+		4E75B1C1246EB9870061E143 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C0246EB9870061E143 /* JSONParser.swift */; };
+		4E75B1C3246EBADC0061E143 /* JSONAPIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */; };
+		4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C4246EBBE60061E143 /* Channel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +69,9 @@
 		4E75B1BA246E67150061E143 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		4E75B1BC246E67AD0061E143 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		4E75B1BE246E77300061E143 /* ApiURLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiURLS.swift; sourceTree = "<group>"; };
+		4E75B1C0246EB9870061E143 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
+		4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIObject.swift; sourceTree = "<group>"; };
+		4E75B1C4246EBBE60061E143 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +129,9 @@
 				4E57957A246AE3D20009D306 /* Info.plist */,
 				4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */,
 				4E68A420246C27CF00D332BD /* HttpClient.swift */,
+				4E75B1C0246EB9870061E143 /* JSONParser.swift */,
+				4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */,
+				4E75B1C4246EBBE60061E143 /* Channel.swift */,
 				4E6D91C7246D772D00BB7C69 /* EndPoint.swift */,
 				4E75B1BC246E67AD0061E143 /* App.swift */,
 				4E75B1BA246E67150061E143 /* Device.swift */,
@@ -318,7 +327,10 @@
 				4E68A421246C27CF00D332BD /* HttpClient.swift in Sources */,
 				4E6D91CF246D7E5200BB7C69 /* URLRequest.swift in Sources */,
 				4E68A3FD246BDA6000D332BD /* LimeAPIClient.swift in Sources */,
+				4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */,
+				4E75B1C1246EB9870061E143 /* JSONParser.swift in Sources */,
 				4E75B1BD246E67AD0061E143 /* App.swift in Sources */,
+				4E75B1C3246EBADC0061E143 /* JSONAPIObject.swift in Sources */,
 				4E75B1BB246E67150061E143 /* Device.swift in Sources */,
 				4E6D91C8246D772D00BB7C69 /* EndPoint.swift in Sources */,
 				4E6D91D1246D846F00BB7C69 /* String.swift in Sources */,

@@ -49,8 +49,14 @@ public final class LimeAPIClient {
         let request = URLRequest(url: requestUrl, endPoint: endPoint)
         HttpClient(URLSession.shared).getJSON(with: request) { (result) in
             switch result {
-            case .success(let data):
-                LimeAPIClient.log(url, message: data.statusCode)
+            case .success(let result):
+                LimeAPIClient.log(url, message: result.statusCode)
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let parser = JSONParser(decoder)
+                let jsonAPIObjects = parser.decode(JSONAPIObject<T>.self, result.data)
+                let channels = jsonAPIObjects
+                print(jsonAPIObjects)
             case .failure(let error):
                 LimeAPIClient.log(url, message: error.localizedDescription)
                 completion(.failure(error))

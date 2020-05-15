@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // Пример запроса на получение списка каналов для теста
-        LimeAPIClient.request(String.self, url: TEST_CHANNELS_URL, endPoint: .testChannels) { (result) in
+        LimeAPIClient.request(Channel.self, url: TEST_CHANNELS_URL, endPoint: .testChannels) { (result) in
             
         }
     }
