@@ -50,3 +50,17 @@ struct Channel: Decodable {
     }
 }
 ```
+
+### Получение cписка каналов
+Пример запроса
+``` swift
+LimeAPIClient.request([Channel].self, url: CHANNELS_URL, endPoint: .сhannels) { (result) in
+    switch result {
+    case .success(let channels):
+        print(channels)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+В ответ приходи список каналов в виде массива (тип данных `Channels` см. выше)
