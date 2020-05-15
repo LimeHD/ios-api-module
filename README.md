@@ -11,3 +11,42 @@
 ``` ruby
 pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 ```
+
+## Примеры использования
+Перед использованием необходимо добавить в файл модуль  `LimeAPIClient`
+``` swift
+import LimeAPIClient
+```
+### Получение тестовых каналов
+Пример запроса
+``` swift
+LimeAPIClient.request([Channel].self, url: TEST_CHANNELS_URL, endPoint: .testChannels) { (result) in
+    switch result {
+    case .success(let channels):
+        print(channels)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+В ответ приходи список каналов в виде массива. Тип `Channels`:
+``` swift
+struct Channel: Decodable {
+    let id: String
+    let type: String
+    let attributes: Attributes
+    
+    struct Attributes: Decodable {
+        let name: String?
+        let imageUrl: String?
+        let description: String?
+        let streams: [Stream]
+    }
+    
+    struct Stream: Decodable {
+        let id: Int
+        let timeZone: String
+        let contentType: String
+    }
+}
+```
