@@ -20,7 +20,6 @@ enum ApiError: Error, LocalizedError, Equatable {
             let key = "Отсутствует url"
             return NSLocalizedString(key, comment: key)
         case .invalidUrl(let url):
-            let url = url.isEmpty ? "(отсутствует)" : url
             let key = "Не допустимое значение url: \(url)"
             return NSLocalizedString(key, comment: "Не допустимое url")
         }
@@ -30,18 +29,16 @@ enum ApiError: Error, LocalizedError, Equatable {
 public typealias ApiResult<T: Decodable> = (Result<T, Error>) -> Void
 
 public final class LimeAPIClient {
-    static public func request<T: Decodable>(_ type: T.Type, url: String, endPoint: EndPoint, completion: @escaping ApiResult<T>) {
+    static private func privateRequest<T: Decodable>(_ type: T.Type, url: String, endPoint: EndPoint, parameters: [String: String] = [:], completion: @escaping ApiResult<T>) {
         let url = url.trimmingCharacters(in: .whitespacesAndNewlines)
         if url.isEmpty {
             let error = ApiError.emptyUrl
-            LimeAPIClient.log(url, message: error.localizedDescription)
             completion(.failure(error))
             return
         }
         
         guard let requestUrl = URL(string: url) else {
             let error = ApiError.invalidUrl(url)
-            LimeAPIClient.log(url, message: error.localizedDescription)
             completion(.failure(error))
             return
         }
@@ -61,12 +58,24 @@ public final class LimeAPIClient {
                 case .success(let data):
                     completion(.success(data.data))
                 case .failure(let error):
-                    LimeAPIClient.log(url, message: error.localizedDescription)
                     completion(.failure(error))
                 }
             case .failure(let error):
-                LimeAPIClient.log(url, message: error.localizedDescription)
                 completion(.failure(error))
+            }
+        }
+    }
+    
+    static public func request<T: Decodable>(_ type: T.Type, url: String, endPoint: EndPoint, parameters: [String: String] = [:], completion: @escaping ApiResult<T>) {
+        DispatchQueue(label: "tv.limehd.LimeAPIClient.request", qos: .userInitiated).async {
+            LimeAPIClient.privateRequest(T.self, url: url, endPoint: endPoint, parameters: parameters) { (result) in
+                switch result {
+                case .success(let result):
+                    DispatchQueue.main.async { completion(.success(result)) }
+                case .failure(let error):
+                    LimeAPIClient.log(url, message: error.localizedDescription)
+                    DispatchQueue.main.async { completion(.failure(error)) }
+                }
             }
         }
     }
