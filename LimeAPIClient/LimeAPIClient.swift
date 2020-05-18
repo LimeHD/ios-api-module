@@ -44,7 +44,7 @@ public final class LimeAPIClient {
         }
         
         let request = URLRequest(url: requestUrl, endPoint: endPoint)
-        HttpClient(URLSession.shared).getJSON(with: request) { (result) in
+        HTTPClient(URLSession.shared).getJSON(with: request) { (result) in
             switch result {
             case .success(let result):
                 LimeAPIClient.log(url, message: result.statusCode)

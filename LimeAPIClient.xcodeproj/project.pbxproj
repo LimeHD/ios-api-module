@@ -16,10 +16,10 @@
 		4E5795A0246AE61C0009D306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E57959F246AE61C0009D306 /* Assets.xcassets */; };
 		4E5795A3246AE61C0009D306 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E5795A1246AE61C0009D306 /* LaunchScreen.storyboard */; };
 		4E68A3FD246BDA6000D332BD /* LimeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */; };
-		4E68A421246C27CF00D332BD /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A420246C27CF00D332BD /* HttpClient.swift */; };
+		4E68A421246C27CF00D332BD /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A420246C27CF00D332BD /* HTTPClient.swift */; };
 		4E68A423246C3CC700D332BD /* LimeAPIClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E579576246AE3D20009D306 /* LimeAPIClient.framework */; };
 		4E6D91C4246D111900BB7C69 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */; };
-		4E6D91C6246D162700BB7C69 /* HttpClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C5246D162700BB7C69 /* HttpClientTests.swift */; };
+		4E6D91C6246D162700BB7C69 /* HTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C5246D162700BB7C69 /* HTTPClientTests.swift */; };
 		4E6D91C8246D772D00BB7C69 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C7246D772D00BB7C69 /* EndPoint.swift */; };
 		4E6D91CA246D786800BB7C69 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C9246D786800BB7C69 /* HTTP.swift */; };
 		4E6D91CF246D7E5200BB7C69 /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91CE246D7E5200BB7C69 /* URLRequest.swift */; };
@@ -58,9 +58,9 @@
 		4E5795A2246AE61C0009D306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4E5795A4246AE61C0009D306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimeAPIClient.swift; sourceTree = "<group>"; };
-		4E68A420246C27CF00D332BD /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
+		4E68A420246C27CF00D332BD /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
-		4E6D91C5246D162700BB7C69 /* HttpClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClientTests.swift; sourceTree = "<group>"; };
+		4E6D91C5246D162700BB7C69 /* HTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTests.swift; sourceTree = "<group>"; };
 		4E6D91C7246D772D00BB7C69 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		4E6D91C9246D786800BB7C69 /* HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTP.swift; sourceTree = "<group>"; };
 		4E6D91CE246D7E5200BB7C69 /* URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
@@ -101,6 +101,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E56436024727C0600CDD18F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4E68A420246C27CF00D332BD /* HTTPClient.swift */,
+				4E75B1C0246EB9870061E143 /* JSONParser.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4E56436124727C2300CDD18F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */,
+				4E75B1C4246EBBE60061E143 /* Channel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4E56436224727C5A00CDD18F /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				4E75B1BC246E67AD0061E143 /* App.swift */,
+				4E75B1BA246E67150061E143 /* Device.swift */,
+				4E6D91C9246D786800BB7C69 /* HTTP.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		4E57956C246AE3D20009D306 = {
 			isa = PBXGroup;
 			children = (
@@ -128,14 +156,10 @@
 				4E579579246AE3D20009D306 /* LimeAPIClient.h */,
 				4E57957A246AE3D20009D306 /* Info.plist */,
 				4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */,
-				4E68A420246C27CF00D332BD /* HttpClient.swift */,
-				4E75B1C0246EB9870061E143 /* JSONParser.swift */,
-				4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */,
-				4E75B1C4246EBBE60061E143 /* Channel.swift */,
+				4E56436024727C0600CDD18F /* Services */,
+				4E56436124727C2300CDD18F /* Models */,
 				4E6D91C7246D772D00BB7C69 /* EndPoint.swift */,
-				4E75B1BC246E67AD0061E143 /* App.swift */,
-				4E75B1BA246E67150061E143 /* Device.swift */,
-				4E6D91C9246D786800BB7C69 /* HTTP.swift */,
+				4E56436224727C5A00CDD18F /* Support */,
 				4E6D91CD246D7DDA00BB7C69 /* Extensions */,
 			);
 			path = LimeAPIClient;
@@ -145,7 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				4E579584246AE3D20009D306 /* LimeAPIClientTests.swift */,
-				4E6D91C5246D162700BB7C69 /* HttpClientTests.swift */,
+				4E6D91C5246D162700BB7C69 /* HTTPClientTests.swift */,
 				4E579586246AE3D20009D306 /* Info.plist */,
 			);
 			path = LimeAPIClientTests;
@@ -324,7 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E68A421246C27CF00D332BD /* HttpClient.swift in Sources */,
+				4E68A421246C27CF00D332BD /* HTTPClient.swift in Sources */,
 				4E6D91CF246D7E5200BB7C69 /* URLRequest.swift in Sources */,
 				4E68A3FD246BDA6000D332BD /* LimeAPIClient.swift in Sources */,
 				4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */,
@@ -344,7 +368,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E6D91C6246D162700BB7C69 /* HttpClientTests.swift in Sources */,
+				4E6D91C6246D162700BB7C69 /* HTTPClientTests.swift in Sources */,
 				4E579585246AE3D20009D306 /* LimeAPIClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

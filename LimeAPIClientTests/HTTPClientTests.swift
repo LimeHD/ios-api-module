@@ -1,5 +1,5 @@
 //
-//  HttpClientTests.swift
+//  HTTPClientTests.swift
 //  LimeAPIClientTests
 //
 //  Created by Лайм HD on 14.05.2020.
@@ -9,8 +9,8 @@
 import XCTest
 @testable import LimeAPIClient
 
-class HttpClientTests: XCTestCase {
-    var sut: HttpClient!
+class HTTPClientTests: XCTestCase {
+    var sut: HTTPClient!
     var session: MockURLSession!
     var url: URL {
         let path = "https://limehd.tv/"
@@ -24,7 +24,7 @@ class HttpClientTests: XCTestCase {
     override func setUp() {
         super.setUp()
         self.session = MockURLSession()
-        self.sut = HttpClient(self.session)
+        self.sut = HTTPClient(self.session)
         self.request = URLRequest(url: self.url)
     }
     
@@ -107,8 +107,8 @@ class HttpClientTests: XCTestCase {
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
-        let actualError = try XCTUnwrap(result.error as? HttpError)
-        XCTAssertEqual(actualError, HttpError.emptyData)
+        let actualError = try XCTUnwrap(result.error as? HTTPError)
+        XCTAssertEqual(actualError, HTTPError.emptyData)
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
@@ -117,21 +117,21 @@ class HttpClientTests: XCTestCase {
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
-        let actualError = try XCTUnwrap(result.error as? HttpError)
-        XCTAssertEqual(actualError, HttpError.unknownResponse)
+        let actualError = try XCTUnwrap(result.error as? HTTPError)
+        XCTAssertEqual(actualError, HTTPError.unknownResponse)
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
     func test_getJSON_givenResponseStatusCode500_callsCompletionWithFailure() throws {
         let response = self.response(500)
         let unwrappedResponse = try XCTUnwrap(response)
-        let expectedError = HttpError.wrongStatusCode(unwrappedResponse.localizedStatusCode)
+        let expectedError = HTTPError.wrongStatusCode(unwrappedResponse.localizedStatusCode)
         
         let result = self.runGetJSONWith(data: Data(), response)
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
-        let actualError = try XCTUnwrap(result.error as? HttpError)
+        let actualError = try XCTUnwrap(result.error as? HTTPError)
         XCTAssertEqual(actualError, expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }

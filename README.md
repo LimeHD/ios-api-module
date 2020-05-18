@@ -8,7 +8,7 @@
 
 ## Установка
 
-Для установки используется менджер зависимостей [CocoaPods](https://cocoapods.org/). Для интеграции модуля **LimeAPIClient** в ваш проект Xcode используя CocoaPods, добавьте строку в ваш  `Podfile`:
+Для установки используется менджер зависимостей [CocoaPods](https://cocoapods.org/). Для интеграции модуля **LimeAPIClient** в проект Xcode, добавьте строку в `Podfile`:
 
 ``` ruby
 pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'

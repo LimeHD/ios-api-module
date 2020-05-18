@@ -1,5 +1,5 @@
 //
-//  HttpClient.swift
+//  HTTPClient.swift
 //  LimeAPIClient
 //
 //  Created by Лайм HD on 13.05.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum HttpError: Error, LocalizedError, Equatable {
+enum HTTPError: Error, LocalizedError, Equatable {
     case emptyData
     case unknownResponse
     case wrongStatusCode(_ statusCode: String)
@@ -28,7 +28,7 @@ enum HttpError: Error, LocalizedError, Equatable {
     }
 }
 
-class HttpClient {
+class HTTPClient {
     typealias httpResult = (Result<(data: Data, statusCode: String), Error>) -> Void
     
     let session: URLSession
@@ -45,13 +45,13 @@ class HttpClient {
             }
             
             guard let data = data else {
-                let error = HttpError.emptyData
+                let error = HTTPError.emptyData
                 completion(.failure(error))
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse else {
-                let error = HttpError.unknownResponse
+                let error = HTTPError.unknownResponse
                 completion(.failure(error))
                 return
             }
@@ -60,7 +60,7 @@ class HttpClient {
                 let success = (data: data, statusCode: httpResponse.localizedStatusCode)
                 completion(.success(success))
             } else {
-                let error = HttpError.wrongStatusCode(httpResponse.localizedStatusCode)
+                let error = HTTPError.wrongStatusCode(httpResponse.localizedStatusCode)
                 completion(.failure(error))
             }
         }
