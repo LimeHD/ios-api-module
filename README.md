@@ -8,21 +8,22 @@
 
 ## Установка
 
-Для установки используется менджер зависимостей [CocoaPods](https://cocoapods.org/). Для интеграции модуля **LimeAPIClient** в проект Xcode, добавьте строку в `Podfile`:
+Для установки используется менджер зависимостей [CocoaPods](https://cocoapods.org/). Для интеграции модуля **LimeAPIClient** в проект Xcode добавьте строку в `Podfile`:
 
 ``` ruby
 pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 ```
 
 ## Примеры использования
-Перед использованием необходимо добавить в файл модуль  `LimeAPIClient`
+Перед использованием необходимо добавить в файл модуль `LimeAPIClient`
 ``` swift
 import LimeAPIClient
 ```
 ### Получение тестовых каналов
 Пример запроса
 ``` swift
-LimeAPIClient.request([Channel].self, url: TEST_CHANNELS_URL, endPoint: .testChannels) { (result) in
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+apiClient.requestChannels { (result) in
     switch result {
     case .success(let channels):
         print(channels)
@@ -31,7 +32,7 @@ LimeAPIClient.request([Channel].self, url: TEST_CHANNELS_URL, endPoint: .testCha
     }
 }
 ```
-В ответ приходи список каналов в виде массива. Тип `Channels`:
+В ответ приходи список каналов в виде массива. Тип `Channel`:
 ``` swift
 struct Channel: Decodable {
     let id: String
@@ -52,17 +53,3 @@ struct Channel: Decodable {
     }
 }
 ```
-
-### Получение cписка каналов
-Пример запроса
-``` swift
-LimeAPIClient.request([Channel].self, url: CHANNELS_URL, endPoint: .сhannels) { (result) in
-    switch result {
-    case .success(let channels):
-        print(channels)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-В ответ приходи список каналов в виде массива (тип данных `Channels` см. выше)
