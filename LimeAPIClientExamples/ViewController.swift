@@ -15,17 +15,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // Пример запроса на получение списка каналов для теста
-        LimeAPIClient.request([Channel].self, url: TEST_CHANNELS_URL, endPoint: .testChannels) { (result) in
-            switch result {
-            case .success(let channels):
-                print(channels)
-            case .failure(let error):
-                print(error)
-            }
-        }
-        
-        // Пример запроса на получение списка каналов
-        LimeAPIClient.request([Channel].self, url: CHANNELS_URL, endPoint: .channels) { (result) in
+        let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+        apiClient.requestChannels { (result) in
             switch result {
             case .success(let channels):
                 print(channels)

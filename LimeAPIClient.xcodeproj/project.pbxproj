@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E5643642472989900CDD18F /* APIParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643632472989900CDD18F /* APIParameters.swift */; };
 		4E579580246AE3D20009D306 /* LimeAPIClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E579576246AE3D20009D306 /* LimeAPIClient.framework */; };
 		4E579585246AE3D20009D306 /* LimeAPIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E579584246AE3D20009D306 /* LimeAPIClientTests.swift */; };
 		4E579587246AE3D20009D306 /* LimeAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E579579246AE3D20009D306 /* LimeAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -27,7 +28,7 @@
 		4E6D91D3246D84A000BB7C69 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91D2246D84A000BB7C69 /* Character.swift */; };
 		4E75B1BB246E67150061E143 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BA246E67150061E143 /* Device.swift */; };
 		4E75B1BD246E67AD0061E143 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BC246E67AD0061E143 /* App.swift */; };
-		4E75B1BF246E77300061E143 /* ApiURLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BE246E77300061E143 /* ApiURLS.swift */; };
+		4E75B1BF246E77300061E143 /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BE246E77300061E143 /* BaseURL.swift */; };
 		4E75B1C1246EB9870061E143 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C0246EB9870061E143 /* JSONParser.swift */; };
 		4E75B1C3246EBADC0061E143 /* JSONAPIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */; };
 		4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C4246EBBE60061E143 /* Channel.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E5643632472989900CDD18F /* APIParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIParameters.swift; sourceTree = "<group>"; };
 		4E579576246AE3D20009D306 /* LimeAPIClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LimeAPIClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E579579246AE3D20009D306 /* LimeAPIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LimeAPIClient.h; sourceTree = "<group>"; };
 		4E57957A246AE3D20009D306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,7 +70,7 @@
 		4E6D91D2246D84A000BB7C69 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		4E75B1BA246E67150061E143 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		4E75B1BC246E67AD0061E143 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
-		4E75B1BE246E77300061E143 /* ApiURLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiURLS.swift; sourceTree = "<group>"; };
+		4E75B1BE246E77300061E143 /* BaseURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
 		4E75B1C0246EB9870061E143 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIObject.swift; sourceTree = "<group>"; };
 		4E75B1C4246EBBE60061E143 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				4E56436024727C0600CDD18F /* Services */,
 				4E56436124727C2300CDD18F /* Models */,
 				4E6D91C7246D772D00BB7C69 /* EndPoint.swift */,
+				4E5643632472989900CDD18F /* APIParameters.swift */,
 				4E56436224727C5A00CDD18F /* Support */,
 				4E6D91CD246D7DDA00BB7C69 /* Extensions */,
 			);
@@ -178,7 +181,7 @@
 		4E579595246AE6180009D306 /* LimeAPIClientExamples */ = {
 			isa = PBXGroup;
 			children = (
-				4E75B1BE246E77300061E143 /* ApiURLS.swift */,
+				4E75B1BE246E77300061E143 /* BaseURL.swift */,
 				4E579596246AE6180009D306 /* AppDelegate.swift */,
 				4E57959A246AE6180009D306 /* ViewController.swift */,
 				4E57959C246AE6180009D306 /* Main.storyboard */,
@@ -349,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E68A421246C27CF00D332BD /* HTTPClient.swift in Sources */,
+				4E5643642472989900CDD18F /* APIParameters.swift in Sources */,
 				4E6D91CF246D7E5200BB7C69 /* URLRequest.swift in Sources */,
 				4E68A3FD246BDA6000D332BD /* LimeAPIClient.swift in Sources */,
 				4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */,
@@ -377,7 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E75B1BF246E77300061E143 /* ApiURLS.swift in Sources */,
+				4E75B1BF246E77300061E143 /* BaseURL.swift in Sources */,
 				4E57959B246AE6180009D306 /* ViewController.swift in Sources */,
 				4E579597246AE6180009D306 /* AppDelegate.swift in Sources */,
 			);

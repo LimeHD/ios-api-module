@@ -14,6 +14,15 @@ public enum EndPoint {
 }
 
 extension EndPoint {
+    var path: String {
+        switch self {
+        case .testChannels:
+            return "v1/channels/test"
+        case .channels:
+            return "v1/channels"
+        }
+    }
+    
     var httpMethod: String {
         switch self {
         case .testChannels, .channels:
