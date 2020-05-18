@@ -11,13 +11,13 @@ import XCTest
 
 class LimeAPIClientTests: XCTestCase {
     var sut: LimeAPIClient!
-    var rootUrl = URL(string: "https://limehd.tv/")!
+    var baseUrl = "https://limehd.tv/"
     var session: MockURLSession!
     
     override func setUp() {
         super.setUp()
         self.session = MockURLSession()
-        self.sut = LimeAPIClient(rootURL: self.rootUrl, session: self.session)
+        self.sut = LimeAPIClient(baseUrl: self.baseUrl, session: self.session)
     }
     
     override func tearDown() {
@@ -26,52 +26,54 @@ class LimeAPIClientTests: XCTestCase {
         super.tearDown()
     }
     
-    func test_init_sets_rootUrl() {
-        XCTAssertEqual(self.sut.rootURL, self.rootUrl)
+    func test_init_sets_baseUrl() {
+        XCTAssertEqual(self.sut.baseUrl, self.baseUrl)
     }
     
     func test_init_sets_session() {
         XCTAssertEqual(self.sut.session, self.session)
     }
     
-    func test_request_emptyUrl_callsCompletionWithFailure() {
-        self.runRequest(String.self, url: "") { (calledCompletion, data, error) in
+    func test_request_emptyBaseUrl_callsCompletionWithFailure() {
+        self.sut = LimeAPIClient(baseUrl: "", session: self.session)
+        self.runRequestChannels { (calledCompletion, data, error) in
             XCTAssertTrue(calledCompletion)
             XCTAssertNil(data)
-            let actualError = try XCTUnwrap(error as? ApiError)
-            XCTAssertEqual(actualError, ApiError.emptyUrl)
+            let actualError = try XCTUnwrap(error as? APIParametersError)
+            XCTAssertEqual(actualError, APIParametersError.emptyUrl)
             XCTAssertNotNil(actualError.localizedDescription)
         }
     }
     
     typealias RequestResults<T: Decodable> = (_ calledCompletion: Bool, _ data: T?, _ error: Error?) throws -> Void
     
-    func runRequest<T: Decodable>(_ type: T.Type, url: String, comletion: @escaping RequestResults<T>) {
+    func runRequestChannels(comletion: @escaping RequestResults<[Channel]>) {
         var calledCompletion = false
-        var receivedData: T? = nil
+        var receivedChannels: [Channel]? = nil
         var receivedError: Error? = nil
         
-        self.sut.request(T.self, url: url, endPoint: .testChannels) { (result) in
+        self.sut.requestChannels() { (result) in
             calledCompletion = true
             
             switch result {
             case .success(let data):
-                receivedData = data
+                receivedChannels = data
             case .failure(let error):
                 receivedError = error
             }
             
-            try? comletion(calledCompletion, receivedData, receivedError)
+            try? comletion(calledCompletion, receivedChannels, receivedError)
         }
     }
     
-    func test_request_inValidUrl_callsCompletionWithFailure() {
+    func test_request_invalidBaseUrl_callsCompletionWithFailure() {
         let url = "]ч"
-        self.runRequest(String.self, url: url) { (calledCompletion, data, error) in
+        self.sut = LimeAPIClient(baseUrl: url, session: self.session)
+        self.runRequestChannels { (calledCompletion, data, error) in
             XCTAssertTrue(calledCompletion)
             XCTAssertNil(data)
-            let actualError = try XCTUnwrap(error as? ApiError)
-            XCTAssertEqual(actualError, ApiError.invalidUrl(url))
+            let actualError = try XCTUnwrap(error as? APIParametersError)
+            XCTAssertEqual(actualError, APIParametersError.invalidUrl(url))
             XCTAssertNotNil(actualError.localizedDescription)
         }
     }
