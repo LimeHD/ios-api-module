@@ -19,7 +19,7 @@ pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 ``` swift
 import LimeAPIClient
 ```
-### Получение тестовых каналов
+### Получение списка каналов
 Пример запроса
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
@@ -50,6 +50,23 @@ struct Channel: Decodable {
         let id: Int
         let timeZone: String
         let contentType: String
+    }
+}
+```
+
+### Получение программы передач
+Пример запроса
+``` swift
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+let startDate = Date().addingTimeInterval(-8.days)
+let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
+let dateInterval = LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
+apiClient.requestBroadcasts(channelId: 105, dateinterval: dateInterval) { (result) in
+    switch result {
+    case .success(let channels):
+        print(channels)
+    case .failure(let error):
+        print(error)
     }
 }
 ```

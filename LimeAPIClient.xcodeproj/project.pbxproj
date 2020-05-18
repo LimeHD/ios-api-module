@@ -7,7 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E5643642472989900CDD18F /* APIParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643632472989900CDD18F /* APIParameters.swift */; };
+		4E5014E4247316AC00A8DA1F /* LACDateInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */; };
+		4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E5247319F400A8DA1F /* TimeInterval.swift */; };
+		4E5643642472989900CDD18F /* LACParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643632472989900CDD18F /* LACParameters.swift */; };
+		4E5643682472CB7D00CDD18F /* CharacterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643672472CB7D00CDD18F /* CharacterSet.swift */; };
+		4E56436A2472D41900CDD18F /* RFC3339DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643692472D41900CDD18F /* RFC3339DateFormatter.swift */; };
+		4E56436C2472D4EA00CDD18F /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E56436B2472D4EA00CDD18F /* Date.swift */; };
+		4E56436E2472EF7D00CDD18F /* TimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E56436D2472EF7D00CDD18F /* TimeZone.swift */; };
+		4E5643702472F32B00CDD18F /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E56436F2472F32B00CDD18F /* Int.swift */; };
 		4E579580246AE3D20009D306 /* LimeAPIClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E579576246AE3D20009D306 /* LimeAPIClient.framework */; };
 		4E579585246AE3D20009D306 /* LimeAPIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E579584246AE3D20009D306 /* LimeAPIClientTests.swift */; };
 		4E579587246AE3D20009D306 /* LimeAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E579579246AE3D20009D306 /* LimeAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -45,7 +52,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4E5643632472989900CDD18F /* APIParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIParameters.swift; sourceTree = "<group>"; };
+		4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACDateInterval.swift; sourceTree = "<group>"; };
+		4E5014E5247319F400A8DA1F /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		4E5643632472989900CDD18F /* LACParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACParameters.swift; sourceTree = "<group>"; };
+		4E5643672472CB7D00CDD18F /* CharacterSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSet.swift; sourceTree = "<group>"; };
+		4E5643692472D41900CDD18F /* RFC3339DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateFormatter.swift; sourceTree = "<group>"; };
+		4E56436B2472D4EA00CDD18F /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		4E56436D2472EF7D00CDD18F /* TimeZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZone.swift; sourceTree = "<group>"; };
+		4E56436F2472F32B00CDD18F /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		4E579576246AE3D20009D306 /* LimeAPIClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LimeAPIClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E579579246AE3D20009D306 /* LimeAPIClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LimeAPIClient.h; sourceTree = "<group>"; };
 		4E57957A246AE3D20009D306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -127,6 +141,7 @@
 				4E75B1BC246E67AD0061E143 /* App.swift */,
 				4E75B1BA246E67150061E143 /* Device.swift */,
 				4E6D91C9246D786800BB7C69 /* HTTP.swift */,
+				4E5643692472D41900CDD18F /* RFC3339DateFormatter.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -161,7 +176,8 @@
 				4E56436024727C0600CDD18F /* Services */,
 				4E56436124727C2300CDD18F /* Models */,
 				4E6D91C7246D772D00BB7C69 /* EndPoint.swift */,
-				4E5643632472989900CDD18F /* APIParameters.swift */,
+				4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */,
+				4E5643632472989900CDD18F /* LACParameters.swift */,
 				4E56436224727C5A00CDD18F /* Support */,
 				4E6D91CD246D7DDA00BB7C69 /* Extensions */,
 			);
@@ -203,8 +219,13 @@
 			isa = PBXGroup;
 			children = (
 				4E6D91D2246D84A000BB7C69 /* Character.swift */,
+				4E5643672472CB7D00CDD18F /* CharacterSet.swift */,
+				4E56436B2472D4EA00CDD18F /* Date.swift */,
 				4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */,
+				4E56436F2472F32B00CDD18F /* Int.swift */,
 				4E6D91D0246D846F00BB7C69 /* String.swift */,
+				4E5014E5247319F400A8DA1F /* TimeInterval.swift */,
+				4E56436D2472EF7D00CDD18F /* TimeZone.swift */,
 				4E6D91CE246D7E5200BB7C69 /* URLRequest.swift */,
 			);
 			path = Extensions;
@@ -351,20 +372,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E56436E2472EF7D00CDD18F /* TimeZone.swift in Sources */,
 				4E68A421246C27CF00D332BD /* HTTPClient.swift in Sources */,
-				4E5643642472989900CDD18F /* APIParameters.swift in Sources */,
+				4E5643702472F32B00CDD18F /* Int.swift in Sources */,
+				4E5643642472989900CDD18F /* LACParameters.swift in Sources */,
 				4E6D91CF246D7E5200BB7C69 /* URLRequest.swift in Sources */,
 				4E68A3FD246BDA6000D332BD /* LimeAPIClient.swift in Sources */,
 				4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */,
+				4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */,
 				4E75B1C1246EB9870061E143 /* JSONParser.swift in Sources */,
+				4E5643682472CB7D00CDD18F /* CharacterSet.swift in Sources */,
+				4E56436C2472D4EA00CDD18F /* Date.swift in Sources */,
 				4E75B1BD246E67AD0061E143 /* App.swift in Sources */,
 				4E75B1C3246EBADC0061E143 /* JSONAPIObject.swift in Sources */,
 				4E75B1BB246E67150061E143 /* Device.swift in Sources */,
 				4E6D91C8246D772D00BB7C69 /* EndPoint.swift in Sources */,
 				4E6D91D1246D846F00BB7C69 /* String.swift in Sources */,
 				4E6D91CA246D786800BB7C69 /* HTTP.swift in Sources */,
+				4E56436A2472D41900CDD18F /* RFC3339DateFormatter.swift in Sources */,
 				4E6D91C4246D111900BB7C69 /* HTTPURLResponse.swift in Sources */,
 				4E6D91D3246D84A000BB7C69 /* Character.swift in Sources */,
+				4E5014E4247316AC00A8DA1F /* LACDateInterval.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

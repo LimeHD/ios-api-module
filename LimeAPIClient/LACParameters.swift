@@ -1,5 +1,5 @@
 //
-//  APIParameters.swift
+//  LACParameters.swift
 //  LimeAPIClient
 //
 //  Created by Лайм HD on 18.05.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum APIParametersError: Error, LocalizedError, Equatable {
+enum LACParametersError: Error, LocalizedError, Equatable {
     case emptyUrl
     case invalidUrl(_ url: String)
     
@@ -24,7 +24,7 @@ enum APIParametersError: Error, LocalizedError, Equatable {
     }
 }
 
-struct APIParameters {
+struct LACParameters {
     private let baseUrl: String
     private let endPoint: EndPoint
     let url: URL
@@ -32,11 +32,11 @@ struct APIParameters {
     init(baseUrl: String, endPoint: EndPoint) throws {
         let baseUrl = baseUrl.trimmingCharacters(in: .whitespacesAndNewlines)
         if baseUrl.isEmpty {
-            throw APIParametersError.emptyUrl
+            throw LACParametersError.emptyUrl
         }
         
         guard let url = URL(string: baseUrl) else {
-            throw APIParametersError.invalidUrl(baseUrl)
+            throw LACParametersError.invalidUrl(baseUrl)
         }
         
         self.baseUrl = baseUrl
@@ -46,9 +46,27 @@ struct APIParameters {
     
     var request: URLRequest {
         var request = URLRequest(url: self.url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
-        request.httpMethod = endPoint.httpMethod
-        request.setHeaders(endPoint.headers)
+        request.httpMethod = self.endPoint.httpMethod
+        request.setHeaders(self.endPoint.headers)
+        
+        if let url = self.addUrlParameters() {
+            request.url = url
+        }
         
         return request
+    }
+    
+    private func addUrlParameters() -> URL? {
+        guard !self.endPoint.urlParameters.isEmpty else { return nil }
+        if var urlComponents = URLComponents(url: self.url, resolvingAgainstBaseURL: false) {
+            urlComponents.queryItems = [URLQueryItem]()
+            for (key, value) in self.endPoint.urlParameters {
+                let queryItem = URLQueryItem(name: key, value: value)
+                urlComponents.queryItems?.append(queryItem)
+            }
+            urlComponents.percentEncodedQuery = urlComponents.percentEncodedQuery?.removingPercentEncoding
+            return urlComponents.url
+        }
+        return nil
     }
 }

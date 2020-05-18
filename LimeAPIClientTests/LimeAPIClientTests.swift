@@ -39,8 +39,8 @@ class LimeAPIClientTests: XCTestCase {
         self.runRequestChannels { (calledCompletion, data, error) in
             XCTAssertTrue(calledCompletion)
             XCTAssertNil(data)
-            let actualError = try XCTUnwrap(error as? APIParametersError)
-            XCTAssertEqual(actualError, APIParametersError.emptyUrl)
+            let actualError = try XCTUnwrap(error as? LACParametersError)
+            XCTAssertEqual(actualError, LACParametersError.emptyUrl)
             XCTAssertNotNil(actualError.localizedDescription)
         }
     }
@@ -72,8 +72,8 @@ class LimeAPIClientTests: XCTestCase {
         self.runRequestChannels { (calledCompletion, data, error) in
             XCTAssertTrue(calledCompletion)
             XCTAssertNil(data)
-            let actualError = try XCTUnwrap(error as? APIParametersError)
-            XCTAssertEqual(actualError, APIParametersError.invalidUrl(url))
+            let actualError = try XCTUnwrap(error as? LACParametersError)
+            XCTAssertEqual(actualError, LACParametersError.invalidUrl(url))
             XCTAssertNotNil(actualError.localizedDescription)
         }
     }

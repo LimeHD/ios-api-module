@@ -30,3 +30,9 @@ extension String {
         return result
     }
 }
+
+extension String {
+    func encoding(with allowedCharacters: CharacterSet) -> String {
+        return self.addingPercentEncoding(withAllowedCharacters: allowedCharacters) ?? ""
+    }
+}

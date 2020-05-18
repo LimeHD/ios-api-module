@@ -45,7 +45,7 @@ public final class LimeAPIClient {
     private func request<T: Decodable>(_ type: T.Type, endPoint: EndPoint, completion: @escaping ApiResult<T>) {
         let request: URLRequest
         do {
-            let parameters = try APIParameters(baseUrl: self.baseUrl, endPoint: endPoint)
+            let parameters = try LACParameters(baseUrl: self.baseUrl, endPoint: endPoint)
             request = parameters.request
         } catch {
             completion(.failure(error))
@@ -66,6 +66,25 @@ public final class LimeAPIClient {
     public func requestChannels(completion: @escaping ApiResult<[Channel]>) {
         DispatchQueue(label: "tv.limehd.LimeAPIClient.requestChannels", qos: .userInitiated).async {
             self.request([Channel].self, endPoint: .channels) { (result) in
+                switch result {
+                case .success(let result):
+                    DispatchQueue.main.async { completion(.success(result)) }
+                case .failure(let error):
+                    DispatchQueue.main.async { completion(.failure(error)) }
+                }
+            }
+        }
+    }
+    
+    public func requestBroadcasts(channelId: Int, dateinterval: LACDateInterval, completion: @escaping ApiResult<[Channel]>) {
+        let timeZone = dateinterval.timeZone
+        let endPoint = EndPoint.broadcasts(
+            channelId: channelId,
+            start: dateinterval.start.rfc3339String(for: timeZone),
+            end: dateinterval.end.rfc3339String(for: timeZone),
+            timeZone: timeZone.utcString)
+        DispatchQueue(label: "tv.limehd.LimeAPIClient.requestBroadcasts", qos: .userInitiated).async {
+            self.request([Channel].self, endPoint: endPoint) { (result) in
                 switch result {
                 case .success(let result):
                     DispatchQueue.main.async { completion(.success(result)) }
