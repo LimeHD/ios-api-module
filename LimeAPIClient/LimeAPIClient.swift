@@ -29,7 +29,15 @@ enum ApiError: Error, LocalizedError, Equatable {
 public typealias ApiResult<T: Decodable> = (Result<T, Error>) -> Void
 
 public final class LimeAPIClient {
-    static private func privateRequest<T: Decodable>(_ type: T.Type, url: String, endPoint: EndPoint, parameters: [String: String] = [:], completion: @escaping ApiResult<T>) {
+    let rootURL: URL
+    let session: URLSession
+    
+    public init(rootURL: URL, session: URLSession = URLSession.shared) {
+        self.rootURL = rootURL
+        self.session = session
+    }
+    
+    private func privateRequest<T: Decodable>(_ type: T.Type, url: String, endPoint: EndPoint, completion: @escaping ApiResult<T>) {
         let url = url.trimmingCharacters(in: .whitespacesAndNewlines)
         if url.isEmpty {
             let error = ApiError.emptyUrl
@@ -44,7 +52,7 @@ public final class LimeAPIClient {
         }
         
         let request = URLRequest(url: requestUrl, endPoint: endPoint)
-        HTTPClient(URLSession.shared).getJSON(with: request) { (result) in
+        HTTPClient(self.session).getJSON(with: request) { (result) in
             switch result {
             case .success(let result):
                 LimeAPIClient.log(url, message: result.statusCode)
@@ -66,9 +74,9 @@ public final class LimeAPIClient {
         }
     }
     
-    static public func request<T: Decodable>(_ type: T.Type, url: String, endPoint: EndPoint, parameters: [String: String] = [:], completion: @escaping ApiResult<T>) {
+    public func request<T: Decodable>(_ type: T.Type, url: String, endPoint: EndPoint, completion: @escaping ApiResult<T>) {
         DispatchQueue(label: "tv.limehd.LimeAPIClient.request", qos: .userInitiated).async {
-            LimeAPIClient.privateRequest(T.self, url: url, endPoint: endPoint, parameters: parameters) { (result) in
+            self.privateRequest(T.self, url: url, endPoint: endPoint) { (result) in
                 switch result {
                 case .success(let result):
                     DispatchQueue.main.async { completion(.success(result)) }

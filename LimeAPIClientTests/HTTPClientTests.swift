@@ -12,13 +12,7 @@ import XCTest
 class HTTPClientTests: XCTestCase {
     var sut: HTTPClient!
     var session: MockURLSession!
-    var url: URL {
-        let path = "https://limehd.tv/"
-        guard let url = URL(string: path) else {
-            fatalError("Error: \(Self.self).\(#function) invalid url: \(path)")
-        }
-        return url
-    }
+    var url = URL(string: "https://limehd.tv/")!
     var request: URLRequest!
     
     override func setUp() {
@@ -36,12 +30,12 @@ class HTTPClientTests: XCTestCase {
     }
     
     func test_init_sets_session() {
-        XCTAssertEqual(self.sut.session, session)
+        XCTAssertEqual(self.sut.session, self.session)
     }
     
     func test_getJSON_inValidUrl_callsCompletionWithFailure() {
         self.request.url = nil
-        self.sut.getJSON(with: request) { _ in }
+        self.sut.getJSON(with: self.request) { _ in }
         
         let result = self.runGetJSONWith()
         
