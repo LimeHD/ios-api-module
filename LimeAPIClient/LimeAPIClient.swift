@@ -76,12 +76,12 @@ public final class LimeAPIClient {
         }
     }
     
-    public func requestBroadcasts(channelId: Int, dateinterval: LACDateInterval, completion: @escaping ApiResult<[Channel]>) {
-        let timeZone = dateinterval.timeZone
+    public func requestBroadcasts(channelId: Int, dateInterval: LACDateInterval, completion: @escaping ApiResult<[Channel]>) {
+        let timeZone = dateInterval.timeZone
         let endPoint = EndPoint.broadcasts(
             channelId: channelId,
-            start: dateinterval.start.rfc3339String(for: timeZone),
-            end: dateinterval.end.rfc3339String(for: timeZone),
+            start: dateInterval.start.rfc3339String(for: timeZone),
+            end: dateInterval.end.rfc3339String(for: timeZone),
             timeZone: timeZone.utcString)
         DispatchQueue(label: "tv.limehd.LimeAPIClient.requestBroadcasts", qos: .userInitiated).async {
             self.request([Channel].self, endPoint: endPoint) { (result) in
