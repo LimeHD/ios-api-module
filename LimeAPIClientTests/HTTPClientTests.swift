@@ -119,7 +119,7 @@ class HTTPClientTests: XCTestCase {
     func test_getJSON_givenResponseStatusCode500_callsCompletionWithFailure() throws {
         let response = self.response(500)
         let unwrappedResponse = try XCTUnwrap(response)
-        let expectedError = HTTPError.wrongStatusCode(unwrappedResponse.localizedStatusCode)
+        let expectedError = HTTPError.wrongStatusCode(unwrappedResponse.localizedStatusCode, error: "")
         
         let result = self.runGetJSONWith(data: Data(), response)
         

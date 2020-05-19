@@ -32,7 +32,7 @@ apiClient.requestChannels { (result) in
     }
 }
 ```
-В ответ приходи список каналов в виде массива. Тип `Channel`:
+В ответ приходи список каналов в виде массива. Тип данных `Channel`:
 ``` swift
 struct Channel: Decodable {
     let id: String
@@ -61,12 +61,54 @@ let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 let startDate = Date().addingTimeInterval(-8.days)
 let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
 let dateInterval = LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
-apiClient.requestBroadcasts(channelId: 105, dateinterval: dateInterval) { (result) in
+apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { (result) in
     switch result {
     case .success(let channels):
         print(channels)
     case .failure(let error):
         print(error)
     }
+}
+```
+Ошибки приходят в виде типа данных `JSONAPIError`:
+``` swift
+struct JSONAPIError: Decodable, Equatable {
+    let errors: [Error]
+    let meta: Meta
+    
+    struct Error: Decodable, Equatable {
+        let code: String
+        let status: String
+        let title: String
+        let detail: String
+    }
+    
+    struct Meta: Decodable, Equatable {
+        let requestId: String
+    }
+}
+```
+
+### Проверка работоспособности сервиса
+Пример запроса
+``` swift
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+// Параметр key - опциональный. Используется для разнообразия запросов и обхода кэша
+apiClient.ping(key: "test") { (result) in
+    switch result {
+    case .success(let ping):
+        print(ping)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+При успешном запросе в ответ приходи тип данных `Ping`:
+``` swift
+struct Ping: Decodable {
+    let result: String
+    let time: String
+    let version: String
+    let hostname: String
 }
 ```
