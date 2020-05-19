@@ -130,6 +130,40 @@ class HTTPClientTests: XCTestCase {
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
+    func test_getJSON_givenJSONAPIError_callsCompletionWithFailure() throws {
+        let json = """
+        {
+          "errors": [
+            {
+              "code": "sequel/database_error",
+              "status": "500",
+              "title": "Sequel::DatabaseError",
+              "detail": "detail hidden"
+            }
+          ],
+          "meta": {
+            "request_id": "Request is not tracked"
+          }
+        }
+        """
+        let data = try XCTUnwrap(json.data(using: .utf8))
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let jsonAPIError = try decoder.decode(JSONAPIError.self, from: data)
+        
+        let response = self.response(500)
+        let unwrappedResponse = try XCTUnwrap(response)
+        let expectedError = HTTPError.jsonAPIError(unwrappedResponse.localizedStatusCode, error: jsonAPIError)
+        
+        let result = self.runGetJSONWith(data: data, response)
+        
+        XCTAssertTrue(result.calledCompletion)
+        XCTAssertNil(result.data)
+        let actualError = try XCTUnwrap(result.error as? HTTPError)
+        XCTAssertEqual(actualError, expectedError)
+        XCTAssertNotNil(actualError.localizedDescription)
+    }
+    
     func test_getJSON_givenDataAndSuccessResponseStatusCode_callsCompletionWithSuccess() throws {
         let result = self.runGetJSONWith(data: Data(), self.response(200))
         
