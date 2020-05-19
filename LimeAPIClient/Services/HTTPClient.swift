@@ -11,7 +11,8 @@ import Foundation
 enum HTTPError: Error, LocalizedError, Equatable {
     case emptyData
     case unknownResponse
-    case wrongStatusCode(_ statusCode: String)
+    case wrongStatusCode(_ statusCode: String, error: String)
+    case jsonAPIError(_ statusCode: String, error: JSONAPIError)
     
     var errorDescription: String? {
         switch self {
@@ -21,8 +22,11 @@ enum HTTPError: Error, LocalizedError, Equatable {
         case .unknownResponse:
             let key = "Ответ сервера не распознан"
             return NSLocalizedString(key, comment: "Ответ не распознан")
-        case .wrongStatusCode(let statusCode):
-            let key = "Неуспешный ответ состояния HTTP: \(statusCode))"
+        case .wrongStatusCode(let statusCode, let error):
+            let key = "Неуспешный ответ состояния HTTP: \(statusCode). Ошибка: \(error)"
+            return NSLocalizedString(key, comment: statusCode)
+        case .jsonAPIError(let statusCode, let error):
+            let key = "Неуспешный ответ состояния HTTP: \(statusCode). Ошибка: \(error)"
             return NSLocalizedString(key, comment: statusCode)
         }
     }
@@ -60,8 +64,19 @@ class HTTPClient {
                 let success = (data: data, statusCode: httpResponse.localizedStatusCode)
                 completion(.success(success))
             } else {
-                let error = HTTPError.wrongStatusCode(httpResponse.localizedStatusCode)
-                completion(.failure(error))
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let parser = JSONParser(decoder)
+                let result = parser.decode(JSONAPIError.self, data)
+                switch result {
+                case .success(let message):
+                    let error = HTTPError.jsonAPIError(httpResponse.localizedStatusCode, error: message)
+                    completion(.failure(error))
+                case .failure:
+                    let message = String(decoding: data, as: UTF8.self)
+                    let error = HTTPError.wrongStatusCode(httpResponse.localizedStatusCode, error: message)
+                    completion(.failure(error))
+                }
             }
         }
         

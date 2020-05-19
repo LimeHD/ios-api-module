@@ -11,9 +11,11 @@ import Foundation
 public enum EndPoint {
     case testChannels
     case channels
-    // startAt and finishAt - RFC3339, format example: 2020-04-29T23:59:59+03:00
-    // timeZone - https://en.wikipedia.org/wiki/List_of_time_zones_by_country, format example: UTC+03:00
+    // start и end в формате RFC3339, пример: 2020-04-29T23:59:59+03:00
+    // timeZone - https://en.wikipedia.org/wiki/List_of_time_zones_by_country, пример: UTC+03:00
     case broadcasts(channelId: Int, start: String, end: String, timeZone: String)
+    // key - (опционально) используется для разнообразия запросов и обхода кэша
+    case ping(key: String)
 }
 
 extension EndPoint {
@@ -25,6 +27,8 @@ extension EndPoint {
             return "v1/channels"
         case .broadcasts:
             return "v1/broadcasts"
+        case .ping:
+            return "v1/ping"
         }
     }
     
@@ -41,6 +45,11 @@ extension EndPoint {
                 "finish_at": end.encoding(with: .httpHostAllowed),
                 "time_zone": timeZone.encoding(with: .httpHostAllowed)
             ]
+        case .ping(let key):
+            if key.isEmpty { return [:] }
+            return [
+                "key": key.encoding(with: .urlHostAllowed)
+            ]
         }
     }
     
@@ -49,7 +58,8 @@ extension EndPoint {
         case
         .testChannels,
         .channels,
-        .broadcasts:
+        .broadcasts,
+        .ping:
             return HTTP.Method.get
         }
     }
@@ -61,6 +71,8 @@ extension EndPoint {
         .channels,
         .broadcasts:
             return HTTP.headers(language: .ru, accept: .jsonAPI)
+        case .ping:
+            return HTTP.headers(language: .ru, accept: .json)
         }
     }
 }

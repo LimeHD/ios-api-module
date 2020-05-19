@@ -29,10 +29,10 @@ public final class LimeAPIClient {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let parser = JSONParser(decoder)
-                let result = parser.decode(JSONAPIObject<T>.self, result.data)
+                let result = parser.decode(T.self, result.data)
                 switch result {
                 case .success(let data):
-                    completion(.success(data.data))
+                    completion(.success(data))
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -65,10 +65,10 @@ public final class LimeAPIClient {
     
     public func requestChannels(completion: @escaping ApiResult<[Channel]>) {
         DispatchQueue(label: "tv.limehd.LimeAPIClient.requestChannels", qos: .userInitiated).async {
-            self.request([Channel].self, endPoint: .channels) { (result) in
+            self.request(JSONAPIObject<[Channel]>.self, endPoint: .channels) { (result) in
                 switch result {
                 case .success(let result):
-                    DispatchQueue.main.async { completion(.success(result)) }
+                    DispatchQueue.main.async { completion(.success(result.data)) }
                 case .failure(let error):
                     DispatchQueue.main.async { completion(.failure(error)) }
                 }
@@ -84,7 +84,20 @@ public final class LimeAPIClient {
             end: dateInterval.end.rfc3339String(for: timeZone),
             timeZone: timeZone.utcString)
         DispatchQueue(label: "tv.limehd.LimeAPIClient.requestBroadcasts", qos: .userInitiated).async {
-            self.request([Channel].self, endPoint: endPoint) { (result) in
+            self.request(JSONAPIObject<[Channel]>.self, endPoint: endPoint) { (result) in
+                switch result {
+                case .success(let result):
+                    DispatchQueue.main.async { completion(.success(result.data)) }
+                case .failure(let error):
+                    DispatchQueue.main.async { completion(.failure(error)) }
+                }
+            }
+        }
+    }
+    
+    public func ping(key: String = "", completion: @escaping ApiResult<Ping>) {
+        DispatchQueue(label: "tv.limehd.LimeAPIClient.ping", qos: .userInitiated).async {
+            self.request(Ping.self, endPoint: .ping(key: key)) { (result) in
                 switch result {
                 case .success(let result):
                     DispatchQueue.main.async { completion(.success(result)) }

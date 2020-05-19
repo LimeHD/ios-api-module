@@ -12,6 +12,7 @@ struct HTTP {
     struct Header {
         enum Accept: String {
             case jsonAPI = "application/vnd.api+json"
+            case json = "application/json"
         }
         enum Language: String {
             case ru = "ru-RU"

@@ -9,20 +9,20 @@
 import Foundation
 
 public struct Channel: Decodable {
-    let id: String
-    let type: String
-    let attributes: Attributes
+    public let id: String
+    public let type: String
+    public let attributes: Attributes
     
-    struct Attributes: Decodable {
-        let name: String?
-        let imageUrl: String?
-        let description: String?
-        let streams: [Stream]
+    public struct Attributes: Decodable {
+        public let name: String?
+        public let imageUrl: String?
+        public let description: String?
+        public let streams: [Stream]
     }
     
-    struct Stream: Decodable {
-        let id: Int
-        let timeZone: String
-        let contentType: String
+    public struct Stream: Decodable {
+        public let id: Int
+        public let timeZone: String
+        public let contentType: String
     }
 }
