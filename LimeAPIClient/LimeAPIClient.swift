@@ -65,7 +65,7 @@ public final class LimeAPIClient {
     
     public func requestChannels(completion: @escaping ApiResult<[Channel]>) {
         DispatchQueue(label: "tv.limehd.LimeAPIClient.requestChannels", qos: .userInitiated).async {
-            self.request(JSONAPIObject<[Channel]>.self, endPoint: .channels) { (result) in
+            self.request(JSONAPIObject<[Channel], String>.self, endPoint: .channels) { (result) in
                 switch result {
                 case .success(let result):
                     DispatchQueue.main.async { completion(.success(result.data)) }
@@ -76,7 +76,7 @@ public final class LimeAPIClient {
         }
     }
     
-    public func requestBroadcasts(channelId: Int, dateInterval: LACDateInterval, completion: @escaping ApiResult<[Channel]>) {
+    public func requestBroadcasts(channelId: Int, dateInterval: LACDateInterval, completion: @escaping ApiResult<[Broadcast]>) {
         let timeZone = dateInterval.timeZone
         let endPoint = EndPoint.broadcasts(
             channelId: channelId,
@@ -84,7 +84,7 @@ public final class LimeAPIClient {
             end: dateInterval.end.rfc3339String(for: timeZone),
             timeZone: timeZone.utcString)
         DispatchQueue(label: "tv.limehd.LimeAPIClient.requestBroadcasts", qos: .userInitiated).async {
-            self.request(JSONAPIObject<[Channel]>.self, endPoint: endPoint) { (result) in
+            self.request(JSONAPIObject<[Broadcast], Broadcast.Meta>.self, endPoint: endPoint) { (result) in
                 switch result {
                 case .success(let result):
                     DispatchQueue.main.async { completion(.success(result.data)) }

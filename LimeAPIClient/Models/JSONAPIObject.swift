@@ -8,6 +8,7 @@
 
 import Foundation
 
-struct JSONAPIObject<T: Decodable>: Decodable {
+struct JSONAPIObject<T: Decodable, U: Decodable>: Decodable {
     let data: T
+    let meta: U?
 }

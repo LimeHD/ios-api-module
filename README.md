@@ -70,6 +70,22 @@ apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { (resul
     }
 }
 ```
+В ответ приходи список каналов в виде массива. Тип данных `Broadcast`:
+``` swift
+struct Broadcast: Decodable {
+    let id: String
+    let type: String
+    let attributes: Attributes
+    
+    struct Attributes: Decodable {
+        let title: String
+        let detail: String
+        let rating: Int?
+        let startAt: String
+        let finishAt: String
+    }
+}
+```
 Ошибки приходят в виде типа данных `JSONAPIError`:
 ``` swift
 struct JSONAPIError: Decodable, Equatable {
