@@ -11,7 +11,7 @@ import UIKit
 struct Device {
     static var name: String {
         let name = UIDevice.current.name.filteringEmoji
-        let percentEncodingName = name.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) ?? ""
+        let percentEncodingName = name.addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed) ?? ""
         return percentEncodingName
     }
     

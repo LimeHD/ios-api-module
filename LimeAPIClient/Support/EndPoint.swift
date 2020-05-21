@@ -41,9 +41,9 @@ extension EndPoint {
         case .broadcasts(let channelId, let start, let end, let timeZone):
             return [
                 "channel_id": "\(channelId)",
-                "start_at": start.encoding(with: .httpHostAllowed),
-                "finish_at": end.encoding(with: .httpHostAllowed),
-                "time_zone": timeZone.encoding(with: .httpHostAllowed)
+                "start_at": start.encoding(with: .rfc3986Allowed),
+                "finish_at": end.encoding(with: .rfc3986Allowed),
+                "time_zone": timeZone.encoding(with: .rfc3986Allowed)
             ]
         case .ping(let key):
             if key.isEmpty { return [:] }
