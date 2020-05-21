@@ -50,24 +50,9 @@ class JSONParserTests: XCTestCase {
     func test_decode_givenCorrectJSON_returnsSuccess() throws {
         var expectedData: JSONAPIError? = nil
         var expectedError: Error? = nil
-        let json = """
-        {
-          "errors": [
-            {
-              "code": "sequel/database_error",
-              "status": "500",
-              "title": "Sequel::DatabaseError",
-              "detail": "detail hidden"
-            }
-          ],
-          "meta": {
-            "request_id": "Request is not tracked"
-          }
-        }
-        """
-        let data = try XCTUnwrap(json.data(using: .utf8))
+    
+        let data = try XCTUnwrap(JSONAPIErrorExample.data(using: .utf8))
         let result = self.sut.decode(JSONAPIError.self, data)
-        
         
         switch result {
         case .success(let data):

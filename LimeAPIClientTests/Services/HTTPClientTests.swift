@@ -131,22 +131,7 @@ class HTTPClientTests: XCTestCase {
     }
     
     func test_getJSON_givenJSONAPIError_callsCompletionWithFailure() throws {
-        let json = """
-        {
-          "errors": [
-            {
-              "code": "sequel/database_error",
-              "status": "500",
-              "title": "Sequel::DatabaseError",
-              "detail": "detail hidden"
-            }
-          ],
-          "meta": {
-            "request_id": "Request is not tracked"
-          }
-        }
-        """
-        let data = try XCTUnwrap(json.data(using: .utf8))
+        let data = try XCTUnwrap(JSONAPIErrorExample.data(using: .utf8))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let jsonAPIError = try decoder.decode(JSONAPIError.self, from: data)

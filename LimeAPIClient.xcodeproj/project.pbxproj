@@ -43,6 +43,7 @@
 		4E835BED2473D50700C8DD96 /* Ping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEC2473D50700C8DD96 /* Ping.swift */; };
 		4E835BEF2473EFE300C8DD96 /* JSONAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */; };
 		4E835BF32474179F00C8DD96 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BF22474179F00C8DD96 /* JSONParserTests.swift */; };
+		4EFC6E4C2476B49A009D6CF7 /* JSONAPIErrorExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		4E835BEC2473D50700C8DD96 /* Ping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ping.swift; sourceTree = "<group>"; };
 		4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIError.swift; sourceTree = "<group>"; };
 		4E835BF22474179F00C8DD96 /* JSONParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
+		4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIErrorExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				4E579584246AE3D20009D306 /* LimeAPIClientTests.swift */,
+				4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */,
 				4E835BF4247417AC00C8DD96 /* Services */,
 				4E579586246AE3D20009D306 /* Info.plist */,
 			);
@@ -425,6 +428,7 @@
 			files = (
 				4E835BF32474179F00C8DD96 /* JSONParserTests.swift in Sources */,
 				4E6D91C6246D162700BB7C69 /* HTTPClientTests.swift in Sources */,
+				4EFC6E4C2476B49A009D6CF7 /* JSONAPIErrorExample.swift in Sources */,
 				4E579585246AE3D20009D306 /* LimeAPIClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
