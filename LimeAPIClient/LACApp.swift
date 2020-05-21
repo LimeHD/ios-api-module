@@ -9,8 +9,11 @@
 import Foundation
 
 public struct LACApp {
-    public static var id: String {
-        Bundle.main.bundleIdentifier ?? ""
+    public struct id {
+        public static var custom = ""
+        public static var bundle: String {
+            Bundle.main.bundleIdentifier ?? ""
+        }
     }
     
     static var version: String {

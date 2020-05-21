@@ -15,11 +15,10 @@ public typealias ApiResult<T: Decodable> = (Result<T, Error>) -> Void
 public final class LimeAPIClient {
     let baseUrl: String
     let session: URLSession
-    let appId: String
     
-    public init(baseUrl: String, appId: String = LACApp.id, session: URLSession = URLSession.shared) {
+    public init(baseUrl: String, appId: String = LACApp.id.bundle, session: URLSession = URLSession.shared) {
         self.baseUrl = baseUrl
-        self.appId = appId
+        LACApp.id.custom = appId
         self.session = session
     }
     
@@ -67,7 +66,7 @@ extension LimeAPIClient {
     private func request<T: Decodable>(_ type: T.Type, endPoint: EndPoint, completion: @escaping ApiResult<T>) {
         let request: URLRequest
         do {
-            let parameters = try LACParameters(baseUrl: self.baseUrl, appId: self.appId, endPoint: endPoint)
+            let parameters = try LACParameters(baseUrl: self.baseUrl, endPoint: endPoint)
             request = parameters.request
         } catch {
             completion(.failure(error))

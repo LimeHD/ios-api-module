@@ -64,16 +64,15 @@ extension EndPoint {
         }
     }
     
-    func headers(with appId: String) -> [String: String] {
-        let http = HTTP(appId: appId)
+    var headers: [String: String] {
         switch self {
         case
         .testChannels,
         .channels,
         .broadcasts:
-            return http.headers(language: .ru, accept: .jsonAPI)
+            return HTTP.headers(language: .ru, accept: .jsonAPI)
         case .ping:
-            return http.headers(language: .ru, accept: .json)
+            return HTTP.headers(language: .ru, accept: .json)
         }
     }
 }

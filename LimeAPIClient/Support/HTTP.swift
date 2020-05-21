@@ -29,14 +29,14 @@ struct HTTP {
         static var delete   = "DELETE"
     }
     
-    func headers(language: Header.Language, accept: Header.Accept) -> [String: String] {
+    static func headers(language: Header.Language, accept: Header.Accept) -> [String: String] {
         [
             "Accept":           accept.rawValue,
             "Accept-Language":  language.rawValue,
             "X-Platform":       "ios",
             "X-Device-Name":    Device.name,
             "X-Device-Id":      Device.id,
-            "X-App-Id":         self.appId,
+            "X-App-Id":         LACApp.id.custom,
             "X-App-Version":    LACApp.version
         ]
     }

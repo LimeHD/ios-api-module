@@ -17,7 +17,7 @@ class LimeAPIClientTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        self.appId = LACApp.id
+        self.appId = LACApp.id.bundle
         self.session = MockURLSession()
         self.sut = LimeAPIClient(baseUrl: self.baseUrl, appId: self.appId, session: self.session)
     }
@@ -33,7 +33,15 @@ class LimeAPIClientTests: XCTestCase {
     }
     
     func test_init_sets_appId() {
-        XCTAssertEqual(self.sut.appId, self.appId)
+        XCTAssertEqual(self.appId, LACApp.id.custom)
+    }
+    
+    func test_init_sets_correctAppId() {
+        let appId = "TEST_APPLICATION_ID"
+        self.session = MockURLSession()
+        self.sut = LimeAPIClient(baseUrl: self.baseUrl, appId: appId, session: self.session)
+        XCTAssertEqual(appId, LACApp.id.custom)
+        XCTAssertNotEqual(LACApp.id.bundle, LACApp.id.custom)
     }
     
     func test_init_sets_session() {
