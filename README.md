@@ -1,6 +1,8 @@
 # LimeAPIClient
 ![LimeAPIClient CI](https://github.com/LimeHD/ios-api-module/workflows/LimeAPIClient%20CI/badge.svg)
 [![Build Status](https://ci.iptv2022.com/app/rest/builds/buildType:(id:IOSRoot_LimeApiClient_LimeApiClientMaster)/statusIcon)](https://ci.iptv2022.com/viewType.html?buildTypeId=IOSRoot_LimeApiClient_LimeApiClientMaster&guest=1)
+![TeamCity Full Build Status](https://img.shields.io/teamcity/build/s/IOSRoot_LimeApiClient_LimeApiClientMaster?server=https%3A%2F%2Fci.iptv2022.com)
+[![Maintainability](https://api.codeclimate.com/v1/badges/9cd49b797924f442e35a/maintainability)](https://codeclimate.com/repos/5e58b87660bb0c014d009f9f/maintainability)
 
 Общий клиент для работы с API
 
