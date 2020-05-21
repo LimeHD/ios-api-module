@@ -9,6 +9,8 @@
 import Foundation
 
 struct HTTP {
+    let appId: String
+    
     struct Header {
         enum Accept: String {
             case jsonAPI = "application/vnd.api+json"
@@ -27,15 +29,15 @@ struct HTTP {
         static var delete   = "DELETE"
     }
     
-    static func headers(language: Header.Language, accept: Header.Accept) -> [String: String] {
+    func headers(language: Header.Language, accept: Header.Accept) -> [String: String] {
         [
             "Accept":           accept.rawValue,
             "Accept-Language":  language.rawValue,
             "X-Platform":       "ios",
             "X-Device-Name":    Device.name,
             "X-Device-Id":      Device.id,
-            "X-App-Id":         App.id,
-            "X-App-Version":    App.version
+            "X-App-Id":         self.appId,
+            "X-App-Version":    LACApp.version
         ]
     }
 }

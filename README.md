@@ -24,7 +24,7 @@ import LimeAPIClient
 ### Получение списка каналов
 Пример запроса
 ``` swift
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+let apiClient = LimeAPIClient(baseUrl: BASE_URL, appId: APPLICATION_ID)
 apiClient.requestChannels { (result) in
     switch result {
     case .success(let channels):
@@ -59,7 +59,7 @@ struct Channel: Decodable {
 ### Получение программы передач
 Пример запроса
 ``` swift
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+let apiClient = LimeAPIClient(baseUrl: BASE_URL, appId: APPLICATION_ID)
 let startDate = Date().addingTimeInterval(-8.days)
 let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
 let dateInterval = LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
@@ -110,7 +110,7 @@ struct JSONAPIError: Decodable, Equatable {
 ### Проверка работоспособности сервиса
 Пример запроса
 ``` swift
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+let apiClient = LimeAPIClient(baseUrl: BASE_URL, appId: APPLICATION_ID)
 // Параметр key - опциональный. Используется для разнообразия запросов и обхода кэша
 apiClient.ping(key: "test") { (result) in
     switch result {

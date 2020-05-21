@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum EndPoint {
+enum EndPoint {
     case testChannels
     case channels
     // start и end в формате RFC3339, пример: 2020-04-29T23:59:59+03:00
@@ -64,15 +64,16 @@ extension EndPoint {
         }
     }
     
-    var headers: [String: String] {
+    func headers(with appId: String) -> [String: String] {
+        let http = HTTP(appId: appId)
         switch self {
         case
         .testChannels,
         .channels,
         .broadcasts:
-            return HTTP.headers(language: .ru, accept: .jsonAPI)
+            return http.headers(language: .ru, accept: .jsonAPI)
         case .ping:
-            return HTTP.headers(language: .ru, accept: .json)
+            return http.headers(language: .ru, accept: .json)
         }
     }
 }

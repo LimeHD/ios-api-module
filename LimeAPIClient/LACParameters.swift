@@ -26,10 +26,11 @@ enum LACParametersError: Error, LocalizedError, Equatable {
 
 struct LACParameters {
     private let baseUrl: String
+    private let appId: String
     private let endPoint: EndPoint
     let url: URL
     
-    init(baseUrl: String, endPoint: EndPoint) throws {
+    init(baseUrl: String, appId: String, endPoint: EndPoint) throws {
         let baseUrl = baseUrl.trimmingCharacters(in: .whitespacesAndNewlines)
         if baseUrl.isEmpty {
             throw LACParametersError.emptyUrl
@@ -40,6 +41,7 @@ struct LACParameters {
         }
         
         self.baseUrl = baseUrl
+        self.appId = appId
         self.endPoint = endPoint
         self.url = url.appendingPathComponent(endPoint.path)
     }
@@ -47,7 +49,7 @@ struct LACParameters {
     var request: URLRequest {
         var request = URLRequest(url: self.url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
         request.httpMethod = self.endPoint.httpMethod
-        request.setHeaders(self.endPoint.headers)
+        request.setHeaders(self.endPoint.headers(with: self.appId))
         
         if let url = self.addUrlParameters() {
             request.url = url

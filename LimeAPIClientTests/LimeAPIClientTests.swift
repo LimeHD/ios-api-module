@@ -12,12 +12,14 @@ import XCTest
 class LimeAPIClientTests: XCTestCase {
     var sut: LimeAPIClient!
     var baseUrl = "https://limehd.tv/"
+    var appId: String!
     var session: MockURLSession!
     
     override func setUp() {
         super.setUp()
+        self.appId = LACApp.id
         self.session = MockURLSession()
-        self.sut = LimeAPIClient(baseUrl: self.baseUrl, session: self.session)
+        self.sut = LimeAPIClient(baseUrl: self.baseUrl, appId: self.appId, session: self.session)
     }
     
     override func tearDown() {
@@ -28,6 +30,10 @@ class LimeAPIClientTests: XCTestCase {
     
     func test_init_sets_baseUrl() {
         XCTAssertEqual(self.sut.baseUrl, self.baseUrl)
+    }
+    
+    func test_init_sets_appId() {
+        XCTAssertEqual(self.sut.appId, self.appId)
     }
     
     func test_init_sets_session() {

@@ -1,5 +1,5 @@
 //
-//  App.swift
+//  LACApp.swift
 //  LimeAPIClient
 //
 //  Created by Лайм HD on 15.05.2020.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct App {
-    static var id: String {
+public struct LACApp {
+    public static var id: String {
         Bundle.main.bundleIdentifier ?? ""
     }
     

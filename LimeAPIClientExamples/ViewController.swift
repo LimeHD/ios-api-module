@@ -14,8 +14,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.requestChannels()
+        self.requestBroadcasts()
+        self.ping()
+    }
+
+}
+
+extension ViewController {
+    private func requestChannels() {
         // Пример запроса на получение списка каналов
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+        let apiClient = LimeAPIClient(baseUrl: BASE_URL, appId: APPLICATION_ID)
         apiClient.requestChannels { (result) in
             switch result {
             case .success(let channels):
@@ -24,8 +33,11 @@ class ViewController: UIViewController {
                 print(error)
             }
         }
-        
+    }
+    
+    private func requestBroadcasts() {
         // Пример запроса на получение программы передач
+        let apiClient = LimeAPIClient(baseUrl: BASE_URL, appId: APPLICATION_ID)
         let startDate = Date().addingTimeInterval(-8.days)
         let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
         let dateInterval = LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
@@ -37,9 +49,12 @@ class ViewController: UIViewController {
                 print(error)
             }
         }
-        
+    }
+    
+    private func ping() {
         // Пример запроса на проверку работоспособности сервиса
         // Параметр key - опциональный. Используется для разнообразия запросов и обхода кэша
+        let apiClient = LimeAPIClient(baseUrl: BASE_URL, appId: APPLICATION_ID)
         apiClient.ping(key: "test") { (result) in
             switch result {
             case .success(let ping):
@@ -49,6 +64,4 @@ class ViewController: UIViewController {
             }
         }
     }
-
 }
-
