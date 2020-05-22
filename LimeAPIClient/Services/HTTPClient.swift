@@ -9,11 +9,14 @@
 import Foundation
 
 enum HTTPError: Error, LocalizedError, Equatable {
+    typealias Base = JSONAPIBaseError
+    typealias Standart = JSONAPIStandartError
+
     case emptyData
     case unknownResponse
     case wrongStatusCode(_ statusCode: String, error: String)
-    case jsonAPIBaseError(_ statusCode: String, error: JSONAPIError.Base)
-    case jsonAPIStandartError(_ statusCode: String, error: JSONAPIError.Standart)
+    case jsonAPIBaseError(_ statusCode: String, error: JSONAPIError<Base>)
+    case jsonAPIStandartError(_ statusCode: String, error: JSONAPIError<Standart>)
     
     var errorDescription: String? {
         switch self {
@@ -38,6 +41,8 @@ enum HTTPError: Error, LocalizedError, Equatable {
 
 class HTTPClient {
     typealias httpResult = (Result<(data: Data, statusCode: String), Error>) -> Void
+    typealias Base = JSONAPIBaseError
+    typealias Standart = JSONAPIStandartError
     
     let session: URLSession
     
@@ -71,13 +76,13 @@ class HTTPClient {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let parser = JSONParser(decoder)
-                let result = parser.decode(JSONAPIError.Base.self, data)
+                let result = parser.decode(JSONAPIError<Base>.self, data)
                 switch result {
                 case .success(let message):
                     let error = HTTPError.jsonAPIBaseError(httpResponse.localizedStatusCode, error: message)
                     completion(.failure(error))
                 case .failure:
-                    let result = parser.decode(JSONAPIError.Standart.self, data)
+                    let result = parser.decode(JSONAPIError<Standart>.self, data)
                     switch result {
                     case .success(let message):
                         let error = HTTPError.jsonAPIStandartError(httpResponse.localizedStatusCode, error: message)

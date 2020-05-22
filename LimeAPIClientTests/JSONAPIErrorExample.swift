@@ -8,18 +8,20 @@
 
 import Foundation
 
-let JSONAPIErrorExample = """
-{
-  "errors": [
+struct JSONAPIErrorExample {
+    static var standart = """
     {
-      "code": "sequel/database_error",
-      "status": "500",
-      "title": "Sequel::DatabaseError",
-      "detail": "detail hidden"
+      "errors": [
+        {
+          "code": "sequel/database_error",
+          "status": "500",
+          "title": "Sequel::DatabaseError",
+          "detail": "detail hidden"
+        }
+      ],
+      "meta": {
+        "request_id": "Request is not tracked"
+      }
     }
-  ],
-  "meta": {
-    "request_id": "Request is not tracked"
-  }
+    """
 }
-"""

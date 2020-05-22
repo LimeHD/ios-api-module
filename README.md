@@ -48,40 +48,29 @@ struct Session: Decodable {
     let streamEndpoint: String
 }
 ```
-Все ошибки в ответе сервера, приходят в виде типа данных `JSONAPIError` либо `Base`, либо `Standart`:
+Все ошибки в ответе сервера, приходят в виде типа данных `JSONAPIError<JSONAPIBaseError>` или `JSONAPIError<JSONAPIStandartError>`:
 ``` swift
-struct JSONAPIError: Decodable, Equatable {
-    struct Base: Decodable, Equatable {
-        let errors: [Error]
-        let meta: Meta
-        
-        struct Error: Decodable, Equatable {
-            let id: Int
-            let status: Int
-            let code: String
-            let title: String
-        }
-        
-        struct Meta: Decodable, Equatable {
-            let requestId: String
-        }
-    }
+struct JSONAPIError<T: Decodable & Equatable>: Decodable, Equatable {
+    let errors: [T]
+    let meta: Meta
     
-    struct Standart: Decodable, Equatable {
-        let errors: [Error]
-        let meta: Meta
-        
-        struct Error: Decodable, Equatable {
-            let code: String
-            let status: String
-            let title: String
-            let detail: String
-        }
-        
-        struct Meta: Decodable, Equatable {
-            let requestId: String
-        }
+    struct Meta: Decodable, Equatable {
+        let requestId: String
     }
+}
+
+struct JSONAPIBaseError: Decodable, Equatable {
+    let id: Int
+    let status: Int
+    let code: String
+    let title: String
+}
+    
+struct JSONAPIStandartError: Decodable, Equatable {
+    let code: String
+    let status: String
+    let title: String
+    let detail: String
 }
 ```
 

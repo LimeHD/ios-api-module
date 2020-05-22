@@ -10,6 +10,9 @@ import XCTest
 @testable import LimeAPIClient
 
 class HTTPClientTests: XCTestCase {
+    typealias Base = JSONAPIBaseError
+    typealias Standart = JSONAPIStandartError
+    
     var sut: HTTPClient!
     var session: MockURLSession!
     var url = URL(string: "https://limehd.tv/")!
@@ -131,10 +134,10 @@ class HTTPClientTests: XCTestCase {
     }
     
     func test_getJSON_givenJSONAPIError_callsCompletionWithFailure() throws {
-        let data = try XCTUnwrap(JSONAPIErrorExample.data(using: .utf8))
+        let data = try XCTUnwrap(JSONAPIErrorExample.standart.data(using: .utf8))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let jsonAPIError = try decoder.decode(JSONAPIError.Standart.self, from: data)
+        let jsonAPIError = try decoder.decode(JSONAPIError<Standart>.self, from: data)
         
         let response = self.response(500)
         let unwrappedResponse = try XCTUnwrap(response)
