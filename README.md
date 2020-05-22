@@ -22,8 +22,7 @@ pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 import LimeAPIClient
 ```
 ### Конфигурирование клиента
-// Пример конфигурирования клиента LimeAPIClient перед использованием
-// задается один раз до начала использования запросов
+Конфигурирования клиента `LimeAPIClient` осуществлятся один раз до начала использования запросов
 ``` swift
 let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION)
 LimeAPIClient.configuration = configuration
@@ -31,7 +30,7 @@ LimeAPIClient.configuration = configuration
 
 ### Пример cоздания новой сессии
 ``` swift
-let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.session { (result) in
     switch result {
     case .success(let session):
