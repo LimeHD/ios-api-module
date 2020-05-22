@@ -53,6 +53,10 @@ struct LACParameters {
             request.url = url
         }
         
+        if let data = self.addBodyParameters() {
+            request.httpBody = data
+        }
+        
         return request
     }
     
@@ -68,5 +72,18 @@ struct LACParameters {
             return urlComponents.url
         }
         return nil
+    }
+    
+    private func addBodyParameters() -> Data? {
+        guard !self.endPoint.bodyParameters.isEmpty else { return nil }
+        
+        return self.endPoint.bodyParameters
+            .map { key, value in
+            let escapedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed) ?? ""
+            let escapedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed) ?? ""
+            return escapedKey + "=" + escapedValue
+        }
+        .joined(separator: "&")
+        .data(using: .utf8)
     }
 }

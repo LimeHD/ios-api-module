@@ -15,17 +15,25 @@ public typealias ApiResult<T: Decodable> = (Result<T, Error>) -> Void
 public final class LimeAPIClient {
     let baseUrl: String
     let session: URLSession
+    public static var configuration: LACConfiguration?
     
-    public init(baseUrl: String, appId: String = LACApp.id.bundle, session: URLSession = URLSession.shared) {
+    public init(baseUrl: String, session: URLSession = URLSession.shared) {
         self.baseUrl = baseUrl
-        LACApp.id.custom = appId
         self.session = session
+    }
+    
+    public func session(completion: @escaping ApiResult<Session>) {
+        DispatchQueue(label: "tv.limehd.LimeAPIClient.session", qos: .userInitiated).async {
+            self.request(Session.self, endPoint: .sessions) { (result) in
+                 self.handleJSONResult(result, completion)
+            }
+        }
     }
     
     public func requestChannels(completion: @escaping ApiResult<[Channel]>) {
         DispatchQueue(label: "tv.limehd.LimeAPIClient.requestChannels", qos: .userInitiated).async {
             self.request(JSONAPIObject<[Channel], String>.self, endPoint: .channels) { (result) in
-                self.handleJSONAPIResult(result, completion: completion)
+                self.handleJSONAPIResult(result, completion)
             }
         }
     }
@@ -39,7 +47,7 @@ public final class LimeAPIClient {
             timeZone: timeZone.utcString)
         DispatchQueue(label: "tv.limehd.LimeAPIClient.requestBroadcasts", qos: .userInitiated).async {
             self.request(JSONAPIObject<[Broadcast], Broadcast.Meta>.self, endPoint: endPoint) { (result) in
-                self.handleJSONAPIResult(result, completion: completion)
+                self.handleJSONAPIResult(result, completion)
             }
         }
     }
@@ -47,12 +55,7 @@ public final class LimeAPIClient {
     public func ping(key: String = "", completion: @escaping ApiResult<Ping>) {
         DispatchQueue(label: "tv.limehd.LimeAPIClient.ping", qos: .userInitiated).async {
             self.request(Ping.self, endPoint: .ping(key: key)) { (result) in
-                switch result {
-                case .success(let result):
-                    DispatchQueue.main.async { completion(.success(result)) }
-                case .failure(let error):
-                    DispatchQueue.main.async { completion(.failure(error)) }
-                }
+                self.handleJSONResult(result, completion)
             }
         }
     }
@@ -105,10 +108,19 @@ extension LimeAPIClient {
         }
     }
     
-    private func handleJSONAPIResult<T: Decodable, U: Decodable>(_ result: JSONAPIResult<T, U>, completion: @escaping ApiResult<[T]>) {
+    private func handleJSONAPIResult<T: Decodable, U: Decodable>(_ result: JSONAPIResult<T, U>, _ completion: @escaping ApiResult<[T]>) {
         switch result {
         case .success(let result):
             DispatchQueue.main.async { completion(.success(result.data)) }
+        case .failure(let error):
+            DispatchQueue.main.async { completion(.failure(error)) }
+        }
+    }
+    
+    private func handleJSONResult<T: Decodable>(_ result: Result<T, Error>, _ completion: @escaping ApiResult<T>) {
+        switch result {
+        case .success(let result):
+            DispatchQueue.main.async { completion(.success(result)) }
         case .failure(let error):
             DispatchQueue.main.async { completion(.failure(error)) }
         }

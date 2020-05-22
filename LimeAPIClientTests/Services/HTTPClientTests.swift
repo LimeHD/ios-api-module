@@ -134,11 +134,11 @@ class HTTPClientTests: XCTestCase {
         let data = try XCTUnwrap(JSONAPIErrorExample.data(using: .utf8))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let jsonAPIError = try decoder.decode(JSONAPIError.self, from: data)
+        let jsonAPIError = try decoder.decode(JSONAPIError.Standart.self, from: data)
         
         let response = self.response(500)
         let unwrappedResponse = try XCTUnwrap(response)
-        let expectedError = HTTPError.jsonAPIError(unwrappedResponse.localizedStatusCode, error: jsonAPIError)
+        let expectedError = HTTPError.jsonAPIStandartError(unwrappedResponse.localizedStatusCode, error: jsonAPIError)
         
         let result = self.runGetJSONWith(data: data, response)
         

@@ -21,10 +21,75 @@ pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 ``` swift
 import LimeAPIClient
 ```
+### Конфигурирование клиента
+// Пример конфигурирования клиента LimeAPIClient перед использованием
+// задается один раз до начала использования запросов
+``` swift
+let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION)
+LimeAPIClient.configuration = configuration
+```
+
+### Пример cоздания новой сессии
+``` swift
+let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
+apiClient.session { (result) in
+    switch result {
+    case .success(let session):
+        print(session)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+При успешном запросе в ответ приходи тип данных `Session`:
+``` swift
+struct Session: Decodable {
+    let sessionId: String
+    let currentTime: String
+    let streamEndpoint: String
+}
+```
+Все ошибки в ответе сервера, приходят в виде типа данных `JSONAPIError` либо `Base`, либо `Standart`:
+``` swift
+struct JSONAPIError: Decodable, Equatable {
+    struct Base: Decodable, Equatable {
+        let errors: [Error]
+        let meta: Meta
+        
+        struct Error: Decodable, Equatable {
+            let id: Int
+            let status: Int
+            let code: String
+            let title: String
+        }
+        
+        struct Meta: Decodable, Equatable {
+            let requestId: String
+        }
+    }
+    
+    struct Standart: Decodable, Equatable {
+        let errors: [Error]
+        let meta: Meta
+        
+        struct Error: Decodable, Equatable {
+            let code: String
+            let status: String
+            let title: String
+            let detail: String
+        }
+        
+        struct Meta: Decodable, Equatable {
+            let requestId: String
+        }
+    }
+}
+```
+
 ### Получение списка каналов
 Пример запроса
 ``` swift
-let apiClient = LimeAPIClient(baseUrl: BASE_URL, appId: APPLICATION_ID)
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.requestChannels { (result) in
     switch result {
     case .success(let channels):
@@ -59,7 +124,7 @@ struct Channel: Decodable {
 ### Получение программы передач
 Пример запроса
 ``` swift
-let apiClient = LimeAPIClient(baseUrl: BASE_URL, appId: APPLICATION_ID)
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 let startDate = Date().addingTimeInterval(-8.days)
 let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
 let dateInterval = LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
@@ -88,29 +153,11 @@ struct Broadcast: Decodable {
     }
 }
 ```
-Ошибки приходят в виде типа данных `JSONAPIError`:
-``` swift
-struct JSONAPIError: Decodable, Equatable {
-    let errors: [Error]
-    let meta: Meta
-    
-    struct Error: Decodable, Equatable {
-        let code: String
-        let status: String
-        let title: String
-        let detail: String
-    }
-    
-    struct Meta: Decodable, Equatable {
-        let requestId: String
-    }
-}
-```
 
 ### Проверка работоспособности сервиса
 Пример запроса
 ``` swift
-let apiClient = LimeAPIClient(baseUrl: BASE_URL, appId: APPLICATION_ID)
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // Параметр key - опциональный. Используется для разнообразия запросов и обхода кэша
 apiClient.ping(key: "test") { (result) in
     switch result {

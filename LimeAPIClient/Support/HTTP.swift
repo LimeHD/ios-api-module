@@ -16,6 +16,10 @@ struct HTTP {
             case jsonAPI = "application/vnd.api+json"
             case json = "application/json"
         }
+        enum ContentType: String {
+            case none = ""
+            case formUrlencoded = "application/x-www-form-urlencoded"
+        }
         enum Language: String {
             case ru = "ru-RU"
         }
@@ -29,15 +33,22 @@ struct HTTP {
         static var delete   = "DELETE"
     }
     
-    static func headers(language: Header.Language, accept: Header.Accept) -> [String: String] {
-        [
+    static func headers(language: Header.Language, accept: Header.Accept, contentType: Header.ContentType = .none) -> [String: String] {
+        var headers = [
             "Accept":           accept.rawValue,
             "Accept-Language":  language.rawValue,
             "X-Platform":       "ios",
             "X-Device-Name":    Device.name,
             "X-Device-Id":      Device.id,
-            "X-App-Id":         LACApp.id.custom,
-            "X-App-Version":    LACApp.version
+            "X-App-Id":         LimeAPIClient.configuration?.appId ?? "",
+            "X-App-Version":    LACApp.version,
+            "X-Access-Key":     LimeAPIClient.configuration?.apiKey ?? ""
         ]
+        
+        if contentType != .none {
+            headers["Content-Type"] = contentType.rawValue
+        }
+        
+        return headers
     }
 }

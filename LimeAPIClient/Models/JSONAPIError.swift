@@ -9,17 +9,35 @@
 import Foundation
 
 public struct JSONAPIError: Decodable, Equatable {
-    public let errors: [Error]
-    public let meta: Meta
-    
-    public struct Error: Decodable, Equatable {
-        public let code: String
-        public let status: String
-        public let title: String
-        public let detail: String
+    struct Base: Decodable, Equatable {
+        public let errors: [Error]
+        public let meta: Meta
+        
+        public struct Error: Decodable, Equatable {
+            public let id: Int
+            public let status: Int
+            public let code: String
+            public let title: String
+        }
+        
+        public struct Meta: Decodable, Equatable {
+            public let requestId: String
+        }
     }
     
-    public struct Meta: Decodable, Equatable {
-        public let requestId: String
+    struct Standart: Decodable, Equatable {
+        public let errors: [Error]
+        public let meta: Meta
+        
+        public struct Error: Decodable, Equatable {
+            public let code: String
+            public let status: String
+            public let title: String
+            public let detail: String
+        }
+        
+        public struct Meta: Decodable, Equatable {
+            public let requestId: String
+        }
     }
 }

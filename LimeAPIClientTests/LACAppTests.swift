@@ -14,7 +14,7 @@ class LACAppTests: XCTestCase {
     func test_bundleIdIsCorrect() {
         let expectedId = Bundle.main.bundleIdentifier ?? ""
         XCTAssertFalse(expectedId.isEmpty)
-        XCTAssertEqual(LACApp.id.bundle, expectedId)
+        XCTAssertEqual(LACApp.id, expectedId)
     }
     
     func test_versionIsCorrect() {

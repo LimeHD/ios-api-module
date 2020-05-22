@@ -12,14 +12,12 @@ import XCTest
 class LimeAPIClientTests: XCTestCase {
     var sut: LimeAPIClient!
     var baseUrl = "https://limehd.tv/"
-    var appId: String!
     var session: MockURLSession!
     
     override func setUp() {
         super.setUp()
-        self.appId = LACApp.id.bundle
         self.session = MockURLSession()
-        self.sut = LimeAPIClient(baseUrl: self.baseUrl, appId: self.appId, session: self.session)
+        self.sut = LimeAPIClient(baseUrl: self.baseUrl, session: self.session)
     }
     
     override func tearDown() {
@@ -28,20 +26,14 @@ class LimeAPIClientTests: XCTestCase {
         super.tearDown()
     }
     
+    func test_beforeUse_sets_configuration() {
+        let configuration = LACConfiguration(appId: "TEST_ID", apiKey: "TEST_API")
+        LimeAPIClient.configuration = configuration
+        XCTAssertNotNil(LimeAPIClient.configuration)
+    }
+    
     func test_init_sets_baseUrl() {
         XCTAssertEqual(self.sut.baseUrl, self.baseUrl)
-    }
-    
-    func test_init_sets_appId() {
-        XCTAssertEqual(self.appId, LACApp.id.custom)
-    }
-    
-    func test_init_sets_correctAppId() {
-        let appId = "TEST_APPLICATION_ID"
-        self.session = MockURLSession()
-        self.sut = LimeAPIClient(baseUrl: self.baseUrl, appId: appId, session: self.session)
-        XCTAssertEqual(appId, LACApp.id.custom)
-        XCTAssertNotEqual(LACApp.id.bundle, LACApp.id.custom)
     }
     
     func test_init_sets_session() {

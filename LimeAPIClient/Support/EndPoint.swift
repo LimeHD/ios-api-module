@@ -9,6 +9,7 @@
 import Foundation
 
 enum EndPoint {
+    case sessions
     case testChannels
     case channels
     // start и end в формате RFC3339, пример: 2020-04-29T23:59:59+03:00
@@ -21,6 +22,8 @@ enum EndPoint {
 extension EndPoint {
     var path: String {
         switch self {
+        case .sessions:
+            return "v1/sessions"
         case .testChannels:
             return "v1/channels/test"
         case .channels:
@@ -35,6 +38,7 @@ extension EndPoint {
     var urlParameters: [String: String] {
         switch self {
         case
+        .sessions,
         .testChannels,
         .channels:
             return [:]
@@ -53,8 +57,23 @@ extension EndPoint {
         }
     }
     
+    var bodyParameters: [String: String] {
+        switch self {
+        case .sessions:
+            return ["app_id": LimeAPIClient.configuration?.appId ?? ""]
+        case
+        .testChannels,
+        .channels,
+        .broadcasts,
+        .ping:
+            return [:]
+        }
+    }
+    
     var httpMethod: String {
         switch self {
+        case .sessions:
+            return HTTP.Method.post
         case
         .testChannels,
         .channels,
@@ -71,7 +90,9 @@ extension EndPoint {
         .channels,
         .broadcasts:
             return HTTP.headers(language: .ru, accept: .jsonAPI)
-        case .ping:
+        case
+        .sessions,
+        .ping:
             return HTTP.headers(language: .ru, accept: .json)
         }
     }
