@@ -61,10 +61,10 @@ struct LACParameters {
     }
     
     private func addUrlParameters() -> URL? {
-        guard !self.endPoint.urlParameters.isEmpty else { return nil }
+        guard !self.endPoint.parameters.url.isEmpty else { return nil }
         if var urlComponents = URLComponents(url: self.url, resolvingAgainstBaseURL: false) {
             urlComponents.queryItems = [URLQueryItem]()
-            for (key, value) in self.endPoint.urlParameters {
+            for (key, value) in self.endPoint.parameters.url {
                 let queryItem = URLQueryItem(name: key, value: value)
                 urlComponents.queryItems?.append(queryItem)
             }
@@ -75,9 +75,9 @@ struct LACParameters {
     }
     
     private func addBodyParameters() -> Data? {
-        guard !self.endPoint.bodyParameters.isEmpty else { return nil }
+        guard !self.endPoint.parameters.body.isEmpty else { return nil }
         
-        return self.endPoint.bodyParameters
+        return self.endPoint.parameters.body
             .map { key, value in
             let escapedKey = key.encoding(with: .rfc3986Allowed)
             let escapedValue = value.encoding(with: .rfc3986Allowed)

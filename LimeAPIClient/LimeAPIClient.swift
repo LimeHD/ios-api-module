@@ -24,7 +24,7 @@ public final class LimeAPIClient {
     
     public func session(completion: @escaping ApiResult<Session>) {
         DispatchQueue(label: "tv.limehd.LimeAPIClient.session", qos: .userInitiated).async {
-            self.request(Session.self, endPoint: .sessions) { (result) in
+            self.request(Session.self, endPoint: EndPoint.Factory.session()) { (result) in
                  self.handleJSONResult(result, completion)
             }
         }
@@ -32,7 +32,7 @@ public final class LimeAPIClient {
     
     public func requestChannels(completion: @escaping ApiResult<[Channel]>) {
         DispatchQueue(label: "tv.limehd.LimeAPIClient.requestChannels", qos: .userInitiated).async {
-            self.request(JSONAPIObject<[Channel], String>.self, endPoint: .channels) { (result) in
+            self.request(JSONAPIObject<[Channel], String>.self, endPoint: EndPoint.Factory.channels()) { (result) in
                 self.handleJSONAPIResult(result, completion)
             }
         }
@@ -40,7 +40,7 @@ public final class LimeAPIClient {
     
     public func requestBroadcasts(channelId: Int, dateInterval: LACDateInterval, completion: @escaping ApiResult<[Broadcast]>) {
         let timeZone = dateInterval.timeZone
-        let endPoint = EndPoint.broadcasts(
+        let endPoint = EndPoint.Factory.broadcasts(
             channelId: channelId,
             start: dateInterval.start.rfc3339String(for: timeZone),
             end: dateInterval.end.rfc3339String(for: timeZone),
@@ -54,7 +54,7 @@ public final class LimeAPIClient {
     
     public func ping(key: String = "", completion: @escaping ApiResult<Ping>) {
         DispatchQueue(label: "tv.limehd.LimeAPIClient.ping", qos: .userInitiated).async {
-            self.request(Ping.self, endPoint: .ping(key: key)) { (result) in
+            self.request(Ping.self, endPoint: EndPoint.Factory.ping(key: key)) { (result) in
                 self.handleJSONResult(result, completion)
             }
         }
