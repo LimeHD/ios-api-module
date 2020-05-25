@@ -12,18 +12,18 @@ typealias HTTPParameters = [String: String]
 
 struct EndPoint {
     let path: String
-    let headers: HTTPHeaders
-    let httpMethod: HTTPMethod
+    let acceptHeader: String
+    let httpMethod: String
     let parameters: EndPoint.Parameters
     
     init(
         path: String,
-        headers: HTTPHeaders,
-        httpMethod: HTTPMethod = HTTP.Method.get,
+        acceptHeader: String,
+        httpMethod: String = HTTP.Method.get,
         parameters: EndPoint.Parameters = EndPoint.Parameters()
     ) {
         self.path = path
-        self.headers = headers
+        self.acceptHeader = acceptHeader
         self.httpMethod = httpMethod
         self.parameters = parameters
     }
@@ -51,7 +51,7 @@ extension EndPoint.Factory {
         )
         return EndPoint(
             path: "v1/sessions",
-            headers: HTTP.headers(accept: HTTP.Header.Accept.json),
+            acceptHeader: HTTP.Header.Accept.json,
             httpMethod: HTTP.Method.post,
             parameters: parameters
         )
@@ -60,14 +60,14 @@ extension EndPoint.Factory {
     static func testChannels() -> EndPoint {
         return EndPoint(
             path: "v1/channels/test",
-            headers: HTTP.headers(accept: HTTP.Header.Accept.jsonAPI)
+            acceptHeader: HTTP.Header.Accept.jsonAPI
         )
     }
     
     static func channels() -> EndPoint {
         return EndPoint(
             path: "v1/channels",
-            headers: HTTP.headers(accept: HTTP.Header.Accept.jsonAPI)
+            acceptHeader: HTTP.Header.Accept.jsonAPI
         )
     }
     
@@ -83,7 +83,7 @@ extension EndPoint.Factory {
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
             path: "v1/broadcasts",
-            headers: HTTP.headers(accept: HTTP.Header.Accept.jsonAPI),
+            acceptHeader: HTTP.Header.Accept.jsonAPI,
             parameters: parameters
         )
     }
@@ -99,19 +99,8 @@ extension EndPoint.Factory {
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
             path: "v1/ping",
-            headers: HTTP.headers(accept: HTTP.Header.Accept.json),
+            acceptHeader: HTTP.Header.Accept.json,
             parameters: parameters
         )
     }
-}
-
-enum EndPointOld {
-    case sessions
-    case testChannels
-    case channels
-    // start и end в формате RFC3339, пример: 2020-04-29T23:59:59+03:00
-    // timeZone - https://en.wikipedia.org/wiki/List_of_time_zones_by_country, пример: UTC+03:00
-    case broadcasts(channelId: Int, start: String, end: String, timeZone: String)
-    // key - (опционально) используется для разнообразия запросов и обхода кэша
-    case ping(key: String)
 }

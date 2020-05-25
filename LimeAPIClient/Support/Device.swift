@@ -18,4 +18,8 @@ struct Device {
     static var id: String {
         UIDevice.current.identifierForVendor?.uuidString ?? ""
     }
+    
+    static var language: String {
+        Locale.preferredLanguages.first ?? "ru-RU"
+    }
 }

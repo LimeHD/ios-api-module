@@ -27,7 +27,7 @@ class LimeAPIClientTests: XCTestCase {
     }
     
     func test_beforeUse_sets_configuration() {
-        let configuration = LACConfiguration(appId: "TEST_ID", apiKey: "TEST_API")
+        let configuration = LACConfiguration(appId: "TEST_ID", apiKey: "TEST_API", language: Device.language)
         LimeAPIClient.configuration = configuration
         XCTAssertNotNil(LimeAPIClient.configuration)
     }

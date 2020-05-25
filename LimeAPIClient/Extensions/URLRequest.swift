@@ -9,8 +9,8 @@
 import Foundation
 
 extension URLRequest {
-    mutating func setHeaders(_ headers: [String: String]) {
-        for (key, value) in headers {
+    mutating func setHeaders(parameters: [String: String]) {
+        for (key, value) in parameters {
             self.setValue(value, forHTTPHeaderField: key)
         }
     }

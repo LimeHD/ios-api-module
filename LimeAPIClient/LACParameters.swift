@@ -47,7 +47,8 @@ struct LACParameters {
     var request: URLRequest {
         var request = URLRequest(url: self.url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
         request.httpMethod = self.endPoint.httpMethod
-        request.setHeaders(self.endPoint.headers)
+        request.setValue(self.endPoint.acceptHeader, forHTTPHeaderField: "Accept")
+        request.setHeaders(parameters: HTTP.headers)
         
         if let url = self.addUrlParameters() {
             request.url = url
@@ -55,7 +56,7 @@ struct LACParameters {
         
         if let data = self.addBodyParameters() {
             request.httpBody = data
-            request.setHeaders(["Content-Type": HTTP.Header.ContentType.formUrlEncoded])
+            request.setValue(HTTP.Header.ContentType.urlEncodedForm, forHTTPHeaderField: "Content-Type")
         }
         
         return request
