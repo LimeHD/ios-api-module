@@ -11,9 +11,11 @@ import Foundation
 public struct LACConfiguration {
     let appId: String
     let apiKey: String
+    let language: String
     
-    public init(appId: String, apiKey: String) {
+    public init(appId: String, apiKey: String, language: String) {
         self.appId = appId
         self.apiKey = apiKey
+        self.language = language
     }
 }

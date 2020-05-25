@@ -20,17 +20,17 @@ struct HTTP {
             case none = ""
             case formUrlEncoded = "application/x-www-form-urlencoded"
         }
-        enum Language: String {
-            case ru = "ru-RU"
-        }
     }
     
     struct Method { }
     
-    static func headers(language: Header.Language, accept: Header.Accept, contentType: Header.ContentType = .none) -> [String: String] {
+    static func headers(
+        accept: Header.Accept,
+        contentType: Header.ContentType = .none) -> [String: String]
+    {
         var headers = [
             "Accept":           accept.rawValue,
-            "Accept-Language":  language.rawValue,
+            "Accept-Language":  LimeAPIClient.configuration?.language ?? "",
             "X-Platform":       "ios",
             "X-Device-Name":    Device.name,
             "X-Device-Id":      Device.id,

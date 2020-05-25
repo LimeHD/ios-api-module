@@ -24,7 +24,8 @@ import LimeAPIClient
 ### Конфигурирование клиента
 Конфигурирования клиента `LimeAPIClient` осуществлятся один раз до начала использования запросов
 ``` swift
-let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION)
+let language = Locale.preferredLanguages.first ?? "ru-RU"
+let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION, language: language)
 LimeAPIClient.configuration = configuration
 ```
 
@@ -48,7 +49,7 @@ struct Session: Decodable {
     let streamEndpoint: String
 }
 ```
-Все ошибки в ответе сервера, приходят в виде типа данных `JSONAPIError<JSONAPIBaseError>` или `JSONAPIError<JSONAPIStandartError>`:
+Все ошибки в ответе сервера приходят в виде типа данных `JSONAPIError<JSONAPIBaseError>` или `JSONAPIError<JSONAPIStandartError>`:
 ``` swift
 struct JSONAPIError<T: Decodable & Equatable>: Decodable, Equatable {
     let errors: [T]
