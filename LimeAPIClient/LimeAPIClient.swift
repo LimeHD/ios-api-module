@@ -69,7 +69,7 @@ extension LimeAPIClient {
     private func request<T: Decodable>(_ type: T.Type, endPoint: EndPoint, completion: @escaping ApiResult<T>) {
         let request: URLRequest
         do {
-            let parameters = try LACParameters(baseUrl: self.baseUrl, endPoint: endPoint)
+            let parameters = try URLParameters(baseUrl: self.baseUrl, endPoint: endPoint)
             request = parameters.request
         } catch {
             completion(.failure(error))

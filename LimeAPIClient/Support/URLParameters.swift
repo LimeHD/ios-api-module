@@ -1,5 +1,5 @@
 //
-//  LACParameters.swift
+//  URLParameters.swift
 //  LimeAPIClient
 //
 //  Created by Лайм HD on 18.05.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum LACParametersError: Error, LocalizedError, Equatable {
+enum URLParametersError: Error, LocalizedError, Equatable {
     case emptyUrl
     case invalidUrl(_ url: String)
     
@@ -24,7 +24,7 @@ enum LACParametersError: Error, LocalizedError, Equatable {
     }
 }
 
-struct LACParameters {
+struct URLParameters {
     private let baseUrl: String
     private let endPoint: EndPoint
     let url: URL
@@ -32,11 +32,11 @@ struct LACParameters {
     init(baseUrl: String, endPoint: EndPoint) throws {
         let baseUrl = baseUrl.trimmingCharacters(in: .whitespacesAndNewlines)
         if baseUrl.isEmpty {
-            throw LACParametersError.emptyUrl
+            throw URLParametersError.emptyUrl
         }
         
         guard let url = URL(string: baseUrl) else {
-            throw LACParametersError.invalidUrl(baseUrl)
+            throw URLParametersError.invalidUrl(baseUrl)
         }
         
         self.baseUrl = baseUrl
