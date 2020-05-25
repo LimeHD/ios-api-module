@@ -79,8 +79,8 @@ struct LACParameters {
         
         return self.endPoint.bodyParameters
             .map { key, value in
-            let escapedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed) ?? ""
-            let escapedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .rfc3986Allowed) ?? ""
+            let escapedKey = key.encoding(with: .rfc3986Allowed)
+            let escapedValue = value.encoding(with: .rfc3986Allowed)
             return escapedKey + "=" + escapedValue
         }
         .joined(separator: "&")
