@@ -8,8 +8,6 @@
 
 import Foundation
 
-typealias HTTPParameters = [String: String]
-
 struct EndPoint {
     let path: String
     let acceptHeader: String
@@ -29,12 +27,12 @@ struct EndPoint {
     }
     
     struct Parameters {
-        let url: HTTPParameters
-        let body: HTTPParameters
+        let url: [String : String]
+        let body: [String : String]
         
         init(
-            url: HTTPParameters = [:],
-            body: HTTPParameters = [:]
+            url: [String : String] = [:],
+            body: [String : String] = [:]
         ) {
             self.url = url
             self.body = body
@@ -90,7 +88,7 @@ extension EndPoint.Factory {
     
     // key - (опционально) используется для разнообразия запросов и обхода кэша
     static func ping(key: String) -> EndPoint {
-        let urlParameters: HTTPParameters
+        let urlParameters: [String : String]
         if key.isEmpty {
             urlParameters = [:]
         } else {

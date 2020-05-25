@@ -50,8 +50,11 @@ struct URLParameters {
         request.setValue(self.endPoint.acceptHeader, forHTTPHeaderField: "Accept")
         request.setHeaders(parameters: HTTP.headers)
         
-        if let url = self.addUrlParameters() {
-            request.url = url
+        let urlParameters = self.endPoint.parameters.url
+        if !urlParameters.isEmpty {
+            if let url = self.url.addQueryItems(parameters: urlParameters, resolvingAgainstBaseURL: false) {
+                request.url = url
+            }
         }
         
         if let data = self.addBodyParameters() {
@@ -60,15 +63,6 @@ struct URLParameters {
         }
         
         return request
-    }
-    
-    private func addUrlParameters() -> URL? {
-        guard !self.endPoint.parameters.url.isEmpty else { return nil }
-        if var urlComponents = URLComponents(url: self.url, resolvingAgainstBaseURL: false) {
-            urlComponents.addQueryItems(parameters: self.endPoint.parameters.url)
-            return urlComponents.url
-        }
-        return nil
     }
     
     private func addBodyParameters() -> Data? {
