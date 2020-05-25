@@ -9,6 +9,21 @@
 import Foundation
 
 struct JSONAPIErrorExample {
+    static var base = """
+    {
+      "errors": [
+        {
+          "id": 64856824904380,
+          "status": 401,
+          "code": "unauthorized_error",
+          "title": "UnauthorizedError"
+        }
+      ],
+      "meta": {
+        "request_id": "Request is not tracked"
+      }
+    }
+    """
     static var standart = """
     {
       "errors": [

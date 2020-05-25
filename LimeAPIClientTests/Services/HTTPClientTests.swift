@@ -71,9 +71,9 @@ class HTTPClientTests: XCTestCase {
         XCTAssertEqual(actualError, expectedError)
     }
     
-    typealias getJSONResults = (calledCompletion: Bool, data: (Data, String)?, error: Error?)
+    typealias JSONResult = (calledCompletion: Bool, data: (Data, String)?, error: Error?)
     
-    func runGetJSONWith(data: Data? = nil, _ response: HTTPURLResponse? = nil, _ error: Error? = nil) -> getJSONResults {
+    func runGetJSONWith(data: Data? = nil, _ response: HTTPURLResponse? = nil, _ error: Error? = nil) -> JSONResult {
         var calledCompletion = false
         var receivedData: (Data, String)? = nil
         var receivedError: Error? = nil
@@ -133,11 +133,32 @@ class HTTPClientTests: XCTestCase {
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
-    func test_getJSON_givenJSONAPIError_callsCompletionWithFailure() throws {
-        let data = try XCTUnwrap(JSONAPIErrorExample.standart.data(using: .utf8))
+    func test_getJSON_givenJSONAPIBaseError_callsCompletionWithFailure() throws {
+        let data = try XCTUnwrap(JSONAPIErrorExample.base.data(using: .utf8))
+        let jsonAPIError = try self.decodeJSONAPIError(JSONAPIError<Base>.self, from: data)
+        
+        let response = self.response(500)
+        let unwrappedResponse = try XCTUnwrap(response)
+        let expectedError = HTTPError.jsonAPIBaseError(unwrappedResponse.localizedStatusCode, error: jsonAPIError)
+        
+        let result = self.runGetJSONWith(data: data, response)
+        
+        XCTAssertTrue(result.calledCompletion)
+        XCTAssertNil(result.data)
+        let actualError = try XCTUnwrap(result.error as? HTTPError)
+        XCTAssertEqual(actualError, expectedError)
+        XCTAssertNotNil(actualError.localizedDescription)
+    }
+    
+    func decodeJSONAPIError<T: Decodable & Equatable>(_ type: T.Type, from data: Data) throws -> T {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let jsonAPIError = try decoder.decode(JSONAPIError<Standart>.self, from: data)
+        return try decoder.decode(T.self, from: data)
+    }
+    
+    func test_getJSON_givenJSONAPIStandartError_callsCompletionWithFailure() throws {
+        let data = try XCTUnwrap(JSONAPIErrorExample.standart.data(using: .utf8))
+        let jsonAPIError = try self.decodeJSONAPIError(JSONAPIError<Standart>.self, from: data)
         
         let response = self.response(500)
         let unwrappedResponse = try XCTUnwrap(response)
