@@ -45,36 +45,22 @@ struct URLParameters {
     }
     
     var request: URLRequest {
-        var request = URLRequest(url: self.url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0)
+        var request = URLRequest(
+            url: self.url,
+            cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
+            timeoutInterval: 10.0
+        )
         request.httpMethod = self.endPoint.httpMethod
         request.setValue(self.endPoint.acceptHeader, forHTTPHeaderField: "Accept")
         request.setHeaders(parameters: HTTP.headers)
         
-        let urlParameters = self.endPoint.parameters.url
-        if !urlParameters.isEmpty {
-            if let url = self.url.addQueryItems(parameters: urlParameters, resolvingAgainstBaseURL: false) {
-                request.url = url
-            }
-        }
-        
-        if let data = self.addBodyParameters() {
-            request.httpBody = data
+        request.addURLQueryItems(parameters: self.endPoint.parameters.url, resolvingAgainstBaseURL: false)
+        request.addBodyQueryItems(parameters: self.endPoint.parameters.body, dataEncoding: .utf8)
+        if request.httpBody != nil {
             request.setValue(HTTP.Header.ContentType.urlEncodedForm, forHTTPHeaderField: "Content-Type")
         }
         
         return request
     }
-    
-    private func addBodyParameters() -> Data? {
-        guard !self.endPoint.parameters.body.isEmpty else { return nil }
-        
-        return self.endPoint.parameters.body
-            .map { key, value in
-            let escapedKey = key.encoding(with: .rfc3986Allowed)
-            let escapedValue = value.encoding(with: .rfc3986Allowed)
-            return escapedKey + "=" + escapedValue
-        }
-        .joined(separator: "&")
-        .data(using: .utf8)
-    }
+
 }

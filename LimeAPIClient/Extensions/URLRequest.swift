@@ -14,4 +14,18 @@ extension URLRequest {
             self.setValue(value, forHTTPHeaderField: key)
         }
     }
+    
+    mutating func addURLQueryItems(parameters: [String : String], resolvingAgainstBaseURL resolve: Bool) {
+        guard !parameters.isEmpty else { return }
+        if let url = self.url?.addQueryItems(parameters: parameters, resolvingAgainstBaseURL: resolve) {
+            self.url = url
+        }
+    }
+    
+    mutating func addBodyQueryItems(parameters: [String : String], dataEncoding: String.Encoding) {
+        guard !parameters.isEmpty else { return }
+        if let httpBody = parameters.dataEncodingQueryItems(using: dataEncoding) {
+            self.httpBody = httpBody
+        }
+    }
 }
