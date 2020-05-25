@@ -55,6 +55,7 @@ struct LACParameters {
         
         if let data = self.addBodyParameters() {
             request.httpBody = data
+            request.setHeaders(["Content-Type": HTTP.Header.ContentType.formUrlEncoded])
         }
         
         return request

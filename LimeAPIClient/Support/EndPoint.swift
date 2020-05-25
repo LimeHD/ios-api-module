@@ -51,7 +51,7 @@ extension EndPoint.Factory {
         )
         return EndPoint(
             path: "v1/sessions",
-            headers: HTTP.headers(accept: .json, contentType: .formUrlEncoded),
+            headers: HTTP.headers(accept: HTTP.Header.Accept.json),
             httpMethod: HTTP.Method.post,
             parameters: parameters
         )
@@ -60,14 +60,14 @@ extension EndPoint.Factory {
     static func testChannels() -> EndPoint {
         return EndPoint(
             path: "v1/channels/test",
-            headers: HTTP.headers(accept: .jsonAPI)
+            headers: HTTP.headers(accept: HTTP.Header.Accept.jsonAPI)
         )
     }
     
     static func channels() -> EndPoint {
         return EndPoint(
             path: "v1/channels",
-            headers: HTTP.headers(accept: .jsonAPI)
+            headers: HTTP.headers(accept: HTTP.Header.Accept.jsonAPI)
         )
     }
     
@@ -83,7 +83,7 @@ extension EndPoint.Factory {
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
             path: "v1/broadcasts",
-            headers: HTTP.headers(accept: .jsonAPI),
+            headers: HTTP.headers(accept: HTTP.Header.Accept.jsonAPI),
             parameters: parameters
         )
     }
@@ -99,7 +99,7 @@ extension EndPoint.Factory {
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
             path: "v1/ping",
-            headers: HTTP.headers(accept: .json),
+            headers: HTTP.headers(accept: HTTP.Header.Accept.json),
             parameters: parameters
         )
     }

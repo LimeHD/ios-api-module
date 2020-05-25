@@ -9,27 +9,25 @@
 import Foundation
 
 typealias HTTPHeaders = [String: String]
+typealias HTTPAcceptHeader = String
 
 struct HTTP {
     struct Header {
-        enum Accept: String {
-            case jsonAPI = "application/vnd.api+json"
-            case json = "application/json"
+        struct Accept {
+            static var jsonAPI = "application/vnd.api+json"
+            static var json = "application/json"
         }
-        enum ContentType: String {
-            case none = ""
-            case formUrlEncoded = "application/x-www-form-urlencoded"
+        struct ContentType {
+            static var formUrlEncoded = "application/x-www-form-urlencoded"
         }
     }
     
     struct Method { }
     
-    static func headers(
-        accept: Header.Accept,
-        contentType: Header.ContentType = .none) -> [String: String]
+    static func headers(accept: HTTPAcceptHeader) -> HTTPHeaders
     {
-        var headers = [
-            "Accept":           accept.rawValue,
+        return [
+            "Accept":           accept,
             "Accept-Language":  LimeAPIClient.configuration?.language ?? "",
             "X-Platform":       "ios",
             "X-Device-Name":    Device.name,
@@ -38,12 +36,6 @@ struct HTTP {
             "X-App-Version":    LACApp.version,
             "X-Access-Key":     LimeAPIClient.configuration?.apiKey ?? ""
         ]
-        
-        if contentType != .none {
-            headers["Content-Type"] = contentType.rawValue
-        }
-        
-        return headers
     }
 }
 
