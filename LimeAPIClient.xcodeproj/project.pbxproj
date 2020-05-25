@@ -29,6 +29,7 @@
 		4E59F2DC247700B800F3456F /* LACAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59F2DB247700B800F3456F /* LACAppTests.swift */; };
 		4E5B0C8A247BB80600DDE6BA /* LimeAPIClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E579576246AE3D20009D306 /* LimeAPIClient.framework */; };
 		4E5B0C8B247BB80600DDE6BA /* LimeAPIClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4E579576246AE3D20009D306 /* LimeAPIClient.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4E5B0C8E247BC0B300DDE6BA /* URLComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5B0C8D247BC0B300DDE6BA /* URLComponents.swift */; };
 		4E68A3FD246BDA6000D332BD /* LimeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */; };
 		4E68A421246C27CF00D332BD /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A420246C27CF00D332BD /* HTTPClient.swift */; };
 		4E6D91C4246D111900BB7C69 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */; };
@@ -100,6 +101,7 @@
 		4E5795A4246AE61C0009D306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E5913CD247560CA009BAAA1 /* Broadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broadcast.swift; sourceTree = "<group>"; };
 		4E59F2DB247700B800F3456F /* LACAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACAppTests.swift; sourceTree = "<group>"; };
+		4E5B0C8D247BC0B300DDE6BA /* URLComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLComponents.swift; sourceTree = "<group>"; };
 		4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimeAPIClient.swift; sourceTree = "<group>"; };
 		4E68A420246C27CF00D332BD /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				4E6D91D0246D846F00BB7C69 /* String.swift */,
 				4E5014E5247319F400A8DA1F /* TimeInterval.swift */,
 				4E56436D2472EF7D00CDD18F /* TimeZone.swift */,
+				4E5B0C8D247BC0B300DDE6BA /* URLComponents.swift */,
 				4E6D91CE246D7E5200BB7C69 /* URLRequest.swift */,
 			);
 			path = Extensions;
@@ -438,6 +441,7 @@
 				4E75B1BB246E67150061E143 /* Device.swift in Sources */,
 				4E6D91C8246D772D00BB7C69 /* EndPoint.swift in Sources */,
 				4E835BED2473D50700C8DD96 /* Ping.swift in Sources */,
+				4E5B0C8E247BC0B300DDE6BA /* URLComponents.swift in Sources */,
 				4E6D91D1246D846F00BB7C69 /* String.swift in Sources */,
 				4E6D91CA246D786800BB7C69 /* HTTP.swift in Sources */,
 				4E54C5F92477F8DF00AAF223 /* Session.swift in Sources */,

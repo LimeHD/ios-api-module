@@ -76,9 +76,9 @@ extension EndPoint.Factory {
     static func broadcasts(channelId: Int, start: String, end: String, timeZone: String) -> EndPoint {
         let urlParameters = [
             "channel_id": "\(channelId)",
-            "start_at": start.encoding(with: .rfc3986Allowed),
-            "finish_at": end.encoding(with: .rfc3986Allowed),
-            "time_zone": timeZone.encoding(with: .rfc3986Allowed)
+            "start_at": start,
+            "finish_at": end,
+            "time_zone": timeZone
         ]
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(

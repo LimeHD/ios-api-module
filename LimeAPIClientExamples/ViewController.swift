@@ -19,9 +19,9 @@ class ViewController: UIViewController {
         let language = Locale.preferredLanguages.first ?? "ru-RU"
         let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION, language: language)
         LimeAPIClient.configuration = configuration
-        self.session()
+//        self.session()
 //        self.requestChannels()
-//        self.requestBroadcasts()
+        self.requestBroadcasts()
 //        self.ping()
     }
 

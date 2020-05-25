@@ -64,12 +64,7 @@ struct LACParameters {
     private func addUrlParameters() -> URL? {
         guard !self.endPoint.parameters.url.isEmpty else { return nil }
         if var urlComponents = URLComponents(url: self.url, resolvingAgainstBaseURL: false) {
-            urlComponents.queryItems = [URLQueryItem]()
-            for (key, value) in self.endPoint.parameters.url {
-                let queryItem = URLQueryItem(name: key, value: value)
-                urlComponents.queryItems?.append(queryItem)
-            }
-            urlComponents.percentEncodedQuery = urlComponents.percentEncodedQuery?.removingPercentEncoding
+            urlComponents.addQueryItems(parameters: self.endPoint.parameters.url)
             return urlComponents.url
         }
         return nil
