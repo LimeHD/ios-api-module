@@ -14,15 +14,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Пример конфигурирования клиента LimeAPIClient перед использованием
-        // задается один раз до начала использования запросов
-        let language = Locale.preferredLanguages.first ?? "ru-RU"
-        let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION, language: language)
-        LimeAPIClient.configuration = configuration
         self.session()
-        self.requestChannels()
-        self.requestBroadcasts()
-        self.ping()
+//        self.requestChannels()
+//        self.requestBroadcasts()
+//        self.ping()
     }
 
 }
