@@ -15,10 +15,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.session()
-        self.requestChannels()
-        self.requestChannelsByGroupId()
-        self.requestBroadcasts()
-        self.ping()
+//        self.requestChannels()
+//        self.requestChannelsByGroupId()
+//        self.requestBroadcasts()
+//        self.ping()
     }
 
 }

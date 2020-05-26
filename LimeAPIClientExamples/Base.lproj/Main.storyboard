@@ -15,14 +15,25 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7c2-gW-G5e" customClass="SessionView" customModule="LimeAPIClientExamples" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="414" height="214"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="7c2-gW-G5e" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="URS-Am-mWf"/>
+                            <constraint firstItem="7c2-gW-G5e" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="WsN-42-qa4"/>
+                            <constraint firstItem="7c2-gW-G5e" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cjA-Wx-R5h"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Лайм API Client" id="AHd-AW-7Al"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1043" y="40"/>
+            <point key="canvasLocation" x="1042.0289855072465" y="39.508928571428569"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3ZK-ph-1Sj">
