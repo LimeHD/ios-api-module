@@ -27,7 +27,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func ping(_ sender: Any) {
-        self.ping()
+        let message = "Используется для разнообразия запросов и обхода кэша (опциональный)"
+        let alert = UIAlertController(title: "Параметр Key", message: message, preferredStyle: .alert)
+        alert.addTextField { (_) in }
+        let action = UIAlertAction(title: "Ок", style: .default) { (_) in
+            let key = alert.textFields?.first?.text
+            self.ping(key: key ?? "")
+        }
+        alert.addAction(action)
+        alert.preferredAction = action
+        self.present(alert, animated: true)
     }
 }
 
@@ -89,11 +98,11 @@ extension ViewController {
         }
     }
     
-    private func ping() {
+    private func ping(key: String) {
         // Пример запроса на проверку работоспособности сервиса
         // Параметр key - опциональный. Используется для разнообразия запросов и обхода кэша
         let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.ping(key: "test") { (result) in
+        apiClient.ping(key: key) { (result) in
             switch result {
             case .success(let ping):
                 print(ping)

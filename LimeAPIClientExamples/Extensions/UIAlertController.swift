@@ -9,9 +9,10 @@
 import UIKit
 
 extension UIAlertController {
-    convenience init(title: String?, message: String?, defaultActionTitle: String = "Ок") {
+    convenience init(title: String?, message: String?, defaultActionTitle: String = "Ок",
+    defaultAction: ((UIAlertAction) -> Void)? = nil) {
         self.init(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: defaultActionTitle, style: .default)
+        let action = UIAlertAction(title: defaultActionTitle, style: .default, handler: defaultAction)
         self.addAction(action)
         self.preferredAction = action
     }
