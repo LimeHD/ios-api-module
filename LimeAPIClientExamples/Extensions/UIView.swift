@@ -30,3 +30,13 @@ extension UIView {
             view.heightAnchor.constraint(equalTo: self.heightAnchor)])
     }
 }
+
+// MARK: - IBInspectable cornerRadius
+
+extension UIView {
+    @IBInspectable
+    var cornerRadius: CGFloat {
+        get { self.layer.cornerRadius }
+        set { self.layer.cornerRadius = newValue }
+    }
+}

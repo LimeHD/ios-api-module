@@ -10,7 +10,8 @@ import UIKit
 import LimeAPIClient
 
 class ViewController: UIViewController {
-
+    @IBOutlet private weak var sessionView: SessionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,9 +19,16 @@ class ViewController: UIViewController {
 //        self.requestChannels()
 //        self.requestChannelsByGroupId()
 //        self.requestBroadcasts()
-//        self.ping()
     }
 
+    @IBAction func newSession(_ sender: Any) {
+        self.sessionView.reset()
+        self.session()
+    }
+    
+    @IBAction func ping(_ sender: Any) {
+        self.ping()
+    }
 }
 
 extension ViewController {
@@ -31,6 +39,7 @@ extension ViewController {
             switch result {
             case .success(let session):
                 print(session)
+                self.sessionView.set(session)
 //                self.requestChannelsByGroupId()
             case .failure(let error):
                 print(error)
@@ -88,6 +97,12 @@ extension ViewController {
             switch result {
             case .success(let ping):
                 print(ping)
+                var message = "result: \(ping.result)\n"
+                message += "time: \(ping.time)\n"
+                message += "version: \(ping.version)\n"
+                message += "hostname: \(ping.hostname)"
+                let alert = UIAlertController(title: "Успешно!", message: message)
+                self.present(alert, animated: true)
             case .failure(let error):
                 print(error)
             }

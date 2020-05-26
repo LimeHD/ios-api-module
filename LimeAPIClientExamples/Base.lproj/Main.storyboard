@@ -18,18 +18,67 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7c2-gW-G5e" customClass="SessionView" customModule="LimeAPIClientExamples" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="214"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="65J-As-Rfm">
+                                <rect key="frame" x="20" y="302" width="374" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bI6-kw-bkS" userLabel="New Session Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="177" height="44"/>
+                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="0QO-YD-aAv"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Новая сессия">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="newSession:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DwN-OF-Nqo"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kG-kD-3kG" userLabel="Ping Button">
+                                        <rect key="frame" x="197" y="0.0" width="177" height="44"/>
+                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Пинг">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="ping:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HUR-K0-iRF"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="5kG-kD-3kG" firstAttribute="width" secondItem="bI6-kw-bkS" secondAttribute="width" id="0Wu-xI-lEm"/>
+                                    <constraint firstItem="5kG-kD-3kG" firstAttribute="height" secondItem="bI6-kw-bkS" secondAttribute="height" id="yTG-rk-4ek"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.65000000000000002" green="1" blue="0.73809523807582633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="65J-As-Rfm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="AzM-6C-IV4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="65J-As-Rfm" secondAttribute="trailing" constant="20" id="QNb-kr-BXm"/>
                             <constraint firstItem="7c2-gW-G5e" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="URS-Am-mWf"/>
                             <constraint firstItem="7c2-gW-G5e" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="WsN-42-qa4"/>
                             <constraint firstItem="7c2-gW-G5e" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cjA-Wx-R5h"/>
+                            <constraint firstItem="65J-As-Rfm" firstAttribute="top" secondItem="7c2-gW-G5e" secondAttribute="bottom" id="tS6-u8-6zq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Лайм API Client" id="AHd-AW-7Al"/>
+                    <connections>
+                        <outlet property="sessionView" destination="7c2-gW-G5e" id="1cM-BN-5wO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -43,6 +92,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="n4t-HN-uFB">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
