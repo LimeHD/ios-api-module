@@ -12,6 +12,7 @@ public struct LACConfiguration {
     let appId: String
     let apiKey: String
     let language: String
+    var defaultChannelGroupId = ""
     
     public init(appId: String, apiKey: String, language: String) {
         self.appId = appId

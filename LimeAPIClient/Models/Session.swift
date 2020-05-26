@@ -12,4 +12,5 @@ public struct Session: Decodable {
     public let sessionId: String
     public let currentTime: String
     public let streamEndpoint: String
+    public let defaultChannelGroupId: Int
 }

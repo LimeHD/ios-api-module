@@ -15,9 +15,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.session()
-//        self.requestChannels()
-//        self.requestBroadcasts()
-//        self.ping()
+        self.requestChannels()
+        self.requestChannelsByGroupId()
+        self.requestBroadcasts()
+        self.ping()
     }
 
 }
@@ -30,6 +31,7 @@ extension ViewController {
             switch result {
             case .success(let session):
                 print(session)
+//                self.requestChannelsByGroupId()
             case .failure(let error):
                 print(error)
             }
@@ -40,6 +42,19 @@ extension ViewController {
         // Пример запроса на получение списка каналов
         let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
         apiClient.requestChannels { (result) in
+            switch result {
+            case .success(let channels):
+                print(channels)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func requestChannelsByGroupId() {
+        // Пример запроса на получение списка каналов по id группы
+        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
+        apiClient.requestChannelsByGroupId { (result) in
             switch result {
             case .success(let channels):
                 print(channels)

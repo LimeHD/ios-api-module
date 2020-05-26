@@ -21,6 +21,15 @@ pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 ``` swift
 import LimeAPIClient
 ```
+Все сетевые запросы осуществляются в одельной очереди:
+``` swift
+DispatchQueue(label: "tv.limehd.LimeAPIClient", qos: .userInitiated, attributes: .concurrent)
+```
+После выполнения запроса ответ передается в главную очередь:
+``` swift
+DispatchQueue.main
+```
+
 ### Конфигурирование клиента
 Конфигурирования клиента `LimeAPIClient` осуществлятся один раз до начала использования запросов
 ``` swift
@@ -47,6 +56,7 @@ struct Session: Decodable {
     let sessionId: String
     let currentTime: String
     let streamEndpoint: String
+    let defaultChannelGroupId: Int
 }
 ```
 Все ошибки в ответе сервера приходят в виде типа данных `JSONAPIError<JSONAPIBaseError>` или `JSONAPIError<JSONAPIStandartError>`:
@@ -109,6 +119,21 @@ struct Channel: Decodable {
     }
 }
 ```
+### Получение списка каналов по группе id
+**Внимание!** Перед выполеннием запроса необходимо создать новую сессию и получить параметр `defaultChannelGroupId` (см. выше).
+Пример запроса
+``` swift
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+apiClient.requestChannelsByGroupId { (result) in
+    switch result {
+    case .success(let channels):
+        print(channels)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+В ответ приходи список каналов в виде массива. Тип данных `Channel` (см. выше).
 
 ### Получение программы передач
 Пример запроса

@@ -69,6 +69,13 @@ extension EndPoint.Factory {
         )
     }
     
+    static func channelsByGroupId(_ defaultChannelGroupId: String) -> EndPoint {
+        return EndPoint(
+            path: "v1/channels/by_group/\(defaultChannelGroupId)",
+            acceptHeader: HTTP.Header.Accept.jsonAPI
+        )
+    }
+    
     // start и end в формате RFC3339, пример: 2020-04-29T23:59:59+03:00
     // timeZone - https://en.wikipedia.org/wiki/List_of_time_zones_by_country, пример: UTC+03:00
     static func broadcasts(channelId: Int, start: String, end: String, timeZone: String) -> EndPoint {
