@@ -33,6 +33,10 @@
 		4E5B0C92247BDB6500DDE6BA /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5B0C91247BDB6500DDE6BA /* Dictionary.swift */; };
 		4E5B0C94247C002900DDE6BA /* URLParametersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5B0C93247C002900DDE6BA /* URLParametersTests.swift */; };
 		4E5B0C97247C07E400DDE6BA /* StringExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5B0C96247C07E400DDE6BA /* StringExtensionTests.swift */; };
+		4E5CDDED247E463E00F0F55F /* ResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CDDEC247E463E00F0F55F /* ResultTableViewController.swift */; };
+		4E5CDDEF247E4C6B00F0F55F /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CDDEE247E4C6B00F0F55F /* UITableView.swift */; };
+		4E5CDDF1247E4D0E00F0F55F /* UINavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CDDF0247E4D0E00F0F55F /* UINavigationItem.swift */; };
+		4E5CDDF3247E58D600F0F55F /* SubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CDDF2247E58D600F0F55F /* SubtitleTableViewCell.swift */; };
 		4E68A3FD246BDA6000D332BD /* LimeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */; };
 		4E68A421246C27CF00D332BD /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A420246C27CF00D332BD /* HTTPClient.swift */; };
 		4E6D91C4246D111900BB7C69 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */; };
@@ -111,6 +115,10 @@
 		4E5B0C91247BDB6500DDE6BA /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		4E5B0C93247C002900DDE6BA /* URLParametersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParametersTests.swift; sourceTree = "<group>"; };
 		4E5B0C96247C07E400DDE6BA /* StringExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionTests.swift; sourceTree = "<group>"; };
+		4E5CDDEC247E463E00F0F55F /* ResultTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewController.swift; sourceTree = "<group>"; };
+		4E5CDDEE247E4C6B00F0F55F /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
+		4E5CDDF0247E4D0E00F0F55F /* UINavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationItem.swift; sourceTree = "<group>"; };
+		4E5CDDF2247E58D600F0F55F /* SubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimeAPIClient.swift; sourceTree = "<group>"; };
 		4E68A420246C27CF00D332BD /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
@@ -254,6 +262,8 @@
 				4E75B1BE246E77300061E143 /* LACSettings.swift */,
 				4E579596246AE6180009D306 /* AppDelegate.swift */,
 				4ECFB09E247D59AE00727244 /* APITableViewController.swift */,
+				4E5CDDEC247E463E00F0F55F /* ResultTableViewController.swift */,
+				4E5CDDF2247E58D600F0F55F /* SubtitleTableViewCell.swift */,
 				4ECFB09D247D4AD400727244 /* Extensions */,
 				4E57959F246AE61C0009D306 /* Assets.xcassets */,
 				4E5795A1246AE61C0009D306 /* LaunchScreen.storyboard */,
@@ -318,6 +328,8 @@
 			isa = PBXGroup;
 			children = (
 				4ECFB09B247D4AAA00727244 /* UIAlertController.swift */,
+				4E5CDDF0247E4D0E00F0F55F /* UINavigationItem.swift */,
+				4E5CDDEE247E4C6B00F0F55F /* UITableView.swift */,
 				4ECFB094247D0F8400727244 /* UIView.swift */,
 			);
 			path = Extensions;
@@ -517,9 +529,13 @@
 			files = (
 				4ECFB095247D0F8400727244 /* UIView.swift in Sources */,
 				4E75B1BF246E77300061E143 /* LACSettings.swift in Sources */,
+				4E5CDDED247E463E00F0F55F /* ResultTableViewController.swift in Sources */,
+				4E5CDDF3247E58D600F0F55F /* SubtitleTableViewCell.swift in Sources */,
 				4E579597246AE6180009D306 /* AppDelegate.swift in Sources */,
 				4ECFB09F247D59AE00727244 /* APITableViewController.swift in Sources */,
 				4ECFB09C247D4AAA00727244 /* UIAlertController.swift in Sources */,
+				4E5CDDF1247E4D0E00F0F55F /* UINavigationItem.swift in Sources */,
+				4E5CDDEF247E4C6B00F0F55F /* UITableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

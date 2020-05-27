@@ -40,3 +40,12 @@ extension UIView {
         set { self.layer.cornerRadius = newValue }
     }
 }
+
+// MARK: - Constraints
+
+extension UIView {
+    func addCenterConstraints(equalTo view: UIView) {
+        self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        self.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+}

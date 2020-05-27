@@ -9,18 +9,18 @@
 import UIKit
 import LimeAPIClient
 
+enum Request: String {
+    case sessions
+    case ping
+    case channels
+    case channelsByGroupId = "channels by group id"
+    case broadcasts
+}
+
 class APITableViewController: UITableViewController {
     struct API {
         let section: String
-        let requests: [Requests]
-    }
-    
-    enum Requests: String {
-        case sessions
-        case ping
-        case channels
-        case channelsByGroupId = "channels by group id"
-        case broadcasts
+        let requests: [Request]
     }
     
     var apiList = [API]()
@@ -35,11 +35,8 @@ class APITableViewController: UITableViewController {
             API(section: "broadcasts", requests: [.broadcasts])
         ]
         
-        self.removeExtraEmptyCells()
-    }
-    
-    private func removeExtraEmptyCells() {
-        self.tableView.tableFooterView = UIView()
+        self.tableView.removeExtraEmptyCells()
+        self.navigationItem.removeBackBarButtonItemTitle()
     }
 
     // MARK: - Table view data source
@@ -75,113 +72,10 @@ class APITableViewController: UITableViewController {
         guard
             let cell = self.tableView.cellForRow(at: indexPath),
             let cellText = cell.textLabel?.text,
-            let request = Requests(rawValue: cellText)
+            let request = Request(rawValue: cellText)
         else { return }
         
-        switch request {
-        case .sessions:
-            self.session()
-        case .ping:
-            self.ping()
-        case .channels:
-            self.requestChannels()
-        case .channelsByGroupId:
-            self.requestChannelsByGroupId()
-        case .broadcasts:
-            self.requestBroadcasts()
-        }
-    }
-
-}
-
-// MARK: - API Requests
-
-extension APITableViewController {
-    private func session() {
-        // Пример cоздания новой сессии
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.session { (result) in
-            switch result {
-            case .success(let session):
-                print(session)
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func ping() {
-        let message = "Используется для разнообразия запросов и обхода кэша (опциональный)"
-        let alert = UIAlertController(title: "Параметр Key", message: message, preferredStyle: .alert)
-        alert.addTextField { (_) in }
-        let action = UIAlertAction(title: "Ок", style: .default) { (_) in
-            let key = alert.textFields?.first?.text
-            self.ping(key: key ?? "")
-        }
-        alert.addAction(action)
-        alert.preferredAction = action
-        self.present(alert, animated: true)
-    }
-    
-    private func ping(key: String) {
-        // Пример запроса на проверку работоспособности сервиса
-        // Параметр key - опциональный. Используется для разнообразия запросов и обхода кэша
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.ping(key: key) { (result) in
-            switch result {
-            case .success(let ping):
-                print(ping)
-                var message = "result: \(ping.result)\n"
-                message += "time: \(ping.time)\n"
-                message += "version: \(ping.version)\n"
-                message += "hostname: \(ping.hostname)"
-                let alert = UIAlertController(title: "Успешно!", message: message)
-                self.present(alert, animated: true)
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func requestChannels() {
-        // Пример запроса на получение списка каналов
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.requestChannels { (result) in
-            switch result {
-            case .success(let channels):
-                print(channels)
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func requestChannelsByGroupId() {
-        // Пример запроса на получение списка каналов по id группы
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.requestChannelsByGroupId { (result) in
-            switch result {
-            case .success(let channels):
-                print(channels)
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    private func requestBroadcasts() {
-        // Пример запроса на получение программы передач
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        let startDate = Date().addingTimeInterval(-8.days)
-        let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
-        let dateInterval = LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
-        apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { (result) in
-            switch result {
-            case .success(let broadcasts):
-                print(broadcasts)
-            case .failure(let error):
-                print(error)
-            }
-        }
+        let controller = ResultTableViewController(request: request)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
