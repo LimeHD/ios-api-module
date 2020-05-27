@@ -51,12 +51,9 @@
 		4E835BED2473D50700C8DD96 /* Ping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEC2473D50700C8DD96 /* Ping.swift */; };
 		4E835BEF2473EFE300C8DD96 /* JSONAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */; };
 		4E835BF32474179F00C8DD96 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BF22474179F00C8DD96 /* JSONParserTests.swift */; };
-		4ECFB090247D0E9D00727244 /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB08F247D0E9D00727244 /* SessionView.swift */; };
-		4ECFB092247D0EB000727244 /* SessionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ECFB091247D0EB000727244 /* SessionView.xib */; };
 		4ECFB095247D0F8400727244 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB094247D0F8400727244 /* UIView.swift */; };
 		4ECFB09C247D4AAA00727244 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB09B247D4AAA00727244 /* UIAlertController.swift */; };
 		4ECFB09F247D59AE00727244 /* APITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB09E247D59AE00727244 /* APITableViewController.swift */; };
-		4ECFB0A1247D880900727244 /* AccessoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB0A0247D880900727244 /* AccessoryButton.swift */; };
 		4EFC6E4C2476B49A009D6CF7 /* JSONAPIErrorExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */; };
 /* End PBXBuildFile section */
 
@@ -132,12 +129,9 @@
 		4E835BEC2473D50700C8DD96 /* Ping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ping.swift; sourceTree = "<group>"; };
 		4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIError.swift; sourceTree = "<group>"; };
 		4E835BF22474179F00C8DD96 /* JSONParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
-		4ECFB08F247D0E9D00727244 /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
-		4ECFB091247D0EB000727244 /* SessionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SessionView.xib; sourceTree = "<group>"; };
 		4ECFB094247D0F8400727244 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4ECFB09B247D4AAA00727244 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		4ECFB09E247D59AE00727244 /* APITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITableViewController.swift; sourceTree = "<group>"; };
-		4ECFB0A0247D880900727244 /* AccessoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryButton.swift; sourceTree = "<group>"; };
 		4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIErrorExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -260,8 +254,6 @@
 				4E75B1BE246E77300061E143 /* LACSettings.swift */,
 				4E579596246AE6180009D306 /* AppDelegate.swift */,
 				4ECFB09E247D59AE00727244 /* APITableViewController.swift */,
-				4ECFB0A0247D880900727244 /* AccessoryButton.swift */,
-				4ECFB093247D0EB700727244 /* SessionView */,
 				4ECFB09D247D4AD400727244 /* Extensions */,
 				4E57959F246AE61C0009D306 /* Assets.xcassets */,
 				4E5795A1246AE61C0009D306 /* LaunchScreen.storyboard */,
@@ -320,15 +312,6 @@
 				4E835BF22474179F00C8DD96 /* JSONParserTests.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		4ECFB093247D0EB700727244 /* SessionView */ = {
-			isa = PBXGroup;
-			children = (
-				4ECFB08F247D0E9D00727244 /* SessionView.swift */,
-				4ECFB091247D0EB000727244 /* SessionView.xib */,
-			);
-			path = SessionView;
 			sourceTree = "<group>";
 		};
 		4ECFB09D247D4AD400727244 /* Extensions */ = {
@@ -472,7 +455,6 @@
 				4E5795A3246AE61C0009D306 /* LaunchScreen.storyboard in Resources */,
 				4E5795A0246AE61C0009D306 /* Assets.xcassets in Resources */,
 				4E57959E246AE6180009D306 /* Main.storyboard in Resources */,
-				4ECFB092247D0EB000727244 /* SessionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,8 +520,6 @@
 				4E579597246AE6180009D306 /* AppDelegate.swift in Sources */,
 				4ECFB09F247D59AE00727244 /* APITableViewController.swift in Sources */,
 				4ECFB09C247D4AAA00727244 /* UIAlertController.swift in Sources */,
-				4ECFB090247D0E9D00727244 /* SessionView.swift in Sources */,
-				4ECFB0A1247D880900727244 /* AccessoryButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

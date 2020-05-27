@@ -11,7 +11,7 @@ import LimeAPIClient
 
 class APITableViewController: UITableViewController {
     struct API {
-        let title: String
+        let section: String
         let requests: [Requests]
     }
     
@@ -29,10 +29,10 @@ class APITableViewController: UITableViewController {
         super.viewDidLoad()
 
         self.apiList = [
-            API(title: "sessions", requests: [.sessions]),
-            API(title: "ping", requests: [.ping]),
-            API(title: "channels", requests: [.channels, .channelsByGroupId]),
-            API(title: "broadcasts", requests: [.broadcasts])
+            API(section: "sessions", requests: [.sessions]),
+            API(section: "ping", requests: [.ping]),
+            API(section: "channels", requests: [.channels, .channelsByGroupId]),
+            API(section: "broadcasts", requests: [.broadcasts])
         ]
         
         self.removeExtraEmptyCells()
@@ -50,7 +50,7 @@ class APITableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.apiList[section].title
+        return self.apiList[section].section
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -67,22 +67,16 @@ class APITableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         cell.textLabel?.text = self.apiList[indexPath.section].requests[indexPath.row].rawValue
-        let button = AccessoryButton(title: "Запрос", indexPath: indexPath, tintColor: .black)
-        button.addTarget(self, action: #selector(request(_:)), for: .touchUpInside)
-        cell.accessoryView = button
         
         return cell
     }
     
-    @objc private func request(_ sender: AccessoryButton) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard
-            let cell = self.tableView.cellForRow(at: sender.indexPath),
+            let cell = self.tableView.cellForRow(at: indexPath),
             let cellText = cell.textLabel?.text,
             let request = Requests(rawValue: cellText)
         else { return }
-        let indicator = UIActivityIndicatorView(style: .gray)
-        indicator.startAnimating()
-        cell.accessoryView = indicator
         
         switch request {
         case .sessions:
