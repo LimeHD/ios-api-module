@@ -10,19 +10,44 @@ import UIKit
 import LimeAPIClient
 
 class ResultTableViewController: UITableViewController {
-    struct ResultCell {
+    enum Section: Int, CaseIterable {
+        case parameters
+        case results
+        
+        init(_ value: Int) {
+            if let section = Section(rawValue: value) {
+                self = section
+            } else {
+                self = .parameters
+            }
+        }
+        
+        var header: String {
+            switch self {
+            case .parameters: return "Параметры запроса"
+            case .results: return "Ответ сервера"
+            }
+        }
+    }
+    
+    struct RequestResult {
         let title: String
         let detail: String
     }
     
+    struct RequestParameter {
+        let name: String
+        let detail: String
+    }
+    
     let request: Request
-    var results = [ResultCell]()
+    var parameters = [RequestParameter]()
+    var results = [RequestResult]()
     
     var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .gray)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.color = .black
-        indicator.startAnimating()
         return indicator
     }()
     
@@ -34,17 +59,33 @@ class ResultTableViewController: UITableViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.registerCells()
         self.configureAppearance()
-        self.configureActivityIndicator()
-        self.addRefreshButton()
+        self.hideKeyboardWhenTappedAround()
         
-        self.tableView.register(SubtitleTableViewCell.self)
+        switch self.request {
+        case
+        .sessions,
+        .channels,
+        .channelsByGroupId:
+            break
+        case .ping:
+            self.parameters = [RequestParameter(name: "key", detail: "Запрос на проверку работоспособности сервиса. Устанавливает кеширующие заголовки")]
+            return
+        case .broadcasts:
+            break
+        }
         
         self.requestData()
+    }
+    
+    private func registerCells() {
+        self.tableView.register(fromNib: ParameterCell.self)
+        self.tableView.register(SubtitleCell.self)
     }
     
     private func configureAppearance() {
@@ -52,6 +93,9 @@ class ResultTableViewController: UITableViewController {
         self.title = request.rawValue
         self.tableView.removeExtraEmptyCells()
         self.view.backgroundColor = #colorLiteral(red: 0.6509803922, green: 1, blue: 0.737254902, alpha: 1)
+        
+        self.configureActivityIndicator()
+        self.addRequestButton()
     }
     
     private func configureActivityIndicator() {
@@ -59,9 +103,13 @@ class ResultTableViewController: UITableViewController {
         self.activityIndicator.addCenterConstraints(equalTo: self.view)
     }
     
-    private func addRefreshButton() {
-        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(requestData))
-        self.navigationItem.rightBarButtonItem = refreshButton
+    private func addRequestButton() {
+        let requestButton = UIBarButtonItem(title: "Запрос", style: .plain, target: self, action: #selector(requestData))
+        self.navigationItem.rightBarButtonItem = requestButton
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
     
     @objc private func requestData() {
@@ -69,6 +117,7 @@ class ResultTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.results = []
         self.tableView.reloadData()
+        self.activityIndicator.startAnimating()
         
         switch self.request {
         case .sessions:
@@ -85,20 +134,66 @@ class ResultTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return Section.allCases.count
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let section = Section(section)
+        switch section {
+        case .parameters:
+            if self.parameters.isNotEmpty {
+                return section.header
+            }
+        case .results:
+            if self.results.isNotEmpty {
+                var header = section.header
+                if self.request != .sessions && self.request != .ping {
+                    header += " (ячеек: \(self.results.count))"
+                }
+                return header
+            }
+        }
+        return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let view = view as? UITableViewHeaderFooterView
+        view?.contentView.backgroundColor = .systemGreen
+        view?.textLabel?.textColor = .white
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return self.results.count
+        switch Section(section) {
+        case .parameters:
+            return self.parameters.count
+        case .results:
+            return self.results.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(SubtitleTableViewCell.self, for: indexPath)
+        switch Section(indexPath.section) {
+        case .parameters:
+            let cell = tableView.dequeueReusableCell(ParameterCell.self, for: indexPath)
 
-        cell?.textLabel?.text = results[indexPath.row].title
-        cell?.detailTextLabel?.text = results[indexPath.row].detail
-        cell?.backgroundColor = #colorLiteral(red: 0.6509803922, green: 1, blue: 0.737254902, alpha: 1)
+            cell?.selectionStyle = .none
+            cell?.parameterNameLabel.text = parameters[indexPath.row].name
+            cell?.parameterDescriptionLabel.text = parameters[indexPath.row].detail
+            cell?.backgroundColor = #colorLiteral(red: 0.6509803922, green: 1, blue: 0.737254902, alpha: 1)
 
-        return cell ?? UITableViewCell()
+            return cell ?? UITableViewCell()
+        case .results:
+            let cell = tableView.dequeueReusableCell(SubtitleCell.self, for: indexPath)
+
+            cell?.selectionStyle = .none
+            cell?.textLabel?.text = results[indexPath.row].title
+            cell?.detailTextLabel?.text = results[indexPath.row].detail
+            cell?.backgroundColor = #colorLiteral(red: 0.6509803922, green: 1, blue: 0.737254902, alpha: 1)
+
+            return cell ?? UITableViewCell()
+        }
     }
 }
 
@@ -120,10 +215,10 @@ extension ResultTableViewController {
             switch result {
             case .success(let session):
                 self.results = [
-                    ResultCell(title: "session id", detail: session.sessionId),
-                    ResultCell(title: "current time", detail: session.currentTime),
-                    ResultCell(title: "stream endpoint", detail: session.streamEndpoint),
-                    ResultCell(title: "default channel group id", detail: session.defaultChannelGroupId.string)
+                    RequestResult(title: "session id", detail: session.sessionId),
+                    RequestResult(title: "current time", detail: session.currentTime),
+                    RequestResult(title: "stream endpoint", detail: session.streamEndpoint),
+                    RequestResult(title: "default channel group id", detail: session.defaultChannelGroupId.string)
                 ]
                 self.tableView.reloadData()
                 print(session)
@@ -135,21 +230,10 @@ extension ResultTableViewController {
     }
     
     private func ping() {
-        let message = "Используется для разнообразия запросов и обхода кэша (опциональный)"
-        let alert = UIAlertController(title: "Параметр Key", message: message, preferredStyle: .alert)
-        alert.addTextField { (_) in }
-        let action = UIAlertAction(title: "Ок", style: .default) { [weak self] (_) in
-            guard let self = self else { return }
-            
-            let key = alert.textFields?.first?.text
-            self.ping(key: key ?? "")
-        }
-        alert.addAction(action)
-        alert.preferredAction = action
-        self.present(alert, animated: true)
-    }
+        let keyIndexPath = IndexPath(row: 0, section: Section.parameters.rawValue)
+        guard let keyCell = self.tableView.cellForRow(at: keyIndexPath) as? ParameterCell else { return }
     
-    private func ping(key: String) {
+        let key = keyCell.parameterValueTextField.text ?? ""
         // Пример запроса на проверку работоспособности сервиса
         // Параметр key - опциональный. Используется для разнообразия запросов и обхода кэша
         let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
@@ -160,10 +244,10 @@ extension ResultTableViewController {
             switch result {
             case .success(let ping):
                 self.results = [
-                    ResultCell(title: "result", detail: ping.result),
-                    ResultCell(title: "time", detail: ping.time),
-                    ResultCell(title: "version", detail: ping.version),
-                    ResultCell(title: "hostname", detail: ping.hostname)
+                    RequestResult(title: "result", detail: ping.result),
+                    RequestResult(title: "time", detail: ping.time),
+                    RequestResult(title: "version", detail: ping.version),
+                    RequestResult(title: "hostname", detail: ping.hostname)
                 ]
                 self.tableView.reloadData()
                 print(ping)
@@ -183,11 +267,10 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let channels):
-                self.results = channels.map { (channel) -> ResultCell in
-                    ResultCell(title: "id: \(channel.id)", detail: channel.attributes.name ?? "")
+                self.results = channels.map { (channel) -> RequestResult in
+                    RequestResult(title: "id: \(channel.id)", detail: channel.attributes.name ?? "")
                 }
                 self.tableView.reloadData()
-                self.title = self.request.rawValue + " (\(self.results.count))"
                 print(channels)
             case .failure(let error):
                 self.showAlert(error)
@@ -205,11 +288,10 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let channels):
-                self.results = channels.map { (channel) -> ResultCell in
-                    ResultCell(title: "id: \(channel.id)", detail: channel.attributes.name ?? "")
+                self.results = channels.map { (channel) -> RequestResult in
+                    RequestResult(title: "id: \(channel.id)", detail: channel.attributes.name ?? "")
                 }
                 self.tableView.reloadData()
-                self.title = self.request.rawValue + " (\(self.results.count))"
                 print(channels)
             case .failure(let error):
                 self.showAlert(error)
@@ -230,11 +312,10 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let broadcasts):
-                self.results = broadcasts.map { (broadcast) -> ResultCell in
-                    ResultCell(title: "id: \(broadcast.id)", detail: broadcast.attributes.title)
+                self.results = broadcasts.map { (broadcast) -> RequestResult in
+                    RequestResult(title: "id: \(broadcast.id)", detail: broadcast.attributes.title)
                 }
                 self.tableView.reloadData()
-                self.title = self.request.rawValue + " (\(self.results.count))"
                 print(broadcasts)
             case .failure(let error):
                 self.showAlert(error)
@@ -244,7 +325,7 @@ extension ResultTableViewController {
     }
     
     private func showAlert(_ error: Error) {
-        let alert = UIAlertController(title: "Ошбика", message: error.localizedDescription)
+        let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
         self.present(alert, animated: true)
     }
 }

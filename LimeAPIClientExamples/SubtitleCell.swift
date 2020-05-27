@@ -1,5 +1,5 @@
 //
-//  SubtitleTableViewCell.swift
+//  SubtitleCell.swift
 //  LimeAPIClientExamples
 //
 //  Created by Лайм HD on 27.05.2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SubtitleTableViewCell: UITableViewCell {
+class SubtitleCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: "\(Self.self)")
     }
