@@ -21,7 +21,6 @@
 		4E579585246AE3D20009D306 /* LimeAPIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E579584246AE3D20009D306 /* LimeAPIClientTests.swift */; };
 		4E579587246AE3D20009D306 /* LimeAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E579579246AE3D20009D306 /* LimeAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4E579597246AE6180009D306 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E579596246AE6180009D306 /* AppDelegate.swift */; };
-		4E57959B246AE6180009D306 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E57959A246AE6180009D306 /* ViewController.swift */; };
 		4E57959E246AE6180009D306 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E57959C246AE6180009D306 /* Main.storyboard */; };
 		4E5795A0246AE61C0009D306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E57959F246AE61C0009D306 /* Assets.xcassets */; };
 		4E5795A3246AE61C0009D306 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E5795A1246AE61C0009D306 /* LaunchScreen.storyboard */; };
@@ -56,6 +55,8 @@
 		4ECFB092247D0EB000727244 /* SessionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ECFB091247D0EB000727244 /* SessionView.xib */; };
 		4ECFB095247D0F8400727244 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB094247D0F8400727244 /* UIView.swift */; };
 		4ECFB09C247D4AAA00727244 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB09B247D4AAA00727244 /* UIAlertController.swift */; };
+		4ECFB09F247D59AE00727244 /* APITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB09E247D59AE00727244 /* APITableViewController.swift */; };
+		4ECFB0A1247D880900727244 /* AccessoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB0A0247D880900727244 /* AccessoryButton.swift */; };
 		4EFC6E4C2476B49A009D6CF7 /* JSONAPIErrorExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */; };
 /* End PBXBuildFile section */
 
@@ -102,7 +103,6 @@
 		4E579586246AE3D20009D306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E579594246AE6180009D306 /* LimeAPIClientExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LimeAPIClientExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E579596246AE6180009D306 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4E57959A246AE6180009D306 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4E57959D246AE6180009D306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4E57959F246AE61C0009D306 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E5795A2246AE61C0009D306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -136,6 +136,8 @@
 		4ECFB091247D0EB000727244 /* SessionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SessionView.xib; sourceTree = "<group>"; };
 		4ECFB094247D0F8400727244 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4ECFB09B247D4AAA00727244 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
+		4ECFB09E247D59AE00727244 /* APITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITableViewController.swift; sourceTree = "<group>"; };
+		4ECFB0A0247D880900727244 /* AccessoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryButton.swift; sourceTree = "<group>"; };
 		4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIErrorExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -257,7 +259,8 @@
 			children = (
 				4E75B1BE246E77300061E143 /* LACSettings.swift */,
 				4E579596246AE6180009D306 /* AppDelegate.swift */,
-				4E57959A246AE6180009D306 /* ViewController.swift */,
+				4ECFB09E247D59AE00727244 /* APITableViewController.swift */,
+				4ECFB0A0247D880900727244 /* AccessoryButton.swift */,
 				4ECFB093247D0EB700727244 /* SessionView */,
 				4ECFB09D247D4AD400727244 /* Extensions */,
 				4E57959F246AE61C0009D306 /* Assets.xcassets */,
@@ -532,10 +535,11 @@
 			files = (
 				4ECFB095247D0F8400727244 /* UIView.swift in Sources */,
 				4E75B1BF246E77300061E143 /* LACSettings.swift in Sources */,
-				4E57959B246AE6180009D306 /* ViewController.swift in Sources */,
 				4E579597246AE6180009D306 /* AppDelegate.swift in Sources */,
+				4ECFB09F247D59AE00727244 /* APITableViewController.swift in Sources */,
 				4ECFB09C247D4AAA00727244 /* UIAlertController.swift in Sources */,
 				4ECFB090247D0E9D00727244 /* SessionView.swift in Sources */,
+				4ECFB0A1247D880900727244 /* AccessoryButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

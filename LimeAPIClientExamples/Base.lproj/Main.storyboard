@@ -4,85 +4,48 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Лайм API Client-->
-        <scene sceneID="tne-QT-ifu">
+        <scene sceneID="8NV-Z8-XDk">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="LimeAPIClientExamples" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                <tableViewController id="SW4-eo-w0O" customClass="APITableViewController" customModule="LimeAPIClientExamples" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jb3-ik-62L">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7c2-gW-G5e" customClass="SessionView" customModule="LimeAPIClientExamples" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="88" width="414" height="214"/>
-                            </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="65J-As-Rfm">
-                                <rect key="frame" x="20" y="302" width="374" height="44"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bI6-kw-bkS" userLabel="New Session Button">
-                                        <rect key="frame" x="0.0" y="0.0" width="177" height="44"/>
-                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="0QO-YD-aAv"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Новая сессия">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="6"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="newSession:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DwN-OF-Nqo"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5kG-kD-3kG" userLabel="Ping Button">
-                                        <rect key="frame" x="197" y="0.0" width="177" height="44"/>
-                                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Пинг">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="6"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="ping:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HUR-K0-iRF"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="5kG-kD-3kG" firstAttribute="width" secondItem="bI6-kw-bkS" secondAttribute="width" id="0Wu-xI-lEm"/>
-                                    <constraint firstItem="5kG-kD-3kG" firstAttribute="height" secondItem="bI6-kw-bkS" secondAttribute="height" id="yTG-rk-4ek"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.65000000000000002" green="1" blue="0.73809523807582633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="65J-As-Rfm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="AzM-6C-IV4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="65J-As-Rfm" secondAttribute="trailing" constant="20" id="QNb-kr-BXm"/>
-                            <constraint firstItem="7c2-gW-G5e" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="URS-Am-mWf"/>
-                            <constraint firstItem="7c2-gW-G5e" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="WsN-42-qa4"/>
-                            <constraint firstItem="7c2-gW-G5e" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cjA-Wx-R5h"/>
-                            <constraint firstItem="65J-As-Rfm" firstAttribute="top" secondItem="7c2-gW-G5e" secondAttribute="bottom" id="tS6-u8-6zq"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Лайм API Client" id="AHd-AW-7Al"/>
-                    <connections>
-                        <outlet property="sessionView" destination="7c2-gW-G5e" id="1cM-BN-5wO"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" red="0.65000000000000002" green="1" blue="0.7380952381" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseIdentifier" textLabel="DL7-ej-vly" style="IBUITableViewCellStyleDefault" id="EAs-gR-0pT">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EAs-gR-0pT" id="cGY-Y4-Y1L">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DL7-ej-vly">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.65000000000000002" green="1" blue="0.7380952381" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.65000000000000002" green="1" blue="0.7380952381" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="SW4-eo-w0O" id="cTs-Dd-Bdv"/>
+                            <outlet property="delegate" destination="SW4-eo-w0O" id="FWk-vp-NXk"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Лайм API Client" id="fp7-af-M0F"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YJu-Xc-VCs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1042.0289855072465" y="39.508928571428569"/>
+            <point key="canvasLocation" x="1010" y="40"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3ZK-ph-1Sj">
@@ -96,7 +59,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="lTm-Y3-qfK"/>
+                        <segue destination="SW4-eo-w0O" kind="relationship" relationship="rootViewController" id="1p2-bR-Qml"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hSO-4p-Xzw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
