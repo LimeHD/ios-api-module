@@ -59,29 +59,23 @@ struct Session: Decodable {
     let defaultChannelGroupId: Int
 }
 ```
-Все ошибки в ответе сервера приходят в виде типа данных `JSONAPIError<JSONAPIBaseError>` или `JSONAPIError<JSONAPIStandartError>`:
+Все ошибки в ответе сервера приходят в виде типа данных `JSONAPIError`:
 ``` swift
-struct JSONAPIError<T: Decodable & Equatable>: Decodable, Equatable {
-    let errors: [T]
+struct JSONAPIError: Decodable, Equatable {
+    let errors: [Error]
     let meta: Meta
     
+    struct Error: Decodable, Equatable {
+        let id: Int?
+        let status: String
+        let code: String
+        let title: String
+        let detail: String?
+    }
+
     struct Meta: Decodable, Equatable {
         let requestId: String
     }
-}
-
-struct JSONAPIBaseError: Decodable, Equatable {
-    let id: Int
-    let status: Int
-    let code: String
-    let title: String
-}
-    
-struct JSONAPIStandartError: Decodable, Equatable {
-    let code: String
-    let status: String
-    let title: String
-    let detail: String
 }
 ```
 
@@ -120,7 +114,7 @@ struct Channel: Decodable {
 }
 ```
 ### Получение списка каналов по группе id
-**Внимание!** Перед выполеннием запроса необходимо создать новую сессию и получить параметр `defaultChannelGroupId` (см. выше).
+**Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения параметра `defaultChannelGroupId` (см. выше).
 Пример запроса
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
