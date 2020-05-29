@@ -10,9 +10,6 @@ import XCTest
 @testable import LimeAPIClient
 
 class JSONParserTests: XCTestCase {
-    typealias Base = JSONAPIBaseError
-    typealias Standart = JSONAPIStandartError
-    
     var sut: JSONParser!
     var decoder: JSONDecoder!
     
@@ -51,11 +48,11 @@ class JSONParserTests: XCTestCase {
     }
     
     func test_decode_givenCorrectJSON_returnsSuccess() throws {
-        var expectedData: JSONAPIError<Standart>? = nil
+        var expectedData: JSONAPIError? = nil
         var expectedError: Error? = nil
     
         let data = try XCTUnwrap(JSONAPIErrorExample.standart.data(using: .utf8))
-        let result = self.sut.decode(JSONAPIError<Standart>.self, data)
+        let result = self.sut.decode(JSONAPIError.self, data)
         
         switch result {
         case .success(let data):

@@ -10,9 +10,6 @@ import XCTest
 @testable import LimeAPIClient
 
 class HTTPClientTests: XCTestCase {
-    typealias Base = JSONAPIBaseError
-    typealias Standart = JSONAPIStandartError
-    
     var sut: HTTPClient!
     var session: MockURLSession!
     var url = URL(string: "https://limehd.tv/")!
@@ -135,11 +132,11 @@ class HTTPClientTests: XCTestCase {
     
     func test_getJSON_givenJSONAPIBaseError_callsCompletionWithFailure() throws {
         let data = try XCTUnwrap(JSONAPIErrorExample.base.data(using: .utf8))
-        let jsonAPIError = try self.decodeJSONAPIError(JSONAPIError<Base>.self, from: data)
+        let jsonAPIError = try self.decodeJSONAPIError(JSONAPIError.self, from: data)
         
         let response = self.response(500)
         let unwrappedResponse = try XCTUnwrap(response)
-        let expectedError = HTTPError.jsonAPIBaseError(unwrappedResponse.localizedStatusCode, error: jsonAPIError)
+        let expectedError = HTTPError.jsonAPIError(unwrappedResponse.localizedStatusCode, error: jsonAPIError)
         
         let result = self.runGetJSONWith(data: data, response)
         
@@ -158,11 +155,11 @@ class HTTPClientTests: XCTestCase {
     
     func test_getJSON_givenJSONAPIStandartError_callsCompletionWithFailure() throws {
         let data = try XCTUnwrap(JSONAPIErrorExample.standart.data(using: .utf8))
-        let jsonAPIError = try self.decodeJSONAPIError(JSONAPIError<Standart>.self, from: data)
+        let jsonAPIError = try self.decodeJSONAPIError(JSONAPIError.self, from: data)
         
         let response = self.response(500)
         let unwrappedResponse = try XCTUnwrap(response)
-        let expectedError = HTTPError.jsonAPIStandartError(unwrappedResponse.localizedStatusCode, error: jsonAPIError)
+        let expectedError = HTTPError.jsonAPIError(unwrappedResponse.localizedStatusCode, error: jsonAPIError)
         
         let result = self.runGetJSONWith(data: data, response)
         

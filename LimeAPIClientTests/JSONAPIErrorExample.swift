@@ -14,7 +14,7 @@ struct JSONAPIErrorExample {
       "errors": [
         {
           "id": 64856824904380,
-          "status": 401,
+          "status": "401",
           "code": "unauthorized_error",
           "title": "UnauthorizedError"
         }
