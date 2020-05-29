@@ -30,19 +30,9 @@ class ResultTableViewController: UITableViewController {
         }
     }
     
-    struct RequestResult {
-        let title: String
-        let detail: String
-    }
-    
-    struct RequestParameter {
-        let name: String
-        let detail: String
-    }
-    
-    let request: Request
-    var parameters = [RequestParameter]()
-    var results = [RequestResult]()
+    let requestName: Request.Name
+    var parameters = [Request.Parameter]()
+    var results = [Request.Result]()
     
     var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .gray)
@@ -51,8 +41,8 @@ class ResultTableViewController: UITableViewController {
         return indicator
     }()
     
-    init(request: Request) {
-        self.request = request
+    init(requestName: Request.Name) {
+        self.requestName = requestName
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -67,14 +57,14 @@ class ResultTableViewController: UITableViewController {
         self.configureAppearance()
         self.hideKeyboardWhenTappedAround()
         
-        switch self.request {
+        switch self.requestName {
         case
         .sessions,
         .channels,
         .channelsByGroupId:
             break
         case .ping:
-            self.parameters = [RequestParameter(name: "key", detail: "Запрос на проверку работоспособности сервиса. Устанавливает кеширующие заголовки")]
+            self.parameters = [Request.Parameter(name: "key", detail: "Запрос на проверку работоспособности сервиса. Устанавливает кеширующие заголовки")]
             return
         case .broadcasts:
             break
@@ -90,7 +80,7 @@ class ResultTableViewController: UITableViewController {
     
     private func configureAppearance() {
         self.navigationController?.navigationBar.tintColor = .black
-        self.title = request.rawValue
+        self.title = self.requestName.rawValue
         self.tableView.removeExtraEmptyCells()
         self.view.backgroundColor = #colorLiteral(red: 0.6509803922, green: 1, blue: 0.737254902, alpha: 1)
         
@@ -113,13 +103,13 @@ class ResultTableViewController: UITableViewController {
     }
     
     @objc private func requestData() {
-        self.title = self.request.rawValue
+        self.title = self.requestName.rawValue
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.results = []
         self.tableView.reloadData()
         self.activityIndicator.startAnimating()
         
-        switch self.request {
+        switch self.requestName {
         case .sessions:
             self.session()
         case .ping:
@@ -149,7 +139,7 @@ class ResultTableViewController: UITableViewController {
         case .results:
             if self.results.isNotEmpty {
                 var header = section.header
-                if self.request != .sessions && self.request != .ping {
+                if self.requestName != .sessions && self.requestName != .ping {
                     header += " (ячеек: \(self.results.count))"
                 }
                 return header
@@ -215,10 +205,10 @@ extension ResultTableViewController {
             switch result {
             case .success(let session):
                 self.results = [
-                    RequestResult(title: "session id", detail: session.sessionId),
-                    RequestResult(title: "current time", detail: session.currentTime),
-                    RequestResult(title: "stream endpoint", detail: session.streamEndpoint),
-                    RequestResult(title: "default channel group id", detail: session.defaultChannelGroupId.string)
+                    Request.Result(title: "session id", detail: session.sessionId),
+                    Request.Result(title: "current time", detail: session.currentTime),
+                    Request.Result(title: "stream endpoint", detail: session.streamEndpoint),
+                    Request.Result(title: "default channel group id", detail: session.defaultChannelGroupId.string)
                 ]
                 self.tableView.reloadData()
                 print(session)
@@ -244,10 +234,10 @@ extension ResultTableViewController {
             switch result {
             case .success(let ping):
                 self.results = [
-                    RequestResult(title: "result", detail: ping.result),
-                    RequestResult(title: "time", detail: ping.time),
-                    RequestResult(title: "version", detail: ping.version),
-                    RequestResult(title: "hostname", detail: ping.hostname)
+                    Request.Result(title: "result", detail: ping.result),
+                    Request.Result(title: "time", detail: ping.time),
+                    Request.Result(title: "version", detail: ping.version),
+                    Request.Result(title: "hostname", detail: ping.hostname)
                 ]
                 self.tableView.reloadData()
                 print(ping)
@@ -267,8 +257,8 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let channels):
-                self.results = channels.map { (channel) -> RequestResult in
-                    RequestResult(title: "id: \(channel.id)", detail: channel.attributes.name ?? "")
+                self.results = channels.map { (channel) -> Request.Result in
+                    Request.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "")
                 }
                 self.tableView.reloadData()
                 print(channels)
@@ -288,8 +278,8 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let channels):
-                self.results = channels.map { (channel) -> RequestResult in
-                    RequestResult(title: "id: \(channel.id)", detail: channel.attributes.name ?? "")
+                self.results = channels.map { (channel) -> Request.Result in
+                    Request.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "")
                 }
                 self.tableView.reloadData()
                 print(channels)
@@ -312,8 +302,8 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let broadcasts):
-                self.results = broadcasts.map { (broadcast) -> RequestResult in
-                    RequestResult(title: "id: \(broadcast.id)", detail: broadcast.attributes.title)
+                self.results = broadcasts.map { (broadcast) -> Request.Result in
+                    Request.Result(title: "id: \(broadcast.id)", detail: broadcast.attributes.title)
                 }
                 self.tableView.reloadData()
                 print(broadcasts)
