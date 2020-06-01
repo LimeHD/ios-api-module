@@ -73,6 +73,12 @@ public final class LimeAPIClient {
         }
     }
     
+    public func getBanner(bannerId: Int, completion: @escaping ApiResult<BannerAndDevice.Banner>) {
+        self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Factory.getBanner(bannerId)) { (result) in
+            self.handleJSONResult(result, completion)
+        }
+    }
+    
     // MARK: Channels
     
     public func requestChannels(completion: @escaping ApiResult<[Channel]>) {

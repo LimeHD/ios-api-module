@@ -184,7 +184,23 @@ apiClient.banBanner(bannerId: BANNER_ID) { (result) in
     }
 }
 ```
-В ответ приходит результат выполнения запроса. Тип данных `BanBanner` (см. выше)
+В ответ приходит результат выполнения запроса. Тип данных `BanBanner` (см. выше).
+
+### Получить баннер (информацию о нём)
+Пример запроса
+``` swift
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+// Параметр BANNER_ID тип данных Int (ID Баннера для модификации)
+apiClient.getBanner(bannerId: BANNER_ID) { (result) in
+    switch result {
+    case .success(let banner):
+        print(banner)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+В ответ приходит баннер. Тип данных `BannerAndDevice.Banner` (см. выше).
 
 ### Получение списка каналов
 Пример запроса

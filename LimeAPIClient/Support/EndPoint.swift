@@ -110,6 +110,15 @@ extension EndPoint.Factory {
         )
     }
     
+    static func getBanner(_ bannerId: Int) -> EndPoint {
+        let parameters = EndPoint.Parameters(url: ["device_id" : Device.id])
+        return EndPoint(
+            path: "v1/banners/\(bannerId)",
+            acceptHeader: HTTP.Header.Accept.json,
+            parameters: parameters
+        )
+    }
+    
     static func channels() -> EndPoint {
         return EndPoint(
             path: "v1/channels",

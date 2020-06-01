@@ -67,7 +67,8 @@ class ResultTableViewController: UITableViewController {
             break
         case
         .deleteBanFromBanner,
-        .banBanner:
+        .banBanner,
+        .getBanner:
             self.parameters = [APIRequest.Parameter(name: "banner id", detail: "Id баннера для модификации", keyboardType: .numberPad)]
             return
         case .ping:
@@ -117,6 +118,7 @@ class ResultTableViewController: UITableViewController {
     }
     
     @objc private func requestData() {
+        self.changeColorTheme(.success)
         self.title = self.request.rawValue
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.results = []
@@ -136,6 +138,8 @@ class ResultTableViewController: UITableViewController {
             self.deleteBanFromBanner()
         case .banBanner:
             self.banBanner()
+        case .getBanner:
+            self.getBanner()
         case .channels:
             self.requestChannels()
         case .channelsByGroupId:
@@ -174,7 +178,8 @@ class ResultTableViewController: UITableViewController {
                 .findBanner,
                 .nextBanner,
                 .deleteBanFromBanner,
-                .banBanner:
+                .banBanner,
+                .getBanner:
                     break
                 default:
                     header += " (ячеек: \(self.results.count))"
@@ -315,17 +320,21 @@ extension ResultTableViewController {
         let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
         apiClient.nextBanner { [weak self] (result) in
             guard let self = self else { return }
-            self.configureStopAnimating()
-            
-            switch result {
-            case .success(let banner):
-                self.configureBannerResult(banner)
-                self.tableView.reloadData()
-                print(banner)
-            case .failure(let error):
-                self.showAlert(error)
-                print(error)
-            }
+            self.handleBannerResult(result)
+        }
+    }
+    
+    private func handleBannerResult(_ result: Result<BannerAndDevice.Banner, Error>) {
+        self.configureStopAnimating()
+        
+        switch result {
+        case .success(let banner):
+            self.configureBannerResult(banner)
+            self.tableView.reloadData()
+            print(banner)
+        case .failure(let error):
+            self.showAlert(error)
+            print(error)
         }
     }
     
@@ -344,6 +353,7 @@ extension ResultTableViewController {
     
     private func handleBanBannerResult(_ result: Result<BanBanner, Error>) {
         self.configureStopAnimating()
+        
         switch result {
         case .success(let banBanner):
             self.results = [APIRequest.Result(title: "result", detail: banBanner.result)]
@@ -367,6 +377,19 @@ extension ResultTableViewController {
         apiClient.banBanner(bannerId: bannerId) { [weak self] (result) in
             guard let self = self else { return }
             self.handleBanBannerResult(result)
+        }
+    }
+    
+    private func getBanner() {
+        let bannerIdIndexPath = IndexPath(row: 0, section: Section.parameters.rawValue)
+        guard let bannerIdCell = self.tableView.cellForRow(at: bannerIdIndexPath) as? ParameterCell else { return }
+        
+        let bannerId = bannerIdCell.parameterValueTextField.text?.int ?? 0
+        // Пример получения баннера (информацию о нём)
+        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
+        apiClient.getBanner(bannerId: bannerId) { [weak self] (result) in
+            guard let self = self else { return }
+            self.handleBannerResult(result)
         }
     }
     
