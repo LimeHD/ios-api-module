@@ -8,14 +8,13 @@
 
 import Foundation
 
-enum HTTPError: Error, LocalizedError, Equatable {
-
+public enum HTTPError: Error, LocalizedError, Equatable {
     case emptyData
     case unknownResponse
     case wrongStatusCode(_ statusCode: String, error: String)
     case jsonAPIError(_ statusCode: String, error: JSONAPIError)
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .emptyData:
             let key = "В ответе сервера отсутствуют данные"

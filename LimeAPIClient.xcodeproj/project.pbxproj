@@ -61,6 +61,7 @@
 		4E835BEF2473EFE300C8DD96 /* JSONAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */; };
 		4E835BF32474179F00C8DD96 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BF22474179F00C8DD96 /* JSONParserTests.swift */; };
 		4EBFF41A2484DCD10096FFCF /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF4192484DCD10096FFCF /* APIRequest.swift */; };
+		4EBFF41C2484E1960096FFCF /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF41B2484E1960096FFCF /* ColorTheme.swift */; };
 		4ECFB095247D0F8400727244 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB094247D0F8400727244 /* UIView.swift */; };
 		4ECFB09C247D4AAA00727244 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB09B247D4AAA00727244 /* UIAlertController.swift */; };
 		4ECFB09F247D59AE00727244 /* APITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB09E247D59AE00727244 /* APITableViewController.swift */; };
@@ -149,6 +150,7 @@
 		4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIError.swift; sourceTree = "<group>"; };
 		4E835BF22474179F00C8DD96 /* JSONParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
 		4EBFF4192484DCD10096FFCF /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		4EBFF41B2484E1960096FFCF /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		4ECFB094247D0F8400727244 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4ECFB09B247D4AAA00727244 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		4ECFB09E247D59AE00727244 /* APITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITableViewController.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				4E75B1BE246E77300061E143 /* LACSettings.swift */,
 				4E579596246AE6180009D306 /* AppDelegate.swift */,
 				4EBFF4192484DCD10096FFCF /* APIRequest.swift */,
+				4EBFF41B2484E1960096FFCF /* ColorTheme.swift */,
 				4EBFF4182484DC940096FFCF /* Controllers */,
 				4E5CDDF2247E58D600F0F55F /* SubtitleCell.swift */,
 				4E5CDDFC247EA74100F0F55F /* ParameterCell */,
@@ -568,6 +571,7 @@
 				4E5CDDF5247E899600F0F55F /* Bool.swift in Sources */,
 				4E5CDDF3247E58D600F0F55F /* SubtitleCell.swift in Sources */,
 				4E579597246AE6180009D306 /* AppDelegate.swift in Sources */,
+				4EBFF41C2484E1960096FFCF /* ColorTheme.swift in Sources */,
 				4E5CDDF7247E8A8200F0F55F /* Array.swift in Sources */,
 				4E5CDDFE247EA95100F0F55F /* UIViewController.swift in Sources */,
 				4EBFF41A2484DCD10096FFCF /* APIRequest.swift in Sources */,

@@ -73,6 +73,13 @@ class ResultTableViewController: UITableViewController {
         self.requestData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        ColorTheme.setMode(.success)
+        self.navigationController?.navigationBar.barTintColor = ColorTheme.Background.header
+    }
+    
     private func registerCells() {
         self.tableView.register(fromNib: ParameterCell.self)
         self.tableView.register(SubtitleCell.self)
@@ -82,7 +89,7 @@ class ResultTableViewController: UITableViewController {
         self.navigationController?.navigationBar.tintColor = .black
         self.title = self.request.rawValue
         self.tableView.removeExtraEmptyCells()
-        self.view.backgroundColor = #colorLiteral(red: 0.6509803922, green: 1, blue: 0.737254902, alpha: 1)
+        self.view.backgroundColor = ColorTheme.Background.view
         
         self.configureActivityIndicator()
         self.addRequestButton()
@@ -122,6 +129,12 @@ class ResultTableViewController: UITableViewController {
             self.requestBroadcasts()
         }
     }
+    
+    private func changeColorTheme(_ mode: ColorTheme.Mode) {
+        ColorTheme.setMode(mode)
+        self.navigationController?.navigationBar.barTintColor = ColorTheme.Background.header
+        self.view.backgroundColor = ColorTheme.Background.view
+    }
 
     // MARK: - Table view data source
     
@@ -150,7 +163,7 @@ class ResultTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let view = view as? UITableViewHeaderFooterView
-        view?.contentView.backgroundColor = .systemGreen
+        view?.contentView.backgroundColor = ColorTheme.Background.header
         view?.textLabel?.textColor = .white
     }
 
@@ -171,7 +184,7 @@ class ResultTableViewController: UITableViewController {
             cell?.selectionStyle = .none
             cell?.parameterNameLabel.text = parameters[indexPath.row].name
             cell?.parameterDescriptionLabel.text = parameters[indexPath.row].detail
-            cell?.backgroundColor = #colorLiteral(red: 0.6509803922, green: 1, blue: 0.737254902, alpha: 1)
+            cell?.backgroundColor = ColorTheme.Background.view
 
             return cell ?? UITableViewCell()
         case .results:
@@ -180,7 +193,7 @@ class ResultTableViewController: UITableViewController {
             cell?.selectionStyle = .none
             cell?.textLabel?.text = results[indexPath.row].title
             cell?.detailTextLabel?.text = results[indexPath.row].detail
-            cell?.backgroundColor = #colorLiteral(red: 0.6509803922, green: 1, blue: 0.737254902, alpha: 1)
+            cell?.backgroundColor = ColorTheme.Background.view
 
             return cell ?? UITableViewCell()
         }
@@ -315,6 +328,28 @@ extension ResultTableViewController {
     }
     
     private func showAlert(_ error: Error) {
+        self.changeColorTheme(.failure)
+        if let error = error as? HTTPError {
+            switch error {
+            case .jsonAPIError(let statusCode, error: let jsonAPIError):
+                if let error = jsonAPIError.errors.first {
+                    let errorId = error.id != nil ? "\(error.id!)" : "-"
+                    self.results = [
+                        APIRequest.Result(title: "id", detail: errorId),
+                        APIRequest.Result(title: "status", detail: error.status),
+                        APIRequest.Result(title: "code", detail: error.code),
+                        APIRequest.Result(title: "title", detail: error.title),
+                        APIRequest.Result(title: "detail", detail: error.detail ?? "nil")
+                    ]
+                    self.tableView.reloadData()
+                    let alert = UIAlertController(title: "Ошибка", message: "Неуспешный ответ состояния HTTP: \(statusCode)")
+                    self.present(alert, animated: true)
+                    return
+                }
+            default:
+                break
+            }
+        }
         let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
         self.present(alert, animated: true)
     }
