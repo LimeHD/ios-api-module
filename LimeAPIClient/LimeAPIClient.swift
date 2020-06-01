@@ -47,11 +47,21 @@ public final class LimeAPIClient {
         }
     }
     
-    public func findBanner(completion: @escaping ApiResult<BannerData>) {
-        self.request(BannerData.self, endPoint: EndPoint.Factory.findBanner()) { (result) in
+    // MARK: Banners
+    
+    public func findBanner(completion: @escaping ApiResult<BannerAndDevice>) {
+        self.request(BannerAndDevice.self, endPoint: EndPoint.Factory.findBanner()) { (result) in
             self.handleJSONResult(result, completion)
         }
     }
+    
+    public func nextBanner(completion: @escaping ApiResult<BannerAndDevice.Banner>) {
+        self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Factory.nextBanner()) { (result) in
+            self.handleJSONResult(result, completion)
+        }
+    }
+    
+    // MARK: Channels
     
     public func requestChannels(completion: @escaping ApiResult<[Channel]>) {
         self.request(JSONAPIObject<[Channel], String>.self, endPoint: EndPoint.Factory.channels()) { (result) in

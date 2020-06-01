@@ -1,5 +1,5 @@
 //
-//  BannerData.swift
+//  BannerAndDevice.swift
 //  LimeAPIClient
 //
 //  Created by Лайм HD on 01.06.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct BannerData: Decodable {
+public struct BannerAndDevice: Decodable {
     public let banner: Banner
     public let device: Device?
     
@@ -26,8 +26,8 @@ public struct BannerData: Decodable {
     
     public struct Device: Decodable {
         public let id: String
-        public let shownBanners: [String : Int]
-        public let skippedBanners: [Int]
+        public let shownBanners: String
+        public let skippedBanners: String
         public let createdAt: String
         public let updatedAt: String
     }

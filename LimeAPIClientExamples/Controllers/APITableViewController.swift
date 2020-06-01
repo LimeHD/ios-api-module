@@ -23,7 +23,7 @@ class APITableViewController: UITableViewController {
         self.apiList = [
             API(section: "sessions", requests: [.sessions]),
             API(section: "ping", requests: [.ping]),
-            API(section: "banners", requests: [.findBanner]),
+            API(section: "banners", requests: [.findBanner, .nextBanner]),
             API(section: "channels", requests: [.channels, .channelsByGroupId]),
             API(section: "broadcasts", requests: [.broadcasts])
         ]

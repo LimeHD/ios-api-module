@@ -20,6 +20,7 @@ class JSONParser {
             let result = try self.decoder.decode(T.self, from: data)
             return Result.success(result)
         } catch {
+            print(String(decoding: data, as: UTF8.self))
             return Result.failure(error)
         }
     }

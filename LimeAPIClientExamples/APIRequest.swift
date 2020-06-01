@@ -12,6 +12,7 @@ enum APIRequest: String {
     case sessions
     case ping
     case findBanner = "find banner"
+    case nextBanner = "next banner"
     case channels
     case channelsByGroupId = "channels by group id"
     case broadcasts
@@ -24,6 +25,8 @@ enum APIRequest: String {
             return "Запрос на проверку работоспособности сервиса. Устанавливает кеширующие заголовки"
         case .findBanner:
             return "Отдает на проверку подходящий баннер без ротации"
+        case .nextBanner:
+            return "Рекомендованные данному устройству и приложению баннеры"
         case .channels:
             return "Полный список доступных каналов"
         case .channelsByGroupId:

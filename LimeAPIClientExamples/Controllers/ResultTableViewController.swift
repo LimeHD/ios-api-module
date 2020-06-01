@@ -61,6 +61,7 @@ class ResultTableViewController: UITableViewController {
         case
         .sessions,
         .findBanner,
+        .nextBanner,
         .channels,
         .channelsByGroupId:
             break
@@ -124,6 +125,8 @@ class ResultTableViewController: UITableViewController {
             self.ping()
         case .findBanner:
             self.findBanner()
+        case .nextBanner:
+            self.nextBanner()
         case .channels:
             self.requestChannels()
         case .channelsByGroupId:
@@ -159,7 +162,8 @@ class ResultTableViewController: UITableViewController {
                 case
                 .sessions,
                 .ping,
-                .findBanner:
+                .findBanner,
+                .nextBanner:
                     break
                 default:
                     header += " (ячеек: \(self.results.count))"
@@ -260,20 +264,9 @@ extension ResultTableViewController {
             self.configureStopAnimating()
             
             switch result {
-            case .success(let bannerData):
-                let banner = bannerData.banner
-                self.results = [
-                    APIRequest.Result(title: "id", detail: banner.id.string),
-                    APIRequest.Result(title: "image url", detail: banner.imageUrl),
-                    APIRequest.Result(title: "title", detail: banner.title),
-                    APIRequest.Result(title: "description", detail: banner.description),
-                    APIRequest.Result(title: "is skipable", detail: banner.isSkipable.string),
-                    APIRequest.Result(title: "type", detail: banner.type.string),
-                    APIRequest.Result(title: "pack id", detail: banner.packId?.string ?? "null"),
-                    APIRequest.Result(title: "detail url", detail: banner.detailUrl),
-                    APIRequest.Result(title: "delay", detail: banner.delay.string)
-                ]
-                if let device = bannerData.device {
+            case .success(let bannerAndDevice):
+                self.configureBannerResult(bannerAndDevice.banner)
+                if let device = bannerAndDevice.device {
                     self.results += [
                         APIRequest.Result(title: "device id", detail: device.id),
                         APIRequest.Result(title: "shown banners", detail: "\(device.shownBanners)"),
@@ -283,7 +276,40 @@ extension ResultTableViewController {
                     ]
                 }
                 self.tableView.reloadData()
-                print(bannerData)
+                print(bannerAndDevice)
+            case .failure(let error):
+                self.showAlert(error)
+                print(error)
+            }
+        }
+    }
+    
+    private func configureBannerResult(_ banner: BannerAndDevice.Banner) {
+        self.results = [
+            APIRequest.Result(title: "id", detail: banner.id.string),
+            APIRequest.Result(title: "image url", detail: banner.imageUrl),
+            APIRequest.Result(title: "title", detail: banner.title),
+            APIRequest.Result(title: "description", detail: banner.description),
+            APIRequest.Result(title: "is skipable", detail: banner.isSkipable.string),
+            APIRequest.Result(title: "type", detail: banner.type.string),
+            APIRequest.Result(title: "pack id", detail: banner.packId?.string ?? "null"),
+            APIRequest.Result(title: "detail url", detail: banner.detailUrl),
+            APIRequest.Result(title: "delay", detail: banner.delay.string)
+        ]
+    }
+    
+    private func nextBanner() {
+        // Пример запроса рекомендованного данному устройству и приложению баннера
+        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
+        apiClient.nextBanner { [weak self] (result) in
+            guard let self = self else { return }
+            self.configureStopAnimating()
+            
+            switch result {
+            case .success(let banner):
+                self.configureBannerResult(banner)
+                self.tableView.reloadData()
+                print(banner)
             case .failure(let error):
                 self.showAlert(error)
                 print(error)

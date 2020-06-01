@@ -99,16 +99,16 @@ struct JSONAPIError: Decodable, Equatable {
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.findBanner { (result) in
     switch result {
-    case .success(let bannerData):
-        print(bannerData)
+    case .success(let bannerAndDevice):
+        print(bannerAndDevice)
     case .failure(let error):
         print(error)
     }
 }
 ```
-В ответ приходит баннер. Тип данных `BannerData`:
+В ответ приходит баннер. Тип данных `BannerAndDevice`:
 ``` swift
-struct BannerData: Decodable {
+struct Banner: Decodable {
     let banner: Banner
     let device: Device?
     
@@ -133,6 +133,21 @@ struct BannerData: Decodable {
     }
 }
 ```
+
+### Получение баннера, рекомендованного данному устройству и приложению
+Пример запроса
+``` swift
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+apiClient.nextBanner { (result) in
+    switch result {
+    case .success(let banner):
+        print(banner)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+В ответ приходит баннер. Тип данных `BannerAndDevice.Banner` (см. выше).
 
 ### Получение списка каналов
 Пример запроса
