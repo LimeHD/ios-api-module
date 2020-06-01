@@ -62,7 +62,7 @@
 		4E835BF32474179F00C8DD96 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BF22474179F00C8DD96 /* JSONParserTests.swift */; };
 		4EBFF41A2484DCD10096FFCF /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF4192484DCD10096FFCF /* APIRequest.swift */; };
 		4EBFF41C2484E1960096FFCF /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF41B2484E1960096FFCF /* ColorTheme.swift */; };
-		4EBFF41E248511A20096FFCF /* BannerAndDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF41D248511A20096FFCF /* BannerAndDevice.swift */; };
+		4EBFF41E248511A20096FFCF /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF41D248511A20096FFCF /* Banner.swift */; };
 		4ECFB095247D0F8400727244 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB094247D0F8400727244 /* UIView.swift */; };
 		4ECFB09C247D4AAA00727244 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB09B247D4AAA00727244 /* UIAlertController.swift */; };
 		4ECFB09F247D59AE00727244 /* APITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB09E247D59AE00727244 /* APITableViewController.swift */; };
@@ -152,7 +152,7 @@
 		4E835BF22474179F00C8DD96 /* JSONParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
 		4EBFF4192484DCD10096FFCF /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		4EBFF41B2484E1960096FFCF /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
-		4EBFF41D248511A20096FFCF /* BannerAndDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAndDevice.swift; sourceTree = "<group>"; };
+		4EBFF41D248511A20096FFCF /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		4ECFB094247D0F8400727244 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4ECFB09B247D4AAA00727244 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		4ECFB09E247D59AE00727244 /* APITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITableViewController.swift; sourceTree = "<group>"; };
@@ -201,7 +201,7 @@
 				4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */,
 				4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */,
 				4E5913CD247560CA009BAAA1 /* Broadcast.swift */,
-				4EBFF41D248511A20096FFCF /* BannerAndDevice.swift */,
+				4EBFF41D248511A20096FFCF /* Banner.swift */,
 				4E75B1C4246EBBE60061E143 /* Channel.swift */,
 				4E835BEC2473D50700C8DD96 /* Ping.swift */,
 				4E54C5F82477F8DF00AAF223 /* Session.swift */,
@@ -541,7 +541,7 @@
 				4E5B0C92247BDB6500DDE6BA /* Dictionary.swift in Sources */,
 				4E6D91D1246D846F00BB7C69 /* String.swift in Sources */,
 				4E6D91CA246D786800BB7C69 /* HTTP.swift in Sources */,
-				4EBFF41E248511A20096FFCF /* BannerAndDevice.swift in Sources */,
+				4EBFF41E248511A20096FFCF /* Banner.swift in Sources */,
 				4E54C5F92477F8DF00AAF223 /* Session.swift in Sources */,
 				4E56436A2472D41900CDD18F /* RFC3339DateFormatter.swift in Sources */,
 				4E6D91C4246D111900BB7C69 /* HTTPURLResponse.swift in Sources */,

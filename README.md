@@ -149,6 +149,26 @@ apiClient.nextBanner { (result) in
 ```
 В ответ приходит баннер. Тип данных `BannerAndDevice.Banner` (см. выше).
 
+### Снятие (удаление) пометки «нежелательный» с баннера
+Пример запроса
+``` swift
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+apiClient.deleteBanFromBanner(bannerId: bannerId) { (result) in
+    switch result {
+    case .success(let banBanner):
+        print(banBanner)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+В ответ приходит баннер. Тип данных `BanBanner`:
+``` swift
+struct BanBanner: Decodable {
+    let result: String
+}
+```
+
 ### Получение списка каналов
 Пример запроса
 ``` swift

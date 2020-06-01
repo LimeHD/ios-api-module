@@ -6,13 +6,14 @@
 //  Copyright © 2020 Лайм HD. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum APIRequest: String {
     case sessions
     case ping
     case findBanner = "find banner"
     case nextBanner = "next banner"
+    case deleteBanFromBanner = "delete ban from banner"
     case channels
     case channelsByGroupId = "channels by group id"
     case broadcasts
@@ -27,6 +28,8 @@ enum APIRequest: String {
             return "Отдает на проверку подходящий баннер без ротации"
         case .nextBanner:
             return "Рекомендованные данному устройству и приложению баннеры"
+        case .deleteBanFromBanner:
+            return "Снять (удалить) пометку «нежелательный» с баннера"
         case .channels:
             return "Полный список доступных каналов"
         case .channelsByGroupId:
@@ -39,6 +42,7 @@ enum APIRequest: String {
     struct Parameter {
         let name: String
         let detail: String
+        let keyboardType: UIKeyboardType
     }
     
     struct Result {

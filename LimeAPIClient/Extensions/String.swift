@@ -36,3 +36,7 @@ extension String {
         return self.addingPercentEncoding(withAllowedCharacters: allowedCharacters) ?? ""
     }
 }
+
+public extension String {
+    var int: Int? { Int(self) }
+}

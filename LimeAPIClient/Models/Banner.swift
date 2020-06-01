@@ -1,5 +1,5 @@
 //
-//  BannerAndDevice.swift
+//  Banner.swift
 //  LimeAPIClient
 //
 //  Created by Лайм HD on 01.06.2020.
@@ -31,4 +31,8 @@ public struct BannerAndDevice: Decodable {
         public let createdAt: String
         public let updatedAt: String
     }
+}
+
+public struct BanBanner: Decodable {
+    public let result: String
 }

@@ -65,8 +65,11 @@ class ResultTableViewController: UITableViewController {
         .channels,
         .channelsByGroupId:
             break
+        case .deleteBanFromBanner:
+            self.parameters = [APIRequest.Parameter(name: "banner id", detail: "Id баннера для модификации", keyboardType: .numberPad)]
+            return
         case .ping:
-            self.parameters = [APIRequest.Parameter(name: "key", detail: "Запрос на проверку работоспособности сервиса. Устанавливает кеширующие заголовки")]
+            self.parameters = [APIRequest.Parameter(name: "key", detail: "Запрос на проверку работоспособности сервиса. Устанавливает кеширующие заголовки", keyboardType: .URL)]
             return
         case .broadcasts:
             break
@@ -127,6 +130,8 @@ class ResultTableViewController: UITableViewController {
             self.findBanner()
         case .nextBanner:
             self.nextBanner()
+        case .deleteBanFromBanner:
+            self.banBanner()
         case .channels:
             self.requestChannels()
         case .channelsByGroupId:
@@ -163,7 +168,8 @@ class ResultTableViewController: UITableViewController {
                 .sessions,
                 .ping,
                 .findBanner,
-                .nextBanner:
+                .nextBanner,
+                .deleteBanFromBanner:
                     break
                 default:
                     header += " (ячеек: \(self.results.count))"
@@ -196,6 +202,7 @@ class ResultTableViewController: UITableViewController {
 
             cell?.selectionStyle = .none
             cell?.parameterNameLabel.text = parameters[indexPath.row].name
+            cell?.parameterValueTextField.keyboardType = parameters[indexPath.row].keyboardType
             cell?.parameterDescriptionLabel.text = parameters[indexPath.row].detail
             cell?.backgroundColor = ColorTheme.Background.view
 
@@ -310,6 +317,31 @@ extension ResultTableViewController {
                 self.configureBannerResult(banner)
                 self.tableView.reloadData()
                 print(banner)
+            case .failure(let error):
+                self.showAlert(error)
+                print(error)
+            }
+        }
+    }
+    
+    private func banBanner() {
+        let bannerIdIndexPath = IndexPath(row: 0, section: Section.parameters.rawValue)
+        guard let bannerIdCell = self.tableView.cellForRow(at: bannerIdIndexPath) as? ParameterCell else { return }
+        
+        let bannerId = bannerIdCell.parameterValueTextField.text?.int ?? 0
+        // Пример запроса на снятие (удаление) пометки «нежелательный» с баннера
+        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
+        apiClient.deleteBanFromBanner(bannerId: bannerId) { [weak self] (result) in
+            guard let self = self else { return }
+            self.configureStopAnimating()
+            
+            switch result {
+            case .success(let banBanner):
+                self.results = [APIRequest.Result(title: "result", detail: banBanner.result)]
+                self.tableView.reloadData()
+                print(banBanner)
+                self.tableView.reloadData()
+                print(banBanner)
             case .failure(let error):
                 self.showAlert(error)
                 print(error)

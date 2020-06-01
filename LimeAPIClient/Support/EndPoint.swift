@@ -45,7 +45,7 @@ struct EndPoint {
 extension EndPoint.Factory {
     static func session() -> EndPoint {
         let parameters = EndPoint.Parameters(
-            body: ["app_id": LimeAPIClient.configuration?.appId ?? ""]
+            body: ["app_id" : LimeAPIClient.configuration?.appId ?? ""]
         )
         return EndPoint(
             path: "v1/sessions",
@@ -64,9 +64,9 @@ extension EndPoint.Factory {
     
     static func findBanner() -> EndPoint {
         let urlParameters = [
-            "device_id": Device.id,
-            "app_id": LimeAPIClient.configuration?.appId ?? "",
-            "platform": "ios"
+            "device_id" : Device.id,
+            "app_id" : LimeAPIClient.configuration?.appId ?? "",
+            "platform" : "ios"
         ]
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
@@ -78,14 +78,24 @@ extension EndPoint.Factory {
     
     static func nextBanner() -> EndPoint {
         let urlParameters = [
-            "device_id": Device.id,
-            "app_id": LimeAPIClient.configuration?.appId ?? "",
-            "platform": "ios"
+            "device_id" : Device.id,
+            "app_id" : LimeAPIClient.configuration?.appId ?? "",
+            "platform" : "ios"
         ]
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
             path: "v1/banners/recommended/next",
             acceptHeader: HTTP.Header.Accept.json,
+            parameters: parameters
+        )
+    }
+    
+    static func deleteBanFromBanner(_ bannerId: Int) -> EndPoint {
+        let parameters = EndPoint.Parameters(url: ["device_id" : Device.id])
+        return EndPoint(
+            path: "v1/banners/\(bannerId)/ban",
+            acceptHeader: HTTP.Header.Accept.json,
+            httpMethod: HTTP.Method.delete,
             parameters: parameters
         )
     }
@@ -108,10 +118,10 @@ extension EndPoint.Factory {
     // timeZone - https://en.wikipedia.org/wiki/List_of_time_zones_by_country, пример: UTC+03:00
     static func broadcasts(channelId: Int, start: String, end: String, timeZone: String) -> EndPoint {
         let urlParameters = [
-            "channel_id": "\(channelId)",
-            "start_at": start,
-            "finish_at": end,
-            "time_zone": timeZone
+            "channel_id" : channelId.string,
+            "start_at" : start,
+            "finish_at" : end,
+            "time_zone" : timeZone
         ]
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
@@ -127,7 +137,7 @@ extension EndPoint.Factory {
         if key.isEmpty {
             urlParameters = [:]
         } else {
-            urlParameters = ["key": key.encoding(with: .rfc3986Allowed)]
+            urlParameters = ["key" : key.encoding(with: .rfc3986Allowed)]
         }
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
