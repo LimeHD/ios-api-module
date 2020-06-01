@@ -9,30 +9,10 @@
 import UIKit
 import LimeAPIClient
 
-struct Request {
-    enum Name: String {
-        case sessions
-        case ping
-        case channels
-        case channelsByGroupId = "channels by group id"
-        case broadcasts
-    }
-    
-    struct Result {
-        let title: String
-        let detail: String
-    }
-    
-    struct Parameter {
-        let name: String
-        let detail: String
-    }
-}
-
 class APITableViewController: UITableViewController {
     struct API {
         let section: String
-        let requestNames: [Request.Name]
+        let requests: [APIRequest]
     }
     
     var apiList = [API]()
@@ -41,10 +21,10 @@ class APITableViewController: UITableViewController {
         super.viewDidLoad()
 
         self.apiList = [
-            API(section: "sessions", requestNames: [.sessions]),
-            API(section: "ping", requestNames: [.ping]),
-            API(section: "channels", requestNames: [.channels, .channelsByGroupId]),
-            API(section: "broadcasts", requestNames: [.broadcasts])
+            API(section: "sessions", requests: [.sessions]),
+            API(section: "ping", requests: [.ping]),
+            API(section: "channels", requests: [.channels, .channelsByGroupId]),
+            API(section: "broadcasts", requests: [.broadcasts])
         ]
         
         self.tableView.removeExtraEmptyCells()
@@ -70,12 +50,12 @@ class APITableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.apiList[section].requestNames.count
+        return self.apiList[section].requests.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        cell.textLabel?.text = self.apiList[indexPath.section].requestNames[indexPath.row].rawValue
+        cell.textLabel?.text = self.apiList[indexPath.section].requests[indexPath.row].rawValue
         
         return cell
     }
@@ -84,10 +64,10 @@ class APITableViewController: UITableViewController {
         guard
             let cell = self.tableView.cellForRow(at: indexPath),
             let cellText = cell.textLabel?.text,
-            let requestName = Request.Name(rawValue: cellText)
+            let request = APIRequest(rawValue: cellText)
         else { return }
         
-        let controller = ResultTableViewController(requestName: requestName)
+        let controller = ResultTableViewController(request: request)
         self.navigationController?.pushViewController(controller, animated: true)
     }
 }
