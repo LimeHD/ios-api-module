@@ -100,6 +100,16 @@ extension EndPoint.Factory {
         )
     }
     
+    static func banBanner(_ bannerId: Int) -> EndPoint {
+        let parameters = EndPoint.Parameters(body: ["device_id" : Device.id])
+        return EndPoint(
+            path: "v1/banners/\(bannerId)/ban",
+            acceptHeader: HTTP.Header.Accept.json,
+            httpMethod: HTTP.Method.post,
+            parameters: parameters
+        )
+    }
+    
     static func channels() -> EndPoint {
         return EndPoint(
             path: "v1/channels",

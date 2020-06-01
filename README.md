@@ -153,7 +153,8 @@ apiClient.nextBanner { (result) in
 Пример запроса
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-apiClient.deleteBanFromBanner(bannerId: bannerId) { (result) in
+// Параметр BANNER_ID тип данных Int (ID Баннера для модификации)
+apiClient.deleteBanFromBanner(bannerId: BANNER_ID) { (result) in
     switch result {
     case .success(let banBanner):
         print(banBanner)
@@ -162,12 +163,28 @@ apiClient.deleteBanFromBanner(bannerId: bannerId) { (result) in
     }
 }
 ```
-В ответ приходит баннер. Тип данных `BanBanner`:
+В ответ приходит результат выполнения запроса. Тип данных `BanBanner`:
 ``` swift
 struct BanBanner: Decodable {
     let result: String
 }
 ```
+
+### Пометить баннер как «нежелательный» и больше его не показывать
+Пример запроса
+``` swift
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+// Параметр BANNER_ID тип данных Int (ID Баннера для модификации)
+apiClient.banBanner(bannerId: BANNER_ID) { (result) in
+    switch result {
+    case .success(let banBanner):
+        print(banBanner)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+В ответ приходит результат выполнения запроса. Тип данных `BanBanner` (см. выше)
 
 ### Получение списка каналов
 Пример запроса
@@ -257,7 +274,7 @@ struct Broadcast: Decodable {
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // Параметр key - опциональный. Используется для разнообразия запросов и обхода кэша
-apiClient.ping(key: "test") { (result) in
+apiClient.ping(key: KEY) { (result) in
     switch result {
     case .success(let ping):
         print(ping)

@@ -14,6 +14,7 @@ enum APIRequest: String {
     case findBanner = "find banner"
     case nextBanner = "next banner"
     case deleteBanFromBanner = "delete ban from banner"
+    case banBanner = "ban banner"
     case channels
     case channelsByGroupId = "channels by group id"
     case broadcasts
@@ -30,6 +31,8 @@ enum APIRequest: String {
             return "Рекомендованные данному устройству и приложению баннеры"
         case .deleteBanFromBanner:
             return "Снять (удалить) пометку «нежелательный» с баннера"
+        case .banBanner:
+            return "Пометить баннер как «нежелательный» и больше его не показывать"
         case .channels:
             return "Полный список доступных каналов"
         case .channelsByGroupId:

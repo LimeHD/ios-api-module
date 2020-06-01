@@ -24,7 +24,7 @@ class APITableViewController: UITableViewController {
             API(section: "sessions", requests: [.sessions]),
             API(section: "ping", requests: [.ping]),
             API(section: "banners", requests: [
-                .findBanner, .nextBanner, .deleteBanFromBanner
+                .findBanner, .nextBanner, .deleteBanFromBanner, .banBanner
             ]),
             API(section: "channels", requests: [
                 .channels, .channelsByGroupId
