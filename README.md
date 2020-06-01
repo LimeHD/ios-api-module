@@ -57,6 +57,20 @@ struct Session: Decodable {
     let currentTime: String
     let streamEndpoint: String
     let defaultChannelGroupId: Int
+    let settings: Settings
+    
+    struct Settings: Decodable {
+        let isAdStart: Bool
+        let isAdFirstStart: Bool
+        let isAdOnlStart: Bool
+        let isAdArhStart: Bool
+        let isAdOnlOut: Bool
+        let isAdArhOut: Bool
+        let isAdOnlFullOut: Bool
+        let isAdArhFullOut: Bool
+        let isAdArhPauseOut: Bool
+        let adMinTimeout: Int
+    }
 }
 ```
 Все ошибки в ответе сервера приходят в виде типа данных `JSONAPIError`:

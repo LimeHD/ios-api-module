@@ -13,4 +13,18 @@ public struct Session: Decodable {
     public let currentTime: String
     public let streamEndpoint: String
     public let defaultChannelGroupId: Int
+    public let settings: Settings
+    
+    public struct Settings: Decodable {
+        public let isAdStart: Bool
+        public let isAdFirstStart: Bool
+        public let isAdOnlStart: Bool
+        public let isAdArhStart: Bool
+        public let isAdOnlOut: Bool
+        public let isAdArhOut: Bool
+        public let isAdOnlFullOut: Bool
+        public let isAdArhFullOut: Bool
+        public let isAdArhPauseOut: Bool
+        public let adMinTimeout: Int
+    }
 }

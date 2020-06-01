@@ -193,6 +193,7 @@ class ResultTableViewController: UITableViewController {
             cell?.selectionStyle = .none
             cell?.textLabel?.text = results[indexPath.row].title
             cell?.detailTextLabel?.text = results[indexPath.row].detail
+            cell?.detailTextLabel?.numberOfLines = 0
             cell?.backgroundColor = ColorTheme.Background.view
 
             return cell ?? UITableViewCell()
