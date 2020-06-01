@@ -108,7 +108,7 @@ apiClient.findBanner { (result) in
 ```
 В ответ приходит баннер. Тип данных `BannerAndDevice`:
 ``` swift
-struct Banner: Decodable {
+struct BannerAndDevice: Decodable {
     let banner: Banner
     let device: Device?
     
@@ -153,7 +153,7 @@ apiClient.nextBanner { (result) in
 Пример запроса
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-// Параметр BANNER_ID тип данных Int (ID Баннера для модификации)
+// Параметр bannerId - ID Баннера для модификации, тип данных Int
 apiClient.deleteBanFromBanner(bannerId: BANNER_ID) { (result) in
     switch result {
     case .success(let banBanner):
@@ -174,7 +174,7 @@ struct BanBanner: Decodable {
 Пример запроса
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-// Параметр BANNER_ID тип данных Int (ID Баннера для модификации)
+// Параметр bannerId - ID Баннера для модификации, тип данных Int
 apiClient.banBanner(bannerId: BANNER_ID) { (result) in
     switch result {
     case .success(let banBanner):
@@ -190,7 +190,7 @@ apiClient.banBanner(bannerId: BANNER_ID) { (result) in
 Пример запроса
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-// Параметр BANNER_ID тип данных Int (ID Баннера для модификации)
+// Параметр bannerId - ID Баннера для модификации, тип данных Int
 apiClient.getBanner(bannerId: BANNER_ID) { (result) in
     switch result {
     case .success(let banner):
@@ -289,7 +289,7 @@ struct Broadcast: Decodable {
 Пример запроса
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-// Параметр key - опциональный. Используется для разнообразия запросов и обхода кэша
+// Параметр key - опциональный, тип данных String. Используется для разнообразия запросов и обхода кэша
 apiClient.ping(key: KEY) { (result) in
     switch result {
     case .success(let ping):
