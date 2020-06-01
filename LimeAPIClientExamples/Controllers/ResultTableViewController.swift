@@ -222,7 +222,17 @@ extension ResultTableViewController {
                     APIRequest.Result(title: "session id", detail: session.sessionId),
                     APIRequest.Result(title: "current time", detail: session.currentTime),
                     APIRequest.Result(title: "stream endpoint", detail: session.streamEndpoint),
-                    APIRequest.Result(title: "default channel group id", detail: session.defaultChannelGroupId.string)
+                    APIRequest.Result(title: "default channel group id", detail: session.defaultChannelGroupId.string),
+                    APIRequest.Result(title: "is ad start: \(session.settings.isAdStart)", detail: "Показывать рекламу при старте приложения"),
+                    APIRequest.Result(title: "is ad first start: \(session.settings.isAdFirstStart)", detail: "Показывать рекламу при первом старте приложения"),
+                    APIRequest.Result(title: "is ad onl start: \(session.settings.isAdOnlStart)", detail: "Показывать рекламу при включении онлайн-трансляции"),
+                    APIRequest.Result(title: "is ad arh start: \(session.settings.isAdArhStart)", detail: "Показывать рекламу при включении трансляции архива"),
+                    APIRequest.Result(title: "is ad onl out: \(session.settings.isAdOnlOut)", detail: "Показывать рекламу при выключении онлайн-трансляции"),
+                    APIRequest.Result(title: "is ad arh out: \(session.settings.isAdArhOut)", detail: "Показывать рекламу при выключении трансляции архива"),
+                    APIRequest.Result(title: "is ad onl full out: \(session.settings.isAdOnlFullOut)", detail: "Показывать рекламу при выходе из полного экрана в онлайн-трансляции"),
+                    APIRequest.Result(title: "is ad arh full out: \(session.settings.isAdArhFullOut)", detail: "Показывать рекламу при выходе из полного экрана в трансляции архива"),
+                    APIRequest.Result(title: "is ad arh pause out: \(session.settings.isAdArhPauseOut)", detail: "Показывать рекламу при выходе из паузы при трансляции архива"),
+                    APIRequest.Result(title: "ad min timeout: \(session.settings.adMinTimeout)", detail: "Следующаяя реклама покажется не раньше чем через это количество секунд")
                 ]
                 self.tableView.reloadData()
                 print(session)
