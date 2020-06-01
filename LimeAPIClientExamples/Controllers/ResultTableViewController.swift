@@ -60,6 +60,7 @@ class ResultTableViewController: UITableViewController {
         switch self.request {
         case
         .sessions,
+        .findBanner,
         .channels,
         .channelsByGroupId:
             break
@@ -121,6 +122,8 @@ class ResultTableViewController: UITableViewController {
             self.session()
         case .ping:
             self.ping()
+        case .findBanner:
+            self.findBanner()
         case .channels:
             self.requestChannels()
         case .channelsByGroupId:
@@ -152,7 +155,13 @@ class ResultTableViewController: UITableViewController {
         case .results:
             if self.results.isNotEmpty {
                 var header = section.header
-                if self.request != .sessions && self.request != .ping {
+                switch self.request {
+                case
+                .sessions,
+                .ping,
+                .findBanner:
+                    break
+                default:
                     header += " (ячеек: \(self.results.count))"
                 }
                 return header
@@ -236,6 +245,45 @@ extension ResultTableViewController {
                 ]
                 self.tableView.reloadData()
                 print(session)
+            case .failure(let error):
+                self.showAlert(error)
+                print(error)
+            }
+        }
+    }
+    
+    private func findBanner() {
+        // Пример запроса подходящего баннер без ротации
+        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
+        apiClient.findBanner { [weak self] (result) in
+            guard let self = self else { return }
+            self.configureStopAnimating()
+            
+            switch result {
+            case .success(let bannerData):
+                let banner = bannerData.banner
+                self.results = [
+                    APIRequest.Result(title: "id", detail: banner.id.string),
+                    APIRequest.Result(title: "image url", detail: banner.imageUrl),
+                    APIRequest.Result(title: "title", detail: banner.title),
+                    APIRequest.Result(title: "description", detail: banner.description),
+                    APIRequest.Result(title: "is skipable", detail: banner.isSkipable.string),
+                    APIRequest.Result(title: "type", detail: banner.type.string),
+                    APIRequest.Result(title: "pack id", detail: banner.packId?.string ?? "null"),
+                    APIRequest.Result(title: "detail url", detail: banner.detailUrl),
+                    APIRequest.Result(title: "delay", detail: banner.delay.string)
+                ]
+                if let device = bannerData.device {
+                    self.results += [
+                        APIRequest.Result(title: "device id", detail: device.id),
+                        APIRequest.Result(title: "shown banners", detail: "\(device.shownBanners)"),
+                        APIRequest.Result(title: "skipped banners", detail: "\(device.skippedBanners)"),
+                        APIRequest.Result(title: "created at", detail: device.createdAt),
+                        APIRequest.Result(title: "updated at", detail: device.updatedAt)
+                    ]
+                }
+                self.tableView.reloadData()
+                print(bannerData)
             case .failure(let error):
                 self.showAlert(error)
                 print(error)
@@ -344,9 +392,8 @@ extension ResultTableViewController {
             switch error {
             case .jsonAPIError(let statusCode, error: let jsonAPIError):
                 if let error = jsonAPIError.errors.first {
-                    let errorId = error.id != nil ? "\(error.id!)" : "-"
                     self.results = [
-                        APIRequest.Result(title: "id", detail: errorId),
+                        APIRequest.Result(title: "id", detail: error.id?.string ?? "-"),
                         APIRequest.Result(title: "status", detail: error.status),
                         APIRequest.Result(title: "code", detail: error.code),
                         APIRequest.Result(title: "title", detail: error.title),

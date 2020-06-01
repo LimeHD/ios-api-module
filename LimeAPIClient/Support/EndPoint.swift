@@ -62,6 +62,20 @@ extension EndPoint.Factory {
         )
     }
     
+    static func findBanner() -> EndPoint {
+        let urlParameters = [
+            "device_id": Device.id,
+            "app_id": LimeAPIClient.configuration?.appId ?? "",
+            "platform": "ios"
+        ]
+        let parameters = EndPoint.Parameters(url: urlParameters)
+        return EndPoint(
+            path: "v1/banners/recommended/find",
+            acceptHeader: HTTP.Header.Accept.json,
+            parameters: parameters
+        )
+    }
+    
     static func channels() -> EndPoint {
         return EndPoint(
             path: "v1/channels",

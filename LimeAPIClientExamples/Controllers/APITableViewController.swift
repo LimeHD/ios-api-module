@@ -23,6 +23,7 @@ class APITableViewController: UITableViewController {
         self.apiList = [
             API(section: "sessions", requests: [.sessions]),
             API(section: "ping", requests: [.ping]),
+            API(section: "banners", requests: [.findBanner]),
             API(section: "channels", requests: [.channels, .channelsByGroupId]),
             API(section: "broadcasts", requests: [.broadcasts])
         ]
@@ -56,6 +57,8 @@ class APITableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         cell.textLabel?.text = self.apiList[indexPath.section].requests[indexPath.row].rawValue
+        cell.detailTextLabel?.text = self.apiList[indexPath.section].requests[indexPath.row].detail
+        cell.detailTextLabel?.numberOfLines = 0
         
         return cell
     }

@@ -50,7 +50,7 @@ apiClient.session { (result) in
     }
 }
 ```
-При успешном запросе в ответ приходи тип данных `Session`:
+При успешном запросе в ответ приходит тип данных `Session`:
 ``` swift
 struct Session: Decodable {
     let sessionId: String
@@ -93,6 +93,47 @@ struct JSONAPIError: Decodable, Equatable {
 }
 ```
 
+### Получение подходящего баннера для ротации
+Пример запроса
+``` swift
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+apiClient.findBanner { (result) in
+    switch result {
+    case .success(let bannerData):
+        print(bannerData)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+В ответ приходит баннер. Тип данных `BannerData`:
+``` swift
+struct BannerData: Decodable {
+    let banner: Banner
+    let device: Device?
+    
+    struct Banner: Decodable {
+        let id: Int
+        let imageUrl: String
+        let title: String
+        let description: String
+        let isSkipable: Bool
+        let type: Int
+        let packId: Int?
+        let detailUrl: String
+        let delay: Int
+    }
+    
+    struct Device: Decodable {
+        let id: String
+        let shownBanners: [String : Int]
+        let skippedBanners: [Int]
+        let createdAt: String
+        let updatedAt: String
+    }
+}
+```
+
 ### Получение списка каналов
 Пример запроса
 ``` swift
@@ -106,7 +147,7 @@ apiClient.requestChannels { (result) in
     }
 }
 ```
-В ответ приходи список каналов в виде массива. Тип данных `Channel`:
+В ответ приходит список каналов в виде массива. Тип данных `Channel`:
 ``` swift
 struct Channel: Decodable {
     let id: String
@@ -141,7 +182,7 @@ apiClient.requestChannelsByGroupId { (result) in
     }
 }
 ```
-В ответ приходи список каналов в виде массива. Тип данных `Channel` (см. выше).
+В ответ приходит список каналов в виде массива. Тип данных `Channel` (см. выше).
 
 ### Получение программы передач
 Пример запроса
@@ -159,7 +200,7 @@ apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { (resul
     }
 }
 ```
-В ответ приходи список каналов в виде массива. Тип данных `Broadcast`:
+В ответ приходит список каналов в виде массива. Тип данных `Broadcast`:
 ``` swift
 struct Broadcast: Decodable {
     let id: String
@@ -190,7 +231,7 @@ apiClient.ping(key: "test") { (result) in
     }
 }
 ```
-При успешном запросе в ответ приходи тип данных `Ping`:
+При успешном запросе в ответ приходит тип данных `Ping`:
 ``` swift
 struct Ping: Decodable {
     let result: String
