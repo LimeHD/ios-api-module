@@ -31,11 +31,19 @@ class JSONParserTests: XCTestCase {
     }
     
     func test_decode_givenInvalidJSON_returnsFailure() throws {
+        let result = try self.parseJSON(JSONAPIErrorExample.incorrectData)
+        
+        XCTAssertNil(result.json)
+        XCTAssertNotNil(result.error)
+    }
+    
+    typealias JSONResult = (json: JSONAPIError?, error: Error?)
+    
+    func parseJSON(_ jsonString: String) throws -> JSONResult {
         var expectedData: JSONAPIError? = nil
         var expectedError: Error? = nil
-        let data = try XCTUnwrap(JSONAPIErrorExample.incorrectData.data(using: .utf8))
+        let data = try XCTUnwrap(jsonString.data(using: .utf8))
         let result = self.sut.decode(JSONAPIError.self, data)
-        
         
         switch result {
         case .success(let data):
@@ -44,25 +52,13 @@ class JSONParserTests: XCTestCase {
             expectedError = error
         }
         
-        XCTAssertNil(expectedData)
-        XCTAssertNotNil(expectedError)
+        return (expectedData, expectedError)
     }
     
     func test_decode_givenCorrectJSON_returnsSuccess() throws {
-        var expectedData: JSONAPIError? = nil
-        var expectedError: Error? = nil
-    
-        let data = try XCTUnwrap(JSONAPIErrorExample.standart.data(using: .utf8))
-        let result = self.sut.decode(JSONAPIError.self, data)
+        let result = try self.parseJSON(JSONAPIErrorExample.standart)
         
-        switch result {
-        case .success(let data):
-            expectedData = data
-        case .failure(let error):
-            expectedError = error
-        }
-        
-        XCTAssertNotNil(expectedData)
-        XCTAssertNil(expectedError)
+        XCTAssertNotNil(result.json)
+        XCTAssertNil(result.error)
     }
 }
