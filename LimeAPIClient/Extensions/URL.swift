@@ -9,7 +9,7 @@
 import Foundation
 
 extension URL {
-    func addQueryItems(parameters: [String : String], resolvingAgainstBaseURL resolve: Bool) -> URL? {
+    func addingQueryItems(parameters: [String : String], resolvingAgainstBaseURL resolve: Bool) -> URL? {
         guard !parameters.isEmpty else { return nil }
         if var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: resolve) {
             urlComponents.addQueryItems(parameters: parameters)

@@ -17,7 +17,7 @@ extension URLRequest {
     
     mutating func addURLQueryItems(parameters: [String : String], resolvingAgainstBaseURL resolve: Bool) {
         guard !parameters.isEmpty else { return }
-        if let url = self.url?.addQueryItems(parameters: parameters, resolvingAgainstBaseURL: resolve) {
+        if let url = self.url?.addingQueryItems(parameters: parameters, resolvingAgainstBaseURL: resolve) {
             self.url = url
         }
     }
