@@ -20,7 +20,10 @@ class JSONParser {
             let result = try self.decoder.decode(T.self, from: data)
             return Result.success(result)
         } catch {
+            print("\(module).\(Self.self).\(#function).Error.IncorrectData")
+            print("-----------------------------------")
             print(String(decoding: data, as: UTF8.self))
+            print("-----------------------------------")
             return Result.failure(error)
         }
     }

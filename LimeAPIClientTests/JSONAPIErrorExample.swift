@@ -39,4 +39,19 @@ struct JSONAPIErrorExample {
       }
     }
     """
+    static var incorrectData = """
+    {
+      "errors": [
+        {
+          "code": "sequel/database_error",
+          "status": true,
+          "title": "Sequel::DatabaseError",
+          "detail": "detail hidden"
+        }
+      ],
+      "meta": {
+        "request_id": "Request is not tracked"
+      }
+    }
+    """
 }

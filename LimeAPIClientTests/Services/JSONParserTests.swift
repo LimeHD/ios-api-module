@@ -31,9 +31,10 @@ class JSONParserTests: XCTestCase {
     }
     
     func test_decode_givenInvalidJSON_returnsFailure() throws {
-        var expectedData: Channel? = nil
+        var expectedData: JSONAPIError? = nil
         var expectedError: Error? = nil
-        let result = self.sut.decode(Channel.self, Data())
+        let data = try XCTUnwrap(JSONAPIErrorExample.incorrectData.data(using: .utf8))
+        let result = self.sut.decode(JSONAPIError.self, data)
         
         
         switch result {
