@@ -19,4 +19,13 @@ class StringTests: XCTestCase {
         let emoji = String(repeating: "A", count: 60)
         XCTAssertEqual(emoji.filteringEmoji.count, 40)
     }
+    
+    func test_int_correctValueReturnsInt() {
+        let number = 123
+        XCTAssertEqual("\(number)".int, number)
+    }
+    
+    func test_int_invalidValueReturnsNil() {
+        XCTAssertNil("TEST".int)
+    }
 }
