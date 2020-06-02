@@ -158,12 +158,7 @@ extension LimeAPIClient {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let parser = JSONParser(decoder)
                 let result = parser.decode(T.self, result.data)
-                switch result {
-                case .success(let data):
-                    completion(.success(data))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
+                self.handleJSONResult(result, completion)
             case .failure(let error):
                 completion(.failure(error))
             }
