@@ -26,7 +26,7 @@ struct EndPoint {
         self.parameters = parameters
     }
     
-    struct Parameters {
+    struct Parameters: Equatable {
         let url: [String : String]
         let body: [String : String]
         
