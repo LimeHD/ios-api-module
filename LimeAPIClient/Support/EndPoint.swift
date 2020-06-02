@@ -62,13 +62,16 @@ extension EndPoint.Factory {
         )
     }
     
-    static func findBanner() -> EndPoint {
-        let urlParameters = [
+    private static var bannerUrlParameters: [String : String] {
+        [
             "device_id" : Device.id,
             "app_id" : LimeAPIClient.configuration?.appId ?? "",
             "platform" : "ios"
         ]
-        let parameters = EndPoint.Parameters(url: urlParameters)
+    }
+    
+    static func findBanner() -> EndPoint {
+        let parameters = EndPoint.Parameters(url: EndPoint.Factory.bannerUrlParameters)
         return EndPoint(
             path: "v1/banners/recommended/find",
             acceptHeader: HTTP.Header.Accept.json,
@@ -77,12 +80,7 @@ extension EndPoint.Factory {
     }
     
     static func nextBanner() -> EndPoint {
-        let urlParameters = [
-            "device_id" : Device.id,
-            "app_id" : LimeAPIClient.configuration?.appId ?? "",
-            "platform" : "ios"
-        ]
-        let parameters = EndPoint.Parameters(url: urlParameters)
+        let parameters = EndPoint.Parameters(url: EndPoint.Factory.bannerUrlParameters)
         return EndPoint(
             path: "v1/banners/recommended/next",
             acceptHeader: HTTP.Header.Accept.json,
