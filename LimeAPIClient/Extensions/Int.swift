@@ -10,6 +10,6 @@ import Foundation
 
 public extension Int {
     var minutes: Int { self * 60 }
-    var hours: Int { self * 3600 }
+    var hours: Int { self * 3_600 }
     var string: String { "\(self)" }
 }
