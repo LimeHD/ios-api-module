@@ -69,6 +69,7 @@
 		4E8CD1CA24867BEA00648E24 /* RFC3339DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1C924867BEA00648E24 /* RFC3339DateFormatterTests.swift */; };
 		4E8CD1CC24867F7300648E24 /* LACDateIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1CB24867F7300648E24 /* LACDateIntervalTests.swift */; };
 		4E8CD1CE248682D600648E24 /* TimeIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1CD248682D600648E24 /* TimeIntervalTests.swift */; };
+		4E8CD1D02486843B00648E24 /* TimeZoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1CF2486843B00648E24 /* TimeZoneTests.swift */; };
 		4EBFF41A2484DCD10096FFCF /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF4192484DCD10096FFCF /* APIRequest.swift */; };
 		4EBFF41C2484E1960096FFCF /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF41B2484E1960096FFCF /* ColorTheme.swift */; };
 		4EBFF41E248511A20096FFCF /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF41D248511A20096FFCF /* Banner.swift */; };
@@ -168,6 +169,7 @@
 		4E8CD1C924867BEA00648E24 /* RFC3339DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateFormatterTests.swift; sourceTree = "<group>"; };
 		4E8CD1CB24867F7300648E24 /* LACDateIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACDateIntervalTests.swift; sourceTree = "<group>"; };
 		4E8CD1CD248682D600648E24 /* TimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTests.swift; sourceTree = "<group>"; };
+		4E8CD1CF2486843B00648E24 /* TimeZoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneTests.swift; sourceTree = "<group>"; };
 		4EBFF4192484DCD10096FFCF /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		4EBFF41B2484E1960096FFCF /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		4EBFF41D248511A20096FFCF /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				4E8CD1C52486771C00648E24 /* IntTests.swift */,
 				4E5B0C96247C07E400DDE6BA /* StringTests.swift */,
 				4E8CD1CD248682D600648E24 /* TimeIntervalTests.swift */,
+				4E8CD1CF2486843B00648E24 /* TimeZoneTests.swift */,
 				4E8CD1C12486680C00648E24 /* URLTests.swift */,
 				4E8CD1BF248661FA00648E24 /* URLRequestTests.swift */,
 			);
@@ -582,6 +585,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E8CD1D02486843B00648E24 /* TimeZoneTests.swift in Sources */,
 				4E835BF32474179F00C8DD96 /* JSONParserTests.swift in Sources */,
 				4E8CD1C424866C5200648E24 /* EndPointTests.swift in Sources */,
 				4E8CD1CC24867F7300648E24 /* LACDateIntervalTests.swift in Sources */,
