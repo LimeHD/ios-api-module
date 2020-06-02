@@ -1,5 +1,5 @@
 //
-//  StringExtensionTests.swift
+//  StringTests.swift
 //  LimeAPIClientTests
 //
 //  Created by Лайм HD on 25.05.2020.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import LimeAPIClient
 
-class StringExtensionTests: XCTestCase {
+class StringTests: XCTestCase {
     func test_filteringEmoji_emojiFilters() {
         let emoji = "😀"
         XCTAssertFalse(emoji.filteringEmoji.contains(emoji))
