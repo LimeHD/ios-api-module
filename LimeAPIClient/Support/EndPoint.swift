@@ -43,6 +43,10 @@ struct EndPoint {
 }
 
 extension EndPoint.Factory {
+    struct Banner {
+        private init() { }
+    }
+    
     static func session() -> EndPoint {
         let parameters = EndPoint.Parameters(
             body: ["app_id" : LimeAPIClient.configuration?.appId ?? ""]
@@ -59,61 +63,6 @@ extension EndPoint.Factory {
         return EndPoint(
             path: "v1/channels/test",
             acceptHeader: HTTP.Header.Accept.jsonAPI
-        )
-    }
-    
-    private static var bannerUrlParameters: [String : String] {
-        [
-            "device_id" : Device.id,
-            "app_id" : LimeAPIClient.configuration?.appId ?? "",
-            "platform" : "ios"
-        ]
-    }
-    
-    static func findBanner() -> EndPoint {
-        let parameters = EndPoint.Parameters(url: EndPoint.Factory.bannerUrlParameters)
-        return EndPoint(
-            path: "v1/banners/recommended/find",
-            acceptHeader: HTTP.Header.Accept.json,
-            parameters: parameters
-        )
-    }
-    
-    static func nextBanner() -> EndPoint {
-        let parameters = EndPoint.Parameters(url: EndPoint.Factory.bannerUrlParameters)
-        return EndPoint(
-            path: "v1/banners/recommended/next",
-            acceptHeader: HTTP.Header.Accept.json,
-            parameters: parameters
-        )
-    }
-    
-    static func deleteBanFromBanner(_ bannerId: Int) -> EndPoint {
-        let parameters = EndPoint.Parameters(url: ["device_id" : Device.id])
-        return EndPoint(
-            path: "v1/banners/\(bannerId)/ban",
-            acceptHeader: HTTP.Header.Accept.json,
-            httpMethod: HTTP.Method.delete,
-            parameters: parameters
-        )
-    }
-    
-    static func banBanner(_ bannerId: Int) -> EndPoint {
-        let parameters = EndPoint.Parameters(body: ["device_id" : Device.id])
-        return EndPoint(
-            path: "v1/banners/\(bannerId)/ban",
-            acceptHeader: HTTP.Header.Accept.json,
-            httpMethod: HTTP.Method.post,
-            parameters: parameters
-        )
-    }
-    
-    static func getBanner(_ bannerId: Int) -> EndPoint {
-        let parameters = EndPoint.Parameters(url: ["device_id" : Device.id])
-        return EndPoint(
-            path: "v1/banners/\(bannerId)",
-            acceptHeader: HTTP.Header.Accept.json,
-            parameters: parameters
         )
     }
     
@@ -159,6 +108,66 @@ extension EndPoint.Factory {
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
             path: "v1/ping",
+            acceptHeader: HTTP.Header.Accept.json,
+            parameters: parameters
+        )
+    }
+}
+
+// MARK: - Banner Factory
+
+extension EndPoint.Factory.Banner {
+    enum Request: String {
+        case find
+        case next
+    }
+    
+    static func find() -> EndPoint {
+        return EndPoint.Factory.Banner.request(.find)
+    }
+    
+    static func next() -> EndPoint {
+        return EndPoint.Factory.Banner.request(.next)
+    }
+    
+    private static func request(_ request: EndPoint.Factory.Banner.Request) -> EndPoint {
+        let urlParameters = [
+            "device_id" : Device.id,
+            "app_id" : LimeAPIClient.configuration?.appId ?? "",
+            "platform" : "ios"
+        ]
+        let parameters = EndPoint.Parameters(url: urlParameters)
+        return EndPoint(
+            path: "v1/banners/recommended/\(request.rawValue)",
+            acceptHeader: HTTP.Header.Accept.json,
+            parameters: parameters
+        )
+    }
+    
+    static func deleteBan(_ bannerId: Int) -> EndPoint {
+        let parameters = EndPoint.Parameters(url: ["device_id" : Device.id])
+        return EndPoint(
+            path: "v1/banners/\(bannerId)/ban",
+            acceptHeader: HTTP.Header.Accept.json,
+            httpMethod: HTTP.Method.delete,
+            parameters: parameters
+        )
+    }
+    
+    static func ban(_ bannerId: Int) -> EndPoint {
+        let parameters = EndPoint.Parameters(body: ["device_id" : Device.id])
+        return EndPoint(
+            path: "v1/banners/\(bannerId)/ban",
+            acceptHeader: HTTP.Header.Accept.json,
+            httpMethod: HTTP.Method.post,
+            parameters: parameters
+        )
+    }
+    
+    static func info(_ bannerId: Int) -> EndPoint {
+        let parameters = EndPoint.Parameters(url: ["device_id" : Device.id])
+        return EndPoint(
+            path: "v1/banners/\(bannerId)",
             acceptHeader: HTTP.Header.Accept.json,
             parameters: parameters
         )

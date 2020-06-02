@@ -47,37 +47,7 @@ public final class LimeAPIClient {
         }
     }
     
-    // MARK: Banners
-    
-    public func findBanner(completion: @escaping ApiResult<BannerAndDevice>) {
-        self.request(BannerAndDevice.self, endPoint: EndPoint.Factory.findBanner()) { (result) in
-            self.handleJSONResult(result, completion)
-        }
-    }
-    
-    public func nextBanner(completion: @escaping ApiResult<BannerAndDevice.Banner>) {
-        self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Factory.nextBanner()) { (result) in
-            self.handleJSONResult(result, completion)
-        }
-    }
-    
-    public func deleteBanFromBanner(bannerId: Int, completion: @escaping ApiResult<BanBanner>) {
-        let endPoint = EndPoint.Factory.deleteBanFromBanner(bannerId)
-        self.handleBanBannerRequest(endPoint: endPoint, completion: completion)
-    }
-    
-    public func banBanner(bannerId: Int, completion: @escaping ApiResult<BanBanner>) {
-        let endPoint = EndPoint.Factory.banBanner(bannerId)
-        self.handleBanBannerRequest(endPoint: endPoint, completion: completion)
-    }
-    
-    public func getBanner(bannerId: Int, completion: @escaping ApiResult<BannerAndDevice.Banner>) {
-        self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Factory.getBanner(bannerId)) { (result) in
-            self.handleJSONResult(result, completion)
-        }
-    }
-    
-    // MARK: Channels
+    // MARK: - Channels
     
     public func requestChannels(completion: @escaping ApiResult<[Channel]>) {
         self.request(JSONAPIObject<[Channel], String>.self, endPoint: EndPoint.Factory.channels()) { (result) in
@@ -116,6 +86,38 @@ public final class LimeAPIClient {
     
     public func ping(key: String = "", completion: @escaping ApiResult<Ping>) {
         self.request(Ping.self, endPoint: EndPoint.Factory.ping(key: key)) { (result) in
+            self.handleJSONResult(result, completion)
+        }
+    }
+}
+
+// MARK: - Banners
+
+public extension LimeAPIClient {
+    func findBanner(completion: @escaping ApiResult<BannerAndDevice>) {
+        self.request(BannerAndDevice.self, endPoint: EndPoint.Factory.Banner.find()) { (result) in
+            self.handleJSONResult(result, completion)
+        }
+    }
+    
+    func nextBanner(completion: @escaping ApiResult<BannerAndDevice.Banner>) {
+        self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Factory.Banner.next()) { (result) in
+            self.handleJSONResult(result, completion)
+        }
+    }
+    
+    func deleteBanFromBanner(bannerId: Int, completion: @escaping ApiResult<BanBanner>) {
+        let endPoint = EndPoint.Factory.Banner.deleteBan(bannerId)
+        self.handleBanBannerRequest(endPoint: endPoint, completion: completion)
+    }
+    
+    func banBanner(bannerId: Int, completion: @escaping ApiResult<BanBanner>) {
+        let endPoint = EndPoint.Factory.Banner.ban(bannerId)
+        self.handleBanBannerRequest(endPoint: endPoint, completion: completion)
+    }
+    
+    func getBanner(bannerId: Int, completion: @escaping ApiResult<BannerAndDevice.Banner>) {
+        self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Factory.Banner.info(bannerId)) { (result) in
             self.handleJSONResult(result, completion)
         }
     }
