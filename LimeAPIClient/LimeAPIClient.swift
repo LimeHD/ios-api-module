@@ -62,15 +62,13 @@ public final class LimeAPIClient {
     }
     
     public func deleteBanFromBanner(bannerId: Int, completion: @escaping ApiResult<BanBanner>) {
-        self.request(BanBanner.self, endPoint: EndPoint.Factory.deleteBanFromBanner(bannerId)) { (result) in
-            self.handleJSONResult(result, completion)
-        }
+        let endPoint = EndPoint.Factory.deleteBanFromBanner(bannerId)
+        self.handleBanBannerRequest(endPoint: endPoint, completion: completion)
     }
     
     public func banBanner(bannerId: Int, completion: @escaping ApiResult<BanBanner>) {
-        self.request(BanBanner.self, endPoint: EndPoint.Factory.banBanner(bannerId)) { (result) in
-            self.handleJSONResult(result, completion)
-        }
+        let endPoint = EndPoint.Factory.banBanner(bannerId)
+        self.handleBanBannerRequest(endPoint: endPoint, completion: completion)
     }
     
     public func getBanner(bannerId: Int, completion: @escaping ApiResult<BannerAndDevice.Banner>) {
@@ -187,6 +185,12 @@ extension LimeAPIClient {
             completion(.success(result))
         case .failure(let error):
             completion(.failure(error))
+        }
+    }
+    
+    private func handleBanBannerRequest(endPoint: EndPoint, completion: @escaping ApiResult<BanBanner>) {
+        self.request(BanBanner.self, endPoint: endPoint) { (result) in
+            self.handleJSONResult(result, completion)
         }
     }
     
