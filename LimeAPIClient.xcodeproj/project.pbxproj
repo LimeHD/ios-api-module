@@ -14,6 +14,7 @@
 		4E560CC8248795CC006A644A /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CC7248795CC006A644A /* DispatchQueue.swift */; };
 		4E560CCA2487B3A8006A644A /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */; };
 		4E560CCC2487BE0D006A644A /* SessionExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CCB2487BE0D006A644A /* SessionExample.swift */; };
+		4E560CCF2487C346006A644A /* ChannelExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CCE2487C346006A644A /* ChannelExample.swift */; };
 		4E5643642472989900CDD18F /* URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643632472989900CDD18F /* URLParameters.swift */; };
 		4E5643682472CB7D00CDD18F /* CharacterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643672472CB7D00CDD18F /* CharacterSet.swift */; };
 		4E56436A2472D41900CDD18F /* RFC3339DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643692472D41900CDD18F /* RFC3339DateFormatter.swift */; };
@@ -114,6 +115,7 @@
 		4E560CC7248795CC006A644A /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueue.swift; sourceTree = "<group>"; };
 		4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
 		4E560CCB2487BE0D006A644A /* SessionExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExample.swift; sourceTree = "<group>"; };
+		4E560CCE2487C346006A644A /* ChannelExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelExample.swift; sourceTree = "<group>"; };
 		4E5643632472989900CDD18F /* URLParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParameters.swift; sourceTree = "<group>"; };
 		4E5643672472CB7D00CDD18F /* CharacterSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSet.swift; sourceTree = "<group>"; };
 		4E5643692472D41900CDD18F /* RFC3339DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateFormatter.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */,
+				4E560CCE2487C346006A644A /* ChannelExample.swift */,
 				4E560CCB2487BE0D006A644A /* SessionExample.swift */,
 			);
 			path = Models;
@@ -615,6 +618,7 @@
 				4EFC6E4C2476B49A009D6CF7 /* JSONAPIErrorExample.swift in Sources */,
 				4E8CD1BE24865EBF00648E24 /* HTTPTests.swift in Sources */,
 				4E8CD1CE248682D600648E24 /* TimeIntervalTests.swift in Sources */,
+				4E560CCF2487C346006A644A /* ChannelExample.swift in Sources */,
 				4E579585246AE3D20009D306 /* LimeAPIClientTests.swift in Sources */,
 				4E8CD1C22486680C00648E24 /* URLTests.swift in Sources */,
 				4E8CD1CA24867BEA00648E24 /* RFC3339DateFormatterTests.swift in Sources */,

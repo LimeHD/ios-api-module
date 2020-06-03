@@ -138,9 +138,54 @@ class LimeAPIClientTests: XCTestCase {
         let data = try XCTUnwrap(string.data(using: .utf8))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
+        do {
         let jsonAPIError = try decoder.decode(T.self, from: data)
+            return (data, jsonAPIError)
+        } catch {
+            print("-----------------------------------")
+            print(String(decoding: data, as: UTF8.self))
+            print("-----------------------------------")
+        }
         
-        return (data, jsonAPIError)
+        return (data, nil)
+    }
+}
+
+// MARK: - Channels Tests
+
+extension LimeAPIClientTests {
+    func test_requestChannels_wrongResponseData_callsCompletionWithFailure() {
+        var calledCompletion = false
+        var requestResult: RequestResult<[Channel]> = (nil,  nil)
+        
+        self.sut.requestChannels { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNil(requestResult.data)
+        XCTAssertNotNil(requestResult.error)
+    }
+    
+    func test_requestChannels_correctResponseData_callsCompletionWithSuccess() throws {
+        var calledCompletion = false
+        var requestResult: RequestResult<[Channel]> = (nil,  nil)
+        let data = try generateJSONData(JSONAPIObject<[Channel], String>.self, string: ChannelExample)
+        
+        self.sut.requestChannels { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNotNil(requestResult.data)
+        XCTAssertEqual(requestResult.data, data.decoded?.data)
+        XCTAssertNil(requestResult.error)
     }
 }
 
