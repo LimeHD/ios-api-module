@@ -93,47 +93,6 @@ struct JSONAPIError: Decodable, Equatable {
 }
 ```
 
-### Получение подходящего баннера для ротации
-Пример запроса
-``` swift
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-apiClient.findBanner { (result) in
-    switch result {
-    case .success(let bannerAndDevice):
-        print(bannerAndDevice)
-    case .failure(let error):
-        print(error)
-    }
-}
-```
-В ответ приходит баннер. Тип данных `BannerAndDevice`:
-``` swift
-struct BannerAndDevice: Decodable {
-    let banner: Banner
-    let device: Device?
-    
-    struct Banner: Decodable {
-        let id: Int
-        let imageUrl: String
-        let title: String
-        let description: String
-        let isSkipable: Bool
-        let type: Int
-        let packId: Int?
-        let detailUrl: String
-        let delay: Int
-    }
-    
-    struct Device: Decodable {
-        let id: String
-        let shownBanners: [String : Int]
-        let skippedBanners: [Int]
-        let createdAt: String
-        let updatedAt: String
-    }
-}
-```
-
 ### Получение баннера, рекомендованного данному устройству и приложению
 Пример запроса
 ``` swift
@@ -147,7 +106,20 @@ apiClient.nextBanner { (result) in
     }
 }
 ```
-В ответ приходит баннер. Тип данных `BannerAndDevice.Banner` (см. выше).
+В ответ приходит баннер. Тип данных `BannerAndDevice.Banner`:
+``` swift
+struct BannerAndDevice.Banner: Decodable {
+    let id: Int
+    let imageUrl: String
+    let title: String
+    let description: String
+    let isSkipable: Bool
+    let type: Int
+    let packId: Int?
+    let detailUrl: String
+    let delay: Int
+}
+```
 
 ### Снятие (удаление) пометки «нежелательный» с баннера
 Пример запроса
