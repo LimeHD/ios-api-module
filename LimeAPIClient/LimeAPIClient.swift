@@ -24,7 +24,6 @@ enum APIError: Error, LocalizedError, Equatable {
     }
 }
 
-
 public final class LimeAPIClient {
     let baseUrl: String
     let session: URLSession
@@ -79,8 +78,8 @@ public final class LimeAPIClient {
     public func requestBroadcasts(
         channelId: Int,
         dateInterval: LACDateInterval,
-        completion: @escaping ApiResult<[Broadcast]>)
-    {
+        completion: @escaping ApiResult<[Broadcast]>
+    ) {
         let timeZone = dateInterval.timeZone
         let endPoint = EndPoint.Factory.broadcasts(
             channelId: channelId,
