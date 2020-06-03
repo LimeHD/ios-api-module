@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONAPIErrorExample {
-    static var base = """
+    static let base = """
     {
       "errors": [
         {
@@ -24,7 +24,7 @@ struct JSONAPIErrorExample {
       }
     }
     """
-    static var standart = """
+    static let standart = """
     {
       "errors": [
         {
@@ -39,7 +39,7 @@ struct JSONAPIErrorExample {
       }
     }
     """
-    static var incorrectData = """
+    static let incorrectData = """
     {
       "errors": [
         {

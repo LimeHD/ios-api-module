@@ -93,7 +93,7 @@ class HTTPClientTests: XCTestCase {
     
     func response(_ statusCode: Int?) -> HTTPURLResponse? {
         guard let statusCode = statusCode else { return nil }
-        return HTTPURLResponse(url: self.url, statusCode: statusCode, httpVersion: nil, headerFields: nil)
+        return HTTPURLResponse(url: self.url, statusCode: statusCode)
     }
     
     func test_getJSON_emptyData_callsCompletionWithFailure() throws {
@@ -176,7 +176,7 @@ class HTTPClientTests: XCTestCase {
     }
 }
 
-//MARK: - Mock Classes
+// MARK: - Mock Classes
 
 typealias mockCompletion = (Data?, URLResponse?, Error?) -> Void
 

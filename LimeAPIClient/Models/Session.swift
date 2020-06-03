@@ -8,14 +8,14 @@
 
 import Foundation
 
-public struct Session: Decodable {
+public struct Session: Decodable, Equatable {
     public let sessionId: String
     public let currentTime: String
     public let streamEndpoint: String
     public let defaultChannelGroupId: Int
     public let settings: Settings
     
-    public struct Settings: Decodable {
+    public struct Settings: Decodable, Equatable {
         public let isAdStart: Bool
         public let isAdFirstStart: Bool
         public let isAdOnlStart: Bool

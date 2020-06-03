@@ -13,11 +13,14 @@ class LimeAPIClientTests: XCTestCase {
     var sut: LimeAPIClient!
     var baseUrl = "https://limehd.tv/"
     var session: MockURLSession!
+    var queue: MockDispatchQueue!
+    let response = HTTPURLResponse(url: URL(string: "https://limehd.tv/")!, statusCode: 200)
     
     override func setUp() {
         super.setUp()
         self.session = MockURLSession()
-        self.sut = LimeAPIClient(baseUrl: self.baseUrl, session: self.session)
+        self.queue = MockDispatchQueue()
+        self.sut = LimeAPIClient(baseUrl: self.baseUrl, session: self.session, mainQueue: queue, backgroundQueue: queue)
     }
     
     override func tearDown() {
@@ -83,4 +86,66 @@ class LimeAPIClientTests: XCTestCase {
             XCTAssertNotNil(actualError.localizedDescription)
         }
     }
+    
+    func test_session_wrongResponseData_callsCompletionWithFailure() {
+        var calledCompletion = false
+        var requestResult: RequestResult<Session> = (nil,  nil)
+        
+        self.sut.session { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNil(requestResult.data)
+        XCTAssertNotNil(requestResult.error)
+    }
+    
+    typealias RequestResult<T> = (data: T?, error: Error?)
+    
+    func getRequestResult<T>(_ result: Result<T, Error>) -> RequestResult<T> {
+        switch result {
+        case .success(let data):
+            return (data, nil)
+        case .failure(let error):
+            return (nil, error)
+        }
+    }
+    
+    func test_session_correctResponseData_callsCompletionWithSuccess() throws {
+        var calledCompletion = false
+        var requestResult: RequestResult<Session> = (nil,  nil)
+        let data = try generateJSONData(Session.self, string: SessionExample)
+        
+        self.sut.session { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNotNil(requestResult.data)
+        XCTAssertEqual(requestResult.data, data.decoded)
+        XCTAssertNil(requestResult.error)
+    }
+    
+    typealias JSONData<T> = (raw: Data?, decoded: T?)
+    
+    func generateJSONData<T: Decodable>(_ type: T.Type, string: String) throws -> JSONData<T> {
+        let data = try XCTUnwrap(string.data(using: .utf8))
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let jsonAPIError = try decoder.decode(T.self, from: data)
+        
+        return (data, jsonAPIError)
+    }
+}
+
+// MARK: - MockDispatchQueue
+
+class MockDispatchQueue: Dispatchable {
+    func async(execute work: @escaping () -> Void) { work() }
 }

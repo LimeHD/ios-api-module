@@ -11,6 +11,9 @@
 		4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E5247319F400A8DA1F /* TimeInterval.swift */; };
 		4E54C5F72477E54500AAF223 /* LACConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54C5F62477E54500AAF223 /* LACConfiguration.swift */; };
 		4E54C5F92477F8DF00AAF223 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54C5F82477F8DF00AAF223 /* Session.swift */; };
+		4E560CC8248795CC006A644A /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CC7248795CC006A644A /* DispatchQueue.swift */; };
+		4E560CCA2487B3A8006A644A /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */; };
+		4E560CCC2487BE0D006A644A /* SessionExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CCB2487BE0D006A644A /* SessionExample.swift */; };
 		4E5643642472989900CDD18F /* URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643632472989900CDD18F /* URLParameters.swift */; };
 		4E5643682472CB7D00CDD18F /* CharacterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643672472CB7D00CDD18F /* CharacterSet.swift */; };
 		4E56436A2472D41900CDD18F /* RFC3339DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643692472D41900CDD18F /* RFC3339DateFormatter.swift */; };
@@ -108,6 +111,9 @@
 		4E5014E5247319F400A8DA1F /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		4E54C5F62477E54500AAF223 /* LACConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACConfiguration.swift; sourceTree = "<group>"; };
 		4E54C5F82477F8DF00AAF223 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		4E560CC7248795CC006A644A /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueue.swift; sourceTree = "<group>"; };
+		4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
+		4E560CCB2487BE0D006A644A /* SessionExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExample.swift; sourceTree = "<group>"; };
 		4E5643632472989900CDD18F /* URLParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParameters.swift; sourceTree = "<group>"; };
 		4E5643672472CB7D00CDD18F /* CharacterSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSet.swift; sourceTree = "<group>"; };
 		4E5643692472D41900CDD18F /* RFC3339DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateFormatter.swift; sourceTree = "<group>"; };
@@ -206,6 +212,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E560CCD2487BE30006A644A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */,
+				4E560CCB2487BE0D006A644A /* SessionExample.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		4E56436024727C0600CDD18F /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,8 +300,8 @@
 				4E579584246AE3D20009D306 /* LimeAPIClientTests.swift */,
 				4E59F2DB247700B800F3456F /* LACAppTests.swift */,
 				4E8CD1CB24867F7300648E24 /* LACDateIntervalTests.swift */,
-				4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */,
 				4E835BF4247417AC00C8DD96 /* Services */,
+				4E560CCD2487BE30006A644A /* Models */,
 				4E5B0C95247C006200DDE6BA /* Support */,
 				4E5B0C98247C07F000DDE6BA /* Extensions */,
 				4E579586246AE3D20009D306 /* Info.plist */,
@@ -329,6 +344,7 @@
 			children = (
 				4E8CD1C7248679FB00648E24 /* DateTests.swift */,
 				4E8CD1C52486771C00648E24 /* IntTests.swift */,
+				4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */,
 				4E5B0C96247C07E400DDE6BA /* StringTests.swift */,
 				4E8CD1CD248682D600648E24 /* TimeIntervalTests.swift */,
 				4E8CD1CF2486843B00648E24 /* TimeZoneTests.swift */,
@@ -361,6 +377,7 @@
 				4E5643672472CB7D00CDD18F /* CharacterSet.swift */,
 				4E56436B2472D4EA00CDD18F /* Date.swift */,
 				4E5B0C91247BDB6500DDE6BA /* Dictionary.swift */,
+				4E560CC7248795CC006A644A /* DispatchQueue.swift */,
 				4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */,
 				4E56436F2472F32B00CDD18F /* Int.swift */,
 				4E6D91D0246D846F00BB7C69 /* String.swift */,
@@ -572,6 +589,7 @@
 				4E6D91D1246D846F00BB7C69 /* String.swift in Sources */,
 				4E6D91CA246D786800BB7C69 /* HTTP.swift in Sources */,
 				4EBFF41E248511A20096FFCF /* Banner.swift in Sources */,
+				4E560CC8248795CC006A644A /* DispatchQueue.swift in Sources */,
 				4E54C5F92477F8DF00AAF223 /* Session.swift in Sources */,
 				4E56436A2472D41900CDD18F /* RFC3339DateFormatter.swift in Sources */,
 				4E6D91C4246D111900BB7C69 /* HTTPURLResponse.swift in Sources */,
@@ -591,6 +609,7 @@
 				4E8CD1CC24867F7300648E24 /* LACDateIntervalTests.swift in Sources */,
 				4E5B0C94247C002900DDE6BA /* URLParametersTests.swift in Sources */,
 				4E8CD1C62486771C00648E24 /* IntTests.swift in Sources */,
+				4E560CCC2487BE0D006A644A /* SessionExample.swift in Sources */,
 				4E5B0C97247C07E400DDE6BA /* StringTests.swift in Sources */,
 				4E6D91C6246D162700BB7C69 /* HTTPClientTests.swift in Sources */,
 				4EFC6E4C2476B49A009D6CF7 /* JSONAPIErrorExample.swift in Sources */,
@@ -599,6 +618,7 @@
 				4E579585246AE3D20009D306 /* LimeAPIClientTests.swift in Sources */,
 				4E8CD1C22486680C00648E24 /* URLTests.swift in Sources */,
 				4E8CD1CA24867BEA00648E24 /* RFC3339DateFormatterTests.swift in Sources */,
+				4E560CCA2487B3A8006A644A /* HTTPURLResponse.swift in Sources */,
 				4E8CD1C8248679FB00648E24 /* DateTests.swift in Sources */,
 				4E59F2DC247700B800F3456F /* LACAppTests.swift in Sources */,
 				4E8CD1C0248661FA00648E24 /* URLRequestTests.swift in Sources */,

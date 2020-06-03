@@ -28,11 +28,19 @@ enum APIError: Error, LocalizedError, Equatable {
 public final class LimeAPIClient {
     let baseUrl: String
     let session: URLSession
+    let mainQueue: Dispatchable
+    let backgroundQueue: Dispatchable
     public static var configuration: LACConfiguration?
     
-    public init(baseUrl: String, session: URLSession = URLSession.shared) {
+    public init(baseUrl: String, session: URLSession = URLSession.shared, mainQueue: Dispatchable = DispatchQueue.main, backgroundQueue: Dispatchable? = nil) {
         self.baseUrl = baseUrl
         self.session = session
+        self.mainQueue = mainQueue
+        if let backgroundQueue = backgroundQueue {
+            self.backgroundQueue = backgroundQueue
+        } else {
+            self.backgroundQueue = DispatchQueue(label: "tv.limehd.LimeAPIClient", qos: .userInitiated, attributes: .concurrent)
+        }
     }
     
     public func session(completion: @escaping ApiResult<Session>) {
@@ -138,14 +146,14 @@ extension LimeAPIClient {
             return
         }
         
-        DispatchQueue(label: "tv.limehd.LimeAPIClient", qos: .userInitiated, attributes: .concurrent).async {
+        self.backgroundQueue.async {
             self.dataTask(with: request, T.self) { (result) in
                 switch result {
                 case .success(let result):
-                    DispatchQueue.main.async { completion(.success(result)) }
+                    self.mainQueue.async { completion(.success(result)) }
                 case .failure(let error):
                     LimeAPIClient.log(request, message: error.localizedDescription)
-                    DispatchQueue.main.async { completion(.failure(error)) }
+                    self.mainQueue.async { completion(.failure(error)) }
                 }
             }
         }
