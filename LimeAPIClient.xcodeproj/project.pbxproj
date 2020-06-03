@@ -15,6 +15,7 @@
 		4E560CCA2487B3A8006A644A /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */; };
 		4E560CCC2487BE0D006A644A /* SessionExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CCB2487BE0D006A644A /* SessionExample.swift */; };
 		4E560CCF2487C346006A644A /* ChannelExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CCE2487C346006A644A /* ChannelExample.swift */; };
+		4E560CD12487E596006A644A /* BroadcastExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CD02487E596006A644A /* BroadcastExample.swift */; };
 		4E5643642472989900CDD18F /* URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643632472989900CDD18F /* URLParameters.swift */; };
 		4E5643682472CB7D00CDD18F /* CharacterSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643672472CB7D00CDD18F /* CharacterSet.swift */; };
 		4E56436A2472D41900CDD18F /* RFC3339DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5643692472D41900CDD18F /* RFC3339DateFormatter.swift */; };
@@ -116,6 +117,7 @@
 		4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
 		4E560CCB2487BE0D006A644A /* SessionExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExample.swift; sourceTree = "<group>"; };
 		4E560CCE2487C346006A644A /* ChannelExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelExample.swift; sourceTree = "<group>"; };
+		4E560CD02487E596006A644A /* BroadcastExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastExample.swift; sourceTree = "<group>"; };
 		4E5643632472989900CDD18F /* URLParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParameters.swift; sourceTree = "<group>"; };
 		4E5643672472CB7D00CDD18F /* CharacterSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSet.swift; sourceTree = "<group>"; };
 		4E5643692472D41900CDD18F /* RFC3339DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateFormatter.swift; sourceTree = "<group>"; };
@@ -217,8 +219,9 @@
 		4E560CCD2487BE30006A644A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */,
+				4E560CD02487E596006A644A /* BroadcastExample.swift */,
 				4E560CCE2487C346006A644A /* ChannelExample.swift */,
+				4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */,
 				4E560CCB2487BE0D006A644A /* SessionExample.swift */,
 			);
 			path = Models;
@@ -613,6 +616,7 @@
 				4E5B0C94247C002900DDE6BA /* URLParametersTests.swift in Sources */,
 				4E8CD1C62486771C00648E24 /* IntTests.swift in Sources */,
 				4E560CCC2487BE0D006A644A /* SessionExample.swift in Sources */,
+				4E560CD12487E596006A644A /* BroadcastExample.swift in Sources */,
 				4E5B0C97247C07E400DDE6BA /* StringTests.swift in Sources */,
 				4E6D91C6246D162700BB7C69 /* HTTPClientTests.swift in Sources */,
 				4EFC6E4C2476B49A009D6CF7 /* JSONAPIErrorExample.swift in Sources */,

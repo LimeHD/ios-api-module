@@ -166,6 +166,7 @@ extension LimeAPIClientTests {
         let jsonAPIError = try decoder.decode(T.self, from: data)
             return (data, jsonAPIError)
         } catch {
+            print("\(Self.self).\(#function).Error.unableDecoding")
             print("-----------------------------------")
             print(String(decoding: data, as: UTF8.self))
             print("-----------------------------------")
@@ -309,6 +310,50 @@ extension LimeAPIClientTests {
         
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         XCTAssertFalse(defaultChannelGroupId.isEmpty)
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNotNil(requestResult.data)
+        XCTAssertEqual(requestResult.data, data.decoded?.data)
+        XCTAssertNil(requestResult.error)
+    }
+}
+
+// MARK: - Broadcasts Tests
+
+extension LimeAPIClientTests {
+    func test_requestBroadcasts_wrongResponseData_callsCompletionWithFailure() {
+        var calledCompletion = false
+        var requestResult: RequestResult<[Broadcast]> = (nil,  nil)
+        
+        self.sut.requestBroadcasts(channelId: 105, dateInterval: self.testDateInterval) { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNil(requestResult.data)
+        XCTAssertNotNil(requestResult.error)
+    }
+    
+    var testDateInterval: LACDateInterval {
+        let startDate = Date().addingTimeInterval(-8.days)
+        let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
+        return LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
+    }
+    
+    func test_requestBroadcasts_correctResponseData_callsCompletionWithSuccess() throws {
+        var calledCompletion = false
+        var requestResult: RequestResult<[Broadcast]> = (nil,  nil)
+        let data = try generateJSONData(JSONAPIObject<[Broadcast], Broadcast.Meta>.self, string: BroadcastExample)
+        
+        self.sut.requestBroadcasts(channelId: 105, dateInterval: self.testDateInterval) { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        
         XCTAssertTrue(calledCompletion)
         XCTAssertNotNil(requestResult.data)
         XCTAssertEqual(requestResult.data, data.decoded?.data)

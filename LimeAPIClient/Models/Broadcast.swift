@@ -8,12 +8,12 @@
 
 import Foundation
 
-public struct Broadcast: Decodable {
+public struct Broadcast: Decodable, Equatable {
     public let id: String
     public let type: String
     public let attributes: Attributes
     
-    public struct Attributes: Decodable {
+    public struct Attributes: Decodable, Equatable {
         public let title: String
         public let detail: String
         public let rating: Int?
@@ -21,7 +21,7 @@ public struct Broadcast: Decodable {
         public let finishAt: String
     }
     
-    struct Meta: Decodable {
+    struct Meta: Decodable, Equatable {
         let timeZone: String
         let startAt: String
         let finishAt: String
