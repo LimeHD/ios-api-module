@@ -35,7 +35,7 @@ class HTTPClientTests: XCTestCase {
     
     func test_getJSON_inValidUrl_callsCompletionWithFailure() {
         self.request.url = nil
-        self.sut.getJSON(with: self.request) { _ in }
+        self.sut.dataTask(with: self.request) { _ in }
         
         let result = self.runGetJSONWith()
         
@@ -45,13 +45,13 @@ class HTTPClientTests: XCTestCase {
     }
     
     func test_getJSON_callsExpectedRequest() {
-        self.sut.getJSON(with: self.request) { _ in }
+        self.sut.dataTask(with: self.request) { _ in }
         
         XCTAssertEqual(self.session.lastRequest, self.request)
     }
     
     func test_getJSON_callsResumeOnTask() {
-        self.sut.getJSON(with: self.request) { _ in }
+        self.sut.dataTask(with: self.request) { _ in }
     
         XCTAssertTrue(self.session.lastTask?.calledResume ?? false)
     }
@@ -75,7 +75,7 @@ class HTTPClientTests: XCTestCase {
         var receivedData: (Data, String)? = nil
         var receivedError: Error? = nil
         
-        self.sut.getJSON(with: self.request) { (result) in
+        self.sut.dataTask(with: self.request) { (result) in
             calledCompletion = true
             
             switch result {

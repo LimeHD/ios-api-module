@@ -159,7 +159,7 @@ extension LimeAPIClient {
     }
     
     private func dataTask<T: Decodable>(with request: URLRequest, _ type: T.Type, completion: @escaping ApiResult<T>) {
-        HTTPClient(self.session).getJSON(with: request) { (result) in
+        HTTPClient(self.session).dataTask(with: request) { (result) in
             switch result {
             case .success(let result):
                 LimeAPIClient.log(request, message: result.statusCode)

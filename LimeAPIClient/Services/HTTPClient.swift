@@ -40,8 +40,8 @@ class HTTPClient {
     init(_ session: URLSession) {
         self.session = session
     }
-
-    func getJSON(with request: URLRequest, completion: @escaping httpResult) {
+    
+    func dataTask(with request: URLRequest, completion: @escaping httpResult) {
         let task = self.session.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 completion(.failure(error))
@@ -64,22 +64,26 @@ class HTTPClient {
                 let success = (data: data, statusCode: httpResponse.localizedStatusCode)
                 completion(.success(success))
             } else {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let parser = JSONParser(decoder)
-                let result = parser.decode(JSONAPIError.self, data)
-                switch result {
-                case .success(let message):
-                    let error = HTTPError.jsonAPIError(httpResponse.localizedStatusCode, error: message)
-                    completion(.failure(error))
-                case .failure:
-                    let message = String(decoding: data, as: UTF8.self)
-                    let error = HTTPError.wrongStatusCode(httpResponse.localizedStatusCode, error: message)
-                    completion(.failure(error))
-                }
+                self.decodeError(data, httpResponse, completion)
             }
         }
         
         task.resume()
+    }
+    
+    private func decodeError(_ data: Data, _ httpResponse: HTTPURLResponse, _ completion: @escaping httpResult) {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let parser = JSONParser(decoder)
+        let result = parser.decode(JSONAPIError.self, data)
+        switch result {
+        case .success(let message):
+            let error = HTTPError.jsonAPIError(httpResponse.localizedStatusCode, error: message)
+            completion(.failure(error))
+        case .failure:
+            let message = String(decoding: data, as: UTF8.self)
+            let error = HTTPError.wrongStatusCode(httpResponse.localizedStatusCode, error: message)
+            completion(.failure(error))
+        }
     }
 }
