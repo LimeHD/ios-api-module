@@ -11,172 +11,152 @@ import XCTest
 
 extension LimeAPIClientTests {
     func test_findBanner_wrongResponseData_callsCompletionWithFailure() {
-        var calledCompletion = false
-        var requestResult: RequestResult<BannerAndDevice> = (nil,  nil)
+        var completion: APICompletion<BannerAndDevice> = (data: nil, error: nil, isCalled: false)
         
         self.sut.findBanner { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNil(requestResult.data)
-        XCTAssertNotNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNil(completion.data)
+        XCTAssertNotNil(completion.error)
     }
     
     func test_findBanner_correctResponseData_callsCompletionWithSuccess() throws {
-        var calledCompletion = false
-        var requestResult: RequestResult<BannerAndDevice> = (nil,  nil)
+        var completion: APICompletion<BannerAndDevice> = (data: nil, error: nil, isCalled: false)
         let data = try generateJSONData(BannerAndDevice.self, string: BannerAndDeviceExample)
         
         self.sut.findBanner { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(data.raw, self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNotNil(requestResult)
-        XCTAssertEqual(requestResult.data, data.decoded)
-        XCTAssertNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNotNil(completion.data)
+        XCTAssertEqual(completion.data, data.decoded)
+        XCTAssertNil(completion.error)
     }
     
     func test_nextBanner_wrongResponseData_callsCompletionWithFailure() {
-        var calledCompletion = false
-        var requestResult: RequestResult<BannerAndDevice.Banner> = (nil,  nil)
+        var completion: APICompletion<BannerAndDevice.Banner> = (data: nil, error: nil, isCalled: false)
         
         self.sut.nextBanner { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNil(requestResult.data)
-        XCTAssertNotNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNil(completion.data)
+        XCTAssertNotNil(completion.error)
     }
     
     func test_nextBanner_correctResponseData_callsCompletionWithSuccess() throws {
-        var calledCompletion = false
-        var requestResult: RequestResult<BannerAndDevice.Banner> = (nil,  nil)
+        var completion: APICompletion<BannerAndDevice.Banner> = (data: nil, error: nil, isCalled: false)
         let data = try generateJSONData(BannerAndDevice.Banner.self, string: BannerExample)
         
         self.sut.nextBanner { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(data.raw, self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNotNil(requestResult)
-        XCTAssertEqual(requestResult.data, data.decoded)
-        XCTAssertNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNotNil(completion.data)
+        XCTAssertEqual(completion.data, data.decoded)
+        XCTAssertNil(completion.error)
     }
     
     func test_deleteBanFromBanner_wrongResponseData_callsCompletionWithFailure() {
-        var calledCompletion = false
-        var requestResult: RequestResult<BanBanner> = (nil,  nil)
+        var completion: APICompletion<BanBanner> = (data: nil, error: nil, isCalled: false)
         
         self.sut.deleteBanFromBanner(bannerId: 68) { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNil(requestResult.data)
-        XCTAssertNotNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNil(completion.data)
+        XCTAssertNotNil(completion.error)
     }
     
     func test_deleteBanFromBanner_correctResponseData_callsCompletionWithSuccess() throws {
-        var calledCompletion = false
-        var requestResult: RequestResult<BanBanner> = (nil,  nil)
+        var completion: APICompletion<BanBanner> = (data: nil, error: nil, isCalled: false)
         let data = try generateJSONData(BanBanner.self, string: BanBannerExample)
         
         self.sut.deleteBanFromBanner(bannerId: 68) { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(data.raw, self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNotNil(requestResult)
-        XCTAssertEqual(requestResult.data, data.decoded)
-        XCTAssertNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNotNil(completion.data)
+        XCTAssertEqual(completion.data, data.decoded)
+        XCTAssertNil(completion.error)
     }
     
     func test_banBanner_wrongResponseData_callsCompletionWithFailure() {
-        var calledCompletion = false
-        var requestResult: RequestResult<BanBanner> = (nil,  nil)
+        var completion: APICompletion<BanBanner> = (data: nil, error: nil, isCalled: false)
         
         self.sut.banBanner(bannerId: 68) { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNil(requestResult.data)
-        XCTAssertNotNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNil(completion.data)
+        XCTAssertNotNil(completion.error)
     }
     
     func test_banBanner_correctResponseData_callsCompletionWithSuccess() throws {
-        var calledCompletion = false
-        var requestResult: RequestResult<BanBanner> = (nil,  nil)
+        var completion: APICompletion<BanBanner> = (data: nil, error: nil, isCalled: false)
         let data = try generateJSONData(BanBanner.self, string: BanBannerExample)
         
         self.sut.banBanner(bannerId: 68) { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(data.raw, self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNotNil(requestResult)
-        XCTAssertEqual(requestResult.data, data.decoded)
-        XCTAssertNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNotNil(completion.data)
+        XCTAssertEqual(completion.data, data.decoded)
+        XCTAssertNil(completion.error)
     }
     
     func test_getBanner_wrongResponseData_callsCompletionWithFailure() {
-        var calledCompletion = false
-        var requestResult: RequestResult<BannerAndDevice.Banner> = (nil,  nil)
+        var completion: APICompletion<BannerAndDevice.Banner> = (data: nil, error: nil, isCalled: false)
         
         self.sut.getBanner(bannerId: 68) { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNil(requestResult.data)
-        XCTAssertNotNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNil(completion.data)
+        XCTAssertNotNil(completion.error)
     }
     
     func test_getBanner_correctResponseData_callsCompletionWithSuccess() throws {
-        var calledCompletion = false
-        var requestResult: RequestResult<BannerAndDevice.Banner> = (nil,  nil)
+        var completion: APICompletion<BannerAndDevice.Banner> = (data: nil, error: nil, isCalled: false)
         let data = try generateJSONData(BannerAndDevice.Banner.self, string: BannerExample)
         
         self.sut.getBanner(bannerId: 68) { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(data.raw, self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNotNil(requestResult)
-        XCTAssertEqual(requestResult.data, data.decoded)
-        XCTAssertNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNotNil(completion.data)
+        XCTAssertEqual(completion.data, data.decoded)
+        XCTAssertNil(completion.error)
     }
 }

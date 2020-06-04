@@ -11,80 +11,72 @@ import XCTest
 
 extension LimeAPIClientTests {
     func test_requestChannels_wrongResponseData_callsCompletionWithFailure() {
-        var calledCompletion = false
-        var requestResult: RequestResult<[Channel]> = (nil,  nil)
+        var completion: APICompletion<[Channel]> = (data: nil, error: nil, isCalled: false)
         
         self.sut.requestChannels { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNil(requestResult.data)
-        XCTAssertNotNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNil(completion.data)
+        XCTAssertNotNil(completion.error)
     }
     
     func test_requestChannels_correctResponseData_callsCompletionWithSuccess() throws {
-        var calledCompletion = false
-        var requestResult: RequestResult<[Channel]> = (nil,  nil)
+        var completion: APICompletion<[Channel]> = (data: nil, error: nil, isCalled: false)
         let data = try generateJSONData(JSONAPIObject<[Channel], String>.self, string: ChannelExample)
         
         self.sut.requestChannels { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(data.raw, self.response, nil)
         
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNotNil(requestResult.data)
-        XCTAssertEqual(requestResult.data, data.decoded?.data)
-        XCTAssertNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNotNil(completion.data)
+        XCTAssertEqual(completion.data, data.decoded?.data)
+        XCTAssertNil(completion.error)
     }
     
     func test_requestChannelsByGroupId_runBeforeSession_callsCompletionWithFailure() throws {
-        var calledCompletion = false
-        var requestResult: RequestResult<[Channel]> = (nil,  nil)
+        var completion: APICompletion<[Channel]> = (data: nil, error: nil, isCalled: false)
         let expectedError = APIError.unknownChannelsGroupId
         
         self.sut.requestChannelsByGroupId { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         XCTAssertTrue(defaultChannelGroupId.isEmpty)
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNil(requestResult.data)
-        XCTAssertNotNil(requestResult.error)
-        let actualError = try XCTUnwrap(requestResult.error as? APIError)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNil(completion.data)
+        XCTAssertNotNil(completion.error)
+        let actualError = try XCTUnwrap(completion.error as? APIError)
         XCTAssertEqual(actualError, expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
     func test_requestChannelsByGroupId_wrongResponseData_callsCompletionWithFailure() throws {
-        var calledCompletion = false
-        var requestResult: RequestResult<[Channel]> = (nil,  nil)
+        var completion: APICompletion<[Channel]> = (data: nil, error: nil, isCalled: false)
         
         try self.runSessionToSetDefaultChannelGroupId()
         
         self.sut.requestChannelsByGroupId { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         XCTAssertFalse(defaultChannelGroupId.isEmpty)
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNil(requestResult.data)
-        XCTAssertNotNil(requestResult.error)
-        let apiError = requestResult.error as? APIError
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNil(completion.data)
+        XCTAssertNotNil(completion.error)
+        let apiError = completion.error as? APIError
         XCTAssertNil(apiError)
     }
     
@@ -100,25 +92,23 @@ extension LimeAPIClientTests {
     }
     
     func test_requestChannelsByGroupId_correctResponseData_callsCompletionWithSuccess() throws {
-        var calledCompletion = false
-        var requestResult: RequestResult<[Channel]> = (nil,  nil)
+        var completion: APICompletion<[Channel]> = (data: nil, error: nil, isCalled: false)
         let data = try generateJSONData(JSONAPIObject<[Channel], String>.self, string: ChannelExample)
         
         try self.runSessionToSetDefaultChannelGroupId()
         
         self.sut.requestChannelsByGroupId { (result) in
-            calledCompletion = true
-            requestResult = self.getRequestResult(result)
+            completion = self.callAPICompletion(result)
         }
         
         self.session.lastTask?.completionHandler(data.raw, self.response, nil)
         
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         XCTAssertFalse(defaultChannelGroupId.isEmpty)
-        XCTAssertTrue(calledCompletion)
-        XCTAssertNotNil(requestResult.data)
-        XCTAssertEqual(requestResult.data, data.decoded?.data)
-        XCTAssertNil(requestResult.error)
+        XCTAssertTrue(completion.isCalled)
+        XCTAssertNotNil(completion.data)
+        XCTAssertEqual(completion.data, data.decoded?.data)
+        XCTAssertNil(completion.error)
     }
 }
 
