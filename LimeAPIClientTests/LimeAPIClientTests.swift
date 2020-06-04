@@ -156,20 +156,20 @@ extension LimeAPIClientTests {
     typealias JSONData<T> = (raw: Data?, decoded: T?)
     
     func generateJSONData<T: Decodable>(_ type: T.Type, string: String) throws -> JSONData<T> {
-        let data = try XCTUnwrap(string.data(using: .utf8))
+        let rawData = try XCTUnwrap(string.data(using: .utf8))
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
-        let jsonAPIError = try decoder.decode(T.self, from: data)
-            return (data, jsonAPIError)
+        let decodedData = try decoder.decode(T.self, from: rawData)
+            return (rawData, decodedData)
         } catch {
             print("\(Self.self).\(#function).Error.unableDecoding")
             print("-----------------------------------")
-            print(String(decoding: data, as: UTF8.self))
+            print(String(decoding: rawData, as: UTF8.self))
             print("-----------------------------------")
         }
         
-        return (data, nil)
+        return (rawData, nil)
     }
     
     func test_session_successfulSessionSetsDefaultChannelGroupId() throws {
