@@ -44,3 +44,9 @@ let BannerExample = """
     "delay": 3
 }
 """
+
+let BanBannerExample = """
+{
+    "result": "unbanned"
+}
+"""
