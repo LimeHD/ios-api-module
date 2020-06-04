@@ -11,6 +11,7 @@ import XCTest
 
 class EndPointTests: XCTestCase {
     var sut: EndPoint!
+    let bannerId = 68
     
     func test_testChannels_creatsCorrectEndPoint() {
         self.sut = EndPoint.Factory.testChannels()
@@ -92,33 +93,30 @@ class EndPointTests: XCTestCase {
     }
     
     func test_deleteBannerBan_creatsCorrectEndPoint() {
-        let bannerId = 105
         self.sut = EndPoint.Factory.Banner.deleteBan(bannerId)
         let parameters = EndPoint.Parameters(url: ["device_id" : Device.id])
         
-        XCTAssertEqual(self.sut.path, "v1/banners/\(bannerId)/ban")
+        XCTAssertEqual(self.sut.path, "v1/banners/\(self.bannerId)/ban")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.json)
         XCTAssertEqual(self.sut.httpMethod, HTTP.Method.delete)
         XCTAssertEqual(self.sut.parameters, parameters)
     }
     
     func test_banBanner_creatsCorrectEndPoint() {
-        let bannerId = 105
         self.sut = EndPoint.Factory.Banner.ban(bannerId)
         let parameters = EndPoint.Parameters(body: ["device_id" : Device.id])
         
-        XCTAssertEqual(self.sut.path, "v1/banners/\(bannerId)/ban")
+        XCTAssertEqual(self.sut.path, "v1/banners/\(self.bannerId)/ban")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.json)
         XCTAssertEqual(self.sut.httpMethod, HTTP.Method.post)
         XCTAssertEqual(self.sut.parameters, parameters)
     }
     
     func test_bannerInfo_creatsCorrectEndPoint() {
-        let bannerId = 105
         self.sut = EndPoint.Factory.Banner.info(bannerId)
         let parameters = EndPoint.Parameters(url: ["device_id" : Device.id])
         
-        XCTAssertEqual(self.sut.path, "v1/banners/\(bannerId)")
+        XCTAssertEqual(self.sut.path, "v1/banners/\(self.bannerId)")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.json)
         XCTAssertEqual(self.sut.parameters, parameters)
     }
