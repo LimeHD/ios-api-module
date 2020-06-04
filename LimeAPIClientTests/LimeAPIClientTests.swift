@@ -10,6 +10,11 @@ import XCTest
 @testable import LimeAPIClient
 
 class LimeAPIClientTests: XCTestCase {
+    struct APICompletion<T> {
+        let data: T?
+        let error: Error?
+    }
+    
     var sut: LimeAPIClient!
     var baseUrl = "https://limehd.tv/"
     var session: MockURLSession!
@@ -89,7 +94,7 @@ class LimeAPIClientTests: XCTestCase {
     }
     
     func test_httpError_callsCompletionWithFailure() throws {
-        var completion: APICompletion<Session> = (data: nil, error: nil, isCalled: false)
+        var completion: APICompletion<Session>?
         let expectedError = HTTPError.emptyData
         
         self.sut.session { (result) in
@@ -98,10 +103,10 @@ class LimeAPIClientTests: XCTestCase {
         
         self.session.lastTask?.completionHandler(nil, self.response, nil)
         
-        XCTAssertTrue(completion.isCalled)
-        XCTAssertNil(completion.data)
-        XCTAssertNotNil(completion.error)
-        let actualError = try XCTUnwrap(completion.error as? HTTPError)
+        XCTAssertNotNil(completion)
+        XCTAssertNil(completion?.data)
+        XCTAssertNotNil(completion?.error)
+        let actualError = try XCTUnwrap(completion?.error as? HTTPError)
         XCTAssertEqual(actualError, expectedError)
     }
 }
@@ -110,7 +115,7 @@ class LimeAPIClientTests: XCTestCase {
 
 extension LimeAPIClientTests {
     func test_session_wrongResponseData_callsCompletionWithFailure() {
-        var completion: APICompletion<Session> = (data: nil, error: nil, isCalled: false)
+        var completion: APICompletion<Session>?
         
         self.sut.session { (result) in
             completion = self.callAPICompletion(result)
@@ -118,24 +123,22 @@ extension LimeAPIClientTests {
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
-        XCTAssertTrue(completion.isCalled)
-        XCTAssertNil(completion.data)
-        XCTAssertNotNil(completion.error)
+        XCTAssertNotNil(completion)
+        XCTAssertNil(completion?.data)
+        XCTAssertNotNil(completion?.error)
     }
-    
-    typealias APICompletion<T> = (data: T?, error: Error?, isCalled: Bool)
     
     func callAPICompletion<T>(_ result: Result<T, Error>) -> APICompletion<T> {
         switch result {
         case .success(let data):
-            return (data: data, error: nil, isCalled: true)
+            return APICompletion(data: data, error: nil)
         case .failure(let error):
-            return (data: nil, error: error, isCalled: true)
+            return APICompletion(data: nil, error: error)
         }
     }
     
     func test_session_correctResponseData_callsCompletionWithSuccess() throws {
-        var completion: APICompletion<Session> = (data: nil, error: nil, isCalled: false)
+        var completion: APICompletion<Session>?
         let data = try generateJSONData(Session.self, string: SessionExample)
         
         self.sut.session { (result) in
@@ -144,10 +147,10 @@ extension LimeAPIClientTests {
         
         self.session.lastTask?.completionHandler(data.raw, self.response, nil)
         
-        XCTAssertTrue(completion.isCalled)
-        XCTAssertNotNil(completion.data)
-        XCTAssertEqual(completion.data, data.decoded)
-        XCTAssertNil(completion.error)
+        XCTAssertNotNil(completion)
+        XCTAssertNotNil(completion?.data)
+        XCTAssertEqual(completion?.data, data.decoded)
+        XCTAssertNil(completion?.error)
     }
     
     typealias JSONData<T> = (raw: Data?, decoded: T?)
@@ -200,7 +203,7 @@ extension LimeAPIClientTests {
 
 extension LimeAPIClientTests {
     func test_ping_wrongResponseData_callsCompletionWithFailure() {
-        var completion: APICompletion<Ping> = (data: nil, error: nil, isCalled: false)
+        var completion: APICompletion<Ping>?
         
         self.sut.ping { (result) in
             completion = self.callAPICompletion(result)
@@ -208,13 +211,13 @@ extension LimeAPIClientTests {
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
-        XCTAssertTrue(completion.isCalled)
-        XCTAssertNil(completion.data)
-        XCTAssertNotNil(completion.error)
+        XCTAssertNotNil(completion)
+        XCTAssertNil(completion?.data)
+        XCTAssertNotNil(completion?.error)
     }
     
     func test_ping_correctResponseData_callsCompletionWithSuccess() throws {
-        var completion: APICompletion<Ping> = (data: nil, error: nil, isCalled: false)
+        var completion: APICompletion<Ping>?
         let data = try generateJSONData(Ping.self, string: PingExample)
         
         self.sut.ping { (result) in
@@ -223,10 +226,10 @@ extension LimeAPIClientTests {
         
         self.session.lastTask?.completionHandler(data.raw, self.response, nil)
         
-        XCTAssertTrue(completion.isCalled)
-        XCTAssertNotNil(completion.data)
-        XCTAssertEqual(completion.data, data.decoded)
-        XCTAssertNil(completion.error)
+        XCTAssertNotNil(completion)
+        XCTAssertNotNil(completion?.data)
+        XCTAssertEqual(completion?.data, data.decoded)
+        XCTAssertNil(completion?.error)
     }
 }
 
@@ -234,7 +237,7 @@ extension LimeAPIClientTests {
 
 extension LimeAPIClientTests {
     func test_requestBroadcasts_wrongResponseData_callsCompletionWithFailure() {
-        var completion: APICompletion<[Broadcast]> = (data: nil, error: nil, isCalled: false)
+        var completion: APICompletion<[Broadcast]>?
         
         self.sut.requestBroadcasts(channelId: 105, dateInterval: self.testDateInterval) { (result) in
             completion = self.callAPICompletion(result)
@@ -242,9 +245,9 @@ extension LimeAPIClientTests {
         
         self.session.lastTask?.completionHandler(Data(), self.response, nil)
         
-        XCTAssertTrue(completion.isCalled)
-        XCTAssertNil(completion.data)
-        XCTAssertNotNil(completion.error)
+        XCTAssertNotNil(completion)
+        XCTAssertNil(completion?.data)
+        XCTAssertNotNil(completion?.error)
     }
     
     var testDateInterval: LACDateInterval {
@@ -254,7 +257,7 @@ extension LimeAPIClientTests {
     }
     
     func test_requestBroadcasts_correctResponseData_callsCompletionWithSuccess() throws {
-        var completion: APICompletion<[Broadcast]> = (data: nil, error: nil, isCalled: false)
+        var completion: APICompletion<[Broadcast]>?
         let data = try generateJSONData(JSONAPIObject<[Broadcast], Broadcast.Meta>.self, string: BroadcastExample)
         
         self.sut.requestBroadcasts(channelId: 105, dateInterval: self.testDateInterval) { (result) in
@@ -263,10 +266,10 @@ extension LimeAPIClientTests {
         
         self.session.lastTask?.completionHandler(data.raw, self.response, nil)
         
-        XCTAssertTrue(completion.isCalled)
-        XCTAssertNotNil(completion.data)
-        XCTAssertEqual(completion.data, data.decoded?.data)
-        XCTAssertNil(completion.error)
+        XCTAssertNotNil(completion)
+        XCTAssertNotNil(completion?.data)
+        XCTAssertEqual(completion?.data, data.decoded?.data)
+        XCTAssertNil(completion?.error)
     }
 }
 
