@@ -21,6 +21,11 @@ struct HTTP {
     
     struct Method { }
     
+    struct Result {
+        let data: Data
+        let response: HTTPURLResponse
+    }
+    
     static var headers: [String: String] {
         return [
             "Accept-Language":  LimeAPIClient.configuration?.language ?? "",

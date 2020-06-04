@@ -162,7 +162,7 @@ extension LimeAPIClient {
         HTTPClient(self.session).dataTask(with: request) { (result) in
             switch result {
             case .success(let result):
-                LimeAPIClient.log(request, message: result.statusCode)
+                LimeAPIClient.log(request, message: result.response.localizedStatusCode)
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let parser = JSONParser(decoder)

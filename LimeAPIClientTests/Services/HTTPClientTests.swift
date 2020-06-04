@@ -68,11 +68,11 @@ class HTTPClientTests: XCTestCase {
         XCTAssertEqual(actualError, expectedError)
     }
     
-    typealias JSONResult = (calledCompletion: Bool, data: (Data, String)?, error: Error?)
+    typealias JSONResult = (calledCompletion: Bool, data: HTTP.Result?, error: Error?)
     
     func runGetJSONWith(data: Data? = nil, _ response: HTTPURLResponse? = nil, _ error: Error? = nil) -> JSONResult {
         var calledCompletion = false
-        var receivedData: (Data, String)? = nil
+        var receivedData: HTTP.Result? = nil
         var receivedError: Error? = nil
         
         self.sut.dataTask(with: self.request) { (result) in

@@ -33,7 +33,7 @@ public enum HTTPError: Error, LocalizedError, Equatable {
 }
 
 class HTTPClient {
-    typealias httpResult = (Result<(data: Data, statusCode: String), Error>) -> Void
+    typealias httpResult = (Result<HTTP.Result, Error>) -> Void
     
     let session: URLSession
     
@@ -61,8 +61,8 @@ class HTTPClient {
             }
             
             if (200...299).contains(httpResponse.statusCode) {
-                let success = (data: data, statusCode: httpResponse.localizedStatusCode)
-                completion(.success(success))
+                let httpResult = HTTP.Result(data: data, response: httpResponse)
+                completion(.success(httpResult))
             } else {
                 self.decodeError(data, httpResponse, completion)
             }
