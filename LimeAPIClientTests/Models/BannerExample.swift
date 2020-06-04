@@ -30,3 +30,17 @@ let BannerAndDeviceExample = """
     }
 }
 """
+
+let BannerExample = """
+{
+    "id": 5166,
+    "image_url": "http://cdn.limehd.tv/images/banner_5166.jpg",
+    "title": "Глобальная стройка в лесу!",
+    "description": "<p><span style=\\"font-size: 14pt;\\">&laquo;Дом Брайана&raquo; на телеканале &laquo;Загородный&raquo;</span></p>",
+    "is_skipable": true,
+    "type": 20,
+    "pack_id": 10,
+    "detail_url": "",
+    "delay": 3
+}
+"""
