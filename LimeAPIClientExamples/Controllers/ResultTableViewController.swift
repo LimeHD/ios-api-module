@@ -154,9 +154,11 @@ class ResultTableViewController: UITableViewController {
         self.navigationController?.navigationBar.barTintColor = ColorTheme.Background.header
         self.view.backgroundColor = ColorTheme.Background.view
     }
+}
 
-    // MARK: - Table view data source
-    
+// MARK: - Table view data source
+
+extension ResultTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Section.allCases.count
     }
@@ -228,6 +230,15 @@ class ResultTableViewController: UITableViewController {
 
             return cell ?? UITableViewCell()
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard
+            let cell = tableView.cellForRow(at: indexPath),
+            let path = cell.detailTextLabel?.text,
+            let url = URL(string: path)
+        else { return }
+        UIApplication.shared.open(url: url)
     }
 }
 
