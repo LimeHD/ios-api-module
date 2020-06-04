@@ -77,6 +77,7 @@
 		4E8CD1D02486843B00648E24 /* TimeZoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1CF2486843B00648E24 /* TimeZoneTests.swift */; };
 		4E91926F2488D23B00974C02 /* PingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E91926E2488D23B00974C02 /* PingExample.swift */; };
 		4E9192712488D4FC00974C02 /* BannerExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9192702488D4FC00974C02 /* BannerExample.swift */; };
+		4E9192732488DC4C00974C02 /* DispatchQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9192722488DC4C00974C02 /* DispatchQueueTests.swift */; };
 		4EBFF41A2484DCD10096FFCF /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF4192484DCD10096FFCF /* APIRequest.swift */; };
 		4EBFF41C2484E1960096FFCF /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF41B2484E1960096FFCF /* ColorTheme.swift */; };
 		4EBFF41E248511A20096FFCF /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF41D248511A20096FFCF /* Banner.swift */; };
@@ -184,6 +185,7 @@
 		4E8CD1CF2486843B00648E24 /* TimeZoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneTests.swift; sourceTree = "<group>"; };
 		4E91926E2488D23B00974C02 /* PingExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingExample.swift; sourceTree = "<group>"; };
 		4E9192702488D4FC00974C02 /* BannerExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerExample.swift; sourceTree = "<group>"; };
+		4E9192722488DC4C00974C02 /* DispatchQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueueTests.swift; sourceTree = "<group>"; };
 		4EBFF4192484DCD10096FFCF /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		4EBFF41B2484E1960096FFCF /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		4EBFF41D248511A20096FFCF /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				4E8CD1C7248679FB00648E24 /* DateTests.swift */,
+				4E9192722488DC4C00974C02 /* DispatchQueueTests.swift */,
 				4E8CD1C52486771C00648E24 /* IntTests.swift */,
 				4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */,
 				4E5B0C96247C07E400DDE6BA /* StringTests.swift */,
@@ -626,6 +629,7 @@
 				4E560CCC2487BE0D006A644A /* SessionExample.swift in Sources */,
 				4E560CD12487E596006A644A /* BroadcastExample.swift in Sources */,
 				4E5B0C97247C07E400DDE6BA /* StringTests.swift in Sources */,
+				4E9192732488DC4C00974C02 /* DispatchQueueTests.swift in Sources */,
 				4E6D91C6246D162700BB7C69 /* HTTPClientTests.swift in Sources */,
 				4EFC6E4C2476B49A009D6CF7 /* JSONAPIErrorExample.swift in Sources */,
 				4E8CD1BE24865EBF00648E24 /* HTTPTests.swift in Sources */,
