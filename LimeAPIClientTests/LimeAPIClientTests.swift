@@ -503,6 +503,40 @@ extension LimeAPIClientTests {
         XCTAssertEqual(requestResult.data, data.decoded)
         XCTAssertNil(requestResult.error)
     }
+    
+    func test_banBanner_wrongResponseData_callsCompletionWithFailure() {
+        var calledCompletion = false
+        var requestResult: RequestResult<BanBanner> = (nil,  nil)
+        
+        self.sut.banBanner(bannerId: 68) { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNil(requestResult.data)
+        XCTAssertNotNil(requestResult.error)
+    }
+    
+    func test_banBanner_correctResponseData_callsCompletionWithSuccess() throws {
+        var calledCompletion = false
+        var requestResult: RequestResult<BanBanner> = (nil,  nil)
+        let data = try generateJSONData(BanBanner.self, string: BanBannerExample)
+        
+        self.sut.banBanner(bannerId: 68) { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNotNil(requestResult)
+        XCTAssertEqual(requestResult.data, data.decoded)
+        XCTAssertNil(requestResult.error)
+    }
 }
 
 // MARK: - MockDispatchQueue
