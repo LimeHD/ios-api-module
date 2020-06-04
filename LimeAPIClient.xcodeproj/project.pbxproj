@@ -75,6 +75,7 @@
 		4E8CD1CC24867F7300648E24 /* LACDateIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1CB24867F7300648E24 /* LACDateIntervalTests.swift */; };
 		4E8CD1CE248682D600648E24 /* TimeIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1CD248682D600648E24 /* TimeIntervalTests.swift */; };
 		4E8CD1D02486843B00648E24 /* TimeZoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1CF2486843B00648E24 /* TimeZoneTests.swift */; };
+		4E91926F2488D23B00974C02 /* PingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E91926E2488D23B00974C02 /* PingExample.swift */; };
 		4EBFF41A2484DCD10096FFCF /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF4192484DCD10096FFCF /* APIRequest.swift */; };
 		4EBFF41C2484E1960096FFCF /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF41B2484E1960096FFCF /* ColorTheme.swift */; };
 		4EBFF41E248511A20096FFCF /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFF41D248511A20096FFCF /* Banner.swift */; };
@@ -180,6 +181,7 @@
 		4E8CD1CB24867F7300648E24 /* LACDateIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACDateIntervalTests.swift; sourceTree = "<group>"; };
 		4E8CD1CD248682D600648E24 /* TimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTests.swift; sourceTree = "<group>"; };
 		4E8CD1CF2486843B00648E24 /* TimeZoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneTests.swift; sourceTree = "<group>"; };
+		4E91926E2488D23B00974C02 /* PingExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PingExample.swift; sourceTree = "<group>"; };
 		4EBFF4192484DCD10096FFCF /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		4EBFF41B2484E1960096FFCF /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		4EBFF41D248511A20096FFCF /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				4E560CD02487E596006A644A /* BroadcastExample.swift */,
 				4E560CCE2487C346006A644A /* ChannelExample.swift */,
 				4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */,
+				4E91926E2488D23B00974C02 /* PingExample.swift */,
 				4E560CCB2487BE0D006A644A /* SessionExample.swift */,
 			);
 			path = Models;
@@ -615,6 +618,7 @@
 				4E8CD1CC24867F7300648E24 /* LACDateIntervalTests.swift in Sources */,
 				4E5B0C94247C002900DDE6BA /* URLParametersTests.swift in Sources */,
 				4E8CD1C62486771C00648E24 /* IntTests.swift in Sources */,
+				4E91926F2488D23B00974C02 /* PingExample.swift in Sources */,
 				4E560CCC2487BE0D006A644A /* SessionExample.swift in Sources */,
 				4E560CD12487E596006A644A /* BroadcastExample.swift in Sources */,
 				4E5B0C97247C07E400DDE6BA /* StringTests.swift in Sources */,

@@ -202,6 +202,44 @@ extension LimeAPIClientTests {
     }
 }
 
+// MARK: - Ping Tests
+
+extension LimeAPIClientTests {
+    func test_ping_wrongResponseData_callsCompletionWithFailure() {
+        var calledCompletion = false
+        var requestResult: RequestResult<Ping> = (nil,  nil)
+        
+        self.sut.ping { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNil(requestResult.data)
+        XCTAssertNotNil(requestResult.error)
+    }
+    
+    func test_ping_correctResponseData_callsCompletionWithSuccess() throws {
+        var calledCompletion = false
+        var requestResult: RequestResult<Ping> = (nil,  nil)
+        let data = try generateJSONData(Ping.self, string: PingExample)
+        
+        self.sut.ping { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNotNil(requestResult)
+        XCTAssertEqual(requestResult.data, data.decoded)
+        XCTAssertNil(requestResult.error)
+    }
+}
+
 // MARK: - Channels Tests
 
 extension LimeAPIClientTests {

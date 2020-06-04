@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Ping: Decodable {
+public struct Ping: Decodable, Equatable {
     public let result: String
     public let time: String
     public let version: String
