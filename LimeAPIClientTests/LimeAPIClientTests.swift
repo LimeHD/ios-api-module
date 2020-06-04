@@ -399,6 +399,44 @@ extension LimeAPIClientTests {
     }
 }
 
+// MARK: - Channels Tests
+
+extension LimeAPIClientTests {
+    func test_findBanner_wrongResponseData_callsCompletionWithFailure() {
+        var calledCompletion = false
+        var requestResult: RequestResult<BannerAndDevice> = (nil,  nil)
+        
+        self.sut.findBanner { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNil(requestResult.data)
+        XCTAssertNotNil(requestResult.error)
+    }
+    
+    func test_findBanner_correctResponseData_callsCompletionWithSuccess() throws {
+        var calledCompletion = false
+        var requestResult: RequestResult<BannerAndDevice> = (nil,  nil)
+        let data = try generateJSONData(BannerAndDevice.self, string: BannerAndDeviceExample)
+        
+        self.sut.findBanner { (result) in
+            calledCompletion = true
+            requestResult = self.getRequestResult(result)
+        }
+        
+        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        
+        XCTAssertTrue(calledCompletion)
+        XCTAssertNotNil(requestResult)
+        XCTAssertEqual(requestResult.data, data.decoded)
+        XCTAssertNil(requestResult.error)
+    }
+}
+
 // MARK: - MockDispatchQueue
 
 class MockDispatchQueue: Dispatchable {

@@ -8,11 +8,11 @@
 
 import Foundation
 
-public struct BannerAndDevice: Decodable {
+public struct BannerAndDevice: Decodable, Equatable {
     public let banner: Banner
     public let device: Device?
     
-    public struct Banner: Decodable {
+    public struct Banner: Decodable, Equatable {
         public let id: Int
         public let imageUrl: String
         public let title: String
@@ -24,7 +24,7 @@ public struct BannerAndDevice: Decodable {
         public let delay: Int
     }
     
-    public struct Device: Decodable {
+    public struct Device: Decodable, Equatable {
         public let id: String
         public let shownBanners: String
         public let skippedBanners: String
@@ -33,6 +33,6 @@ public struct BannerAndDevice: Decodable {
     }
 }
 
-public struct BanBanner: Decodable {
+public struct BanBanner: Decodable, Equatable {
     public let result: String
 }
