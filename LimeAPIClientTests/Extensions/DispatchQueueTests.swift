@@ -17,6 +17,7 @@ class DispatchQueueTests: XCTestCase {
         var workCompleted = false
         
         self.sut.async {
+            sleep(1)
             workCompleted = true
         }
         
