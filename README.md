@@ -8,6 +8,27 @@
 
 [Спецификация к API](https://github.com/LimeHD/specs)
 
+## Содержание
+<!-- TOC -->
+
+- [Содержание](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
+- [Установка](#%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0)
+- [Кэширование запросов](#%D0%BA%D1%8D%D1%88%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2)
+- [Интервал времени ожидания запроса](#%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB-%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8-%D0%BE%D0%B6%D0%B8%D0%B4%D0%B0%D0%BD%D0%B8%D1%8F-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%B0)
+- [Примеры использования](#%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F)
+    - [Конфигурирование клиента](#%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BA%D0%BB%D0%B8%D0%B5%D0%BD%D1%82%D0%B0)
+    - [Cоздание новой сессии](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)
+    - [Получение баннера, рекомендованного данному устройству и приложению](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B1%D0%B0%D0%BD%D0%BD%D0%B5%D1%80%D0%B0-%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%BC%D1%83-%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D1%83-%D0%B8-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8E)
+    - [Снятие (удаление) пометки «нежелательный» с баннера](#%D1%81%D0%BD%D1%8F%D1%82%D0%B8%D0%B5-%D1%83%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE%D0%BC%D0%B5%D1%82%D0%BA%D0%B8-%C2%AB%D0%BD%D0%B5%D0%B6%D0%B5%D0%BB%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%C2%BB-%D1%81-%D0%B1%D0%B0%D0%BD%D0%BD%D0%B5%D1%80%D0%B0)
+    - [Пометить баннер как «нежелательный» и больше его не показывать](#%D0%BF%D0%BE%D0%BC%D0%B5%D1%82%D0%B8%D1%82%D1%8C-%D0%B1%D0%B0%D0%BD%D0%BD%D0%B5%D1%80-%D0%BA%D0%B0%D0%BA-%C2%AB%D0%BD%D0%B5%D0%B6%D0%B5%D0%BB%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%C2%BB-%D0%B8-%D0%B1%D0%BE%D0%BB%D1%8C%D1%88%D0%B5-%D0%B5%D0%B3%D0%BE-%D0%BD%D0%B5-%D0%BF%D0%BE%D0%BA%D0%B0%D0%B7%D1%8B%D0%B2%D0%B0%D1%82%D1%8C)
+    - [Получить баннер (информацию о нём)](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C-%D0%B1%D0%B0%D0%BD%D0%BD%D0%B5%D1%80-%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E-%D0%BE-%D0%BD%D1%91%D0%BC)
+    - [Получение списка каналов](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B0-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2)
+    - [Получение списка каналов по группе id](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B0-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2-%D0%BF%D0%BE-%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D0%B5-id)
+    - [Получение программы передач](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87)
+    - [Проверка работоспособности сервиса](#%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BE%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%B0)
+
+<!-- /TOC -->
+
 ## Установка
 
 Для установки используется менджер зависимостей [CocoaPods](https://cocoapods.org/). Для интеграции модуля **LimeAPIClient** в проект Xcode добавьте строку в `Podfile`:
@@ -31,7 +52,7 @@ pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 Размер кэша в соответствии с установленными по умолчанию значениями для [`URLCache.shared`](https://developer.apple.com/documentation/foundation/urlcache/1413377-shared).  
 Для более подробной информации см. документацию Apple: [Accessing Cached Data](https://developer.apple.com/documentation/foundation/url_loading_system/accessing_cached_data).
 
-## Интервал времени ожидания для запроса
+## Интервал времени ожидания запроса
 Для запросов установлен [интервал времени ожидания](https://developer.apple.com/documentation/foundation/nsurlrequest/1418229-timeoutinterval) равный 10 сек.
 
 ## Примеры использования
@@ -56,7 +77,7 @@ let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPL
 LimeAPIClient.configuration = configuration
 ```
 
-### Пример cоздания новой сессии
+### Cоздание новой сессии
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.session { (result) in
@@ -226,6 +247,7 @@ struct Channel: Decodable {
     }
 }
 ```
+
 ### Получение списка каналов по группе id
 **Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения параметра `defaultChannelGroupId` (см. выше).
 
