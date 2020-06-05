@@ -34,6 +34,8 @@ class URLParametersTests: XCTestCase {
     }
     
     func test_requestIsCorrect() {
+        XCTAssertEqual(self.sut.request.timeoutInterval, 10)
+        XCTAssertEqual(self.sut.request.cachePolicy, .useProtocolCachePolicy)
         XCTAssertEqual(self.sut.request.httpMethod, self.endPoint.httpMethod)
         XCTAssertEqual(self.sut.request.allHTTPHeaderFields?["Accept"], self.endPoint.acceptHeader)
     }

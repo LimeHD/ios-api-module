@@ -45,11 +45,7 @@ struct URLParameters {
     }
     
     var request: URLRequest {
-        var request = URLRequest(
-            url: self.url,
-            cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
-            timeoutInterval: 10.0
-        )
+        var request = URLRequest(url: self.url, timeoutInterval: 10.0)
         request.httpMethod = self.endPoint.httpMethod
         request.setValue(self.endPoint.acceptHeader, forHTTPHeaderField: "Accept")
         request.setHeaders(parameters: HTTP.headers)

@@ -16,6 +16,24 @@
 pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 ```
 
+## Кэширование запросов
+Кэширование запросов осуществляется в соответсвии параметром политики кэширования установленным для 
+[`URLRequest`](https://developer.apple.com/documentation/foundation/urlrequest) по умолчанию  [`NSURLRequest.CachePolicy.useProtocolCachePolicy`](https://developer.apple.com/documentation/foundation/nsurlrequest/cachepolicy/useprotocolcachepolicy):
+> ## HTTP Cacheing Behavior
+> For the HTTP and HTTPS protocols, NSURLRequest.CachePolicy.useProtocolCachePolicy performs the following behavior:
+> 1. If a cached response does not exist for the request, the URL loading system fetches the data from the originating source.
+> 2. Otherwise, if the cached response does not indicate that it must be revalidated every time, and if the cached response is not stale (past its expiration date), the URL loading system returns the cached response.
+> 3. If the cached response is stale or requires revalidation, the URL loading system makes a HEAD request to the originating source to see if the resource has changed. If so, the URL loading system fetches the data from the originating source. Otherwise, it returns the cached response.
+>
+>
+> For the formal definition of these semantics, see [RFC 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13).
+
+Размер кэша в соответствии с установленными по умолчанию значениями для [`URLCache.shared`](https://developer.apple.com/documentation/foundation/urlcache/1413377-shared).  
+Для более подробной информации см. документацию Apple: [Accessing Cached Data](https://developer.apple.com/documentation/foundation/url_loading_system/accessing_cached_data).
+
+## Интервал времени ожидания для запроса
+Для запросов установлен [интервал времени ожидания](https://developer.apple.com/documentation/foundation/nsurlrequest/1418229-timeoutinterval) равный 10 сек.
+
 ## Примеры использования
 Перед использованием необходимо добавить в файл модуль `LimeAPIClient`
 ``` swift
