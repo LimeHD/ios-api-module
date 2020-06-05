@@ -274,8 +274,8 @@ let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
 let dateInterval = LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
 apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { (result) in
     switch result {
-    case .success(let channels):
-        print(channels)
+    case .success(let broadcasts):
+        print(broadcasts)
     case .failure(let error):
         print(error)
     }
