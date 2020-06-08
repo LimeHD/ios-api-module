@@ -17,7 +17,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        self.session.lastTask?.completionHandler(Data(), self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
@@ -32,7 +32,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNotNil(completion?.data)
@@ -47,7 +47,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        self.session.lastTask?.completionHandler(Data(), self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
@@ -62,7 +62,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNotNil(completion?.data)
@@ -77,7 +77,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        self.session.lastTask?.completionHandler(Data(), self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
@@ -92,7 +92,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNotNil(completion?.data)
@@ -107,7 +107,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        self.session.lastTask?.completionHandler(Data(), self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
@@ -122,7 +122,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNotNil(completion?.data)
@@ -137,7 +137,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        self.session.lastTask?.completionHandler(Data(), self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
@@ -152,7 +152,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNotNil(completion?.data)

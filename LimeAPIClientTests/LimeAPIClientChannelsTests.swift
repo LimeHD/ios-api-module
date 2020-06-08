@@ -17,7 +17,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        self.session.lastTask?.completionHandler(Data(), self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
@@ -32,7 +32,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
         
         XCTAssertNotNil(completion)
         XCTAssertNotNil(completion?.data)
@@ -48,7 +48,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        self.session.lastTask?.completionHandler(Data(), self.response200, nil)
         
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         XCTAssertTrue(defaultChannelGroupId.isEmpty)
@@ -69,7 +69,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(Data(), self.response, nil)
+        self.session.lastTask?.completionHandler(Data(), self.response200, nil)
         
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         XCTAssertFalse(defaultChannelGroupId.isEmpty)
@@ -88,7 +88,7 @@ extension LimeAPIClientTests {
         
         self.sut.session { (result) in }
         
-        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
     }
     
     func test_requestChannelsByGroupId_correctResponseData_callsCompletionWithSuccess() throws {
@@ -101,7 +101,7 @@ extension LimeAPIClientTests {
             completion = self.callAPICompletion(result)
         }
         
-        self.session.lastTask?.completionHandler(data.raw, self.response, nil)
+        self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
         
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         XCTAssertFalse(defaultChannelGroupId.isEmpty)

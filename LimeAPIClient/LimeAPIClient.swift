@@ -14,12 +14,20 @@ public typealias ApiResult<T: Decodable> = (Result<T, Error>) -> Void
 
 enum APIError: Error, LocalizedError, Equatable {
     case unknownChannelsGroupId
+    case jsonAPIError(_ statusCode: String, error: JSONAPIError)
+    case wrongStatusCode(_ statusCode: String, error: String)
     
     var errorDescription: String? {
         switch self {
         case .unknownChannelsGroupId:
             let key = "Отсутствует id группы каналов. Возможно необходимо сделать запрос новой сессии"
             return NSLocalizedString(key, comment: "Отсутствует id группы каналов")
+        case let .jsonAPIError(statusCode, error: error):
+            let key = "Неуспешный ответ состояния HTTP: \(statusCode). Ошибка: \(error)"
+            return NSLocalizedString(key, comment: statusCode)
+        case let .wrongStatusCode(statusCode, error: error):
+            let key = "Неуспешный ответ состояния HTTP: \(statusCode). Ошибка: \(error)"
+            return NSLocalizedString(key, comment: statusCode)
         }
     }
 }
@@ -366,7 +374,12 @@ extension LimeAPIClient {
                 let result = parser.decode(T.self, result.data)
                 self.handleJSONResult(result, completion)
             case .failure(let error):
-                completion(.failure(error))
+                if let error = error as? HTTPError,
+                    case let .wrongStatusCode(data, response) = error {
+                    self.decodeError(data, response, completion)
+                } else {
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -392,6 +405,18 @@ extension LimeAPIClient {
     private func handleBanBannerRequest(endPoint: EndPoint, completion: @escaping ApiResult<BanBanner>) {
         self.request(BanBanner.self, endPoint: endPoint) { (result) in
             self.handleJSONResult(result, completion)
+        }
+    }
+    
+    private func decodeError<T>(_ data: Data, _ response: HTTPURLResponse, _ completion: @escaping ApiResult<T>) {
+        do {
+            let jsonAPIError = try JSONAPIError(decoding: data)
+            let error = APIError.jsonAPIError(response.localizedStatusCode, error: jsonAPIError)
+            completion(.failure(error))
+        } catch {
+            let message = String(decoding: data, as: UTF8.self)
+            let error = APIError.wrongStatusCode(response.localizedStatusCode, error: message)
+            completion(.failure(error))
         }
     }
     
