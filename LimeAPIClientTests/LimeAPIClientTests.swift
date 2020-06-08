@@ -119,7 +119,7 @@ class LimeAPIClientTests: XCTestCase {
         try? self.response(200)
     }
     
-    func test_getJSON_givenJSONAPIBaseError_callsCompletionWithFailure() throws {
+    func test_dataTask_givenJSONAPIBaseError_callsCompletionWithFailure() throws {
         let result = try self.generateJSONAPIError(JSONAPIErrorExample.base)
         
         XCTAssertNotNil(result.completion)
@@ -151,7 +151,7 @@ class LimeAPIClientTests: XCTestCase {
         return completion
     }
     
-    func test_getJSON_givenJSONAPIStandartError_callsCompletionWithFailure() throws {
+    func test_dataTask_givenJSONAPIStandartError_callsCompletionWithFailure() throws {
         let result = try self.generateJSONAPIError(JSONAPIErrorExample.standart)
         
         XCTAssertNotNil(result.completion)
@@ -161,7 +161,7 @@ class LimeAPIClientTests: XCTestCase {
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
-    func test_getJSON_givenStatusCodeError_callsCompletionWithFailure() throws {
+    func test_dataTask_givenStatusCodeError_callsCompletionWithFailure() throws {
         let data = Data()
         let message = String(decoding: data, as: UTF8.self)
         let response = try self.response(500)

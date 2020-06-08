@@ -33,33 +33,33 @@ class HTTPClientTests: XCTestCase {
         XCTAssertEqual(self.sut.session, self.session)
     }
     
-    func test_getJSON_inValidUrl_callsCompletionWithFailure() {
+    func test_dataTask_inValidUrl_callsCompletionWithFailure() {
         self.request.url = nil
         self.sut.dataTask(with: self.request) { _ in }
         
-        let result = self.runGetJSONWith()
+        let result = self.runDataTaskWith()
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
         XCTAssertNotNil(result.error)
     }
     
-    func test_getJSON_callsExpectedRequest() {
+    func test_dataTask_callsExpectedRequest() {
         self.sut.dataTask(with: self.request) { _ in }
         
         XCTAssertEqual(self.session.lastRequest, self.request)
     }
     
-    func test_getJSON_callsResumeOnTask() {
+    func test_dataTask_callsResumeOnTask() {
         self.sut.dataTask(with: self.request) { _ in }
     
         XCTAssertTrue(self.session.lastTask?.calledResume ?? false)
     }
     
-    func test_getJSON_givenError_callsCompletionWithFailure() throws {
+    func test_dataTask_givenError_callsCompletionWithFailure() throws {
         let expectedError = NSError(domain: NSURLErrorDomain, code: NSURLErrorTimedOut)
         
-        let result = self.runGetJSONWith(self.response(200), expectedError)
+        let result = self.runDataTaskWith(self.response(200), expectedError)
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
@@ -70,7 +70,7 @@ class HTTPClientTests: XCTestCase {
     
     typealias JSONResult = (calledCompletion: Bool, data: HTTP.Result?, error: Error?)
     
-    func runGetJSONWith(data: Data? = nil, _ response: HTTPURLResponse? = nil, _ error: Error? = nil) -> JSONResult {
+    func runDataTaskWith(data: Data? = nil, _ response: HTTPURLResponse? = nil, _ error: Error? = nil) -> JSONResult {
         var calledCompletion = false
         var receivedData: HTTP.Result? = nil
         var receivedError: Error? = nil
@@ -96,8 +96,8 @@ class HTTPClientTests: XCTestCase {
         return HTTPURLResponse(url: self.url, statusCode: statusCode)
     }
     
-    func test_getJSON_emptyData_callsCompletionWithFailure() throws {
-        let result = self.runGetJSONWith(self.response(200))
+    func test_dataTask_emptyData_callsCompletionWithFailure() throws {
+        let result = self.runDataTaskWith(self.response(200))
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
@@ -106,8 +106,8 @@ class HTTPClientTests: XCTestCase {
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
-    func test_getJSON_unknownResponse_callsCompletionWithFailure() throws {
-        let result = self.runGetJSONWith(data: Data())
+    func test_dataTask_unknownResponse_callsCompletionWithFailure() throws {
+        let result = self.runDataTaskWith(data: Data())
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
@@ -116,12 +116,12 @@ class HTTPClientTests: XCTestCase {
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
-    func test_getJSON_givenResponseStatusCode500_callsCompletionWithFailure() throws {
+    func test_dataTask_givenResponseStatusCode500_callsCompletionWithFailure() throws {
         let response = self.response(500)
         let unwrappedResponse = try XCTUnwrap(response)
         let expectedError = HTTPError.wrongStatusCode(Data(), unwrappedResponse)
         
-        let result = self.runGetJSONWith(data: Data(), response)
+        let result = self.runDataTaskWith(data: Data(), response)
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
@@ -130,8 +130,8 @@ class HTTPClientTests: XCTestCase {
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
-    func test_getJSON_givenDataAndSuccessResponseStatusCode_callsCompletionWithSuccess() throws {
-        let result = self.runGetJSONWith(data: Data(), self.response(200))
+    func test_dataTask_givenDataAndSuccessResponseStatusCode_callsCompletionWithSuccess() throws {
+        let result = self.runDataTaskWith(data: Data(), self.response(200))
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNotNil(result.data)
