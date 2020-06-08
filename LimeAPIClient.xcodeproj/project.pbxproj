@@ -47,6 +47,7 @@
 		4E5CDDF9247E968100F0F55F /* ParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CDDF8247E968100F0F55F /* ParameterCell.swift */; };
 		4E5CDDFB247E9C5900F0F55F /* ParameterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E5CDDFA247E9C5900F0F55F /* ParameterCell.xib */; };
 		4E5CDDFE247EA95100F0F55F /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CDDFD247EA95100F0F55F /* UIViewController.swift */; };
+		4E607C4D248E205900F9BEB7 /* JSONAPIErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E607C4C248E205900F9BEB7 /* JSONAPIErrorTests.swift */; };
 		4E68A3FD246BDA6000D332BD /* LimeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */; };
 		4E68A421246C27CF00D332BD /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A420246C27CF00D332BD /* HTTPClient.swift */; };
 		4E6D91C4246D111900BB7C69 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */; };
@@ -158,6 +159,7 @@
 		4E5CDDF8247E968100F0F55F /* ParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCell.swift; sourceTree = "<group>"; };
 		4E5CDDFA247E9C5900F0F55F /* ParameterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParameterCell.xib; sourceTree = "<group>"; };
 		4E5CDDFD247EA95100F0F55F /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		4E607C4C248E205900F9BEB7 /* JSONAPIErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIErrorTests.swift; sourceTree = "<group>"; };
 		4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimeAPIClient.swift; sourceTree = "<group>"; };
 		4E68A420246C27CF00D332BD /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				4E560CD02487E596006A644A /* BroadcastExample.swift */,
 				4E560CCE2487C346006A644A /* ChannelExample.swift */,
 				4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */,
+				4E607C4C248E205900F9BEB7 /* JSONAPIErrorTests.swift */,
 				4E91926E2488D23B00974C02 /* PingExample.swift */,
 				4E560CCB2487BE0D006A644A /* SessionExample.swift */,
 			);
@@ -651,6 +654,7 @@
 				4E560CCA2487B3A8006A644A /* HTTPURLResponse.swift in Sources */,
 				4E8CD1C8248679FB00648E24 /* DateTests.swift in Sources */,
 				4E59F2DC247700B800F3456F /* LACAppTests.swift in Sources */,
+				4E607C4D248E205900F9BEB7 /* JSONAPIErrorTests.swift in Sources */,
 				4E8CD1C0248661FA00648E24 /* URLRequestTests.swift in Sources */,
 				4E9192752488E66800974C02 /* LimeAPIClientBannersTests.swift in Sources */,
 			);

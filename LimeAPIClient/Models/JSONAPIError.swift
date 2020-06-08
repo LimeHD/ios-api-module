@@ -23,4 +23,11 @@ public struct JSONAPIError: Decodable, Equatable {
     public struct Meta: Decodable, Equatable {
         public let requestId: String
     }
+    
+    init(decoding data: Data) throws {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        self = try decoder.decode(JSONAPIError.self, from: data)
+    }
 }
+ 

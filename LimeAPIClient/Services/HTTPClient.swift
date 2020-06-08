@@ -8,6 +8,17 @@
 
 import Foundation
 
+public struct HTTPStatusCodeError: Error, LocalizedError, Equatable {
+    let data: Data
+    let response: HTTPURLResponse
+    
+    public var errorDescription: String? {
+        let statusCode = self.response.localizedStatusCode
+        let key = "Неуспешный ответ состояния HTTP: \(statusCode)"
+        return NSLocalizedString(key, comment: statusCode)
+    }
+}
+
 public enum HTTPError: Error, LocalizedError, Equatable {
     case emptyData
     case unknownResponse
@@ -72,15 +83,11 @@ class HTTPClient {
     }
     
     private func decodeError(_ data: Data, _ httpResponse: HTTPURLResponse, _ completion: @escaping httpResult) {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let parser = JSONParser(decoder)
-        let result = parser.decode(JSONAPIError.self, data)
-        switch result {
-        case .success(let message):
-            let error = HTTPError.jsonAPIError(httpResponse.localizedStatusCode, error: message)
+        do {
+            let jsonAPIError = try JSONAPIError(decoding: data)
+            let error = HTTPError.jsonAPIError(httpResponse.localizedStatusCode, error: jsonAPIError)
             completion(.failure(error))
-        case .failure:
+        } catch {
             let message = String(decoding: data, as: UTF8.self)
             let error = HTTPError.wrongStatusCode(httpResponse.localizedStatusCode, error: message)
             completion(.failure(error))
