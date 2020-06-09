@@ -26,7 +26,15 @@ public struct LACConfiguration {
     /// Уникальрый ключи приложения
     let apiKey: String
     /// Язык ожидаемого контента, который в указывается запросе
+    ///
+    /// Описание см.:  https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html#//apple_ref/doc/uid/10000171i-CH15
     let language: String
+    /// Язык ожидаемого контента, который в указывается запросе в соответствии с ISO 639-1 Code / ISO 639-2 Code
+    lazy var languageDesignator: String = {
+        let regionDesignatorDeleted = self.language.components(separatedBy: "_").first
+        let scriptDesignatorDeleted = regionDesignatorDeleted?.components(separatedBy: "-").first
+        return scriptDesignatorDeleted ?? ""
+    }()
     /// Идентификатор группы канала, значение получают при успешном запросе сессии
     var defaultChannelGroupId = ""
     

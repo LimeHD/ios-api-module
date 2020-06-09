@@ -66,6 +66,7 @@
 		4E835BED2473D50700C8DD96 /* Ping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEC2473D50700C8DD96 /* Ping.swift */; };
 		4E835BEF2473EFE300C8DD96 /* JSONAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */; };
 		4E835BF32474179F00C8DD96 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BF22474179F00C8DD96 /* JSONParserTests.swift */; };
+		4E835E46248F72FB0011E0E0 /* LACConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835E45248F72FB0011E0E0 /* LACConfigurationTests.swift */; };
 		4E8CD1BE24865EBF00648E24 /* HTTPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1BD24865EBF00648E24 /* HTTPTests.swift */; };
 		4E8CD1C0248661FA00648E24 /* URLRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1BF248661FA00648E24 /* URLRequestTests.swift */; };
 		4E8CD1C22486680C00648E24 /* URLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1C12486680C00648E24 /* URLTests.swift */; };
@@ -178,6 +179,7 @@
 		4E835BEC2473D50700C8DD96 /* Ping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ping.swift; sourceTree = "<group>"; };
 		4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIError.swift; sourceTree = "<group>"; };
 		4E835BF22474179F00C8DD96 /* JSONParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
+		4E835E45248F72FB0011E0E0 /* LACConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACConfigurationTests.swift; sourceTree = "<group>"; };
 		4E8CD1BD24865EBF00648E24 /* HTTPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPTests.swift; sourceTree = "<group>"; };
 		4E8CD1BF248661FA00648E24 /* URLRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestTests.swift; sourceTree = "<group>"; };
 		4E8CD1C12486680C00648E24 /* URLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLTests.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				4E9192742488E66800974C02 /* LimeAPIClientBannersTests.swift */,
 				4E9192762488E88300974C02 /* LimeAPIClientChannelsTests.swift */,
 				4E59F2DB247700B800F3456F /* LACAppTests.swift */,
+				4E835E45248F72FB0011E0E0 /* LACConfigurationTests.swift */,
 				4E8CD1CB24867F7300648E24 /* LACDateIntervalTests.swift */,
 				4E835BF4247417AC00C8DD96 /* Services */,
 				4E560CCD2487BE30006A644A /* Models */,
@@ -635,6 +638,7 @@
 				4E8CD1C424866C5200648E24 /* EndPointTests.swift in Sources */,
 				4E8CD1CC24867F7300648E24 /* LACDateIntervalTests.swift in Sources */,
 				4E5B0C94247C002900DDE6BA /* URLParametersTests.swift in Sources */,
+				4E835E46248F72FB0011E0E0 /* LACConfigurationTests.swift in Sources */,
 				4E9192712488D4FC00974C02 /* BannerExample.swift in Sources */,
 				4E8CD1C62486771C00648E24 /* IntTests.swift in Sources */,
 				4E91926F2488D23B00974C02 /* PingExample.swift in Sources */,
