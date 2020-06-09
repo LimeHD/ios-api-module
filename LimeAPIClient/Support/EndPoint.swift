@@ -168,34 +168,28 @@ extension EndPoint.Factory.Banner {
 // MARK: - Сhannels Factory
 
 extension EndPoint.Factory.Channels {
-    static var localeParameters: EndPoint.Parameters = {
+    static func path(_ path: String) -> EndPoint {
         let urlParameters = [
             "locale" : EndPoint.languageDesignator
         ]
-        return EndPoint.Parameters(url: urlParameters)
-    }()
+        let parameters = EndPoint.Parameters(url: urlParameters)
+        
+        return EndPoint(
+            path: path,
+            acceptHeader: HTTP.Header.Accept.jsonAPI,
+            parameters: parameters
+        )
+    }
     
     static func test() -> EndPoint {
-        return EndPoint(
-            path: "v1/channels/test",
-            acceptHeader: HTTP.Header.Accept.jsonAPI,
-            parameters: EndPoint.Factory.Channels.localeParameters
-        )
+        EndPoint.Factory.Channels.path("v1/channels/test")
     }
     
     static func all() -> EndPoint {
-        return EndPoint(
-            path: "v1/channels",
-            acceptHeader: HTTP.Header.Accept.jsonAPI,
-            parameters: EndPoint.Factory.Channels.localeParameters
-        )
+        EndPoint.Factory.Channels.path("v1/channels")
     }
     
     static func byGroupId(_ defaultChannelGroupId: String) -> EndPoint {
-        return EndPoint(
-            path: "v1/channels/by_group/\(defaultChannelGroupId)",
-            acceptHeader: HTTP.Header.Accept.jsonAPI,
-            parameters: EndPoint.Factory.Channels.localeParameters
-        )
+        EndPoint.Factory.Channels.path("v1/channels/by_group/\(defaultChannelGroupId)")
     }
 }
