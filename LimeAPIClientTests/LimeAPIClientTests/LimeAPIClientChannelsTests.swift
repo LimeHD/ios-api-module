@@ -86,9 +86,7 @@ extension LimeAPIClientTests {
         let configuration = LACConfiguration(appId: "TEST_ID", apiKey: "TEST_API", language: Device.language)
         LimeAPIClient.configuration = configuration
         
-        self.sut.session { (result) in }
-        
-        self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
+        self.runSessionRequest(data.raw, self.response200)
     }
     
     func test_requestChannelsByGroupId_correctResponseData_callsCompletionWithSuccess() throws {
