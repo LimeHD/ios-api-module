@@ -12,12 +12,12 @@ let module = NSStringFromClass(LimeAPIClient.self).components(separatedBy:".")[0
 
 public typealias ApiResult<T: Decodable> = (Result<T, Error>) -> Void
 
-enum APIError: Error, LocalizedError, Equatable {
+public enum APIError: Error, LocalizedError, Equatable {
     case unknownChannelsGroupId
     case jsonAPIError(_ statusCode: String, error: JSONAPIError)
     case wrongStatusCode(_ statusCode: String, error: String)
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .unknownChannelsGroupId:
             let key = "Отсутствует id группы каналов. Возможно необходимо сделать запрос новой сессии"

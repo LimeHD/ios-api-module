@@ -501,24 +501,20 @@ extension ResultTableViewController {
     
     private func showAlert(_ error: Error) {
         self.changeColorTheme(.failure)
-        if let error = error as? HTTPError {
-            switch error {
-            case .jsonAPIError(let statusCode, error: let jsonAPIError):
-                if let error = jsonAPIError.errors.first {
-                    self.results = [
-                        APIRequest.Result(title: "id", detail: error.id?.string ?? "-"),
-                        APIRequest.Result(title: "status", detail: error.status),
-                        APIRequest.Result(title: "code", detail: error.code),
-                        APIRequest.Result(title: "title", detail: error.title),
-                        APIRequest.Result(title: "detail", detail: error.detail ?? "nil")
-                    ]
-                    self.tableView.reloadData()
-                    let alert = UIAlertController(title: "Ошибка", message: "Неуспешный ответ состояния HTTP: \(statusCode)")
-                    self.present(alert, animated: true)
-                    return
-                }
-            default:
-                break
+        if let error = error as? APIError,
+            case let .jsonAPIError(statusCode, error: jsonAPIError) = error {
+            if let error = jsonAPIError.errors.first {
+                self.results = [
+                    APIRequest.Result(title: "id", detail: error.id?.string ?? "-"),
+                    APIRequest.Result(title: "status", detail: error.status),
+                    APIRequest.Result(title: "code", detail: error.code),
+                    APIRequest.Result(title: "title", detail: error.title),
+                    APIRequest.Result(title: "detail", detail: error.detail ?? "nil")
+                ]
+                self.tableView.reloadData()
+                let alert = UIAlertController(title: "Ошибка", message: "Неуспешный ответ состояния HTTP: \(statusCode)")
+                self.present(alert, animated: true)
+                return
             }
         }
         let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
