@@ -13,6 +13,12 @@ struct EndPoint {
     let acceptHeader: String
     let httpMethod: String
     let parameters: EndPoint.Parameters
+    static var appId: String {
+        LimeAPIClient.configuration?.appId ?? ""
+    }
+    static var languageDesignator: String {
+        LimeAPIClient.configuration?.languageDesignator ?? ""
+    }
     
     init(
         path: String,
@@ -53,7 +59,7 @@ extension EndPoint.Factory {
     
     static func session() -> EndPoint {
         let parameters = EndPoint.Parameters(
-            body: ["app_id" : LimeAPIClient.configuration?.appId ?? ""]
+            body: ["app_id" : EndPoint.appId]
         )
         return EndPoint(
             path: "v1/sessions",
@@ -70,7 +76,8 @@ extension EndPoint.Factory {
             "channel_id" : channelId.string,
             "start_at" : start,
             "finish_at" : end,
-            "time_zone" : timeZone
+            "time_zone" : timeZone,
+            "locale" : EndPoint.languageDesignator
         ]
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
@@ -116,7 +123,7 @@ extension EndPoint.Factory.Banner {
     private static func request(_ request: EndPoint.Factory.Banner.Request) -> EndPoint {
         let urlParameters = [
             "device_id" : Device.id,
-            "app_id" : LimeAPIClient.configuration?.appId ?? "",
+            "app_id" : EndPoint.appId,
             "platform" : "ios"
         ]
         let parameters = EndPoint.Parameters(url: urlParameters)
@@ -161,24 +168,34 @@ extension EndPoint.Factory.Banner {
 // MARK: - Сhannels Factory
 
 extension EndPoint.Factory.Channels {
+    static var localeParameters: EndPoint.Parameters = {
+        let urlParameters = [
+            "locale" : EndPoint.languageDesignator
+        ]
+        return EndPoint.Parameters(url: urlParameters)
+    }()
+    
     static func test() -> EndPoint {
         return EndPoint(
             path: "v1/channels/test",
-            acceptHeader: HTTP.Header.Accept.jsonAPI
+            acceptHeader: HTTP.Header.Accept.jsonAPI,
+            parameters: EndPoint.Factory.Channels.localeParameters
         )
     }
     
     static func all() -> EndPoint {
         return EndPoint(
             path: "v1/channels",
-            acceptHeader: HTTP.Header.Accept.jsonAPI
+            acceptHeader: HTTP.Header.Accept.jsonAPI,
+            parameters: EndPoint.Factory.Channels.localeParameters
         )
     }
     
     static func byGroupId(_ defaultChannelGroupId: String) -> EndPoint {
         return EndPoint(
             path: "v1/channels/by_group/\(defaultChannelGroupId)",
-            acceptHeader: HTTP.Header.Accept.jsonAPI
+            acceptHeader: HTTP.Header.Accept.jsonAPI,
+            parameters: EndPoint.Factory.Channels.localeParameters
         )
     }
 }

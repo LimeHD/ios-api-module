@@ -14,12 +14,15 @@ struct ColorTheme {
         case failure
     }
     
+    static var mode = Mode.success
+    
     struct Background {
         static var header = UIColor.systemGreen
         static var view = #colorLiteral(red: 0.6509803922, green: 1, blue: 0.737254902, alpha: 1)
     }
     
     static func setMode(_ mode: Mode) {
+        ColorTheme.mode = mode
         switch mode {
         case .success:
             Background.header = UIColor.systemGreen

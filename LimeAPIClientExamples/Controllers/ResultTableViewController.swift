@@ -173,6 +173,8 @@ extension ResultTableViewController {
         case .results:
             if self.results.isNotEmpty {
                 var header = section.header
+                if ColorTheme.mode == .failure { return header }
+                
                 switch self.request {
                 case
                 .sessions,

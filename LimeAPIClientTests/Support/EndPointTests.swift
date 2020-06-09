@@ -13,11 +13,23 @@ class EndPointTests: XCTestCase {
     var sut: EndPoint!
     let bannerId = 68
     
+    override func setUp() {
+        super.setUp()
+        let configuration = LACConfiguration(appId: "TEST", apiKey: "TEST_KEY", language: "zh-Hans_HK")
+        LimeAPIClient.configuration = configuration
+    }
+    
+    override func tearDown() {
+        LimeAPIClient.configuration = nil
+        super.tearDown()
+    }
+    
     func test_testChannels_creatsCorrectEndPoint() {
         self.sut = EndPoint.Factory.Channels.test()
         
         XCTAssertEqual(self.sut.path, "v1/channels/test")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.jsonAPI)
+        XCTAssertEqual(self.sut.parameters.url["locale"], LimeAPIClient.configuration?.languageDesignator ?? "")
     }
     
     func test_allChannels_creatsCorrectEndPoint() {
@@ -25,6 +37,7 @@ class EndPointTests: XCTestCase {
         
         XCTAssertEqual(self.sut.path, "v1/channels")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.jsonAPI)
+        XCTAssertEqual(self.sut.parameters.url["locale"], LimeAPIClient.configuration?.languageDesignator ?? "")
     }
     
     func test_channelsByGroupId_creatsCorrectEndPoint() {
@@ -33,6 +46,7 @@ class EndPointTests: XCTestCase {
         
         XCTAssertEqual(self.sut.path, "v1/channels/by_group/\(defaultChannelGroupId)")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.jsonAPI)
+        XCTAssertEqual(self.sut.parameters.url["locale"], LimeAPIClient.configuration?.languageDesignator ?? "")
     }
     
     func test_broadcasts_creatsCorrectEndPoint() {
@@ -46,7 +60,8 @@ class EndPointTests: XCTestCase {
             "channel_id" : channelId.string,
             "start_at" : start,
             "finish_at" : end,
-            "time_zone" : timeZone
+            "time_zone" : timeZone,
+            "locale" : LimeAPIClient.configuration?.languageDesignator ?? ""
         ]
         let parameters = EndPoint.Parameters(url: urlParameters)
         
