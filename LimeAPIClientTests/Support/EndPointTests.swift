@@ -14,15 +14,22 @@ class EndPointTests: XCTestCase {
     let bannerId = 68
     
     func test_testChannels_creatsCorrectEndPoint() {
-        self.sut = EndPoint.Factory.testChannels()
+        self.sut = EndPoint.Factory.Channels.test()
         
         XCTAssertEqual(self.sut.path, "v1/channels/test")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.jsonAPI)
     }
     
+    func test_allChannels_creatsCorrectEndPoint() {
+        self.sut = EndPoint.Factory.Channels.all()
+        
+        XCTAssertEqual(self.sut.path, "v1/channels")
+        XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.jsonAPI)
+    }
+    
     func test_channelsByGroupId_creatsCorrectEndPoint() {
         let defaultChannelGroupId = "105"
-        self.sut = EndPoint.Factory.channelsByGroupId(defaultChannelGroupId)
+        self.sut = EndPoint.Factory.Channels.byGroupId(defaultChannelGroupId)
         
         XCTAssertEqual(self.sut.path, "v1/channels/by_group/\(defaultChannelGroupId)")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.jsonAPI)

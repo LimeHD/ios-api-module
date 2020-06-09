@@ -47,6 +47,10 @@ extension EndPoint.Factory {
         private init() { }
     }
     
+    struct Channels {
+        private init() { }
+    }
+    
     static func session() -> EndPoint {
         let parameters = EndPoint.Parameters(
             body: ["app_id" : LimeAPIClient.configuration?.appId ?? ""]
@@ -56,27 +60,6 @@ extension EndPoint.Factory {
             acceptHeader: HTTP.Header.Accept.json,
             httpMethod: HTTP.Method.post,
             parameters: parameters
-        )
-    }
-    
-    static func testChannels() -> EndPoint {
-        return EndPoint(
-            path: "v1/channels/test",
-            acceptHeader: HTTP.Header.Accept.jsonAPI
-        )
-    }
-    
-    static func channels() -> EndPoint {
-        return EndPoint(
-            path: "v1/channels",
-            acceptHeader: HTTP.Header.Accept.jsonAPI
-        )
-    }
-    
-    static func channelsByGroupId(_ defaultChannelGroupId: String) -> EndPoint {
-        return EndPoint(
-            path: "v1/channels/by_group/\(defaultChannelGroupId)",
-            acceptHeader: HTTP.Header.Accept.jsonAPI
         )
     }
     
@@ -170,6 +153,32 @@ extension EndPoint.Factory.Banner {
             path: "v1/banners/\(bannerId)",
             acceptHeader: HTTP.Header.Accept.json,
             parameters: parameters
+        )
+    }
+}
+
+
+// MARK: - Сhannels Factory
+
+extension EndPoint.Factory.Channels {
+    static func test() -> EndPoint {
+        return EndPoint(
+            path: "v1/channels/test",
+            acceptHeader: HTTP.Header.Accept.jsonAPI
+        )
+    }
+    
+    static func all() -> EndPoint {
+        return EndPoint(
+            path: "v1/channels",
+            acceptHeader: HTTP.Header.Accept.jsonAPI
+        )
+    }
+    
+    static func byGroupId(_ defaultChannelGroupId: String) -> EndPoint {
+        return EndPoint(
+            path: "v1/channels/by_group/\(defaultChannelGroupId)",
+            acceptHeader: HTTP.Header.Accept.jsonAPI
         )
     }
 }
