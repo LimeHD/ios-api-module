@@ -26,7 +26,7 @@ enum URLParametersError: Error, LocalizedError, Equatable {
 
 struct URLParameters {
     private let baseUrl: String
-    private let endPoint: EndPoint
+    private let endPoint: EndPoint?
     let url: URL
     
     init(baseUrl: String, endPoint: EndPoint) throws {
@@ -44,14 +44,32 @@ struct URLParameters {
         self.url = url.appendingPathComponent(endPoint.path)
     }
     
+    init(path: String) throws {
+        let path = path.trimmingCharacters(in: .whitespacesAndNewlines)
+        if path.isEmpty {
+            throw URLParametersError.emptyUrl
+        }
+        
+        guard let url = URL(string: path) else {
+            throw URLParametersError.invalidUrl(path)
+        }
+        
+        self.baseUrl = ""
+        self.endPoint = nil
+        self.url = url
+    }
+    
     var request: URLRequest {
         var request = URLRequest(url: self.url, timeoutInterval: 10.0)
-        request.httpMethod = self.endPoint.httpMethod
-        request.setValue(self.endPoint.acceptHeader, forHTTPHeaderField: "Accept")
+        request.httpMethod = self.endPoint?.httpMethod ?? HTTP.Method.get
         request.setHeaders(parameters: HTTP.headers)
         
-        request.addURLQueryItems(parameters: self.endPoint.parameters.url, resolvingAgainstBaseURL: false)
-        request.addBodyQueryItems(parameters: self.endPoint.parameters.body, dataEncoding: .utf8)
+        guard let endPoint = self.endPoint else { return request }
+        
+        request.setValue(endPoint.acceptHeader, forHTTPHeaderField: "Accept")
+        
+        request.addURLQueryItems(parameters: endPoint.parameters.url, resolvingAgainstBaseURL: false)
+        request.addBodyQueryItems(parameters: endPoint.parameters.body, dataEncoding: .utf8)
         if request.httpBody != nil {
             request.setValue(HTTP.Header.ContentType.urlEncodedForm, forHTTPHeaderField: "Content-Type")
         }

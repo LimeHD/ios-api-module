@@ -54,5 +54,12 @@ enum APIRequest: String {
     struct Result {
         let title: String
         let detail: String
+        let imageUrl: String?
+        
+        init(title: String, detail: String, imageUrl: String? = nil) {
+            self.title = title
+            self.detail = detail
+            self.imageUrl = imageUrl
+        }
     }
 }

@@ -31,10 +31,12 @@ class ResultTableViewController: UITableViewController {
     }
     
     let request: APIRequest
-    var parameters = [APIRequest.Parameter]()
-    var results = [APIRequest.Result]()
+    private var parameters = [APIRequest.Parameter]()
+    private var results = [APIRequest.Result]()
+    private var cachedImages = NSCache<NSString, UIImage>()
+    private let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
     
-    var activityIndicator: UIActivityIndicatorView = {
+    private var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .gray)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.color = .black
@@ -215,23 +217,54 @@ extension ResultTableViewController {
             let cell = tableView.dequeueReusableCell(ParameterCell.self, for: indexPath)
 
             cell?.selectionStyle = .none
-            cell?.parameterNameLabel.text = parameters[indexPath.row].name
-            cell?.parameterValueTextField.keyboardType = parameters[indexPath.row].keyboardType
-            cell?.parameterDescriptionLabel.text = parameters[indexPath.row].detail
+            cell?.parameterNameLabel.text = self.parameters[indexPath.row].name
+            cell?.parameterValueTextField.keyboardType = self.parameters[indexPath.row].keyboardType
+            cell?.parameterDescriptionLabel.text = self.parameters[indexPath.row].detail
             cell?.backgroundColor = ColorTheme.Background.view
+            cell?.imageView?.image = nil
 
             return cell ?? UITableViewCell()
         case .results:
             let cell = tableView.dequeueReusableCell(SubtitleCell.self, for: indexPath)
 
             cell?.selectionStyle = .none
-            cell?.textLabel?.text = results[indexPath.row].title
-            cell?.detailTextLabel?.text = results[indexPath.row].detail
+            cell?.textLabel?.text = self.results[indexPath.row].title
+            cell?.detailTextLabel?.text = self.results[indexPath.row].detail
             cell?.detailTextLabel?.numberOfLines = 0
             cell?.backgroundColor = ColorTheme.Background.view
+            self.setImage(for: cell, at: indexPath)
 
             return cell ?? UITableViewCell()
         }
+    }
+    
+    private func setImage(for cell: UITableViewCell?, at indexPath: IndexPath) {
+        cell?.imageView?.image = nil
+        guard let imageUrl = self.results[indexPath.row].imageUrl else { return }
+        
+        if let image = self.image(path: imageUrl) {
+            cell?.imageView?.image = image
+            return
+        }
+
+        self.apiClient.getImage(with: imageUrl) { [weak self] (result) in
+            switch result {
+            case let .success(image):
+                let cell = self?.tableView.cellForRow(at: indexPath)
+                let cellHeight = cell?.frame.size.height ?? 44
+                let image = image.resize(cellHeight, cellHeight) ?? image
+                self?.cachedImages.setObject(image, forKey: imageUrl as NSString)
+                cell?.imageView?.contentMode = .scaleAspectFit
+                cell?.imageView?.image = image
+                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+            case let .failure(error):
+                print("Ошибка загрузки изображения. \(self?.results[indexPath.row].title ?? ""): \(self?.results[indexPath.row].detail ?? "") - \(imageUrl) \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func image(path: String) -> UIImage? {
+        return self.cachedImages.object(forKey: path as NSString)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -253,9 +286,7 @@ extension ResultTableViewController {
     }
     
     private func session() {
-        // Пример cоздания новой сессии
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.session { [weak self] (result) in
+        self.apiClient.session { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             
@@ -287,9 +318,7 @@ extension ResultTableViewController {
     }
     
     private func findBanner() {
-        // Пример запроса подходящего баннер без ротации
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.findBanner { [weak self] (result) in
+        self.apiClient.findBanner { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             
@@ -317,7 +346,7 @@ extension ResultTableViewController {
     private func configureBannerResult(_ banner: BannerAndDevice.Banner) {
         self.results = [
             APIRequest.Result(title: "id", detail: banner.id.string),
-            APIRequest.Result(title: "image url", detail: banner.imageUrl),
+            APIRequest.Result(title: "image url", detail: banner.imageUrl, imageUrl: banner.imageUrl),
             APIRequest.Result(title: "title", detail: banner.title),
             APIRequest.Result(title: "description", detail: banner.description),
             APIRequest.Result(title: "is skipable", detail: banner.isSkipable.string),
@@ -329,9 +358,7 @@ extension ResultTableViewController {
     }
     
     private func nextBanner() {
-        // Пример запроса рекомендованного данному устройству и приложению баннера
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.nextBanner { [weak self] (result) in
+        self.apiClient.nextBanner { [weak self] (result) in
             guard let self = self else { return }
             self.handleBannerResult(result)
         }
@@ -356,9 +383,8 @@ extension ResultTableViewController {
         guard let bannerIdCell = self.tableView.cellForRow(at: bannerIdIndexPath) as? ParameterCell else { return }
         
         let bannerId = bannerIdCell.parameterValueTextField.text?.int ?? 0
-        // Пример запроса на снятие (удаление) пометки «нежелательный» с баннера
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.deleteBanFromBanner(bannerId: bannerId) { [weak self] (result) in
+        
+        self.apiClient.deleteBanFromBanner(bannerId: bannerId) { [weak self] (result) in
             guard let self = self else { return }
             self.handleBanBannerResult(result)
         }
@@ -385,9 +411,8 @@ extension ResultTableViewController {
         guard let bannerIdCell = self.tableView.cellForRow(at: bannerIdIndexPath) as? ParameterCell else { return }
         
         let bannerId = bannerIdCell.parameterValueTextField.text?.int ?? 0
-        // Пример запроса для отметки баннера как «нежелательный» для исключения из показа
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.banBanner(bannerId: bannerId) { [weak self] (result) in
+        
+        self.apiClient.banBanner(bannerId: bannerId) { [weak self] (result) in
             guard let self = self else { return }
             self.handleBanBannerResult(result)
         }
@@ -398,9 +423,8 @@ extension ResultTableViewController {
         guard let bannerIdCell = self.tableView.cellForRow(at: bannerIdIndexPath) as? ParameterCell else { return }
         
         let bannerId = bannerIdCell.parameterValueTextField.text?.int ?? 0
-        // Пример получения баннера (информацию о нём)
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.getBanner(bannerId: bannerId) { [weak self] (result) in
+        
+        self.apiClient.getBanner(bannerId: bannerId) { [weak self] (result) in
             guard let self = self else { return }
             self.handleBannerResult(result)
         }
@@ -411,10 +435,8 @@ extension ResultTableViewController {
         guard let keyCell = self.tableView.cellForRow(at: keyIndexPath) as? ParameterCell else { return }
     
         let key = keyCell.parameterValueTextField.text ?? ""
-        // Пример запроса на проверку работоспособности сервиса
-        // Параметр key - опциональный. Используется для разнообразия запросов и обхода кэша
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.ping(key: key) { [weak self] (result) in
+        
+        self.apiClient.ping(key: key) { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             
@@ -436,16 +458,14 @@ extension ResultTableViewController {
     }
     
     private func requestChannels() {
-        // Пример запроса на получение списка каналов
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.requestChannels { [weak self] (result) in
+        self.apiClient.requestChannels { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             
             switch result {
             case .success(let channels):
                 self.results = channels.map { (channel) -> APIRequest.Result in
-                    APIRequest.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "")
+                    APIRequest.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "", imageUrl: channel.attributes.imageUrl)
                 }
                 self.tableView.reloadData()
                 print(channels)
@@ -457,16 +477,14 @@ extension ResultTableViewController {
     }
     
     private func requestChannelsByGroupId() {
-        // Пример запроса на получение списка каналов по id группы
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
-        apiClient.requestChannelsByGroupId { [weak self] (result) in
+        self.apiClient.requestChannelsByGroupId { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             
             switch result {
             case .success(let channels):
                 self.results = channels.map { (channel) -> APIRequest.Result in
-                    APIRequest.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "")
+                    APIRequest.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "", imageUrl: channel.attributes.imageUrl)
                 }
                 self.tableView.reloadData()
                 print(channels)
@@ -478,12 +496,10 @@ extension ResultTableViewController {
     }
     
     private func requestBroadcasts() {
-        // Пример запроса на получение программы передач
-        let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
         let startDate = Date().addingTimeInterval(-8.days)
         let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
         let dateInterval = LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
-        apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { [weak self] (result) in
+        self.apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             

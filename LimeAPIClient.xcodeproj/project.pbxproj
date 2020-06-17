@@ -63,6 +63,7 @@
 		4E75B1C1246EB9870061E143 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C0246EB9870061E143 /* JSONParser.swift */; };
 		4E75B1C3246EBADC0061E143 /* JSONAPIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */; };
 		4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C4246EBBE60061E143 /* Channel.swift */; };
+		4E81FEE6249A3A930061F7FB /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E81FEE5249A3A930061F7FB /* UIImage.swift */; };
 		4E835BED2473D50700C8DD96 /* Ping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEC2473D50700C8DD96 /* Ping.swift */; };
 		4E835BEF2473EFE300C8DD96 /* JSONAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */; };
 		4E835BF32474179F00C8DD96 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BF22474179F00C8DD96 /* JSONParserTests.swift */; };
@@ -177,6 +178,7 @@
 		4E75B1C0246EB9870061E143 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIObject.swift; sourceTree = "<group>"; };
 		4E75B1C4246EBBE60061E143 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		4E81FEE5249A3A930061F7FB /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		4E835BEC2473D50700C8DD96 /* Ping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ping.swift; sourceTree = "<group>"; };
 		4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIError.swift; sourceTree = "<group>"; };
 		4E835BF22474179F00C8DD96 /* JSONParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				4E5CDDF4247E899600F0F55F /* Bool.swift */,
 				4ECFB09B247D4AAA00727244 /* UIAlertController.swift */,
 				4E91927A248927BD00974C02 /* UIApplication.swift */,
+				4E81FEE5249A3A930061F7FB /* UIImage.swift */,
 				4E5CDDF0247E4D0E00F0F55F /* UINavigationItem.swift */,
 				4E5CDDEE247E4C6B00F0F55F /* UITableView.swift */,
 				4ECFB094247D0F8400727244 /* UIView.swift */,
@@ -686,6 +689,7 @@
 				4E5CDDED247E463E00F0F55F /* ResultTableViewController.swift in Sources */,
 				4E5CDDF5247E899600F0F55F /* Bool.swift in Sources */,
 				4E5CDDF3247E58D600F0F55F /* SubtitleCell.swift in Sources */,
+				4E81FEE6249A3A930061F7FB /* UIImage.swift in Sources */,
 				4E579597246AE6180009D306 /* AppDelegate.swift in Sources */,
 				4EBFF41C2484E1960096FFCF /* ColorTheme.swift in Sources */,
 				4E5CDDF7247E8A8200F0F55F /* Array.swift in Sources */,

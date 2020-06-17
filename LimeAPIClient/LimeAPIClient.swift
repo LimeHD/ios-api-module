@@ -6,16 +6,18 @@
 //  Copyright © 2020 Лайм HD. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 let module = NSStringFromClass(LimeAPIClient.self).components(separatedBy:".")[0]
 
 public typealias ApiResult<T: Decodable> = (Result<T, Error>) -> Void
+public typealias ApiImageResult = (Result<UIImage, Error>) -> Void
 
 public enum APIError: Error, LocalizedError, Equatable {
     case unknownChannelsGroupId
     case jsonAPIError(_ statusCode: String, error: JSONAPIError)
     case wrongStatusCode(_ statusCode: String, error: String)
+    case incorrectImageData
     
     public var errorDescription: String? {
         switch self {
@@ -28,6 +30,9 @@ public enum APIError: Error, LocalizedError, Equatable {
         case let .wrongStatusCode(statusCode, error: error):
             let key = "Неуспешный ответ состояния HTTP: \(statusCode). Ошибка: \(error)"
             return NSLocalizedString(key, comment: statusCode)
+        case .incorrectImageData:
+            let key = "Полученный формат данных изображения не поддерживается системой"
+            return NSLocalizedString(key, comment: "Неверный формат данных")
         }
     }
 }
@@ -333,6 +338,19 @@ public extension LimeAPIClient {
             self.handleJSONResult(result, completion)
         }
     }
+    
+    func getImage(with path: String, completion: @escaping ApiImageResult) {
+        self.backgroundQueue.async {
+            self.requestImage(with: path) { (result) in
+                switch result {
+                case .success(let image):
+                    self.mainQueue.async { completion(.success(image)) }
+                case .failure(let error):
+                    self.mainQueue.async { completion(.failure(error)) }
+                }
+            }
+        }
+    }
 }
 
 //MARK: - Private Methods
@@ -417,6 +435,34 @@ extension LimeAPIClient {
             let message = String(decoding: data, as: UTF8.self)
             let error = APIError.wrongStatusCode(response.localizedStatusCode, error: message)
             completion(.failure(error))
+        }
+    }
+    
+    //MARK: - Image Request Methods
+    
+    private func requestImage(with path: String, completion: @escaping ApiImageResult) {
+        let request: URLRequest
+        do {
+            let parameters = try URLParameters(path: path)
+            request = parameters.request
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        
+        HTTPClient(self.session).dataTask(with: request) { (result) in
+            switch result {
+            case .success(let result):
+                if let image = UIImage(data: result.data) {
+                    completion(.success(image))
+                } else {
+                    let error = APIError.incorrectImageData
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                LimeAPIClient.log(request, message: error.localizedDescription)
+                completion(.failure(error))
+            }
         }
     }
     
