@@ -369,10 +369,10 @@ public extension LimeAPIClient {
             switch result {
             case .success(let result):
                 let playlist = String(decoding: result.data, as: UTF8.self)
-                completion(.success(playlist))
+                self.mainQueue.async { completion(.success(playlist)) }
             case .failure(let error):
                 LimeAPIClient.log(request, message: error.localizedDescription)
-                completion(.failure(error))
+                self.mainQueue.async { completion(.failure(error)) }
             }
         }
     }

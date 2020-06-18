@@ -92,6 +92,7 @@
 		4ECFB095247D0F8400727244 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB094247D0F8400727244 /* UIView.swift */; };
 		4ECFB09C247D4AAA00727244 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB09B247D4AAA00727244 /* UIAlertController.swift */; };
 		4ECFB09F247D59AE00727244 /* APITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECFB09E247D59AE00727244 /* APITableViewController.swift */; };
+		4EE6717A249B7FDC001C7B22 /* PlaylistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE67179249B7FDC001C7B22 /* PlaylistTableViewController.swift */; };
 		4EFC6E4C2476B49A009D6CF7 /* JSONAPIErrorExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */; };
 /* End PBXBuildFile section */
 
@@ -208,6 +209,7 @@
 		4ECFB094247D0F8400727244 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4ECFB09B247D4AAA00727244 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		4ECFB09E247D59AE00727244 /* APITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITableViewController.swift; sourceTree = "<group>"; };
+		4EE67179249B7FDC001C7B22 /* PlaylistTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewController.swift; sourceTree = "<group>"; };
 		4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIErrorExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -449,6 +451,7 @@
 			children = (
 				4ECFB09E247D59AE00727244 /* APITableViewController.swift */,
 				4E5CDDEC247E463E00F0F55F /* ResultTableViewController.swift */,
+				4EE67179249B7FDC001C7B22 /* PlaylistTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -688,6 +691,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E91927B248927BD00974C02 /* UIApplication.swift in Sources */,
+				4EE6717A249B7FDC001C7B22 /* PlaylistTableViewController.swift in Sources */,
 				4ECFB095247D0F8400727244 /* UIView.swift in Sources */,
 				4E75B1BF246E77300061E143 /* LACSettings.swift in Sources */,
 				4E5CDDED247E463E00F0F55F /* ResultTableViewController.swift in Sources */,

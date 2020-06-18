@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVKit
 import LimeAPIClient
 
 class ResultTableViewController: UITableViewController {
@@ -31,7 +30,7 @@ class ResultTableViewController: UITableViewController {
         }
     }
     
-    let request: APIRequest
+    private let request: APIRequest
     private var parameters = [APIRequest.Parameter]()
     private var results = [APIRequest.Result]()
     private var channels = [Channel]()
@@ -274,7 +273,7 @@ extension ResultTableViewController {
         case
         .channels,
         .channelsByGroupId:
-            self.presentAVPlayerViewController(for: indexPath)
+            self.pushPlaylistViewController(for: indexPath)
             return
         default:
             break
@@ -288,29 +287,26 @@ extension ResultTableViewController {
         UIApplication.shared.open(url: url)
     }
     
-    private func presentAVPlayerViewController(for indexPath: IndexPath) {
+    private func pushPlaylistViewController(for indexPath: IndexPath) {
         guard let streamId = self.channels[indexPath.row].attributes.streams.first?.id else {
             let alert = UIAlertController(title: "Ошибка", message: "Отсутсвует поток для воспроизведения")
             self.present(alert, animated: true)
             return
         }
-        let asset: AVURLAsset
-        do {
-            asset = try LACStream.online(streamId: streamId)
-        } catch LACStreamError.sessionError {
-            self.handleSessionError()
-            return
-        } catch {
-            let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
-            self.present(alert, animated: true)
-            return
-        }
-        let playerItem = AVPlayerItem(asset: asset)
-        let player = AVPlayer(playerItem: playerItem)
-        let playerViewController = AVPlayerViewController()
-        playerViewController.player = player
-        self.present(playerViewController, animated: true) {
-            playerViewController.player!.play()
+        
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        self.activityIndicator.startAnimating()
+        self.apiClient.playlist(streamId: streamId) { [weak self] (result) in
+            self?.configureStopAnimating()
+            switch result {
+            case let .success(playlist):
+                print(playlist)
+                let playlistController = PlaylistTableViewController(playlist: playlist, streamId: streamId)
+                playlistController.title = self?.channels[indexPath.row].attributes.name ?? "Канал без имени"
+                self?.navigationController?.pushViewController(playlistController, animated: true)
+            case let .failure(error):
+                self?.showAlert(error)
+            }
         }
     }
     
@@ -579,6 +575,16 @@ extension ResultTableViewController {
     }
     
     private func showAlert(_ error: Error) {
+        if let error = error as? APIError,
+            case .unknownChannelsGroupId = error {
+            self.handleSessionError()
+            return
+        }
+        if let error = error as? LACStreamError,
+            case .sessionError = error {
+            self.handleSessionError()
+            return
+        }
         self.changeColorTheme(.failure)
         if let error = error as? APIError,
             case let .jsonAPIError(statusCode, error: jsonAPIError) = error {
@@ -595,11 +601,6 @@ extension ResultTableViewController {
                 self.present(alert, animated: true)
                 return
             }
-        }
-        if let error = error as? APIError,
-            case .unknownChannelsGroupId = error {
-            self.handleSessionError()
-            return
         }
         let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
         self.present(alert, animated: true)
