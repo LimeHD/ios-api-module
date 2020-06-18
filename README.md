@@ -60,10 +60,7 @@ pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 ``` swift
 import LimeAPIClient
 ```
-Все сетевые запросы осуществляются в [одельной очереди](https://developer.apple.com/documentation/dispatch/dispatchqueue/2300059-init):
-``` swift
-DispatchQueue(label: "tv.limehd.LimeAPIClient", qos: .userInitiated, attributes: .concurrent)
-```
+Все сетевые запросы осуществляются в одельном потоке (см. официальную документацию Apple по классу `URLSession` в разделе «[Asynchronicity and URL Sessions](https://developer.apple.com/documentation/foundation/urlsession/)»).
 После выполнения запроса ответ передается в [главную очередь](https://developer.apple.com/documentation/dispatch/dispatchqueue/1781006-main):
 ``` swift
 DispatchQueue.main

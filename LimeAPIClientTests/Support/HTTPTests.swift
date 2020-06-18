@@ -29,7 +29,7 @@ class HTTPTests: XCTestCase {
         let baseUrl = "https://limehd.tv/"
         let session = MockURLSession()
         let queue = MockDispatchQueue()
-        let apiClient = LimeAPIClient(baseUrl: baseUrl, session: session, mainQueue: queue, backgroundQueue: queue)
+        let apiClient = LimeAPIClient(baseUrl: baseUrl, session: session, mainQueue: queue)
         apiClient.session { (_) in }
         let url = try XCTUnwrap(URL(string: baseUrl))
         let response = HTTPURLResponse(url: url, statusCode: 200)

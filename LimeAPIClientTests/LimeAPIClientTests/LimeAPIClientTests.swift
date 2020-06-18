@@ -25,7 +25,7 @@ class LimeAPIClientTests: XCTestCase {
         super.setUp()
         self.session = MockURLSession()
         self.queue = MockDispatchQueue()
-        self.sut = LimeAPIClient(baseUrl: self.baseUrl, session: self.session, mainQueue: queue, backgroundQueue: queue)
+        self.sut = LimeAPIClient(baseUrl: self.baseUrl, session: self.session, mainQueue: queue)
     }
     
     override func tearDown() {

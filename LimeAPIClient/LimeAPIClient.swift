@@ -42,7 +42,6 @@ public final class LimeAPIClient {
     let baseUrl: String
     let session: URLSession
     let mainQueue: Dispatchable
-    let backgroundQueue: Dispatchable
     /// Значения конфигурации клиента
     public static var configuration: LACConfiguration?
     
@@ -51,7 +50,7 @@ public final class LimeAPIClient {
     ///   - baseUrl: адрес  сервера  API
     ///   - session: используется значение по умолчанию `URLSession.shared`
     ///   - mainQueue: очередь для возвращения запроса, по умолчанию используется значение `DispatchQueue.main`
-    ///   - backgroundQueue: очередь в которой выполняютя запросы, по умолчаанию используется `DispatchQueue(label: "tv.limehd.LimeAPIClient", qos: .userInitiated, attributes: .concurrent)`
+    
     ///
     /// Пример инициализации:
     /// ```
@@ -67,15 +66,10 @@ public final class LimeAPIClient {
     /// // BASE_URL - адрес  сервера  API
     /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)
     /// ```
-    public init(baseUrl: String, session: URLSession = URLSession.shared, mainQueue: Dispatchable = DispatchQueue.main, backgroundQueue: Dispatchable? = nil) {
+    public init(baseUrl: String, session: URLSession = URLSession.shared, mainQueue: Dispatchable = DispatchQueue.main) {
         self.baseUrl = baseUrl
         self.session = session
         self.mainQueue = mainQueue
-        if let backgroundQueue = backgroundQueue {
-            self.backgroundQueue = backgroundQueue
-        } else {
-            self.backgroundQueue = DispatchQueue(label: "tv.limehd.LimeAPIClient", qos: .userInitiated, attributes: .concurrent)
-        }
     }
     
     /// Запрос новой сессии
@@ -342,14 +336,12 @@ public extension LimeAPIClient {
     }
     
     func getImage(with path: String, completion: @escaping ApiImageResult) {
-        self.backgroundQueue.async {
-            self.requestImage(with: path) { (result) in
-                switch result {
-                case .success(let image):
-                    self.mainQueue.async { completion(.success(image)) }
-                case .failure(let error):
-                    self.mainQueue.async { completion(.failure(error)) }
-                }
+        self.requestImage(with: path) { (result) in
+            switch result {
+            case .success(let image):
+                self.mainQueue.async { completion(.success(image)) }
+            case .failure(let error):
+                self.mainQueue.async { completion(.failure(error)) }
             }
         }
     }
@@ -393,15 +385,13 @@ extension LimeAPIClient {
             return
         }
         
-        self.backgroundQueue.async {
-            self.dataTask(with: request, T.self) { (result) in
-                switch result {
-                case .success(let result):
-                    self.mainQueue.async { completion(.success(result)) }
-                case .failure(let error):
-                    LimeAPIClient.log(request, message: error.localizedDescription)
-                    self.mainQueue.async { completion(.failure(error)) }
-                }
+        self.dataTask(with: request, T.self) { (result) in
+            switch result {
+            case .success(let result):
+                self.mainQueue.async { completion(.success(result)) }
+            case .failure(let error):
+                LimeAPIClient.log(request, message: error.localizedDescription)
+                self.mainQueue.async { completion(.failure(error)) }
             }
         }
     }
