@@ -553,10 +553,10 @@ extension ResultTableViewController {
     }
     
     private func requestBroadcasts() {
-        let startDate = Date().addingTimeInterval(-8.days)
+        let startDate = Date().addingTimeInterval(-3.days)
         let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
-        let dateInterval = LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
-        self.apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { [weak self] (result) in
+        let dateInterval = LACDateInterval(start: startDate, duration: 7.days, timeZone: timeZone)
+        self.apiClient.requestBroadcasts(channelId: 129, dateInterval: dateInterval) { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             
