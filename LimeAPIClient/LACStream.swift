@@ -33,12 +33,19 @@ public enum LACStreamError: Error, LocalizedError, Equatable {
 }
 
 public struct LACStream {
-    public static func online(streamId: Int) throws -> AVURLAsset {
-        let path = LimeAPIClient.configuration?.streamEndpoint.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    private static var streamEndpoint: String {
+        LimeAPIClient.configuration?.streamEndpoint.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    }
+    static func streamEndpoint(_ streamId: Int) throws -> String {
+        let path = LACStream.streamEndpoint
         if path.isEmpty {
             throw LACStreamError.sessionError
         }
-        let streamPath = path.replacingOccurrences(of: "${stream_id}", with: streamId.string)
+        return path.replacingOccurrences(of: "${stream_id}", with: streamId.string)
+    }
+    
+    public static func online(streamId: Int) throws -> AVURLAsset {
+        let streamPath = try LACStream.streamEndpoint(streamId)
         guard let url = URL(string: streamPath) else {
             throw LACStreamError.invalidUrl(streamPath)
         }
