@@ -20,6 +20,7 @@ class HTTPTests: XCTestCase {
         XCTAssertNotNil(self.sut.headers["X-App-Id"])
         XCTAssertNotNil(self.sut.headers["X-App-Version"])
         XCTAssertNotNil(self.sut.headers["X-Access-Key"])
+        XCTAssertNotNil(self.sut.headers["X-Session-Id"])
     }
 
     func test_headersIsCorrect() {
@@ -37,5 +38,7 @@ class HTTPTests: XCTestCase {
         XCTAssertEqual(self.sut.headers["X-App-Version"], appVersion)
         let key = LimeAPIClient.configuration?.apiKey ?? ""
         XCTAssertEqual(self.sut.headers["X-Access-Key"], key)
+        let sessionId = LimeAPIClient.configuration?.sessionId ?? ""
+        XCTAssertEqual(self.sut.headers["X-Session-Id"], sessionId)
     }
 }

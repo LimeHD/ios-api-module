@@ -35,6 +35,8 @@ public struct LACConfiguration {
         let scriptDesignatorDeleted = regionDesignatorDeleted?.components(separatedBy: "-").first
         return scriptDesignatorDeleted ?? ""
     }()
+    /// Идентификатор сессии, значение получают при успешном запросе сессии
+    var sessionId = ""
     /// Ссылка для редиректа на текущий поток, значение получают при успешном запросе сессии
     var streamEndpoint = ""
     /// Идентификатор группы канала, значение получают при успешном запросе сессии

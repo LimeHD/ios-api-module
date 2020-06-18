@@ -34,7 +34,8 @@ public struct HTTP {
             "X-Device-Id":      Device.id,
             "X-App-Id":         LimeAPIClient.configuration?.appId ?? "",
             "X-App-Version":    LACApp.version,
-            "X-Access-Key":     LimeAPIClient.configuration?.apiKey ?? ""
+            "X-Access-Key":     LimeAPIClient.configuration?.apiKey ?? "",
+            "X-Session-Id":     LimeAPIClient.configuration?.sessionId ?? ""
         ]
     }
 }
