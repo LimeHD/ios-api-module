@@ -23,7 +23,20 @@ class HTTPTests: XCTestCase {
         XCTAssertNotNil(self.sut.headers["X-Session-Id"])
     }
 
-    func test_headersIsCorrect() {
+    func test_headersIsCorrect() throws {
+        let configuration = LACConfiguration(appId: "APPLICATION_ID", apiKey: "API_KEY.APPLICATION", language: Device.language)
+        LimeAPIClient.configuration = configuration
+        let baseUrl = "https://limehd.tv/"
+        let session = MockURLSession()
+        let queue = MockDispatchQueue()
+        let apiClient = LimeAPIClient(baseUrl: baseUrl, session: session, mainQueue: queue, backgroundQueue: queue)
+        apiClient.session { (_) in }
+        let url = try XCTUnwrap(URL(string: baseUrl))
+        let response = HTTPURLResponse(url: url, statusCode: 200)
+        let data = try XCTUnwrap(SessionExample.data(using: .utf8))
+        session.lastTask?.completionHandler(data, response, nil)
+        
+        XCTAssertNotNil(LimeAPIClient.configuration)
         let language = LimeAPIClient.configuration?.language ?? ""
         XCTAssertEqual(self.sut.headers["Accept-Language"], language)
         let platform = "ios"
