@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct HTTP {
+public struct HTTP {
     struct Header {
         struct Accept {
             static var jsonAPI = "application/vnd.api+json"
@@ -26,7 +26,7 @@ struct HTTP {
         let response: HTTPURLResponse
     }
     
-    static var headers: [String: String] {
+    public static var headers: [String: String] {
         return [
             "Accept-Language":  LimeAPIClient.configuration?.language ?? "",
             "X-Platform":       "ios",

@@ -98,6 +98,7 @@ public final class LimeAPIClient {
         self.request(Session.self, endPoint: EndPoint.Factory.session()) { (result) in
             switch result {
             case .success(let session):
+                LimeAPIClient.configuration?.streamEndpoint = session.streamEndpoint
                 LimeAPIClient.configuration?.defaultChannelGroupId = session.defaultChannelGroupId.string
                 completion(.success(session))
             case .failure(let error):

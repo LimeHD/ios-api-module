@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import LimeAPIClient
 
 @UIApplicationMain
@@ -17,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         self.configureLimeAPIClient()
+        self.configureLimeAudioSession()
         
         return true
     }
@@ -28,6 +30,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION, language: language)
         LimeAPIClient.configuration = configuration
     }
-
+    
+    private func configureLimeAudioSession() {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            if #available(iOS 10.0, *) {
+                if #available(iOS 11.0, *) {
+                    try audioSession.setCategory(.playback, mode: .moviePlayback, policy: .longForm, options: [])
+                } else {
+                    try audioSession.setCategory(.playback, mode: .moviePlayback, options: [])
+                }
+            } else {
+                try audioSession.setCategory(.playback)
+            }
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Unable to set audio session category")
+        }
+    }
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 import LimeAPIClient
 
 class ResultTableViewController: UITableViewController {
@@ -33,6 +34,7 @@ class ResultTableViewController: UITableViewController {
     let request: APIRequest
     private var parameters = [APIRequest.Parameter]()
     private var results = [APIRequest.Result]()
+    private var channels = [Channel]()
     private var cachedImages = NSCache<NSString, UIImage>()
     private let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
     
@@ -268,12 +270,70 @@ extension ResultTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch self.request {
+        case
+        .channels,
+        .channelsByGroupId:
+            self.presentAVPlayerViewController(for: indexPath)
+            return
+        default:
+            break
+        }
+        
         guard
             let cell = tableView.cellForRow(at: indexPath),
             let path = cell.detailTextLabel?.text,
             let url = URL(string: path)
         else { return }
         UIApplication.shared.open(url: url)
+    }
+    
+    private func presentAVPlayerViewController(for indexPath: IndexPath) {
+        guard let streamId = self.channels[indexPath.row].attributes.streams.first?.id else {
+            let alert = UIAlertController(title: "Ошибка", message: "Отсутсвует поток для воспроизведения")
+            self.present(alert, animated: true)
+            return
+        }
+        let asset: AVURLAsset
+        do {
+            asset = try LACStream.online(streamId: streamId)
+        } catch LACStreamError.sessionError {
+            self.handleSessionError()
+            return
+        } catch {
+            let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
+            self.present(alert, animated: true)
+            return
+        }
+        let playerItem = AVPlayerItem(asset: asset)
+        let player = AVPlayer(playerItem: playerItem)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        self.present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
+    }
+    
+    private func handleSessionError() {
+        let error = LACStreamError.sessionError.localizedDescription
+        let alert = UIAlertController(title: "Ошибка", message: "\(error)\n\nЗапросить новую сессию?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        let newSessionAction = UIAlertAction(title: "Новая сессия", style: .default) { [weak self] (_) in
+            self?.apiClient.session { (result) in
+                switch result {
+                case .success(_):
+                    let alert = UIAlertController(title: "Новая ссессия", message: "Данные получены")
+                    self?.present(alert, animated: true)
+                case let .failure(error):
+                    let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
+                    self?.present(alert, animated: true)
+                }
+            }
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(newSessionAction)
+        alert.preferredAction = newSessionAction
+        self.present(alert, animated: true)
     }
 }
 
@@ -464,16 +524,21 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let channels):
-                self.results = channels.map { (channel) -> APIRequest.Result in
-                    APIRequest.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "", imageUrl: channel.attributes.imageUrl)
-                }
-                self.tableView.reloadData()
-                print(channels)
+                self.handleChannelsResult(channels)
             case .failure(let error):
                 self.showAlert(error)
                 print(error)
             }
         }
+    }
+    
+    private func handleChannelsResult(_ channels: [Channel]) {
+        self.results = channels.map { (channel) -> APIRequest.Result in
+            return APIRequest.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "", imageUrl: channel.attributes.imageUrl)
+        }
+        self.channels = channels
+        self.tableView.reloadData()
+        print(channels)
     }
     
     private func requestChannelsByGroupId() {
@@ -483,11 +548,7 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let channels):
-                self.results = channels.map { (channel) -> APIRequest.Result in
-                    APIRequest.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "", imageUrl: channel.attributes.imageUrl)
-                }
-                self.tableView.reloadData()
-                print(channels)
+                self.handleChannelsResult(channels)
             case .failure(let error):
                 self.showAlert(error)
                 print(error)
@@ -534,6 +595,11 @@ extension ResultTableViewController {
                 self.present(alert, animated: true)
                 return
             }
+        }
+        if let error = error as? APIError,
+            case .unknownChannelsGroupId = error {
+            self.handleSessionError()
+            return
         }
         let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
         self.present(alert, animated: true)
