@@ -13,3 +13,7 @@ public extension TimeInterval {
     var hours: TimeInterval { self * 3_600 }
     var days: TimeInterval { self * 86_400 }
 }
+
+extension TimeInterval {
+    var int: Int { Int(self) }
+}

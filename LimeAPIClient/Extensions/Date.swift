@@ -12,4 +12,6 @@ extension Date {
     func adjustingByTimeZone(_ timeZone: TimeZone) -> Date {
         self.addingTimeInterval(-timeZone.timeInterval)
     }
+    
+    var unixTime: Int { self.timeIntervalSince1970.int }
 }

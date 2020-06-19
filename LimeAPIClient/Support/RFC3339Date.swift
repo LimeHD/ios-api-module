@@ -45,11 +45,13 @@ struct RFC3339Date {
     let date: Date
     let timeZone: TimeZone
     let string: String
+    let unixTime: Int
     
     init(timeZoneDate: Date, timeZone: TimeZone) {
         self.timeZone = timeZone
         let date = timeZoneDate.adjustingByTimeZone(timeZone)
         self.date = date
+        self.unixTime = date.unixTime
         let formatter = RFC3339DateFormatter(with: timeZone)
         self.string = formatter.string(from: date)
     }
@@ -57,6 +59,7 @@ struct RFC3339Date {
     init(date: Date, timeZone: TimeZone) {
         self.timeZone = timeZone
         self.date = date
+        self.unixTime = date.unixTime
         let formatter = RFC3339DateFormatter(with: timeZone)
         self.string = formatter.string(from: date)
     }
@@ -69,6 +72,7 @@ struct RFC3339Date {
             throw RFC3339DateError.invalidDateString(string)
         }
         self.date = date
+        self.unixTime = date.unixTime
         
         guard let timeZone = TimeZone(rfc3339DateString: string) else {
             throw RFC3339DateError.invalidTimeZoneInString(string)

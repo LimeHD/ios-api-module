@@ -563,7 +563,7 @@ extension ResultTableViewController {
             switch result {
             case .success(let broadcasts):
                 self.results = broadcasts.map { (broadcast) -> APIRequest.Result in
-                    APIRequest.Result(title: "id: \(broadcast.id)", detail: broadcast.attributes.title)
+                    APIRequest.Result(title: "id: \(broadcast.duration ?? 0)", detail: broadcast.attributes.title)
                 }
                 self.tableView.reloadData()
                 print(broadcasts)
