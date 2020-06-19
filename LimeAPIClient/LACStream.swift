@@ -58,6 +58,35 @@ public extension LACStream.Online {
         return path.replacingOccurrences(of: "${stream_id}", with: streamId.string)
     }
     
+    /// Получение ссылки для `AVPlayer` на онлайн поток
+    /// - Parameter streamId: id потока
+    /// - Throws: Возращает ошибку в случае неверной ссылки на поток (не была запрошена новая сессия или получен неверный формат ссылки)
+    /// - Returns: Возвращает ссылку на онлайн поток в формате `AVURLAsset`
+    ///
+    /// Перед использованием необходимо сделать запрос новой сессии для получения ссылки на онлайн поток.
+    /// Сессия запрашивается один раз за все время запуска приложения.
+    ///
+    /// **Пример использования:**
+    /// ```
+    /// import AVKit
+    ///
+    /// let streamId = 44
+    /// let asset: AVURLAsset
+    /// do {
+    ///     asset = try LACStream.Online.urlAsset(for: streamId)
+    /// } catch {
+    ///     print(error)
+    ///     return
+    /// }
+    ///
+    /// let playerItem = AVPlayerItem(asset: asset)
+    /// let player = AVPlayer(playerItem: playerItem)
+    /// let playerViewController = AVPlayerViewController()
+    /// playerViewController.player = player
+    /// self.present(playerViewController, animated: true) {
+    ///     playerViewController.player!.play()
+    /// }
+    /// ```
     static func urlAsset(for streamId: Int) throws -> AVURLAsset {
         let streamPath = try LACStream.Online.endpoint(for: streamId)
         guard let url = URL(string: streamPath) else {
