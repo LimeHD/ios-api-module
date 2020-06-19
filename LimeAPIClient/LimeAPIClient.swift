@@ -360,15 +360,8 @@ public extension LimeAPIClient {
             return
         }
         
-        HTTPClient(self.session).dataTask(with: request) { (result) in
-            switch result {
-            case .success(let result):
-                let playlist = String(decoding: result.data, as: UTF8.self)
-                self.mainQueue.async { completion(.success(playlist)) }
-            case .failure(let error):
-                LimeAPIClient.log(request, message: error.localizedDescription)
-                self.mainQueue.async { completion(.failure(error)) }
-            }
+        self.requestStringData(with: request) { (result) in
+            completion(result)
         }
     }
     
@@ -382,15 +375,8 @@ public extension LimeAPIClient {
             return
         }
         
-        HTTPClient(self.session).dataTask(with: request) { (result) in
-            switch result {
-            case .success(let result):
-                let playlist = String(decoding: result.data, as: UTF8.self)
-                self.mainQueue.async { completion(.success(playlist)) }
-            case .failure(let error):
-                LimeAPIClient.log(request, message: error.localizedDescription)
-                self.mainQueue.async { completion(.failure(error)) }
-            }
+        self.requestStringData(with: request) { (result) in
+            completion(result)
         }
     }
 }
@@ -500,6 +486,19 @@ extension LimeAPIClient {
             case .failure(let error):
                 LimeAPIClient.log(request, message: error.localizedDescription)
                 completion(.failure(error))
+            }
+        }
+    }
+    
+    private func requestStringData(with request: URLRequest, completion: @escaping (Result<String, Error>) -> Void) {
+        HTTPClient(self.session).dataTask(with: request) { (result) in
+            switch result {
+            case .success(let result):
+                let playlist = String(decoding: result.data, as: UTF8.self)
+                self.mainQueue.async { completion(.success(playlist)) }
+            case .failure(let error):
+                LimeAPIClient.log(request, message: error.localizedDescription)
+                self.mainQueue.async { completion(.failure(error)) }
             }
         }
     }
