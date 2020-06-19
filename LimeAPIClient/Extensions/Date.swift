@@ -9,9 +9,7 @@
 import Foundation
 
 extension Date {
-    func rfc3339String(for timeZone: TimeZone) -> String {
-        let formatter = RFC3339DateFormatter()
-        formatter.timeZone = timeZone
-        return formatter.string(from: self)
+    func adjustingByTimeZone(_ timeZone: TimeZone) -> Date {
+        self.addingTimeInterval(-timeZone.timeInterval)
     }
 }

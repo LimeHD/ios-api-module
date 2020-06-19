@@ -187,10 +187,12 @@ public final class LimeAPIClient {
         completion: @escaping ApiResult<[Broadcast]>
     ) {
         let timeZone = dateInterval.timeZone
+        let start = RFC3339Date(date: dateInterval.start, timeZone: timeZone).string
+        let end = RFC3339Date(date: dateInterval.end, timeZone: timeZone).string
         let endPoint = EndPoint.Factory.broadcasts(
             channelId: channelId,
-            start: dateInterval.start.rfc3339String(for: timeZone),
-            end: dateInterval.end.rfc3339String(for: timeZone),
+            start: start,
+            end: end,
             timeZone: timeZone.utcString)
         self.request(JSONAPIObject<[Broadcast], Broadcast.Meta>.self, endPoint: endPoint) { (result) in
             self.handleJSONAPIResult(result, completion)

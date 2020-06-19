@@ -16,3 +16,20 @@ extension TimeZone {
         return formatter.string(from: Date())
     }
 }
+
+//MARK: - Support Methods for RFC3339Date
+
+extension TimeZone {
+    var timeInterval: TimeInterval {
+        TimeInterval(self.secondsFromGMT())
+    }
+    
+    init?(rfc3339DateString string: String) {
+        let stringTimeZone = String(string.suffix(5))
+        let sign = string[19] == "+" ? 1 : -1
+        guard let timeInterval = stringTimeZone.timeIntervalInSeconds else { return nil }
+        let seconds = sign * timeInterval
+        guard let timeZone = TimeZone(secondsFromGMT: seconds) else { return nil }
+        self = timeZone
+    }
+}

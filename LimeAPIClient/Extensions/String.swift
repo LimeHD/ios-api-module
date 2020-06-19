@@ -40,3 +40,26 @@ extension String {
 public extension String {
     var int: Int? { Int(self) }
 }
+
+//MARK: - Support Methods for RFC3339Date
+
+extension String {
+    subscript(i: Int) -> String {
+        let index = self.index(self.startIndex, offsetBy: i)
+        return self[index].string
+    }
+    
+    var timeIntervalInSeconds: Int? {
+        let stringComponents = self.components(separatedBy: ":")
+        var timeComponents = [Int]()
+        for value in stringComponents {
+            if let value = Int(value) {
+                timeComponents.append(value)
+            } else {
+                return nil
+            }
+        }
+        let timeInterval = timeComponents[0].hours + timeComponents[1].minutes
+        return timeInterval
+    }
+}
