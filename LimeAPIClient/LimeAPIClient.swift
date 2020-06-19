@@ -396,13 +396,10 @@ extension LimeAPIClient {
         }
         
         self.dataTask(with: request, T.self) { (result) in
-            switch result {
-            case .success(let result):
-                self.mainQueue.async { completion(.success(result)) }
-            case .failure(let error):
+            if case .failure(let error) = result {
                 LimeAPIClient.log(request, message: error.localizedDescription)
-                self.mainQueue.async { completion(.failure(error)) }
             }
+            self.mainQueue.async { completion(result) }
         }
     }
     
