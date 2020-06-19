@@ -73,7 +73,7 @@ public extension LACStream.Archive {
             throw LACStreamError.emptyBaseUrl
         }
         let endPoint = EndPoint.Factory.archiveStream(for: streamId, startAt: startAt, duration: duration)
-        guard let url = try URLParameters(baseUrl: LACStream.baseUrl, endPoint: endPoint).request.url else {
+        guard let url = try URLRequest(baseUrl: LACStream.baseUrl, endPoint: endPoint).url else {
             throw LACStreamError.emptyArchiveUrl
         }
         return LACStream.urlAsset(url)

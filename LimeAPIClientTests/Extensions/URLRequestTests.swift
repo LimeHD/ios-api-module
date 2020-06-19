@@ -11,7 +11,9 @@ import XCTest
 
 class URLRequestTests: XCTestCase {
     var sut: URLRequest!
+    let baseUrl = "https://limehd.tv/"
     var url = URL(string: "https://limehd.tv/")!
+    let endPoint = EndPoint.Factory.session()
 
     override func setUp() {
         super.setUp()
@@ -40,5 +42,30 @@ class URLRequestTests: XCTestCase {
     func test_addBodyQueryItemsWithEmptyParameters_httpBodyIsEmpty() throws {
         self.sut.addBodyQueryItems(parameters: [:], dataEncoding: .utf8)
         XCTAssertNil(self.sut.httpBody)
+    }
+    
+    func test_handlerInit_notThrows() throws {
+        XCTAssertNoThrow(try URLRequest(baseUrl: self.baseUrl, endPoint: self.endPoint))
+    }
+    
+    func test_handlerInit_requestIsCorrect() throws {
+        self.sut = try URLRequest(baseUrl: self.baseUrl, endPoint: self.endPoint)
+        XCTAssertEqual(self.sut.timeoutInterval, 10)
+        XCTAssertEqual(self.sut.cachePolicy, .useProtocolCachePolicy)
+        XCTAssertEqual(self.sut.httpMethod, self.endPoint.httpMethod)
+        XCTAssertEqual(self.sut.allHTTPHeaderFields?["Accept"], self.endPoint.acceptHeader)
+    }
+    
+    func test_request_setsDefaultHeaders() throws {
+        self.sut = try URLRequest(baseUrl: self.baseUrl, endPoint: self.endPoint)
+        XCTAssertNotNil(self.sut.allHTTPHeaderFields)
+        var isSetDefaulHeaders = true
+        for (key, value) in HTTP.headers {
+            if self.sut.allHTTPHeaderFields?[key] != value {
+                isSetDefaulHeaders = false
+                break
+            }
+        }
+        XCTAssertTrue(isSetDefaulHeaders)
     }
 }
