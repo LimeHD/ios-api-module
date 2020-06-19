@@ -220,7 +220,7 @@ public final class LimeAPIClient {
     /// ```
     public func ping(key: String = "", completion: @escaping ApiResult<Ping>) {
         self.request(Ping.self, endPoint: EndPoint.Factory.ping(key: key)) { (result) in
-            self.handleJSONResult(result, completion)
+            completion(result)
         }
     }
 }
@@ -246,7 +246,7 @@ public extension LimeAPIClient {
     /// ```
     func findBanner(completion: @escaping ApiResult<BannerAndDevice>) {
         self.request(BannerAndDevice.self, endPoint: EndPoint.Factory.Banner.find()) { (result) in
-            self.handleJSONResult(result, completion)
+            completion(result)
         }
     }
     
@@ -268,7 +268,7 @@ public extension LimeAPIClient {
     /// ```
     func nextBanner(completion: @escaping ApiResult<BannerAndDevice.Banner>) {
         self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Factory.Banner.next()) { (result) in
-            self.handleJSONResult(result, completion)
+            completion(result)
         }
     }
     
@@ -335,7 +335,7 @@ public extension LimeAPIClient {
     /// ```
     func getBanner(bannerId: Int, completion: @escaping ApiResult<BannerAndDevice.Banner>) {
         self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Factory.Banner.info(bannerId)) { (result) in
-            self.handleJSONResult(result, completion)
+            completion(result)
         }
     }
     
@@ -415,7 +415,7 @@ extension LimeAPIClient {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let parser = JSONParser(decoder)
                 let result = parser.decode(T.self, result.data)
-                self.handleJSONResult(result, completion)
+                completion(result)
             case .failure(let error):
                 if let error = error as? HTTPError,
                     case let .wrongStatusCode(data, response) = error {
@@ -436,18 +436,9 @@ extension LimeAPIClient {
         }
     }
     
-    private func handleJSONResult<T: Decodable>(_ result: Result<T, Error>, _ completion: @escaping ApiResult<T>) {
-        switch result {
-        case .success(let result):
-            completion(.success(result))
-        case .failure(let error):
-            completion(.failure(error))
-        }
-    }
-    
     private func handleBanBannerRequest(endPoint: EndPoint, completion: @escaping ApiResult<BanBanner>) {
         self.request(BanBanner.self, endPoint: endPoint) { (result) in
-            self.handleJSONResult(result, completion)
+            completion(result)
         }
     }
     
