@@ -49,7 +49,7 @@ enum URLRequestError: Error, LocalizedError, Equatable {
 }
 
 extension URLRequest {
-    init(baseUrl: String, endPoint: EndPoint = EndPoint()) throws {
+    init(baseUrl: String, endPoint: EndPoint) throws {
         let baseUrl = baseUrl.trimmingCharacters(in: .whitespacesAndNewlines)
         if baseUrl.isEmpty {
             throw URLRequestError.emptyUrl
@@ -61,10 +61,15 @@ extension URLRequest {
         if !endPoint.path.isEmpty {
             url = url.appendingPathComponent(endPoint.path)
         }
-        self = URLRequest(url: url, endPoint: endPoint)
+        let path = url.absoluteString
+        self = try URLRequest(path: path, endPoint: endPoint)
     }
     
-    init(url: URL, endPoint: EndPoint) {
+    init(path: String, endPoint: EndPoint = EndPoint()) throws {
+        guard let url = URL(string: path) else {
+            throw URLRequestError.invalidUrl(path)
+        }
+        
         var request = URLRequest(url: url, timeoutInterval: 10.0)
         request.httpMethod = endPoint.httpMethod
         request.setHeaders(parameters: HTTP.headers)
