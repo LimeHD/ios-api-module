@@ -26,10 +26,10 @@ enum URLParametersError: Error, LocalizedError, Equatable {
 
 struct URLParameters {
     private let baseUrl: String
-    private let endPoint: EndPoint?
+    private let endPoint: EndPoint
     let url: URL
     
-    init(baseUrl: String, endPoint: EndPoint) throws {
+    init(baseUrl: String, endPoint: EndPoint? = nil) throws {
         let baseUrl = baseUrl.trimmingCharacters(in: .whitespacesAndNewlines)
         if baseUrl.isEmpty {
             throw URLParametersError.emptyUrl
@@ -40,33 +40,23 @@ struct URLParameters {
         }
         
         self.baseUrl = baseUrl
-        self.endPoint = endPoint
-        self.url = url.appendingPathComponent(endPoint.path)
-    }
-    
-    init(path: String) throws {
-        let path = path.trimmingCharacters(in: .whitespacesAndNewlines)
-        if path.isEmpty {
-            throw URLParametersError.emptyUrl
+        if let endPoint = endPoint {
+            self.endPoint = endPoint
+            self.url = url.appendingPathComponent(endPoint.path)
+        } else {
+            self.endPoint = EndPoint()
+            self.url = url
         }
-        
-        guard let url = URL(string: path) else {
-            throw URLParametersError.invalidUrl(path)
-        }
-        
-        self.baseUrl = ""
-        self.endPoint = nil
-        self.url = url
     }
     
     var request: URLRequest {
         var request = URLRequest(url: self.url, timeoutInterval: 10.0)
-        request.httpMethod = self.endPoint?.httpMethod ?? HTTP.Method.get
+        request.httpMethod = self.endPoint.httpMethod
         request.setHeaders(parameters: HTTP.headers)
         
-        guard let endPoint = self.endPoint else { return request }
-        
-        request.setValue(endPoint.acceptHeader, forHTTPHeaderField: "Accept")
+        if !self.endPoint.acceptHeader.isEmpty {
+            request.setValue(self.endPoint.acceptHeader, forHTTPHeaderField: "Accept")
+        }
         
         request.addURLQueryItems(parameters: endPoint.parameters.url, resolvingAgainstBaseURL: false)
         request.addBodyQueryItems(parameters: endPoint.parameters.body, dataEncoding: .utf8)

@@ -21,8 +21,8 @@ struct EndPoint {
     }
     
     init(
-        path: String,
-        acceptHeader: String,
+        path: String = "",
+        acceptHeader: String = "",
         httpMethod: String = HTTP.Method.get,
         parameters: EndPoint.Parameters = EndPoint.Parameters()
     ) {
@@ -54,6 +54,10 @@ extension EndPoint.Factory {
     }
     
     struct Channels {
+        private init() { }
+    }
+    
+    struct Stream {
         private init() { }
     }
     
@@ -192,4 +196,10 @@ extension EndPoint.Factory.Channels {
     static func byGroupId(_ defaultChannelGroupId: String) -> EndPoint {
         EndPoint.Factory.Channels.path("v1/channels/by_group/\(defaultChannelGroupId)")
     }
+}
+
+// MARK: - Stream Factory
+
+extension EndPoint.Factory.Stream {
+    
 }

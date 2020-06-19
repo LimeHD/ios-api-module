@@ -352,7 +352,7 @@ public extension LimeAPIClient {
         let request: URLRequest
         do {
             let path = try LACStream.Online.endpoint(for: streamId)
-            let parameters = try URLParameters(path: path)
+            let parameters = try URLParameters(baseUrl: path)
             request = parameters.request
         } catch {
             completion(.failure(error))
@@ -375,7 +375,7 @@ public extension LimeAPIClient {
         let request: URLRequest
         do {
             let path = try LACStream.Online.endpoint(for: streamId)
-            let parameters = try URLParameters(path: path)
+            let parameters = try URLParameters(baseUrl: path)
             request = parameters.request
         } catch {
             completion(.failure(error))
@@ -483,7 +483,7 @@ extension LimeAPIClient {
     private func requestImage(with path: String, completion: @escaping ApiImageResult) {
         let request: URLRequest
         do {
-            let parameters = try URLParameters(path: path)
+            let parameters = try URLParameters(baseUrl: path)
             request = parameters.request
         } catch {
             completion(.failure(error))
