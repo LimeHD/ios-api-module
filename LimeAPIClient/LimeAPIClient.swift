@@ -70,6 +70,8 @@ public final class LimeAPIClient {
         self.baseUrl = baseUrl
         self.session = session
         self.mainQueue = mainQueue
+        
+        LACStream.baseUrl = baseUrl
     }
     
     /// Запрос новой сессии
@@ -372,10 +374,10 @@ public extension LimeAPIClient {
     }
     
     func getArchivePlaylist(for streamId: Int, startAt: Int, duration: Int, completion: @escaping (Result<String, Error>) -> Void) {
+        let endPoint = EndPoint.Factory.archiveStream(for: streamId, startAt: startAt, duration: duration)
         let request: URLRequest
         do {
-            let path = try LACStream.Online.endpoint(for: streamId)
-            let parameters = try URLParameters(baseUrl: path)
+            let parameters = try URLParameters(baseUrl: self.baseUrl, endPoint: endPoint)
             request = parameters.request
         } catch {
             completion(.failure(error))

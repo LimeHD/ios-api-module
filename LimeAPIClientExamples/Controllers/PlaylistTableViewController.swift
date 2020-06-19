@@ -12,11 +12,11 @@ import LimeAPIClient
 
 class PlaylistTableViewController: UITableViewController {
     private let playlist: [String]
-    private let streamId: Int
+    private let urlAsset: AVURLAsset
     
-    init(playlist: String, streamId: Int) {
+    init(playlist: String, urlAsset: AVURLAsset) {
         self.playlist = playlist.components(separatedBy: .newlines).dropLast()
-        self.streamId = streamId
+        self.urlAsset = urlAsset
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -59,15 +59,7 @@ class PlaylistTableViewController: UITableViewController {
             cell.textLabel?.text?.contains("#EXT-X-STREAM-INF") ?? false
         else { return }
         
-        let asset: AVURLAsset
-        do {
-            asset = try LACStream.Online.urlAsset(for: streamId)
-        } catch {
-            let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
-            self.present(alert, animated: true)
-            return
-        }
-        let playerItem = AVPlayerItem(asset: asset)
+        let playerItem = AVPlayerItem(asset: self.urlAsset)
         let player = AVPlayer(playerItem: playerItem)
         let playerViewController = AVPlayerViewController()
         playerViewController.player = player

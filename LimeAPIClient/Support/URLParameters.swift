@@ -58,8 +58,8 @@ struct URLParameters {
             request.setValue(self.endPoint.acceptHeader, forHTTPHeaderField: "Accept")
         }
         
-        request.addURLQueryItems(parameters: endPoint.parameters.url, resolvingAgainstBaseURL: false)
-        request.addBodyQueryItems(parameters: endPoint.parameters.body, dataEncoding: .utf8)
+        request.addURLQueryItems(parameters: self.endPoint.parameters.url, resolvingAgainstBaseURL: false)
+        request.addBodyQueryItems(parameters: self.endPoint.parameters.body, dataEncoding: .utf8)
         if request.httpBody != nil {
             request.setValue(HTTP.Header.ContentType.urlEncodedForm, forHTTPHeaderField: "Content-Type")
         }

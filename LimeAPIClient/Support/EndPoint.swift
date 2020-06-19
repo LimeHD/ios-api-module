@@ -57,10 +57,6 @@ extension EndPoint.Factory {
         private init() { }
     }
     
-    struct Stream {
-        private init() { }
-    }
-    
     static func session() -> EndPoint {
         let parameters = EndPoint.Parameters(
             body: ["app_id" : EndPoint.appId]
@@ -102,6 +98,20 @@ extension EndPoint.Factory {
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
             path: "v1/ping",
+            acceptHeader: HTTP.Header.Accept.json,
+            parameters: parameters
+        )
+    }
+    
+    static func archiveStream(for streamId: Int, startAt: Int, duration: Int) -> EndPoint {
+        let urlParameters = [
+            "id" : streamId.string,
+            "start_at" : startAt.string,
+            "duration" : duration.string
+        ]
+        let parameters = EndPoint.Parameters(url: urlParameters)
+        return EndPoint(
+            path: "v1/streams/\(streamId)/archive_redirect",
             acceptHeader: HTTP.Header.Accept.json,
             parameters: parameters
         )
@@ -196,10 +206,4 @@ extension EndPoint.Factory.Channels {
     static func byGroupId(_ defaultChannelGroupId: String) -> EndPoint {
         EndPoint.Factory.Channels.path("v1/channels/by_group/\(defaultChannelGroupId)")
     }
-}
-
-// MARK: - Stream Factory
-
-extension EndPoint.Factory.Stream {
-    
 }

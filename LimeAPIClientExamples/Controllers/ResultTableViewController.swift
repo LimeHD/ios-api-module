@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import LimeAPIClient
 
 class ResultTableViewController: UITableViewController {
@@ -34,6 +35,9 @@ class ResultTableViewController: UITableViewController {
     private var parameters = [APIRequest.Parameter]()
     private var results = [APIRequest.Result]()
     private var channels = [Channel]()
+    private var broadcasts = [Broadcast]()
+    private var broadcastChannelId = 129
+    private var broadcastStreamId = 44
     private var cachedImages = NSCache<NSString, UIImage>()
     private let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
     
@@ -273,7 +277,10 @@ extension ResultTableViewController {
         case
         .channels,
         .channelsByGroupId:
-            self.pushPlaylistViewController(for: indexPath)
+            self.pushOnlinePlaylistViewController(for: indexPath)
+            return
+        case .broadcasts:
+            self.pushArchivePlaylistViewController(for: indexPath)
             return
         default:
             break
@@ -287,7 +294,7 @@ extension ResultTableViewController {
         UIApplication.shared.open(url: url)
     }
     
-    private func pushPlaylistViewController(for indexPath: IndexPath) {
+    private func pushOnlinePlaylistViewController(for indexPath: IndexPath) {
         guard let streamId = self.channels[indexPath.row].attributes.streams.first?.id else {
             let alert = UIAlertController(title: "Ошибка", message: "Отсутсвует поток для воспроизведения")
             self.present(alert, animated: true)
@@ -300,12 +307,53 @@ extension ResultTableViewController {
             self?.configureStopAnimating()
             switch result {
             case let .success(playlist):
-                print(playlist)
-                let playlistController = PlaylistTableViewController(playlist: playlist, streamId: streamId)
+                // print(playlist)
+                let asset: AVURLAsset
+                do {
+                    asset = try LACStream.Online.urlAsset(for: streamId)
+                } catch {
+                    self?.showAlert(error)
+                    return
+                }
+                let playlistController = PlaylistTableViewController(playlist: playlist, urlAsset: asset)
                 playlistController.title = self?.channels[indexPath.row].attributes.name ?? "Канал без имени"
                 self?.navigationController?.pushViewController(playlistController, animated: true)
             case let .failure(error):
                 self?.showAlert(error)
+            }
+        }
+    }
+    
+    private func pushArchivePlaylistViewController(for indexPath: IndexPath) {
+        guard
+            let start = self.broadcasts[indexPath.row].startAtUnix,
+            let duration = self.broadcasts[indexPath.row].duration
+        else {
+            let alert = UIAlertController(title: "Ошибка", message: "Отсутсвует значения начала/продолжительности передачи")
+            self.present(alert, animated: true)
+            return
+        }
+        
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        self.activityIndicator.startAnimating()
+        self.apiClient.getArchivePlaylist(for: self.broadcastStreamId, startAt: start, duration: duration) { [weak self] (result) in
+            guard let self = self else { return }
+            self.configureStopAnimating()
+            switch result {
+            case let .success(playlist):
+//                print(playlist)
+                let asset: AVURLAsset
+                do {
+                    asset = try LACStream.Archive.urlAsset(for: self.broadcastStreamId, startAt: start, duration: duration)
+                } catch {
+                    self.showAlert(error)
+                    return
+                }
+                let playlistController = PlaylistTableViewController(playlist: playlist, urlAsset: asset)
+                playlistController.title = self.broadcasts[indexPath.row].attributes.title
+                self.navigationController?.pushViewController(playlistController, animated: true)
+            case let .failure(error):
+                self.showAlert(error)
             }
         }
     }
@@ -556,7 +604,7 @@ extension ResultTableViewController {
         let startDate = Date().addingTimeInterval(-3.days)
         let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
         let dateInterval = LACDateInterval(start: startDate, duration: 7.days, timeZone: timeZone)
-        self.apiClient.requestBroadcasts(channelId: 129, dateInterval: dateInterval) { [weak self] (result) in
+        self.apiClient.requestBroadcasts(channelId: self.broadcastChannelId, dateInterval: dateInterval) { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             
@@ -565,6 +613,7 @@ extension ResultTableViewController {
                 self.results = broadcasts.map { (broadcast) -> APIRequest.Result in
                     APIRequest.Result(title: "id: \(broadcast.duration ?? 0)", detail: broadcast.attributes.title)
                 }
+                self.broadcasts = broadcasts
                 self.tableView.reloadData()
                 print(broadcasts)
             case .failure(let error):
