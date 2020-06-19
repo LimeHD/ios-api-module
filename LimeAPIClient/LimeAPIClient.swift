@@ -348,10 +348,33 @@ public extension LimeAPIClient {
         }
     }
     
-    func playlist(streamId: Int, completion: @escaping (Result<String, Error>) -> Void) {
+    func getOnlinePlaylist(for streamId: Int, completion: @escaping (Result<String, Error>) -> Void) {
         let request: URLRequest
         do {
-            let path = try LACStream.streamEndpoint(streamId)
+            let path = try LACStream.Online.endpoint(for: streamId)
+            let parameters = try URLParameters(path: path)
+            request = parameters.request
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        
+        HTTPClient(self.session).dataTask(with: request) { (result) in
+            switch result {
+            case .success(let result):
+                let playlist = String(decoding: result.data, as: UTF8.self)
+                self.mainQueue.async { completion(.success(playlist)) }
+            case .failure(let error):
+                LimeAPIClient.log(request, message: error.localizedDescription)
+                self.mainQueue.async { completion(.failure(error)) }
+            }
+        }
+    }
+    
+    func getArchivePlaylist(for streamId: Int, startAt: Int, duration: Int, completion: @escaping (Result<String, Error>) -> Void) {
+        let request: URLRequest
+        do {
+            let path = try LACStream.Online.endpoint(for: streamId)
             let parameters = try URLParameters(path: path)
             request = parameters.request
         } catch {

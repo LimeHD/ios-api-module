@@ -296,7 +296,7 @@ extension ResultTableViewController {
         
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.activityIndicator.startAnimating()
-        self.apiClient.playlist(streamId: streamId) { [weak self] (result) in
+        self.apiClient.getOnlinePlaylist(for: streamId) { [weak self] (result) in
             self?.configureStopAnimating()
             switch result {
             case let .success(playlist):

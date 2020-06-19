@@ -61,7 +61,7 @@ class PlaylistTableViewController: UITableViewController {
         
         let asset: AVURLAsset
         do {
-            asset = try LACStream.online(streamId: streamId)
+            asset = try LACStream.Online.urlAsset(for: streamId)
         } catch {
             let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
             self.present(alert, animated: true)
