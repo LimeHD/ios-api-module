@@ -51,6 +51,8 @@ public struct LACDateInterval {
     /// // Конечная дата через 7 дней после текущей
     /// let endDate = currentDate.addingTimeInterval(7.days)
     /// // Временной интервал продолжительностью 15 дней
+    /// /// // Часовой пояс +3 часа
+    /// let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
     /// let dateInterval = LACDateInterval(start: startDate, end: endDate, timeZone: timeZone)
     /// ```
     public init(start: Date, end: Date, timeZone: TimeZone) {
