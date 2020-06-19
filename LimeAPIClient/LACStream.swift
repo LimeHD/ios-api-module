@@ -11,8 +11,6 @@ import AVFoundation
 public enum LACStreamError: Error, LocalizedError, Equatable {
     case sessionError
     case invalidUrl(_ url: String)
-    case wrongStatusCode(_ statusCode: String, error: String)
-    case incorrectImageData
     
     public var errorDescription: String? {
         switch self {
@@ -22,12 +20,6 @@ public enum LACStreamError: Error, LocalizedError, Equatable {
         case .invalidUrl(let url):
             let key = "Недопустимое значение ссылки на поток: \(url)"
             return NSLocalizedString(key, comment: "Недопустимое значение ссылки на поток")
-        case let .wrongStatusCode(statusCode, error: error):
-            let key = "Неуспешный ответ состояния HTTP: \(statusCode). Ошибка: \(error)"
-            return NSLocalizedString(key, comment: statusCode)
-        case .incorrectImageData:
-            let key = "Полученный формат данных изображения не поддерживается системой"
-            return NSLocalizedString(key, comment: "Неверный формат данных")
         }
     }
 }
