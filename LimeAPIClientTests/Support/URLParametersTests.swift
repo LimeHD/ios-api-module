@@ -24,13 +24,8 @@ class URLParametersTests: XCTestCase {
         super.tearDown()
     }
 
-    func test_init_urCreates() throws {
-        XCTAssertNotNil(self.sut.url)
-    }
-    
-    func test_init_createsCorrectUrl() throws {
-        let url = URL(string: self.baseUrl)?.appendingPathComponent(self.endPoint.path)
-        XCTAssertEqual(self.sut.url, url)
+    func test_init_createsRequest() throws {
+        XCTAssertNotNil(self.sut.request)
     }
     
     func test_requestIsCorrect() {
