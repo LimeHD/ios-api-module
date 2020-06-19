@@ -50,7 +50,7 @@ public extension LACStream.Online {
     private static var endpoint: String {
         LimeAPIClient.configuration?.streamEndpoint.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     }
-    static func endpoint(for streamId: Int) throws -> String {
+    static internal func endpoint(for streamId: Int) throws -> String {
         let path = LACStream.Online.endpoint
         if path.isEmpty {
             throw LACStreamError.sessionError
