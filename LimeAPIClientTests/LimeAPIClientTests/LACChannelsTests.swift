@@ -1,5 +1,5 @@
 //
-//  LimeAPIClientChannelsTests.swift
+//  LACChannelsTests.swift
 //  LimeAPIClientTests
 //
 //  Created by Лайм HD on 04.06.2020.
@@ -63,7 +63,7 @@ extension LimeAPIClientTests {
     func test_requestChannelsByGroupId_wrongResponseData_callsCompletionWithFailure() throws {
         var completion: APICompletion<[Channel]>?
         
-        try self.runSessionToSetDefaultChannelGroupId()
+        try self.runSessionToGetAPIValues()
         
         self.sut.requestChannelsByGroupId { (result) in
             completion = self.callAPICompletion(result)
@@ -80,7 +80,7 @@ extension LimeAPIClientTests {
         XCTAssertNil(apiError)
     }
     
-    func runSessionToSetDefaultChannelGroupId() throws {
+    func runSessionToGetAPIValues() throws {
         let data = try generateJSONData(Session.self, string: SessionExample)
         
         let configuration = LACConfiguration(appId: "TEST_ID", apiKey: "TEST_API", language: Device.language)
@@ -93,7 +93,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<[Channel]>?
         let data = try generateJSONData(JSONAPIObject<[Channel], String>.self, string: ChannelExample)
         
-        try self.runSessionToSetDefaultChannelGroupId()
+        try self.runSessionToGetAPIValues()
         
         self.sut.requestChannelsByGroupId { (result) in
             completion = self.callAPICompletion(result)

@@ -1,5 +1,5 @@
 //
-//  LimeAPIClientBroadcastsTests.swift
+//  LACBroadcastsTests.swift
 //  LimeAPIClientTests
 //
 //  Created by Лайм HD on 09.06.2020.
