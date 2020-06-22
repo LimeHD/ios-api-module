@@ -26,6 +26,7 @@
     - [Получение списка каналов по группе id](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B0-%D0%BA%D0%B0%D0%BD%D0%B0%D0%BB%D0%BE%D0%B2-%D0%BF%D0%BE-%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D0%B5-id)
     - [Получение программы передач](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87)
     - [Проверка работоспособности сервиса](#%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BE%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%B0)
+    - [Получение ссылки на онлайн поток](#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8%20%D0%BD%D0%B0%20%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD%20%D0%BF%D0%BE%D1%82%D0%BE%D0%BA)
 
 <!-- /TOC -->
 
@@ -316,5 +317,41 @@ struct Ping: Decodable {
     let time: String
     let version: String
     let hostname: String
+}
+```
+
+### Получение ссылки на онлайн поток
+Получение ссылки для [`AVPlayer`](https://developer.apple.com/documentation/avfoundation/avplayer) на онлайн поток. Возвращает ссылку на онлайн поток в формате [`AVURLAsset`](https://developer.apple.com/documentation/avfoundation/avurlasset).
+
+Пример запроса
+``` swift
+import LimeAPIClient
+import AVKit
+
+// Запрос новой сессии для получения ссылки на онлайн-поток
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+apiClient.session { (result) in
+   switch result {
+   case .success(let session):
+       print(session)
+   case .failure(let error):
+       print(error)
+   }
+}
+
+let streamId = 44
+let asset: AVURLAsset
+do {
+    asset = try LACStream.Online.urlAsset(for: streamId)
+} catch {
+    print(error)
+    return
+}
+let playerItem = AVPlayerItem(asset: asset)
+let player = AVPlayer(playerItem: playerItem)
+let playerViewController = AVPlayerViewController()
+playerViewController.player = player
+self.present(playerViewController, animated: true) {
+    playerViewController.player!.play()
 }
 ```
