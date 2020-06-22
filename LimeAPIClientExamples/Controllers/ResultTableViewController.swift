@@ -344,7 +344,7 @@ extension ResultTableViewController {
 //                print(playlist)
                 let asset: AVURLAsset
                 do {
-                    asset = try LACStream.Archive.urlAsset(for: self.broadcastStreamId, startAt: start, duration: duration)
+                    asset = try LACStream.Archive.urlAsset(for: self.broadcastStreamId, start: start, duration: duration)
                 } catch {
                     self.showAlert(error)
                     return

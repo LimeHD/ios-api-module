@@ -99,11 +99,11 @@ public extension LACStream.Online {
 }
 
 public extension LACStream.Archive {
-    static func urlAsset(for streamId: Int, startAt: Int, duration: Int) throws -> AVURLAsset {
+    static func urlAsset(for streamId: Int, start: Int, duration: Int) throws -> AVURLAsset {
         if LACStream.baseUrl.isEmpty {
             throw LACStream.Error.emptyBaseUrl
         }
-        let endPoint = EndPoint.Factory.archiveStream(for: streamId, startAt: startAt, duration: duration)
+        let endPoint = EndPoint.Factory.archiveStream(for: streamId, start: start, duration: duration)
         guard let url = try URLRequest(baseUrl: LACStream.baseUrl, endPoint: endPoint).url else {
             throw LACStream.Error.emptyArchiveUrl
         }

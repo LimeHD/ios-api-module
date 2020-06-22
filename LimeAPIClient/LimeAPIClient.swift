@@ -366,7 +366,7 @@ public extension LimeAPIClient {
     }
     
     func getArchivePlaylist(for streamId: Int, startAt: Int, duration: Int, completion: @escaping (Result<String, Error>) -> Void) {
-        let endPoint = EndPoint.Factory.archiveStream(for: streamId, startAt: startAt, duration: duration)
+        let endPoint = EndPoint.Factory.archiveStream(for: streamId, start: startAt, duration: duration)
         let request: URLRequest
         do {
             request = try URLRequest(baseUrl: self.baseUrl, endPoint: endPoint)

@@ -103,10 +103,10 @@ extension EndPoint.Factory {
         )
     }
     
-    static func archiveStream(for streamId: Int, startAt: Int, duration: Int) -> EndPoint {
+    static func archiveStream(for streamId: Int, start: Int, duration: Int) -> EndPoint {
         let urlParameters = [
             "id" : streamId.string,
-            "start_at" : startAt.string,
+            "start_at" : start.string,
             "duration" : duration.string
         ]
         let parameters = EndPoint.Parameters(url: urlParameters)
