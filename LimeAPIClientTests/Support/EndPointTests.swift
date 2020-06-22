@@ -142,4 +142,21 @@ class EndPointTests: XCTestCase {
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.json)
         XCTAssertEqual(self.sut.parameters, parameters)
     }
+    
+    func test_archiveStream_creatsCorrectEndPoint() {
+        let streamId = 1
+        let start = 10
+        let duration = 100
+        self.sut = EndPoint.Factory.archiveStream(for: streamId, start: start, duration: duration)
+        let urlParameters = [
+            "id" : streamId.string,
+            "start_at" : start.string,
+            "duration" : duration.string
+        ]
+        let parameters = EndPoint.Parameters(url: urlParameters)
+        
+        XCTAssertEqual(self.sut.path, "v1/streams/\(streamId)/archive_redirect")
+        XCTAssertTrue(self.sut.acceptHeader.isEmpty)
+        XCTAssertEqual(self.sut.parameters, parameters)
+    }
 }

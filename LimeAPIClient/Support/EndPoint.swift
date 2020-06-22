@@ -112,7 +112,6 @@ extension EndPoint.Factory {
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(
             path: "v1/streams/\(streamId)/archive_redirect",
-            acceptHeader: HTTP.Header.Accept.json,
             parameters: parameters
         )
     }
