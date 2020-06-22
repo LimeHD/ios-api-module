@@ -12,7 +12,7 @@ import XCTest
 class LACConfigurationTests: XCTestCase {
     var sut: LACConfiguration!
 
-    func test_languageDesignator_createsCorrectValue() {
+    func test_languageDesignator_fullLanguage_createsCorrectValue() {
         let languageDesignator = "zh"
         let scriptDesignator = "Hans"
         let regionDesignator = "HK"
@@ -20,6 +20,19 @@ class LACConfigurationTests: XCTestCase {
         self.sut = LACConfiguration(appId: "", apiKey: "", language: language)
         
         XCTAssertEqual(self.sut.languageDesignator, languageDesignator)
+    }
+    
+    func test_languageDesignator_LanguageWithDesignator_createsCorrectValue() {
+        let languageDesignator = "ru"
+        self.sut = LACConfiguration(appId: "", apiKey: "", language: languageDesignator)
+        
+        XCTAssertEqual(self.sut.languageDesignator, languageDesignator)
+    }
+    
+    func test_languageDesignator_emptyLanguage_createsEmptyValue() {
+        self.sut = LACConfiguration(appId: "", apiKey: "", language: "")
+        
+        XCTAssertTrue(self.sut.languageDesignator.isEmpty)
     }
 
 }
