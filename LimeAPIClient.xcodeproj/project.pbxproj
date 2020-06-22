@@ -30,6 +30,8 @@
 		4E5795A3246AE61C0009D306 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E5795A1246AE61C0009D306 /* LaunchScreen.storyboard */; };
 		4E5913CE247560CA009BAAA1 /* Broadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5913CD247560CA009BAAA1 /* Broadcast.swift */; };
 		4E59F2DC247700B800F3456F /* LACAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59F2DB247700B800F3456F /* LACAppTests.swift */; };
+		4E5A27E424A0CE3500128AD9 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5A27E324A0CE3500128AD9 /* UIImage.swift */; };
+		4E5A27E624A0D5C900128AD9 /* LimeAPIClientImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5A27E524A0D5C900128AD9 /* LimeAPIClientImageTests.swift */; };
 		4E5B0C8A247BB80600DDE6BA /* LimeAPIClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E579576246AE3D20009D306 /* LimeAPIClient.framework */; };
 		4E5B0C8B247BB80600DDE6BA /* LimeAPIClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4E579576246AE3D20009D306 /* LimeAPIClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4E5B0C8E247BC0B300DDE6BA /* URLComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5B0C8D247BC0B300DDE6BA /* URLComponents.swift */; };
@@ -147,6 +149,8 @@
 		4E5795A4246AE61C0009D306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E5913CD247560CA009BAAA1 /* Broadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broadcast.swift; sourceTree = "<group>"; };
 		4E59F2DB247700B800F3456F /* LACAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACAppTests.swift; sourceTree = "<group>"; };
+		4E5A27E324A0CE3500128AD9 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		4E5A27E524A0D5C900128AD9 /* LimeAPIClientImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimeAPIClientImageTests.swift; sourceTree = "<group>"; };
 		4E5B0C8D247BC0B300DDE6BA /* URLComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLComponents.swift; sourceTree = "<group>"; };
 		4E5B0C8F247BD81B00DDE6BA /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		4E5B0C91247BDB6500DDE6BA /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
@@ -374,6 +378,7 @@
 				4E8CD1C7248679FB00648E24 /* DateTests.swift */,
 				4E9192722488DC4C00974C02 /* DispatchQueueTests.swift */,
 				4E8CD1C52486771C00648E24 /* IntTests.swift */,
+				4E5A27E324A0CE3500128AD9 /* UIImage.swift */,
 				4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */,
 				4E5B0C96247C07E400DDE6BA /* StringTests.swift */,
 				4E8CD1CD248682D600648E24 /* TimeIntervalTests.swift */,
@@ -434,8 +439,9 @@
 			children = (
 				4E579584246AE3D20009D306 /* LimeAPIClientTests.swift */,
 				4E9192742488E66800974C02 /* LimeAPIClientBannersTests.swift */,
-				4E9192762488E88300974C02 /* LimeAPIClientChannelsTests.swift */,
 				4E835E48248F99EE0011E0E0 /* LimeAPIClientBroadcastsTests.swift */,
+				4E9192762488E88300974C02 /* LimeAPIClientChannelsTests.swift */,
+				4E5A27E524A0D5C900128AD9 /* LimeAPIClientImageTests.swift */,
 			);
 			path = LimeAPIClientTests;
 			sourceTree = "<group>";
@@ -666,12 +672,14 @@
 				4E8CD1CE248682D600648E24 /* TimeIntervalTests.swift in Sources */,
 				4E560CCF2487C346006A644A /* ChannelExample.swift in Sources */,
 				4E579585246AE3D20009D306 /* LimeAPIClientTests.swift in Sources */,
+				4E5A27E424A0CE3500128AD9 /* UIImage.swift in Sources */,
 				4E9192772488E88300974C02 /* LimeAPIClientChannelsTests.swift in Sources */,
 				4E8CD1C22486680C00648E24 /* URLTests.swift in Sources */,
 				4E8CD1CA24867BEA00648E24 /* RFC3339DateFormatterTests.swift in Sources */,
 				4E560CCA2487B3A8006A644A /* HTTPURLResponse.swift in Sources */,
 				4E8CD1C8248679FB00648E24 /* DateTests.swift in Sources */,
 				4E59F2DC247700B800F3456F /* LACAppTests.swift in Sources */,
+				4E5A27E624A0D5C900128AD9 /* LimeAPIClientImageTests.swift in Sources */,
 				4E607C4D248E205900F9BEB7 /* JSONAPIErrorTests.swift in Sources */,
 				4E8CD1C0248661FA00648E24 /* URLRequestTests.swift in Sources */,
 				4E9192752488E66800974C02 /* LimeAPIClientBannersTests.swift in Sources */,
