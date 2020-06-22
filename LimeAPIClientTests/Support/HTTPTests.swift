@@ -24,17 +24,7 @@ class HTTPTests: XCTestCase {
     }
 
     func test_headersIsCorrect() throws {
-        let configuration = LACConfiguration(appId: "APPLICATION_ID", apiKey: "API_KEY.APPLICATION", language: Device.language)
-        LimeAPIClient.configuration = configuration
-        let baseUrl = "https://limehd.tv/"
-        let session = MockURLSession()
-        let queue = MockDispatchQueue()
-        let apiClient = LimeAPIClient(baseUrl: baseUrl, session: session, mainQueue: queue)
-        apiClient.session { (_) in }
-        let url = try XCTUnwrap(URL(string: baseUrl))
-        let response = HTTPURLResponse(url: url, statusCode: 200)
-        let data = try XCTUnwrap(SessionExample.data(using: .utf8))
-        session.lastTask?.completionHandler(data, response, nil)
+        try self.configureLimeAPIClient()
         
         XCTAssertNotNil(LimeAPIClient.configuration)
         let language = LimeAPIClient.configuration?.language ?? ""
@@ -53,5 +43,19 @@ class HTTPTests: XCTestCase {
         XCTAssertEqual(self.sut.headers["X-Access-Key"], key)
         let sessionId = LimeAPIClient.configuration?.sessionId ?? ""
         XCTAssertEqual(self.sut.headers["X-Session-Id"], sessionId)
+    }
+    
+    func configureLimeAPIClient() throws {
+        let configuration = LACConfiguration(appId: "APPLICATION_ID", apiKey: "API_KEY.APPLICATION", language: Device.language)
+        LimeAPIClient.configuration = configuration
+        let baseUrl = "https://limehd.tv/"
+        let session = MockURLSession()
+        let queue = MockDispatchQueue()
+        let apiClient = LimeAPIClient(baseUrl: baseUrl, session: session, mainQueue: queue)
+        apiClient.session { (_) in }
+        let url = try XCTUnwrap(URL(string: baseUrl))
+        let response = HTTPURLResponse(url: url, statusCode: 200)
+        let data = try XCTUnwrap(SessionExample.data(using: .utf8))
+        session.lastTask?.completionHandler(data, response, nil)
     }
 }
