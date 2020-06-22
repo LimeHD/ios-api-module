@@ -8,13 +8,29 @@
 
 import AVFoundation
 
-public enum LACStreamError: Error, LocalizedError, Equatable {
-    case sessionError
-    case invalidUrl(_ url: String)
-    case emptyBaseUrl
-    case emptyArchiveUrl
+public struct LACStream {
+    public enum Error: Swift.Error, LocalizedError, Equatable {
+        case sessionError
+        case invalidUrl(_ url: String)
+        case emptyBaseUrl
+        case emptyArchiveUrl
+    }
     
-    public var errorDescription: String? {
+    static var baseUrl = ""
+    private static func urlAsset(_ url: URL) -> AVURLAsset {
+        AVURLAsset(url: url, options: ["AVURLAssetHTTPHeaderFieldsKey": HTTP.headers])
+    }
+    
+    public struct Online {
+        private init() { }
+    }
+    public struct Archive {
+        private init() { }
+    }
+}
+
+public extension LACStream.Error {
+    var errorDescription: String? {
         switch self {
         case .sessionError:
             let key = "Отсутствует общая ссылка на поток. Возможно необходимо сделать запрос новой сессии"
@@ -32,20 +48,6 @@ public enum LACStreamError: Error, LocalizedError, Equatable {
     }
 }
 
-public struct LACStream {
-    static var baseUrl = ""
-    private static func urlAsset(_ url: URL) -> AVURLAsset {
-        AVURLAsset(url: url, options: ["AVURLAssetHTTPHeaderFieldsKey": HTTP.headers])
-    }
-    
-    public struct Online {
-        private init() { }
-    }
-    public struct Archive {
-        private init() { }
-    }
-}
-
 public extension LACStream.Online {
     private static var endpoint: String {
         LimeAPIClient.configuration?.streamEndpoint.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
@@ -53,7 +55,7 @@ public extension LACStream.Online {
     static internal func endpoint(for streamId: Int) throws -> String {
         let path = LACStream.Online.endpoint
         if path.isEmpty {
-            throw LACStreamError.sessionError
+            throw LACStream.Error.sessionError
         }
         return path.replacingOccurrences(of: "${stream_id}", with: streamId.string)
     }
@@ -90,7 +92,7 @@ public extension LACStream.Online {
     static func urlAsset(for streamId: Int) throws -> AVURLAsset {
         let streamPath = try LACStream.Online.endpoint(for: streamId)
         guard let url = URL(string: streamPath) else {
-            throw LACStreamError.invalidUrl(streamPath)
+            throw LACStream.Error.invalidUrl(streamPath)
         }
         return LACStream.urlAsset(url)
     }
@@ -99,11 +101,11 @@ public extension LACStream.Online {
 public extension LACStream.Archive {
     static func urlAsset(for streamId: Int, startAt: Int, duration: Int) throws -> AVURLAsset {
         if LACStream.baseUrl.isEmpty {
-            throw LACStreamError.emptyBaseUrl
+            throw LACStream.Error.emptyBaseUrl
         }
         let endPoint = EndPoint.Factory.archiveStream(for: streamId, startAt: startAt, duration: duration)
         guard let url = try URLRequest(baseUrl: LACStream.baseUrl, endPoint: endPoint).url else {
-            throw LACStreamError.emptyArchiveUrl
+            throw LACStream.Error.emptyArchiveUrl
         }
         return LACStream.urlAsset(url)
     }

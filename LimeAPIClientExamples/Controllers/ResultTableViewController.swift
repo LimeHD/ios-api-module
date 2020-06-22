@@ -359,7 +359,7 @@ extension ResultTableViewController {
     }
     
     private func handleSessionError() {
-        let error = LACStreamError.sessionError.localizedDescription
+        let error = LACStream.Error.sessionError.localizedDescription
         let alert = UIAlertController(title: "Ошибка", message: "\(error)\n\nЗапросить новую сессию?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
         let newSessionAction = UIAlertAction(title: "Новая сессия", style: .default) { [weak self] (_) in
@@ -629,7 +629,7 @@ extension ResultTableViewController {
             self.handleSessionError()
             return
         }
-        if let error = error as? LACStreamError,
+        if let error = error as? LACStream.Error,
             case .sessionError = error {
             self.handleSessionError()
             return
