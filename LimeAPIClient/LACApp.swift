@@ -8,14 +8,14 @@
 
 import Foundation
 
-/// Получение данных об используемом приложении
+/// Получение данных об используемом приложении.
 public struct LACApp {
-    /// Возвращает идентификатор пакета, который определяется ключом `CFBundleIdentifier` в списке информационных свойств пакета, либо пустую строку
+    /// Возвращает идентификатор пакета, который определяется ключом [CFBundleIdentifier](https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleidentifier) из списка информационных свойств пакета, либо пустую строку.
     public static var id: String {
         Bundle.main.bundleIdentifier ?? ""
     }
     
-    /// Возвращает номер релиза или версии пакета, либо пустую строку.  Oпределяется ключом `CFBundleShortVersionString`
+    /// Возвращает номер релиза или версии пакета, либо пустую строку.  Oпределяется ключом [CFBundleShortVersionString](https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleshortversionstring).
     ///
     /// Формат - это три целых числа, разделенных точками, например 10.14.1. Строка может содержать только числовые символы (0-9) и точки.
     ///
