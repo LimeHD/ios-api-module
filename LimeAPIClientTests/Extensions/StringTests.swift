@@ -28,4 +28,16 @@ class StringTests: XCTestCase {
     func test_int_invalidValueReturnsNil() {
         XCTAssertNil("TEST".int)
     }
+    
+    func test_subscript_returnsCorretValue() {
+        XCTAssertEqual("TEST"[1], "E")
+    }
+    
+    func test_timeIntervalInSeconds_wrongValueReturnsNil() {
+        XCTAssertNil("TEST".timeIntervalInSeconds)
+    }
+    
+    func test_timeIntervalInSeconds_returnsCorrectValue() {
+        XCTAssertEqual("01:20".timeIntervalInSeconds, (60 + 20) * 60)
+    }
 }
