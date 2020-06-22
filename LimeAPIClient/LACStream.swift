@@ -60,17 +60,29 @@ public extension LACStream.Online {
         return path.replacingOccurrences(of: "${stream_id}", with: streamId.string)
     }
     
-    /// Получение ссылки для `AVPlayer` на онлайн поток
-    /// - Parameter streamId: id потока
+    /// Получение ссылки для [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) на онлайн поток
+    /// - Parameter streamId: id онлайн потока
     /// - Throws: Возращает ошибку в случае неверной ссылки на поток (не была запрошена новая сессия или получен неверный формат ссылки)
-    /// - Returns: Возвращает ссылку на онлайн поток в формате `AVURLAsset`
+    /// - Returns: Возвращает ссылку на онлайн поток в формате [AVURLAsset](https://developer.apple.com/documentation/avfoundation/avurlasset)
     ///
     /// Перед использованием необходимо сделать запрос новой сессии для получения ссылки на онлайн поток.
     /// Сессия запрашивается один раз за все время запуска приложения.
     ///
-    /// **Пример использования:**
+    /// Пример использования:
     /// ```
+    /// import LimeAPIClient
     /// import AVKit
+    ///
+    /// // Запрос новой сессии для получения ссылки на онлайн-поток
+    /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+    /// apiClient.session { (result) in
+    ///    switch result {
+    ///    case .success(let session):
+    ///        print(session)
+    ///    case .failure(let error):
+    ///        print(error)
+    ///    }
+    /// }
     ///
     /// let streamId = 44
     /// let asset: AVURLAsset
