@@ -34,12 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func configureLimeAudioSession() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            if #available(iOS 10.0, *) {
-                if #available(iOS 11.0, *) {
-                    try audioSession.setCategory(.playback, mode: .moviePlayback, policy: .longForm, options: [])
-                } else {
-                    try audioSession.setCategory(.playback, mode: .moviePlayback, options: [])
-                }
+            if #available(iOS 11.0, *) {
+                try audioSession.setCategory(.playback, mode: .moviePlayback, policy: .longForm, options: [])
+            } else if #available(iOS 10.0, *) {
+                try audioSession.setCategory(.playback, mode: .moviePlayback, options: [])
             } else {
                 try audioSession.setCategory(.playback)
             }
