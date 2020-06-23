@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4E47BD0F24A1D1A500D98B1A /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E47BD0E24A1D1A500D98B1A /* URL.swift */; };
+		4E47BD1124A1DF1800D98B1A /* RFC3339DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E47BD1024A1DF1800D98B1A /* RFC3339DateTests.swift */; };
 		4E5014E4247316AC00A8DA1F /* LACDateInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */; };
 		4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E5247319F400A8DA1F /* TimeInterval.swift */; };
 		4E54C5F72477E54500AAF223 /* LACConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54C5F62477E54500AAF223 /* LACConfiguration.swift */; };
@@ -125,6 +126,7 @@
 
 /* Begin PBXFileReference section */
 		4E47BD0E24A1D1A500D98B1A /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		4E47BD1024A1DF1800D98B1A /* RFC3339DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateTests.swift; sourceTree = "<group>"; };
 		4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACDateInterval.swift; sourceTree = "<group>"; };
 		4E5014E5247319F400A8DA1F /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		4E54C5F62477E54500AAF223 /* LACConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACConfiguration.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 			children = (
 				4E8CD1C324866C5200648E24 /* EndPointTests.swift */,
 				4E8CD1BD24865EBF00648E24 /* HTTPTests.swift */,
+				4E47BD1024A1DF1800D98B1A /* RFC3339DateTests.swift */,
 				4E8CD1C924867BEA00648E24 /* RFC3339DateFormatterTests.swift */,
 			);
 			path = Support;
@@ -681,6 +684,7 @@
 				4E8CD1BE24865EBF00648E24 /* HTTPTests.swift in Sources */,
 				4E8CD1CE248682D600648E24 /* TimeIntervalTests.swift in Sources */,
 				4E560CCF2487C346006A644A /* ChannelExample.swift in Sources */,
+				4E47BD1124A1DF1800D98B1A /* RFC3339DateTests.swift in Sources */,
 				4E579585246AE3D20009D306 /* LimeAPIClientTests.swift in Sources */,
 				4E5A27E424A0CE3500128AD9 /* UIImage.swift in Sources */,
 				4E9192772488E88300974C02 /* LACChannelsTests.swift in Sources */,

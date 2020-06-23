@@ -41,7 +41,7 @@ enum RFC3339DateError: Error, LocalizedError, Equatable {
     }
 }
 
-struct RFC3339Date {
+struct RFC3339Date: Equatable {
     let date: Date
     let timeZone: TimeZone
     let string: String
