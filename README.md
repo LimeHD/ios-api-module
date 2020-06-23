@@ -242,6 +242,7 @@ struct Channel: Decodable {
     struct Stream: Decodable {
         let id: Int
         let timeZone: String
+        let archiveHours: Int
         let contentType: String
     }
 }

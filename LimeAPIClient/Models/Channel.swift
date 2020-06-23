@@ -23,6 +23,7 @@ public struct Channel: Decodable, Equatable {
     public struct Stream: Decodable, Equatable {
         public let id: Int
         public let timeZone: String
+        public let archiveHours: Int
         public let contentType: String
     }
 }

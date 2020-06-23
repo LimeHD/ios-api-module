@@ -27,7 +27,14 @@ let ChannelExample = """
                 "name": "Первый канал",
                 "image_url": "http://cdn.limehd.tv/images/playlist_1channel.png",
                 "description": "Channel One (Russian: Первый канал, tr. Perviy kanal, literally First Channel) is the first television channel to broadcast in the Russian Federation. It has its headquarters in the Technical Center \\"Ostankino\\" near the Ostankino Tower, Moscow.First among Russia's country-wide channels, Channel One has more than 250 million viewers worldwide. From 1995 to 2002 the channel was known as Public Russian Television (Russian: Общественное Российское Телевидение, tr. Obshchestvennoye Rossiyskoye Televideniye, ORT) or Russian Public Television",
-                "streams": []
+                "streams": [
+                    {
+                        "id": 57,
+                        "time_zone": "UTC+03:00",
+                        "archive_hours": 0,
+                        "content_type": "application/vnd.apple.mpegurl"
+                    }
+                ]
             }
         }
     ]
