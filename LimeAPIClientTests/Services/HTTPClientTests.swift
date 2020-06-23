@@ -101,8 +101,8 @@ class HTTPClientTests: XCTestCase {
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
-        let actualError = try XCTUnwrap(result.error as? HTTPError)
-        XCTAssertEqual(actualError, HTTPError.emptyData)
+        let actualError = try XCTUnwrap(result.error as? HTTPClient.Error)
+        XCTAssertEqual(actualError, HTTPClient.Error.emptyData)
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
@@ -111,21 +111,21 @@ class HTTPClientTests: XCTestCase {
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
-        let actualError = try XCTUnwrap(result.error as? HTTPError)
-        XCTAssertEqual(actualError, HTTPError.unknownResponse)
+        let actualError = try XCTUnwrap(result.error as? HTTPClient.Error)
+        XCTAssertEqual(actualError, HTTPClient.Error.unknownResponse)
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
     func test_dataTask_givenResponseStatusCode500_callsCompletionWithFailure() throws {
         let response = self.response(500)
         let unwrappedResponse = try XCTUnwrap(response)
-        let expectedError = HTTPError.wrongStatusCode(Data(), unwrappedResponse)
+        let expectedError = HTTPClient.Error.wrongStatusCode(Data(), unwrappedResponse)
         
         let result = self.runDataTaskWith(data: Data(), response)
         
         XCTAssertTrue(result.calledCompletion)
         XCTAssertNil(result.data)
-        let actualError = try XCTUnwrap(result.error as? HTTPError)
+        let actualError = try XCTUnwrap(result.error as? HTTPClient.Error)
         XCTAssertEqual(actualError, expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }

@@ -32,7 +32,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<UIImage>?
         let data = Data()
         let response = try self.response(500)
-        let expectedError =  HTTPError.wrongStatusCode(data, response)
+        let expectedError =  HTTPClient.Error.wrongStatusCode(data, response)
         self.sut.getImage(with: self.baseUrl) { (result) in
             completion = self.callAPICompletion(result)
         }
@@ -41,7 +41,7 @@ extension LimeAPIClientTests {
         
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
-        let actualError = try XCTUnwrap(completion?.error as? HTTPError)
+        let actualError = try XCTUnwrap(completion?.error as? HTTPClient.Error)
         XCTAssertEqual(actualError, expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }

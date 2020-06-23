@@ -414,7 +414,7 @@ extension LimeAPIClient {
                 let result = parser.decode(T.self, result.data)
                 completion(result)
             case .failure(let error):
-                if let error = error as? HTTPError,
+                if let error = error as? HTTPClient.Error,
                     case let .wrongStatusCode(data, response) = error {
                     self.decodeError(data, response, completion)
                 } else {

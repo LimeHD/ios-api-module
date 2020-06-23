@@ -8,12 +8,55 @@
 
 import Foundation
 
-public enum HTTPError: Error, LocalizedError, Equatable {
-    case emptyData
-    case unknownResponse
-    case wrongStatusCode(_ data: Data, _ response: HTTPURLResponse)
+class HTTPClient {
+    typealias ClientCompletion = (Result<HTTP.Result, Swift.Error>) -> Void
     
-    public var errorDescription: String? {
+    public enum Error: Swift.Error, Equatable {
+        case emptyData
+        case unknownResponse
+        case wrongStatusCode(_ data: Data, _ response: HTTPURLResponse)
+    }
+    
+    let session: URLSession
+    
+    init(_ session: URLSession) {
+        self.session = session
+    }
+    
+    func dataTask(with request: URLRequest, completion: @escaping ClientCompletion) {
+        let task = self.session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let data = data else {
+                let error = HTTPClient.Error.emptyData
+                completion(.failure(error))
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                let error = HTTPClient.Error.unknownResponse
+                completion(.failure(error))
+                return
+            }
+            
+            if (200...299).contains(httpResponse.statusCode) {
+                let httpResult = HTTP.Result(data: data, response: httpResponse)
+                completion(.success(httpResult))
+            } else {
+                let error = HTTPClient.Error.wrongStatusCode(data, httpResponse)
+                completion(.failure(error))
+            }
+        }
+        
+        task.resume()
+    }
+}
+
+extension HTTPClient.Error: LocalizedError {
+    var errorDescription: String? {
         switch self {
         case .emptyData:
             let key = "В ответе сервера отсутствуют данные"
@@ -26,46 +69,5 @@ public enum HTTPError: Error, LocalizedError, Equatable {
             let key = "Неуспешный ответ состояния HTTP: \(statusCode)"
             return NSLocalizedString(key, comment: statusCode)
         }
-    }
-}
-
-class HTTPClient {
-    typealias httpResult = (Result<HTTP.Result, Error>) -> Void
-    
-    let session: URLSession
-    
-    init(_ session: URLSession) {
-        self.session = session
-    }
-    
-    func dataTask(with request: URLRequest, completion: @escaping httpResult) {
-        let task = self.session.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            guard let data = data else {
-                let error = HTTPError.emptyData
-                completion(.failure(error))
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                let error = HTTPError.unknownResponse
-                completion(.failure(error))
-                return
-            }
-            
-            if (200...299).contains(httpResponse.statusCode) {
-                let httpResult = HTTP.Result(data: data, response: httpResponse)
-                completion(.success(httpResult))
-            } else {
-                let error = HTTPError.wrongStatusCode(data, httpResponse)
-                completion(.failure(error))
-            }
-        }
-        
-        task.resume()
     }
 }

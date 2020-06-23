@@ -95,7 +95,7 @@ class LimeAPIClientTests: XCTestCase {
     
     func test_httpError_callsCompletionWithFailure() throws {
         var completion: APICompletion<Session>?
-        let expectedError = HTTPError.emptyData
+        let expectedError = HTTPClient.Error.emptyData
         
         self.sut.session { (result) in
             completion = self.callAPICompletion(result)
@@ -106,7 +106,7 @@ class LimeAPIClientTests: XCTestCase {
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
         XCTAssertNotNil(completion?.error)
-        let actualError = try XCTUnwrap(completion?.error as? HTTPError)
+        let actualError = try XCTUnwrap(completion?.error as? HTTPClient.Error)
         XCTAssertEqual(actualError, expectedError)
     }
     
