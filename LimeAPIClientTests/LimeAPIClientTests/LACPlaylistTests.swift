@@ -87,12 +87,61 @@ extension LimeAPIClientTests {
         var completion: APICompletion<String>?
         let string = "TEST"
         let data = string.data(using: .utf8)
-        try self.runSessionToGetAPIValues()
+
         self.sut.getArchivePlaylist(for: 44, startAt: 10, duration: 300) { (result) in
             completion = self.callAPICompletion(result)
         }
 
         self.session.lastTask?.completionHandler(data, self.response200, nil)
+
+        XCTAssertNotNil(completion)
+        XCTAssertNotNil(completion?.data)
+        XCTAssertEqual(completion?.data, string)
+        XCTAssertNil(completion?.error)
+    }
+    
+    func test_getArchivePlaylistFromBroadcast_emptyStartAt_callsCompletionWithFailure() throws {
+        let expectedError = APIError.emptyBroadcastStartAt
+        let completion = self.runGetArchivePlaylistFromBroadcast()
+
+        XCTAssertNotNil(completion)
+        XCTAssertNil(completion?.data)
+        XCTAssertNotNil(completion?.error)
+        let actualError = try XCTUnwrap(completion?.error as? APIError)
+        XCTAssertEqual(actualError, expectedError)
+        XCTAssertNotNil(actualError.localizedDescription)
+    }
+    
+    func runGetArchivePlaylistFromBroadcast(startAt: String = "", finishAt: String = "", data: Data = Data()) -> APICompletion<String>? {
+        var completion: APICompletion<String>?
+        let attributes = Broadcast.Attributes(title: "", detail: "", rating: nil, startAt: startAt, finishAt: finishAt)
+        let broadcast = Broadcast(id: "", type: "", attributes: attributes)
+        
+        self.sut.getArchivePlaylist(for: 44, broadcast: broadcast) { (result) in
+            completion = self.callAPICompletion(result)
+        }
+
+        self.session.lastTask?.completionHandler(data, self.response200, nil)
+        return completion
+    }
+    
+    func test_getArchivePlaylistFromBroadcast_emptyDuration_callsCompletionWithFailure() throws {
+        let expectedError = APIError.emptyBroadcastDuration
+        let completion = self.runGetArchivePlaylistFromBroadcast(startAt: "2020-06-02T00:00:00+03:00")
+
+        XCTAssertNotNil(completion)
+        XCTAssertNil(completion?.data)
+        XCTAssertNotNil(completion?.error)
+        let actualError = try XCTUnwrap(completion?.error as? APIError)
+        XCTAssertEqual(actualError, expectedError)
+        XCTAssertNotNil(actualError.localizedDescription)
+    }
+    
+    func test_getArchivePlaylistFromBroadcast_correctResponseData_callsCompletionWithSuccess() throws {
+        let string = "TEST"
+        let data = try XCTUnwrap(string.data(using: .utf8))
+
+        let completion = self.runGetArchivePlaylistFromBroadcast(startAt: "2020-06-02T00:00:00+03:00", finishAt: "2020-06-02T15:00:00+03:00", data: data)
 
         XCTAssertNotNil(completion)
         XCTAssertNotNil(completion?.data)

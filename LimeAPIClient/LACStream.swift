@@ -14,6 +14,8 @@ public struct LACStream {
         case invalidUrl(_ url: String)
         case emptyBaseUrl
         case emptyArchiveUrl
+        case emptyBroadcastStartAt
+        case emptyBroadcastDuration
     }
     
     static var baseUrl = ""
@@ -43,6 +45,12 @@ extension LACStream.Error: LocalizedError {
             return NSLocalizedString(key, comment: "Отсутсвует ссылка на сервер API")
         case .emptyArchiveUrl:
             let key = "Сбой при создании ссылки на поток архива"
+            return NSLocalizedString(key, comment: key)
+        case .emptyBroadcastStartAt:
+            let key = "Отсутствует время начала передачи"
+            return NSLocalizedString(key, comment: key)
+        case .emptyBroadcastDuration:
+            let key = "Отсутствует длительность передачи"
             return NSLocalizedString(key, comment: key)
         }
     }
@@ -157,5 +165,49 @@ public extension LACStream.Archive {
             throw LACStream.Error.emptyArchiveUrl
         }
         return LACStream.urlAsset(url)
+    }
+    
+    /// Получение ссылки для [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) на поток архива
+    /// - Parameters:
+    ///   - streamId: id потока на архив
+    ///   - broadcast: программа передач
+    /// - Throws: Возращает ошибку в случае неверной ссылки на поток (отсутствует ссылка на сервер API или не удалось создать ссылку на поток по другой причине)
+    /// - Returns: Возвращает ссылку на онлайн поток в формате [AVURLAsset](https://developer.apple.com/documentation/avfoundation/avurlasset)
+    ///
+    /// Перед использованием необходимо инициализировать LimeAPIClient для указания сервера API.
+    ///
+    /// Пример использования:
+    /// ```
+    /// import LimeAPIClient
+    /// import AVKit
+    ///
+    /// // Инициализация LimeAPIClient для задания адреса сервера API
+    /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+    ///
+    /// let streamId = 44
+    /// let asset: AVURLAsset
+    /// do {
+    ///     asset = try LACStream.Archive.urlAsset(for: streamId, broadcast: broadcast)
+    /// } catch {
+    ///     print(error)
+    ///     return
+    /// }
+    ///
+    /// let playerItem = AVPlayerItem(asset: asset)
+    /// let player = AVPlayer(playerItem: playerItem)
+    /// let playerViewController = AVPlayerViewController()
+    /// playerViewController.player = player
+    /// self.present(playerViewController, animated: true) {
+    ///     playerViewController.player!.play()
+    /// }
+    /// ```
+    static func urlAsset(for streamId: Int, broadcast: Broadcast) throws -> AVURLAsset {
+        guard let startAt = broadcast.startAtUnix else {
+            throw LACStream.Error.emptyBroadcastStartAt
+        }
+        guard let duration = broadcast.duration else {
+            throw LACStream.Error.emptyBroadcastDuration
+        }
+        return try LACStream.Archive.urlAsset(for: streamId, start: startAt, duration: duration)
     }
 }

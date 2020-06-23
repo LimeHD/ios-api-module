@@ -90,10 +90,7 @@ class LACStreamTests: XCTestCase {
     }
     
     func test_archiveUrlAsset_returnsCorrectValue() throws {
-        let baseUrl = "https://limehd.tv/"
-        let session = MockURLSession()
-        let queue = MockDispatchQueue()
-        _ = LimeAPIClient(baseUrl: baseUrl, session: session, mainQueue: queue)
+        _ = LimeAPIClient(baseUrl: "https://limehd.tv/")
         
         let streamId = 1
         let start = 10
@@ -102,6 +99,65 @@ class LACStreamTests: XCTestCase {
         
         let asset = try LACStream.Archive.urlAsset(for: streamId, start: start, duration: duration)
         let endPoint = EndPoint.Factory.archiveStream(for: streamId, start: start, duration: duration)
+        let url = try XCTUnwrap(try URLRequest(baseUrl: LACStream.baseUrl, endPoint: endPoint).url)
+
+        XCTAssertEqual(asset.url.baseURL, url.baseURL)
+        XCTAssertEqual(asset.url.queryDictionary, url.queryDictionary)
+    }
+    
+    func test_archiveUrlAssetFromBroadcast_emptyStartAt_throws() throws {
+        let expectedError = LACStream.Error.emptyBroadcastStartAt
+        
+        _ = LimeAPIClient(baseUrl: "https://limehd.tv/")
+        
+        let broadcast = self.getBroadcast()
+        
+        XCTAssertThrowsError(try LACStream.Archive.urlAsset(for: 1, broadcast: broadcast))
+        
+        do {
+            _ = try LACStream.Archive.urlAsset(for: 1, broadcast: broadcast)
+        } catch {
+            let actualError = try XCTUnwrap(error as? LACStream.Error)
+            XCTAssertEqual(actualError, expectedError)
+            XCTAssertNotNil(actualError.localizedDescription)
+        }
+    }
+    
+    func getBroadcast(startAt: String = "", finishAt: String = "") -> Broadcast {
+        let attributes = Broadcast.Attributes(title: "", detail: "", rating: nil, startAt: startAt, finishAt: finishAt)
+        let broadcast = Broadcast(id: "", type: "", attributes: attributes)
+        
+        return broadcast
+    }
+    
+    func test_archiveUrlAssetFromBroadcast_emptyDuration_throws() throws {
+        let expectedError = LACStream.Error.emptyBroadcastDuration
+        
+        _ = LimeAPIClient(baseUrl: "https://limehd.tv/")
+        
+        let broadcast = self.getBroadcast(startAt: "2020-06-02T00:00:00+03:00")
+        
+        XCTAssertThrowsError(try LACStream.Archive.urlAsset(for: 1, broadcast: broadcast))
+        
+        do {
+            _ = try LACStream.Archive.urlAsset(for: 1, broadcast: broadcast)
+        } catch {
+            let actualError = try XCTUnwrap(error as? LACStream.Error)
+            XCTAssertEqual(actualError, expectedError)
+            XCTAssertNotNil(actualError.localizedDescription)
+        }
+    }
+    
+    func test_archiveUrlAssetFromBroadcast_returnsCorrectValue() throws {
+        _ = LimeAPIClient(baseUrl: "https://limehd.tv/")
+        
+        let broadcast = self.getBroadcast(startAt: "2020-06-02T00:00:00+03:00", finishAt: "2020-06-02T15:00:00+03:00")
+        XCTAssertNoThrow(try LACStream.Archive.urlAsset(for: 1, broadcast: broadcast))
+        
+        let asset = try LACStream.Archive.urlAsset(for: 1, broadcast: broadcast)
+        let start = try XCTUnwrap(broadcast.startAtUnix)
+        let duration = try XCTUnwrap(broadcast.duration)
+        let endPoint = EndPoint.Factory.archiveStream(for: 1, start: start, duration: duration)
         let url = try XCTUnwrap(try URLRequest(baseUrl: LACStream.baseUrl, endPoint: endPoint).url)
 
         XCTAssertEqual(asset.url.baseURL, url.baseURL)

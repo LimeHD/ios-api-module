@@ -324,25 +324,18 @@ extension ResultTableViewController {
     }
     
     private func pushArchivePlaylistViewController(for indexPath: IndexPath) {
-        guard
-            let start = self.broadcasts[indexPath.row].startAtUnix,
-            let duration = self.broadcasts[indexPath.row].duration
-        else {
-            let alert = UIAlertController(title: "Ошибка", message: "Отсутсвует значения начала/продолжительности передачи")
-            self.present(alert, animated: true)
-            return
-        }
+        let broadcast = self.broadcasts[indexPath.row]
         
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.activityIndicator.startAnimating()
-        self.apiClient.getArchivePlaylist(for: self.broadcastStreamId, startAt: start, duration: duration) { [weak self] (result) in
+        self.apiClient.getArchivePlaylist(for: self.broadcastStreamId, broadcast: broadcast) { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             switch result {
             case let .success(playlist):
                 let asset: AVURLAsset
                 do {
-                    asset = try LACStream.Archive.urlAsset(for: self.broadcastStreamId, start: start, duration: duration)
+                    asset = try LACStream.Archive.urlAsset(for: self.broadcastStreamId, broadcast: broadcast)
                 } catch {
                     self.showAlert(error)
                     return

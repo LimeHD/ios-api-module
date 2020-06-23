@@ -18,6 +18,8 @@ public enum APIError: Error, LocalizedError, Equatable {
     case jsonAPIError(_ statusCode: String, error: JSONAPIError)
     case wrongStatusCode(_ statusCode: String, error: String)
     case incorrectImageData
+    case emptyBroadcastStartAt
+    case emptyBroadcastDuration
     
     public var errorDescription: String? {
         switch self {
@@ -33,6 +35,12 @@ public enum APIError: Error, LocalizedError, Equatable {
         case .incorrectImageData:
             let key = "Полученный формат данных изображения не поддерживается системой"
             return NSLocalizedString(key, comment: "Неверный формат данных")
+        case .emptyBroadcastStartAt:
+            let key = "Отсутствует время начала передачи"
+            return NSLocalizedString(key, comment: key)
+        case .emptyBroadcastDuration:
+            let key = "Отсутствует длительность передачи"
+            return NSLocalizedString(key, comment: key)
         }
     }
 }
@@ -376,6 +384,22 @@ public extension LimeAPIClient {
         }
         
         self.requestStringData(with: request) { (result) in
+            completion(result)
+        }
+    }
+    
+    func getArchivePlaylist(for streamId: Int, broadcast: Broadcast, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let startAt = broadcast.startAtUnix else {
+            let error = APIError.emptyBroadcastStartAt
+            completion(.failure(error))
+            return
+        }
+        guard let duration = broadcast.duration else {
+            let error = APIError.emptyBroadcastDuration
+            completion(.failure(error))
+            return
+        }
+        self.getArchivePlaylist(for: streamId, startAt: startAt, duration: duration) { (result) in
             completion(result)
         }
     }
