@@ -9,7 +9,7 @@
 import AVFoundation
 
 public struct LACStream {
-    public enum Error: Swift.Error, LocalizedError, Equatable {
+    public enum Error: Swift.Error, Equatable {
         case sessionError
         case invalidUrl(_ url: String)
         case emptyBaseUrl
@@ -29,8 +29,8 @@ public struct LACStream {
     }
 }
 
-public extension LACStream.Error {
-    var errorDescription: String? {
+extension LACStream.Error: LocalizedError {
+    public var errorDescription: String? {
         switch self {
         case .sessionError:
             let key = "Отсутствует общая ссылка на поток. Возможно необходимо сделать запрос новой сессии"
