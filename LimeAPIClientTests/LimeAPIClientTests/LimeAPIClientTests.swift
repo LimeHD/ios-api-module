@@ -214,7 +214,7 @@ extension LimeAPIClientTests {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
-        let decodedData = try decoder.decode(T.self, from: rawData)
+            let decodedData = try decoder.decode(T.self, from: rawData)
             return (rawData, decodedData)
         } catch {
             print("\(Self.self).\(#function).Error.unableDecoding")

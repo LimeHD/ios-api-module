@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E47BD0F24A1D1A500D98B1A /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E47BD0E24A1D1A500D98B1A /* URL.swift */; };
 		4E5014E4247316AC00A8DA1F /* LACDateInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */; };
 		4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E5247319F400A8DA1F /* TimeInterval.swift */; };
 		4E54C5F72477E54500AAF223 /* LACConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54C5F62477E54500AAF223 /* LACConfiguration.swift */; };
@@ -33,6 +34,7 @@
 		4E5A27E424A0CE3500128AD9 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5A27E324A0CE3500128AD9 /* UIImage.swift */; };
 		4E5A27E624A0D5C900128AD9 /* LACImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5A27E524A0D5C900128AD9 /* LACImageTests.swift */; };
 		4E5A27E824A0D6D600128AD9 /* LACPlaylistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5A27E724A0D6D600128AD9 /* LACPlaylistTests.swift */; };
+		4E5A27EA24A0E3A600128AD9 /* LACStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5A27E924A0E3A600128AD9 /* LACStreamTests.swift */; };
 		4E5B0C8A247BB80600DDE6BA /* LimeAPIClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E579576246AE3D20009D306 /* LimeAPIClient.framework */; };
 		4E5B0C8B247BB80600DDE6BA /* LimeAPIClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4E579576246AE3D20009D306 /* LimeAPIClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4E5B0C8E247BC0B300DDE6BA /* URLComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5B0C8D247BC0B300DDE6BA /* URLComponents.swift */; };
@@ -122,6 +124,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4E47BD0E24A1D1A500D98B1A /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACDateInterval.swift; sourceTree = "<group>"; };
 		4E5014E5247319F400A8DA1F /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		4E54C5F62477E54500AAF223 /* LACConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACConfiguration.swift; sourceTree = "<group>"; };
@@ -153,6 +156,7 @@
 		4E5A27E324A0CE3500128AD9 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		4E5A27E524A0D5C900128AD9 /* LACImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACImageTests.swift; sourceTree = "<group>"; };
 		4E5A27E724A0D6D600128AD9 /* LACPlaylistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACPlaylistTests.swift; sourceTree = "<group>"; };
+		4E5A27E924A0E3A600128AD9 /* LACStreamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACStreamTests.swift; sourceTree = "<group>"; };
 		4E5B0C8D247BC0B300DDE6BA /* URLComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLComponents.swift; sourceTree = "<group>"; };
 		4E5B0C8F247BD81B00DDE6BA /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		4E5B0C91247BDB6500DDE6BA /* Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
@@ -336,6 +340,7 @@
 				4E59F2DB247700B800F3456F /* LACAppTests.swift */,
 				4E835E45248F72FB0011E0E0 /* LACConfigurationTests.swift */,
 				4E8CD1CB24867F7300648E24 /* LACDateIntervalTests.swift */,
+				4E5A27E924A0E3A600128AD9 /* LACStreamTests.swift */,
 				4E835BF4247417AC00C8DD96 /* Services */,
 				4E560CCD2487BE30006A644A /* Models */,
 				4E5B0C95247C006200DDE6BA /* Support */,
@@ -385,6 +390,7 @@
 				4E5B0C96247C07E400DDE6BA /* StringTests.swift */,
 				4E8CD1CD248682D600648E24 /* TimeIntervalTests.swift */,
 				4E8CD1CF2486843B00648E24 /* TimeZoneTests.swift */,
+				4E47BD0E24A1D1A500D98B1A /* URL.swift */,
 				4E8CD1C12486680C00648E24 /* URLTests.swift */,
 				4E8CD1BF248661FA00648E24 /* URLRequestTests.swift */,
 			);
@@ -670,6 +676,7 @@
 				4E9192732488DC4C00974C02 /* DispatchQueueTests.swift in Sources */,
 				4E6D91C6246D162700BB7C69 /* HTTPClientTests.swift in Sources */,
 				4E835E49248F99EE0011E0E0 /* LACBroadcastsTests.swift in Sources */,
+				4E47BD0F24A1D1A500D98B1A /* URL.swift in Sources */,
 				4EFC6E4C2476B49A009D6CF7 /* JSONAPIErrorExample.swift in Sources */,
 				4E8CD1BE24865EBF00648E24 /* HTTPTests.swift in Sources */,
 				4E8CD1CE248682D600648E24 /* TimeIntervalTests.swift in Sources */,
@@ -686,6 +693,7 @@
 				4E5A27E624A0D5C900128AD9 /* LACImageTests.swift in Sources */,
 				4E607C4D248E205900F9BEB7 /* JSONAPIErrorTests.swift in Sources */,
 				4E8CD1C0248661FA00648E24 /* URLRequestTests.swift in Sources */,
+				4E5A27EA24A0E3A600128AD9 /* LACStreamTests.swift in Sources */,
 				4E9192752488E66800974C02 /* LACBannersTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
