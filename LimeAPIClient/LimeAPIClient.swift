@@ -410,9 +410,16 @@ extension LimeAPIClient {
                 LimeAPIClient.log(request, message: result.response.localizedStatusCode)
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let parser = JSONParser(decoder)
-                let result = parser.decode(T.self, result.data)
-                completion(result)
+                do {
+                    let result = try T(decoding: result.data, decoder: decoder)
+                    completion(.success(result))
+                } catch {
+                    print("\(module).\(Self.self).\(#function).Error.IncorrectData")
+                    print("-----------------------------------")
+                    print(String(decoding: result.data, as: UTF8.self))
+                    print("-----------------------------------")
+                    completion(.failure(error))
+                }
             case .failure(let error):
                 if let error = error as? HTTPClient.Error,
                     case let .wrongStatusCode(data, response) = error {

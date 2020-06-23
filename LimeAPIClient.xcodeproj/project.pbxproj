@@ -10,6 +10,7 @@
 		4E47BD0F24A1D1A500D98B1A /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E47BD0E24A1D1A500D98B1A /* URL.swift */; };
 		4E47BD1124A1DF1800D98B1A /* RFC3339DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E47BD1024A1DF1800D98B1A /* RFC3339DateTests.swift */; };
 		4E47BD1324A1E64C00D98B1A /* BroadcastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E47BD1224A1E64C00D98B1A /* BroadcastTests.swift */; };
+		4E47BD1524A1FAC100D98B1A /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E47BD1424A1FAC100D98B1A /* Decodable.swift */; };
 		4E5014E4247316AC00A8DA1F /* LACDateInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */; };
 		4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E5247319F400A8DA1F /* TimeInterval.swift */; };
 		4E54C5F72477E54500AAF223 /* LACConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54C5F62477E54500AAF223 /* LACConfiguration.swift */; };
@@ -65,14 +66,13 @@
 		4E75B1BB246E67150061E143 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BA246E67150061E143 /* Device.swift */; };
 		4E75B1BD246E67AD0061E143 /* LACApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BC246E67AD0061E143 /* LACApp.swift */; };
 		4E75B1BF246E77300061E143 /* LACSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BE246E77300061E143 /* LACSettings.swift */; };
-		4E75B1C1246EB9870061E143 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C0246EB9870061E143 /* JSONParser.swift */; };
 		4E75B1C3246EBADC0061E143 /* JSONAPIObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */; };
 		4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1C4246EBBE60061E143 /* Channel.swift */; };
 		4E81FEE6249A3A930061F7FB /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E81FEE5249A3A930061F7FB /* UIImage.swift */; };
 		4E81FEE8249A52860061F7FB /* LACStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E81FEE7249A52860061F7FB /* LACStream.swift */; };
 		4E835BED2473D50700C8DD96 /* Ping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEC2473D50700C8DD96 /* Ping.swift */; };
 		4E835BEF2473EFE300C8DD96 /* JSONAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */; };
-		4E835BF32474179F00C8DD96 /* JSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BF22474179F00C8DD96 /* JSONParserTests.swift */; };
+		4E835BF32474179F00C8DD96 /* DecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835BF22474179F00C8DD96 /* DecodableTests.swift */; };
 		4E835E46248F72FB0011E0E0 /* LACConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835E45248F72FB0011E0E0 /* LACConfigurationTests.swift */; };
 		4E835E49248F99EE0011E0E0 /* LACBroadcastsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E835E48248F99EE0011E0E0 /* LACBroadcastsTests.swift */; };
 		4E8CD1BE24865EBF00648E24 /* HTTPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E8CD1BD24865EBF00648E24 /* HTTPTests.swift */; };
@@ -129,6 +129,7 @@
 		4E47BD0E24A1D1A500D98B1A /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		4E47BD1024A1DF1800D98B1A /* RFC3339DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateTests.swift; sourceTree = "<group>"; };
 		4E47BD1224A1E64C00D98B1A /* BroadcastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastTests.swift; sourceTree = "<group>"; };
+		4E47BD1424A1FAC100D98B1A /* Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
 		4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACDateInterval.swift; sourceTree = "<group>"; };
 		4E5014E5247319F400A8DA1F /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		4E54C5F62477E54500AAF223 /* LACConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACConfiguration.swift; sourceTree = "<group>"; };
@@ -187,14 +188,13 @@
 		4E75B1BA246E67150061E143 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		4E75B1BC246E67AD0061E143 /* LACApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACApp.swift; sourceTree = "<group>"; };
 		4E75B1BE246E77300061E143 /* LACSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACSettings.swift; sourceTree = "<group>"; };
-		4E75B1C0246EB9870061E143 /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIObject.swift; sourceTree = "<group>"; };
 		4E75B1C4246EBBE60061E143 /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		4E81FEE5249A3A930061F7FB /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		4E81FEE7249A52860061F7FB /* LACStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACStream.swift; sourceTree = "<group>"; };
 		4E835BEC2473D50700C8DD96 /* Ping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ping.swift; sourceTree = "<group>"; };
 		4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAPIError.swift; sourceTree = "<group>"; };
-		4E835BF22474179F00C8DD96 /* JSONParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParserTests.swift; sourceTree = "<group>"; };
+		4E835BF22474179F00C8DD96 /* DecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableTests.swift; sourceTree = "<group>"; };
 		4E835E45248F72FB0011E0E0 /* LACConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACConfigurationTests.swift; sourceTree = "<group>"; };
 		4E835E48248F99EE0011E0E0 /* LACBroadcastsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACBroadcastsTests.swift; sourceTree = "<group>"; };
 		4E8CD1BD24865EBF00648E24 /* HTTPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPTests.swift; sourceTree = "<group>"; };
@@ -265,15 +265,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		4E56436024727C0600CDD18F /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				4E68A420246C27CF00D332BD /* HTTPClient.swift */,
-				4E75B1C0246EB9870061E143 /* JSONParser.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		4E56436124727C2300CDD18F /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,7 +317,7 @@
 				4E579579246AE3D20009D306 /* LimeAPIClient.h */,
 				4E57957A246AE3D20009D306 /* Info.plist */,
 				4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */,
-				4E56436024727C0600CDD18F /* Services */,
+				4E68A420246C27CF00D332BD /* HTTPClient.swift */,
 				4E56436124727C2300CDD18F /* Models */,
 				4E56436224727C5A00CDD18F /* Support */,
 				4E6D91CD246D7DDA00BB7C69 /* Extensions */,
@@ -342,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				4E835E47248F99B50011E0E0 /* LimeAPIClientTests */,
+				4E6D91C5246D162700BB7C69 /* HTTPClientTests.swift */,
 				4E59F2DB247700B800F3456F /* LACAppTests.swift */,
 				4E835E45248F72FB0011E0E0 /* LACConfigurationTests.swift */,
 				4E8CD1CB24867F7300648E24 /* LACDateIntervalTests.swift */,
@@ -389,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				4E8CD1C7248679FB00648E24 /* DateTests.swift */,
+				4E835BF22474179F00C8DD96 /* DecodableTests.swift */,
 				4E9192722488DC4C00974C02 /* DispatchQueueTests.swift */,
 				4E8CD1C52486771C00648E24 /* IntTests.swift */,
 				4E5A27E324A0CE3500128AD9 /* UIImage.swift */,
@@ -425,6 +418,7 @@
 				4E6D91D2246D84A000BB7C69 /* Character.swift */,
 				4E5643672472CB7D00CDD18F /* CharacterSet.swift */,
 				4E56436B2472D4EA00CDD18F /* Date.swift */,
+				4E47BD1424A1FAC100D98B1A /* Decodable.swift */,
 				4E5B0C91247BDB6500DDE6BA /* Dictionary.swift */,
 				4E560CC7248795CC006A644A /* DispatchQueue.swift */,
 				4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */,
@@ -442,8 +436,6 @@
 		4E835BF4247417AC00C8DD96 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				4E6D91C5246D162700BB7C69 /* HTTPClientTests.swift */,
-				4E835BF22474179F00C8DD96 /* JSONParserTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -641,7 +633,6 @@
 				4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */,
 				4E54C5F72477E54500AAF223 /* LACConfiguration.swift in Sources */,
 				4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */,
-				4E75B1C1246EB9870061E143 /* JSONParser.swift in Sources */,
 				4E5643682472CB7D00CDD18F /* CharacterSet.swift in Sources */,
 				4E56436C2472D4EA00CDD18F /* Date.swift in Sources */,
 				4E75B1BD246E67AD0061E143 /* LACApp.swift in Sources */,
@@ -659,6 +650,7 @@
 				4E56436A2472D41900CDD18F /* RFC3339Date.swift in Sources */,
 				4E6D91C4246D111900BB7C69 /* HTTPURLResponse.swift in Sources */,
 				4E5913CE247560CA009BAAA1 /* Broadcast.swift in Sources */,
+				4E47BD1524A1FAC100D98B1A /* Decodable.swift in Sources */,
 				4E6D91D3246D84A000BB7C69 /* Character.swift in Sources */,
 				4E5014E4247316AC00A8DA1F /* LACDateInterval.swift in Sources */,
 			);
@@ -669,7 +661,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E8CD1D02486843B00648E24 /* TimeZoneTests.swift in Sources */,
-				4E835BF32474179F00C8DD96 /* JSONParserTests.swift in Sources */,
+				4E835BF32474179F00C8DD96 /* DecodableTests.swift in Sources */,
 				4E8CD1C424866C5200648E24 /* EndPointTests.swift in Sources */,
 				4E8CD1CC24867F7300648E24 /* LACDateIntervalTests.swift in Sources */,
 				4E835E46248F72FB0011E0E0 /* LACConfigurationTests.swift in Sources */,
