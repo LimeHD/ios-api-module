@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4E47BD0F24A1D1A500D98B1A /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E47BD0E24A1D1A500D98B1A /* URL.swift */; };
 		4E47BD1124A1DF1800D98B1A /* RFC3339DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E47BD1024A1DF1800D98B1A /* RFC3339DateTests.swift */; };
+		4E47BD1324A1E64C00D98B1A /* BroadcastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E47BD1224A1E64C00D98B1A /* BroadcastTests.swift */; };
 		4E5014E4247316AC00A8DA1F /* LACDateInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */; };
 		4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E5247319F400A8DA1F /* TimeInterval.swift */; };
 		4E54C5F72477E54500AAF223 /* LACConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54C5F62477E54500AAF223 /* LACConfiguration.swift */; };
@@ -127,6 +128,7 @@
 /* Begin PBXFileReference section */
 		4E47BD0E24A1D1A500D98B1A /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		4E47BD1024A1DF1800D98B1A /* RFC3339DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateTests.swift; sourceTree = "<group>"; };
+		4E47BD1224A1E64C00D98B1A /* BroadcastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastTests.swift; sourceTree = "<group>"; };
 		4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACDateInterval.swift; sourceTree = "<group>"; };
 		4E5014E5247319F400A8DA1F /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		4E54C5F62477E54500AAF223 /* LACConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACConfiguration.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 			children = (
 				4E9192702488D4FC00974C02 /* BannerExample.swift */,
 				4E560CD02487E596006A644A /* BroadcastExample.swift */,
+				4E47BD1224A1E64C00D98B1A /* BroadcastTests.swift */,
 				4E560CCE2487C346006A644A /* ChannelExample.swift */,
 				4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */,
 				4E607C4C248E205900F9BEB7 /* JSONAPIErrorTests.swift */,
@@ -691,6 +694,7 @@
 				4E8CD1C22486680C00648E24 /* URLTests.swift in Sources */,
 				4E8CD1CA24867BEA00648E24 /* RFC3339DateFormatterTests.swift in Sources */,
 				4E560CCA2487B3A8006A644A /* HTTPURLResponse.swift in Sources */,
+				4E47BD1324A1E64C00D98B1A /* BroadcastTests.swift in Sources */,
 				4E8CD1C8248679FB00648E24 /* DateTests.swift in Sources */,
 				4E59F2DC247700B800F3456F /* LACAppTests.swift in Sources */,
 				4E5A27E824A0D6D600128AD9 /* LACPlaylistTests.swift in Sources */,
