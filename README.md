@@ -144,7 +144,7 @@ apiClient.nextBanner { (result) in
     }
 }
 ```
-В ответ приходит баннер. Тип данных `BannerAndDevice.Banner`:
+<a id="banner-and-device-banner"></a>В ответ приходит баннер. Тип данных `BannerAndDevice.Banner`:
 ``` swift
 struct BannerAndDevice.Banner: Decodable {
     let id: Int
@@ -173,7 +173,7 @@ apiClient.deleteBanFromBanner(bannerId: BANNER_ID) { (result) in
     }
 }
 ```
-В ответ приходит результат выполнения запроса. Тип данных `BanBanner`:
+<a id="banbanner"></a>В ответ приходит результат выполнения запроса. Тип данных `BanBanner`:
 ``` swift
 struct BanBanner: Decodable {
     let result: String
@@ -194,7 +194,7 @@ apiClient.banBanner(bannerId: BANNER_ID) { (result) in
     }
 }
 ```
-В ответ приходит результат выполнения запроса. Тип данных `BanBanner` (см. выше).
+В ответ приходит результат выполнения запроса. Тип данных `BanBanner` ([см. выше](#banbanner)).
 
 ### Получить баннер (информацию о нём)
 Пример запроса
@@ -210,7 +210,7 @@ apiClient.getBanner(bannerId: BANNER_ID) { (result) in
     }
 }
 ```
-В ответ приходит баннер. Тип данных `BannerAndDevice.Banner` (см. выше).
+В ответ приходит баннер. Тип данных `BannerAndDevice.Banner` ([см. выше](#banner-and-device-banner)).
 
 ### Получение списка каналов
 Пример запроса
@@ -225,7 +225,7 @@ apiClient.requestChannels { (result) in
     }
 }
 ```
-В ответ приходит список каналов в виде массива. Тип данных `Channel`:
+<a id="channel"></a>В ответ приходит список каналов в виде массива. Тип данных `Channel`:
 ``` swift
 struct Channel: Decodable {
     let id: String
@@ -249,7 +249,7 @@ struct Channel: Decodable {
 ```
 
 ### Получение списка каналов по группе id
-**Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения параметра `defaultChannelGroupId` (см. выше).
+**Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения параметра `defaultChannelGroupId` ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
 
 Пример запроса
 ``` swift
@@ -263,7 +263,7 @@ apiClient.requestChannelsByGroupId { (result) in
     }
 }
 ```
-В ответ приходит список каналов в виде массива. Тип данных `Channel` (см. выше).
+В ответ приходит список каналов в виде массива. Тип данных `Channel` ([см. выше](#channel)).
 
 ### Получение программы передач
 Пример запроса
