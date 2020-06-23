@@ -25,6 +25,7 @@ extension TimeZone {
     }
     
     init?(rfc3339DateString string: String) {
+        if string.count != 25 { return nil }
         let stringTimeZone = String(string.suffix(5))
         let sign = string[19] == "+" ? 1 : -1
         guard let timeInterval = stringTimeZone.timeIntervalInSeconds else { return nil }
