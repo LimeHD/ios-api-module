@@ -287,6 +287,8 @@ struct Broadcast: Decodable {
     let id: String
     let type: String
     let attributes: Attributes
+    var startAtUnix: Int? { get }
+    var duration: Int? { get }
     
     struct Attributes: Decodable {
         let title: String
