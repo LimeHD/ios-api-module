@@ -25,23 +25,12 @@ class RFC3339DateFormatter: DateFormatter {
     }
 }
 
-enum RFC3339DateError: Error, LocalizedError, Equatable {
-    case invalidDateString(_ inputString: String)
-    case invalidTimeZoneInString(_ inputString: String)
-    
-    var errorDescription: String? {
-        switch self {
-        case let .invalidDateString(inputString):
-            let key = "Не удалось распознать дату, возможно не соответсвует формату RFC3339: \(inputString). Используйте пример: 2020-06-18T19:17:28-01:00"
-            return NSLocalizedString(key, comment: "Неверный формат данных")
-        case let .invalidTimeZoneInString(inputString):
-            let key = "Не удалось разспознать часовой пояс, возможно не соответсвует формату RFC3339: \(inputString). Используйте пример: 2020-06-18T19:17:28-01:00"
-            return NSLocalizedString(key, comment: "Неверный формат данных")
-        }
-    }
-}
-
 struct RFC3339Date: Equatable {
+    enum Error: Swift.Error, Equatable {
+        case invalidDateString(_ inputString: String)
+        case invalidTimeZoneInString(_ inputString: String)
+    }
+    
     let date: Date
     let timeZone: TimeZone
     let string: String
@@ -69,15 +58,28 @@ struct RFC3339Date: Equatable {
         let formatter = RFC3339DateFormatter()
         
         guard let date = formatter.date(from: string) else {
-            throw RFC3339DateError.invalidDateString(string)
+            throw RFC3339Date.Error.invalidDateString(string)
         }
         self.date = date
         self.unixTime = date.unixTime
         
         guard let timeZone = TimeZone(rfc3339DateString: string) else {
-            throw RFC3339DateError.invalidTimeZoneInString(string)
+            throw RFC3339Date.Error.invalidTimeZoneInString(string)
         }
         self.timeZone = timeZone
         formatter.timeZone = timeZone
+    }
+}
+
+extension RFC3339Date.Error: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case let .invalidDateString(inputString):
+            let key = "Не удалось распознать дату, возможно не соответсвует формату RFC3339: \(inputString). Используйте пример: 2020-06-18T19:17:28-01:00"
+            return NSLocalizedString(key, comment: "Неверный формат данных")
+        case let .invalidTimeZoneInString(inputString):
+            let key = "Не удалось разспознать часовой пояс, возможно не соответсвует формату RFC3339: \(inputString). Используйте пример: 2020-06-18T19:17:28-01:00"
+            return NSLocalizedString(key, comment: "Неверный формат данных")
+        }
     }
 }

@@ -41,14 +41,14 @@ class RFC3339DateTests: XCTestCase {
     
     func test_initSting_invalidDateThrows() throws {
         let rfc3339Date = "INVALID VALUE"
-        let expectedError = RFC3339DateError.invalidDateString(rfc3339Date)
+        let expectedError = RFC3339Date.Error.invalidDateString(rfc3339Date)
         
         XCTAssertThrowsError(try RFC3339Date(string: rfc3339Date))
         
         do {
             _ = try RFC3339Date(string: rfc3339Date)
         } catch {
-            let actualError = try XCTUnwrap(error as? RFC3339DateError)
+            let actualError = try XCTUnwrap(error as? RFC3339Date.Error)
             XCTAssertEqual(actualError, expectedError)
             XCTAssertNotNil(expectedError.localizedDescription)
         }
@@ -56,14 +56,14 @@ class RFC3339DateTests: XCTestCase {
     
     func test_initSting_invalidTimeZoneThrows() throws {
         let rfc3339Date = "2020-06-02T15:00:00+20:00"
-        let expectedError = RFC3339DateError.invalidTimeZoneInString(rfc3339Date)
+        let expectedError = RFC3339Date.Error.invalidTimeZoneInString(rfc3339Date)
         
         XCTAssertThrowsError(try RFC3339Date(string: rfc3339Date))
         
         do {
             _ = try RFC3339Date(string: rfc3339Date)
         } catch {
-            let actualError = try XCTUnwrap(error as? RFC3339DateError)
+            let actualError = try XCTUnwrap(error as? RFC3339Date.Error)
             XCTAssertEqual(actualError, expectedError)
             XCTAssertNotNil(expectedError.localizedDescription)
         }
