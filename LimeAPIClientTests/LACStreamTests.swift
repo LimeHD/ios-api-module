@@ -26,9 +26,10 @@ class LACStreamTests: XCTestCase {
     }
     
     func test_onlineUrlAsset_invalidUrl_throws() throws {
-        let expectedError = LACStream.Error.invalidUrl("INVALID URL")
+        let endpointPath = "INVALID URL"
+        let expectedError = LACStream.Error.invalidUrl(endpointPath)
         
-        try self.runSession(with: SessionExampleFailedEndpoint)
+        try self.runSession(with: SessionExample.failedEndpoint(endpointPath))
         
         XCTAssertNoThrow(try LACStream.Online.endpoint(for: 44))
         XCTAssertThrowsError(try LACStream.Online.urlAsset(for: 44))
@@ -61,7 +62,7 @@ class LACStreamTests: XCTestCase {
     
     func test_onlineUrlAsset_returnsCorrectValue() throws {
         let streamId = 44
-        try self.runSession(with: SessionExample)
+        try self.runSession(with: SessionExample.correct)
         
         XCTAssertNoThrow(try LACStream.Online.endpoint(for: streamId))
         XCTAssertNoThrow(try LACStream.Online.urlAsset(for: streamId))

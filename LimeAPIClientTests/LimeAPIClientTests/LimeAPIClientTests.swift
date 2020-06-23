@@ -198,7 +198,7 @@ extension LimeAPIClientTests {
     }
     
     func test_session_correctResponseData_callsCompletionWithSuccess() throws {
-        let data = try generateJSONData(Session.self, string: SessionExample)
+        let data = try generateJSONData(Session.self, string: SessionExample.correct)
         let completion = self.runSessionRequest(data.raw, self.response200)
         
         XCTAssertNotNil(completion)
@@ -227,7 +227,7 @@ extension LimeAPIClientTests {
     }
     
     func test_session_successfulSessionSetsDefaultChannelGroupId() throws {
-        let data = try generateJSONData(Session.self, string: SessionExample)
+        let data = try generateJSONData(Session.self, string: SessionExample.correct)
         
         let configuration = LACConfiguration(appId: "TEST_ID", apiKey: "TEST_API", language: Device.language)
         LimeAPIClient.configuration = configuration
@@ -242,7 +242,7 @@ extension LimeAPIClientTests {
     }
     
     func test_session_emptyConfigurationNotSetsDefaultChannelGroupId() throws {
-        let data = try generateJSONData(Session.self, string: SessionExample)
+        let data = try generateJSONData(Session.self, string: SessionExample.correct)
         
         self.sut.session { (result) in }
         

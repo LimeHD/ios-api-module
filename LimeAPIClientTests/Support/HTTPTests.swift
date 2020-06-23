@@ -55,7 +55,7 @@ class HTTPTests: XCTestCase {
         apiClient.session { (_) in }
         let url = try XCTUnwrap(URL(string: baseUrl))
         let response = HTTPURLResponse(url: url, statusCode: 200)
-        let data = try XCTUnwrap(SessionExample.data(using: .utf8))
+        let data = try XCTUnwrap(SessionExample.correct.data(using: .utf8))
         session.lastTask?.completionHandler(data, response, nil)
     }
 }
