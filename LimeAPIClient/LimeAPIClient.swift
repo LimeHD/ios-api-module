@@ -414,10 +414,12 @@ extension LimeAPIClient {
                     let result = try T(decoding: result.data, decoder: decoder)
                     completion(.success(result))
                 } catch {
-                    print("\(module).\(Self.self).\(#function).Error.IncorrectData")
-                    print("-----------------------------------")
-                    print(String(decoding: result.data, as: UTF8.self))
-                    print("-----------------------------------")
+                    var message = error.localizedDescription + "\n"
+                    message += "Ошибка при парсинге JSON-файла:\n"
+                    message += "-----------------------------------\n"
+                    message += String(decoding: result.data, as: UTF8.self) + "\n"
+                    message += "-----------------------------------\n"
+                    LimeAPIClient.log(request, message: message)
                     completion(.failure(error))
                 }
             case .failure(let error):
