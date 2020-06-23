@@ -307,7 +307,6 @@ extension ResultTableViewController {
             self?.configureStopAnimating()
             switch result {
             case let .success(playlist):
-                // print(playlist)
                 let asset: AVURLAsset
                 do {
                     asset = try LACStream.Online.urlAsset(for: streamId)
@@ -341,7 +340,6 @@ extension ResultTableViewController {
             self.configureStopAnimating()
             switch result {
             case let .success(playlist):
-//                print(playlist)
                 let asset: AVURLAsset
                 do {
                     asset = try LACStream.Archive.urlAsset(for: self.broadcastStreamId, start: start, duration: duration)
