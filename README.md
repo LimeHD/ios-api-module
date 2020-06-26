@@ -64,10 +64,7 @@ pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 import LimeAPIClient
 ```
 Все сетевые запросы осуществляются в одельном потоке (см. официальную документацию Apple по классу `URLSession` в разделе «[Asynchronicity and URL Sessions](https://developer.apple.com/documentation/foundation/urlsession/)»).
-После выполнения запроса ответ передается в [главную очередь](https://developer.apple.com/documentation/dispatch/dispatchqueue/1781006-main):
-``` swift
-DispatchQueue.main
-```
+После выполнения запроса ответ передается в главную очередь [`DispatchQueue.main`](https://developer.apple.com/documentation/dispatch/dispatchqueue/1781006-main).
 
 ### Конфигурирование клиента
 Конфигурирования клиента `LimeAPIClient` осуществлятся один раз до начала использования запросов
@@ -282,7 +279,7 @@ apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { (resul
     }
 }
 ```
-<a id="broadcast"></a>В ответ приходит список каналов в виде массива. Тип данных `Broadcast`:
+<a id="broadcast"></a>В ответ приходит список телепередач в виде массива. Тип данных `Broadcast`:
 ``` swift
 struct Broadcast: Decodable {
     let id: String
@@ -305,7 +302,8 @@ struct Broadcast: Decodable {
 Пример запроса
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-// Параметр key - опциональный, тип данных String. Используется для разнообразия запросов и обхода кэша
+// Параметр key - опциональный, тип данных String, 
+// используется для разнообразия запросов и обхода кэша
 apiClient.ping(key: KEY) { (result) in
     switch result {
     case .success(let ping):
@@ -326,6 +324,8 @@ struct Ping: Decodable {
 ```
 
 ### Получение ссылки на онлайн поток
+**Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения  общей ссылки на онлайн потоки ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
+
 Получение ссылки для [`AVPlayer`](https://developer.apple.com/documentation/avfoundation/avplayer) на онлайн поток. Возвращает ссылку на онлайн поток в формате [`AVURLAsset`](https://developer.apple.com/documentation/avfoundation/avurlasset).
 
 Пример запроса
@@ -362,6 +362,8 @@ self.present(playerViewController, animated: true) {
 ```
 
 ### Получение ссылки на поток архива
+**Внимание!** Перед выполеннием запроса необходимо инициализировать `LimeAPIClient` для задания сервера API.
+
 Получение ссылки для [`AVPlayer`](https://developer.apple.com/documentation/avfoundation/avplayer) на поток архива. Возвращает ссылку на поток архива в формате [`AVURLAsset`](https://developer.apple.com/documentation/avfoundation/avurlasset).
 
 Пример запроса
@@ -392,7 +394,7 @@ self.present(playerViewController, animated: true) {
 ```
 
 ### Получение ссылки на поток архива с помощью broadcast
-После получения [программы передач](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87) можно непосредственно использовать полученные данные для получения ссылки для [`AVPlayer`](https://developer.apple.com/documentation/avfoundation/avplayer) на поток архива. Метод возвращает ссылку на поток архива в формате [`AVURLAsset`](https://developer.apple.com/documentation/avfoundation/avurlasset). Тип данных `Broadcast` ([см. выше](#broadcast)).
+После получения [программы передач](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87) можно непосредственно использовать полученные данные для получения ссылки для [`AVPlayer`](https://developer.apple.com/documentation/avfoundation/avplayer) на поток архива. Метод возвращает ссылку на поток архива в формате [`AVURLAsset`](https://developer.apple.com/documentation/avfoundation/avurlasset). Описание типа данных `Broadcast` [см. выше](#broadcast).
 
 Пример запроса
 ``` swift
