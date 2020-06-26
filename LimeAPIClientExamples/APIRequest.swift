@@ -137,6 +137,12 @@ extension APIRequest.Results {
         return results
     }
     
+    static func create(from channels: [Channel]) -> [APIRequest.Result] {
+        channels.map { (channel) -> APIRequest.Result in
+            APIRequest.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "", imageUrl: channel.attributes.imageUrl)
+        }
+    }
+    
     static func create(from error: JSONAPIError.Error) -> [APIRequest.Result] {
         [
             APIRequest.Result(title: "id", detail: error.id?.string ?? "-"),

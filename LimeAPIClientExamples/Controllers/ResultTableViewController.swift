@@ -47,6 +47,7 @@ class ResultTableViewController: UITableViewController {
         indicator.color = .black
         return indicator
     }()
+    private lazy var searchBar = UISearchBar()
     
     init(request: APIRequest) {
         self.request = request
@@ -62,6 +63,7 @@ class ResultTableViewController: UITableViewController {
 
         self.registerCells()
         self.configureAppearance()
+        self.tableView.keyboardDismissMode = .onDrag
         self.hideKeyboardWhenTappedAround()
         
         switch self.request {
@@ -109,6 +111,7 @@ class ResultTableViewController: UITableViewController {
         self.view.backgroundColor = ColorTheme.Background.view
         
         self.configureActivityIndicator()
+        self.configureSearchBar()
         self.addRequestButton()
     }
     
@@ -124,6 +127,19 @@ class ResultTableViewController: UITableViewController {
     
     @objc func dismissKeyboard() {
         self.view.endEditing(true)
+    }
+    
+    private func configureSearchBar() {
+        switch self.request {
+        case
+        .channels,
+        .channelsByGroupId:
+            self.searchBar.placeholder = "Поиск канала"
+            self.navigationItem.titleView = self.searchBar
+            self.searchBar.delegate = self
+        default:
+            break
+        }
     }
     
     @objc private func requestData() {
@@ -515,9 +531,7 @@ extension ResultTableViewController {
     }
     
     private func handleChannelsResult(_ channels: [Channel]) {
-        self.results = channels.map { (channel) -> APIRequest.Result in
-            return APIRequest.Result(title: "id: \(channel.id)", detail: channel.attributes.name ?? "", imageUrl: channel.attributes.imageUrl)
-        }
+        self.results = APIRequest.Results.create(from: channels)
         self.channels = channels
         self.tableView.reloadData()
         print(channels)
@@ -585,5 +599,18 @@ extension ResultTableViewController {
         }
         let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
         self.present(alert, animated: true)
+    }
+}
+
+extension ResultTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            self.results = APIRequest.Results.create(from: self.channels)
+            self.tableView.reloadData()
+        } else {
+            let channels = self.channels.filter { $0.id.contains(searchText) || ($0.attributes.name?.contains(searchText) ?? false) }
+            self.results = APIRequest.Results.create(from: channels)
+            self.tableView.reloadData()
+        }
     }
 }
