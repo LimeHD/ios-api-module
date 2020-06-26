@@ -35,6 +35,7 @@ class ResultTableViewController: UITableViewController {
     var parameters = [APIRequest.Parameter]()
     var results = [APIRequest.Result]()
     private var channels = [Channel]()
+    private var channelsTemp = [Channel]()
     private var broadcasts = [Broadcast]()
     var broadcastChannelId: Int? = nil
     var broadcastStreamId: Int? = nil
@@ -643,12 +644,16 @@ extension ResultTableViewController {
 extension ResultTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            self.results = APIRequest.Results.create(from: self.channels)
-            self.tableView.reloadData()
+            self.channels = self.channelsTemp
         } else {
-            let channels = self.channels.filter { $0.id.contains(searchText) || ($0.attributes.name?.contains(searchText) ?? false) }
-            self.results = APIRequest.Results.create(from: channels)
-            self.tableView.reloadData()
+            if self.channelsTemp.isEmpty {
+                self.channelsTemp = self.channels
+            }
+            self.channels = self.channelsTemp.filter {
+                $0.id.contains(searchText) || ($0.attributes.name?.contains(searchText) ?? false)
+            }
         }
+        self.results = APIRequest.Results.create(from: self.channels)
+        self.tableView.reloadData()
     }
 }

@@ -11,6 +11,7 @@ import LimeAPIClient
 
 class ChannelsTableViewController: UITableViewController {
     private var channels = [Channel]()
+    private var channelsTemp = [Channel]()
     private let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
     
     private var activityIndicator: UIActivityIndicatorView = {
@@ -19,11 +20,13 @@ class ChannelsTableViewController: UITableViewController {
         indicator.color = .black
         return indicator
     }()
+    private lazy var searchBar = UISearchBar()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.configureAppearance()
+        self.tableView.keyboardDismissMode = .onDrag
         self.tableView.register(SubtitleCell.self)
         self.requestChannels()
     }
@@ -34,11 +37,18 @@ class ChannelsTableViewController: UITableViewController {
         self.tableView.removeExtraEmptyCells()
         self.view.backgroundColor = ColorTheme.Background.view
         self.configureActivityIndicator()
+        self.configureSearchBar()
     }
     
     private func configureActivityIndicator() {
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.addCenterConstraints(equalTo: self.view)
+    }
+    
+    private func configureSearchBar() {
+        self.searchBar.placeholder = "Поиск канала"
+        self.navigationItem.titleView = self.searchBar
+        self.searchBar.delegate = self
     }
     
     private func requestChannels() {
@@ -100,5 +110,22 @@ class ChannelsTableViewController: UITableViewController {
         resultController.results = []
         resultController.tableView.reloadData()
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+
+extension ChannelsTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            self.channels = self.channelsTemp
+        } else {
+            if self.channelsTemp.isEmpty {
+                self.channelsTemp = self.channels
+            }
+            self.channels = self.channelsTemp.filter {
+                $0.id.contains(searchText) || ($0.attributes.name?.contains(searchText) ?? false)
+            }
+        }
+        self.tableView.reloadData()
     }
 }
