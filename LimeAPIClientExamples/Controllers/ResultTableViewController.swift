@@ -76,10 +76,12 @@ class ResultTableViewController: UITableViewController {
         .deleteBanFromBanner,
         .banBanner,
         .getBanner:
-            self.parameters = [APIRequest.Parameter(name: "banner id", detail: "Id баннера для модификации", keyboardType: .numberPad)]
+            let detail = "Id баннера для модификации"
+            self.parameters = [APIRequest.Parameter(name: "banner id", detail: detail, keyboardType: .numberPad)]
             return
         case .ping:
-            self.parameters = [APIRequest.Parameter(name: "key", detail: "Запрос на проверку работоспособности сервиса. Устанавливает кеширующие заголовки", keyboardType: .URL)]
+            let detail = "Запрос на проверку работоспособности сервиса. Устанавливает кеширующие заголовки"
+            self.parameters = [APIRequest.Parameter(name: "key", detail: detail, keyboardType: .URL)]
             return
         case .broadcasts:
             break
@@ -392,7 +394,6 @@ extension ResultTableViewController {
                 print(session)
             case .failure(let error):
                 self.showAlert(error)
-                print(error)
             }
         }
     }
@@ -409,15 +410,13 @@ extension ResultTableViewController {
                 print(bannerAndDevice)
             case .failure(let error):
                 self.showAlert(error)
-                print(error)
             }
         }
     }
     
     private func nextBanner() {
         self.apiClient.nextBanner { [weak self] (result) in
-            guard let self = self else { return }
-            self.handleBannerResult(result)
+            self?.handleBannerResult(result)
         }
     }
     
@@ -431,7 +430,6 @@ extension ResultTableViewController {
             print(banner)
         case .failure(let error):
             self.showAlert(error)
-            print(error)
         }
     }
     
@@ -442,8 +440,7 @@ extension ResultTableViewController {
         let bannerId = bannerIdCell.parameterValueTextField.text?.int ?? 0
         
         self.apiClient.deleteBanFromBanner(bannerId: bannerId) { [weak self] (result) in
-            guard let self = self else { return }
-            self.handleBanBannerResult(result)
+            self?.handleBanBannerResult(result)
         }
     }
     
@@ -457,7 +454,6 @@ extension ResultTableViewController {
             print(banBanner)
         case .failure(let error):
             self.showAlert(error)
-            print(error)
         }
     }
     
@@ -468,8 +464,7 @@ extension ResultTableViewController {
         let bannerId = bannerIdCell.parameterValueTextField.text?.int ?? 0
         
         self.apiClient.banBanner(bannerId: bannerId) { [weak self] (result) in
-            guard let self = self else { return }
-            self.handleBanBannerResult(result)
+            self?.handleBanBannerResult(result)
         }
     }
     
@@ -480,8 +475,7 @@ extension ResultTableViewController {
         let bannerId = bannerIdCell.parameterValueTextField.text?.int ?? 0
         
         self.apiClient.getBanner(bannerId: bannerId) { [weak self] (result) in
-            guard let self = self else { return }
-            self.handleBannerResult(result)
+            self?.handleBannerResult(result)
         }
     }
     
@@ -502,7 +496,6 @@ extension ResultTableViewController {
                 print(ping)
             case .failure(let error):
                 self.showAlert(error)
-                print(error)
             }
         }
     }
@@ -517,7 +510,6 @@ extension ResultTableViewController {
                 self.handleChannelsResult(channels)
             case .failure(let error):
                 self.showAlert(error)
-                print(error)
             }
         }
     }
@@ -541,7 +533,6 @@ extension ResultTableViewController {
                 self.handleChannelsResult(channels)
             case .failure(let error):
                 self.showAlert(error)
-                print(error)
             }
         }
     }
@@ -564,12 +555,13 @@ extension ResultTableViewController {
                 print(broadcasts)
             case .failure(let error):
                 self.showAlert(error)
-                print(error)
             }
         }
     }
     
     private func showAlert(_ error: Error) {
+        print(error)
+        
         if let error = error as? APIError,
             case .unknownChannelsGroupId = error {
             self.handleSessionError()
