@@ -387,22 +387,7 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let session):
-                self.results = [
-                    APIRequest.Result(title: "session id", detail: session.sessionId),
-                    APIRequest.Result(title: "current time", detail: session.currentTime),
-                    APIRequest.Result(title: "stream endpoint", detail: session.streamEndpoint),
-                    APIRequest.Result(title: "default channel group id", detail: session.defaultChannelGroupId.string),
-                    APIRequest.Result(title: "is ad start: \(session.settings.isAdStart)", detail: "Показывать рекламу при старте приложения"),
-                    APIRequest.Result(title: "is ad first start: \(session.settings.isAdFirstStart)", detail: "Показывать рекламу при первом старте приложения"),
-                    APIRequest.Result(title: "is ad onl start: \(session.settings.isAdOnlStart)", detail: "Показывать рекламу при включении онлайн-трансляции"),
-                    APIRequest.Result(title: "is ad arh start: \(session.settings.isAdArhStart)", detail: "Показывать рекламу при включении трансляции архива"),
-                    APIRequest.Result(title: "is ad onl out: \(session.settings.isAdOnlOut)", detail: "Показывать рекламу при выключении онлайн-трансляции"),
-                    APIRequest.Result(title: "is ad arh out: \(session.settings.isAdArhOut)", detail: "Показывать рекламу при выключении трансляции архива"),
-                    APIRequest.Result(title: "is ad onl full out: \(session.settings.isAdOnlFullOut)", detail: "Показывать рекламу при выходе из полного экрана в онлайн-трансляции"),
-                    APIRequest.Result(title: "is ad arh full out: \(session.settings.isAdArhFullOut)", detail: "Показывать рекламу при выходе из полного экрана в трансляции архива"),
-                    APIRequest.Result(title: "is ad arh pause out: \(session.settings.isAdArhPauseOut)", detail: "Показывать рекламу при выходе из паузы при трансляции архива"),
-                    APIRequest.Result(title: "ad min timeout: \(session.settings.adMinTimeout)", detail: "Следующаяя реклама покажется не раньше чем через это количество секунд")
-                ]
+                self.results = APIRequest.Results.create(from: session)
                 self.tableView.reloadData()
                 print(session)
             case .failure(let error):
@@ -419,16 +404,7 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let bannerAndDevice):
-                self.configureBannerResult(bannerAndDevice.banner)
-                if let device = bannerAndDevice.device {
-                    self.results += [
-                        APIRequest.Result(title: "device id", detail: device.id),
-                        APIRequest.Result(title: "shown banners", detail: "\(device.shownBanners)"),
-                        APIRequest.Result(title: "skipped banners", detail: "\(device.skippedBanners)"),
-                        APIRequest.Result(title: "created at", detail: device.createdAt),
-                        APIRequest.Result(title: "updated at", detail: device.updatedAt)
-                    ]
-                }
+                self.results = APIRequest.Results.create(from: bannerAndDevice)
                 self.tableView.reloadData()
                 print(bannerAndDevice)
             case .failure(let error):
@@ -436,20 +412,6 @@ extension ResultTableViewController {
                 print(error)
             }
         }
-    }
-    
-    private func configureBannerResult(_ banner: BannerAndDevice.Banner) {
-        self.results = [
-            APIRequest.Result(title: "id", detail: banner.id.string),
-            APIRequest.Result(title: "image url", detail: banner.imageUrl, imageUrl: banner.imageUrl),
-            APIRequest.Result(title: "title", detail: banner.title),
-            APIRequest.Result(title: "description", detail: banner.description),
-            APIRequest.Result(title: "is skipable", detail: banner.isSkipable.string),
-            APIRequest.Result(title: "type", detail: banner.type.string),
-            APIRequest.Result(title: "pack id", detail: banner.packId?.string ?? "null"),
-            APIRequest.Result(title: "detail url", detail: banner.detailUrl),
-            APIRequest.Result(title: "delay", detail: banner.delay.string)
-        ]
     }
     
     private func nextBanner() {
@@ -464,7 +426,7 @@ extension ResultTableViewController {
         
         switch result {
         case .success(let banner):
-            self.configureBannerResult(banner)
+            self.results = APIRequest.Results.create(from: banner)
             self.tableView.reloadData()
             print(banner)
         case .failure(let error):
@@ -491,8 +453,6 @@ extension ResultTableViewController {
         switch result {
         case .success(let banBanner):
             self.results = [APIRequest.Result(title: "result", detail: banBanner.result)]
-            self.tableView.reloadData()
-            print(banBanner)
             self.tableView.reloadData()
             print(banBanner)
         case .failure(let error):
@@ -537,12 +497,7 @@ extension ResultTableViewController {
             
             switch result {
             case .success(let ping):
-                self.results = [
-                    APIRequest.Result(title: "result", detail: ping.result),
-                    APIRequest.Result(title: "time", detail: ping.time),
-                    APIRequest.Result(title: "version", detail: ping.version),
-                    APIRequest.Result(title: "hostname", detail: ping.hostname)
-                ]
+                self.results = APIRequest.Results.create(from: ping)
                 self.tableView.reloadData()
                 print(ping)
             case .failure(let error):
@@ -629,13 +584,7 @@ extension ResultTableViewController {
         if let error = error as? APIError,
             case let .jsonAPIError(statusCode, error: jsonAPIError) = error {
             if let error = jsonAPIError.errors.first {
-                self.results = [
-                    APIRequest.Result(title: "id", detail: error.id?.string ?? "-"),
-                    APIRequest.Result(title: "status", detail: error.status),
-                    APIRequest.Result(title: "code", detail: error.code),
-                    APIRequest.Result(title: "title", detail: error.title),
-                    APIRequest.Result(title: "detail", detail: error.detail ?? "nil")
-                ]
+                self.results = APIRequest.Results.create(from: error)
                 self.tableView.reloadData()
                 let alert = UIAlertController(title: "Ошибка", message: "Неуспешный ответ состояния HTTP: \(statusCode)")
                 self.present(alert, animated: true)
