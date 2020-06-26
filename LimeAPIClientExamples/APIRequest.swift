@@ -48,8 +48,14 @@ enum APIRequest: String {
     
     struct Parameter {
         let name: String
-        let detail: String
-        let keyboardType: UIKeyboardType
+        let detail: String?
+        let keyboardType: UIKeyboardType?
+        
+        init(name: String, detail: String? = nil, keyboardType: UIKeyboardType? = nil) {
+            self.name = name
+            self.detail = detail
+            self.keyboardType = keyboardType
+        }
     }
     
     struct Result {

@@ -25,7 +25,7 @@ public struct Broadcast: Decodable, Equatable {
     
     public struct Attributes: Decodable, Equatable {
         public let title: String
-        public let detail: String
+        public let detail: String?
         public let rating: Int?
         public let startAt: String
         public let finishAt: String

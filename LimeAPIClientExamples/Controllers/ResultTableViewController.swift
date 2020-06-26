@@ -32,12 +32,13 @@ class ResultTableViewController: UITableViewController {
     }
     
     private let request: APIRequest
-    private var parameters = [APIRequest.Parameter]()
-    private var results = [APIRequest.Result]()
+    var parameters = [APIRequest.Parameter]()
+    var results = [APIRequest.Result]()
     private var channels = [Channel]()
     private var broadcasts = [Broadcast]()
-    private var broadcastChannelId = 129
-    private var broadcastStreamId = 44
+    var broadcastChannelId: Int? = nil
+    var broadcastStreamId: Int? = nil
+    var broadcastTimeZone: TimeZone? = nil
     private var cachedImages = NSCache<NSString, UIImage>()
     private let apiClient = LimeAPIClient(baseUrl: BASE_URL.TEST)
     
@@ -86,7 +87,8 @@ class ResultTableViewController: UITableViewController {
             self.parameters = [APIRequest.Parameter(name: "key", detail: detail, keyboardType: .URL)]
             return
         case .broadcasts:
-            break
+            self.parameters = [APIRequest.Parameter(name: "Канал")]
+            return
         }
         
         self.requestData()
@@ -102,6 +104,7 @@ class ResultTableViewController: UITableViewController {
     private func registerCells() {
         self.tableView.register(fromNib: ParameterCell.self)
         self.tableView.register(SubtitleCell.self)
+        self.tableView.register(Value1Cell.self)
     }
     
     private func configureAppearance() {
@@ -237,16 +240,27 @@ extension ResultTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch Section(indexPath.section) {
         case .parameters:
-            let cell = tableView.dequeueReusableCell(ParameterCell.self, for: indexPath)
-
-            cell?.selectionStyle = .none
-            cell?.parameterNameLabel.text = self.parameters[indexPath.row].name
-            cell?.parameterValueTextField.keyboardType = self.parameters[indexPath.row].keyboardType
-            cell?.parameterDescriptionLabel.text = self.parameters[indexPath.row].detail
-            cell?.backgroundColor = ColorTheme.Background.view
-            cell?.imageView?.image = nil
-
-            return cell ?? UITableViewCell()
+            if let keyboardType = self.parameters[indexPath.row].keyboardType {
+                let cell = tableView.dequeueReusableCell(ParameterCell.self, for: indexPath)
+                
+                cell?.selectionStyle = .none
+                cell?.parameterNameLabel.text = self.parameters[indexPath.row].name
+                cell?.parameterValueTextField.keyboardType = keyboardType
+                cell?.parameterDescriptionLabel.text = self.parameters[indexPath.row].detail
+                cell?.backgroundColor = ColorTheme.Background.view
+                
+                return cell ?? UITableViewCell()
+            } else {
+                let cell = tableView.dequeueReusableCell(Value1Cell.self, for: indexPath)
+                
+                cell?.selectionStyle = .none
+                cell?.textLabel?.text = self.parameters[indexPath.row].name
+                cell?.detailTextLabel?.text = self.parameters[indexPath.row].detail
+                cell?.backgroundColor = ColorTheme.Background.view
+                cell?.accessoryType = .disclosureIndicator
+                
+                return cell ?? UITableViewCell()
+            }
         case .results:
             let cell = tableView.dequeueReusableCell(SubtitleCell.self, for: indexPath)
 
@@ -298,7 +312,12 @@ extension ResultTableViewController {
             self.pushOnlinePlaylistViewController(for: indexPath)
             return
         case .broadcasts:
-            self.pushArchivePlaylistViewController(for: indexPath)
+            switch Section(indexPath.section) {
+            case .parameters:
+                self.navigationController?.pushViewController(ChannelsTableViewController(), animated: true)
+            case .results:
+                self.pushArchivePlaylistViewController(for: indexPath)
+            }
             return
         default:
             break
@@ -314,8 +333,7 @@ extension ResultTableViewController {
     
     private func pushOnlinePlaylistViewController(for indexPath: IndexPath) {
         guard let streamId = self.channels[indexPath.row].attributes.streams.first?.id else {
-            let alert = UIAlertController(title: "Ошибка", message: "Отсутсвует поток для воспроизведения")
-            self.present(alert, animated: true)
+            self.showAlert("Отсутсвует поток для воспроизведения")
             return
         }
         
@@ -342,18 +360,24 @@ extension ResultTableViewController {
     }
     
     private func pushArchivePlaylistViewController(for indexPath: IndexPath) {
+        guard let streamId = self.broadcastStreamId else {
+            self.configureStopAnimating()
+            self.showAlert("На задан id потока")
+            return
+        }
+        
         let broadcast = self.broadcasts[indexPath.row]
         
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.activityIndicator.startAnimating()
-        self.apiClient.getArchivePlaylist(for: self.broadcastStreamId, broadcast: broadcast) { [weak self] (result) in
+        self.apiClient.getArchivePlaylist(for: streamId, broadcast: broadcast) { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             switch result {
             case let .success(playlist):
                 let asset: AVURLAsset
                 do {
-                    asset = try LACStream.Archive.urlAsset(for: self.broadcastStreamId, broadcast: broadcast)
+                    asset = try LACStream.Archive.urlAsset(for: streamId, broadcast: broadcast)
                 } catch {
                     self.showAlert(error)
                     return
@@ -378,8 +402,7 @@ extension ResultTableViewController {
                     let alert = UIAlertController(title: "Новая ссессия", message: "Данные получены")
                     self?.present(alert, animated: true)
                 case let .failure(error):
-                    let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
-                    self?.present(alert, animated: true)
+                    self?.showAlert(error.localizedDescription)
                 }
             }
         }
@@ -552,10 +575,22 @@ extension ResultTableViewController {
     }
     
     private func requestBroadcasts() {
+        guard let channelId = self.broadcastChannelId else {
+            self.configureStopAnimating()
+            self.showAlert("Выберите канал")
+            return
+        }
+        
+        guard let timeZone = self.broadcastTimeZone else {
+            self.configureStopAnimating()
+            self.showAlert("Не указан часовой пояс")
+            return
+        }
+        
         let startDate = Date().addingTimeInterval(-3.days)
-        let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
+//        let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
         let dateInterval = LACDateInterval(start: startDate, duration: 7.days, timeZone: timeZone)
-        self.apiClient.requestBroadcasts(channelId: self.broadcastChannelId, dateInterval: dateInterval) { [weak self] (result) in
+        self.apiClient.requestBroadcasts(channelId: channelId, dateInterval: dateInterval) { [weak self] (result) in
             guard let self = self else { return }
             self.configureStopAnimating()
             
@@ -592,12 +627,15 @@ extension ResultTableViewController {
             if let error = jsonAPIError.errors.first {
                 self.results = APIRequest.Results.create(from: error)
                 self.tableView.reloadData()
-                let alert = UIAlertController(title: "Ошибка", message: "Неуспешный ответ состояния HTTP: \(statusCode)")
-                self.present(alert, animated: true)
+                self.showAlert("Неуспешный ответ состояния HTTP: \(statusCode)")
                 return
             }
         }
-        let alert = UIAlertController(title: "Ошибка", message: error.localizedDescription)
+        self.showAlert(error.localizedDescription)
+    }
+    
+    private func showAlert(_ error: String) {
+        let alert = UIAlertController(title: "Ошибка", message: error)
         self.present(alert, animated: true)
     }
 }

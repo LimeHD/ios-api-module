@@ -19,15 +19,26 @@ extension TimeZone {
 
 //MARK: - Support Methods for RFC3339Date
 
-extension TimeZone {
+public extension TimeZone {
     var timeInterval: TimeInterval {
         TimeInterval(self.secondsFromGMT())
     }
     
     init?(rfc3339DateString string: String) {
         if string.count != 25 { return nil }
-        let stringTimeZone = String(string.suffix(5))
-        let sign = string[19] == "+" ? 1 : -1
+        self.init(utcString: string)
+    }
+    
+    init?(utcString string: String) {
+        if string.count < 6 { return nil }
+        let timeZoneWithSign = String(string.suffix(6))
+        let stringTimeZone = String(timeZoneWithSign.suffix(5))
+        let sign: Int
+        switch timeZoneWithSign[0] {
+        case "+": sign = 1
+        case "-": sign = 1
+        default: return nil
+        }
         guard let timeInterval = stringTimeZone.timeIntervalInSeconds else { return nil }
         let seconds = sign * timeInterval
         guard let timeZone = TimeZone(secondsFromGMT: seconds) else { return nil }

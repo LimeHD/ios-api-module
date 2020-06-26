@@ -50,4 +50,27 @@ class TimeZoneTests: XCTestCase {
         let actualTimeZone = try XCTUnwrap(TimeZone(rfc3339DateString: rfc3339Date))
         XCTAssertEqual(actualTimeZone, expectedTimeZone)
     }
+    
+    func test_utcStringInit_emptyStringReturnsNil() {
+        let utcString = ""
+        let timeZone = TimeZone(utcString: utcString)
+        XCTAssertNil(timeZone)
+    }
+    
+    func test_utcStringInit_incorrectTimeZoneReturnsNil() {
+        var utcString = "INVALID TIMEZONE"
+        var timeZone = TimeZone(utcString: utcString)
+        XCTAssertNil(timeZone)
+        
+        utcString = "UTC+20:00"
+        timeZone = TimeZone(utcString: utcString)
+        XCTAssertNil(timeZone)
+    }
+    
+    func test_utcStringInit_createsCorrectValue() throws {
+        let utcString = "UTC+03:00"
+        let expectedTimeZone = TimeZone(secondsFromGMT: 3.hours)
+        let actualTimeZone = try XCTUnwrap(TimeZone(utcString: utcString))
+        XCTAssertEqual(actualTimeZone, expectedTimeZone)
+    }
 }
