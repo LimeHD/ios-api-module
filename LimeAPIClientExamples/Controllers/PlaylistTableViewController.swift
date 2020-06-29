@@ -56,10 +56,18 @@ class PlaylistTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard
             let cell = tableView.cellForRow(at: indexPath),
-            cell.textLabel?.text?.contains("#EXT-X-STREAM-INF") ?? false
+            cell.textLabel?.text?.contains("#EXT-X-STREAM-INF") ?? false,
+            let metadata = cell.textLabel?.text
         else { return }
         
+        let bandwidth = metadata.split(separator: ",")
+            .filter { $0.contains("BANDWIDTH") }.first?
+            .replacingOccurrences(of: "BANDWIDTH=", with: "") ?? ""
+        let bitrate = Double(bandwidth) ?? 0
+        guard bitrate > 0 else { return }
+        
         let playerItem = AVPlayerItem(asset: self.urlAsset)
+        playerItem.preferredPeakBitRate = bitrate
         let player = AVPlayer(playerItem: playerItem)
         let playerViewController = AVPlayerViewController()
         playerViewController.player = player
