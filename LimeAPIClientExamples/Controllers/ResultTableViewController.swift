@@ -310,7 +310,7 @@ extension ResultTableViewController {
         case
         .channels,
         .channelsByGroupId:
-            self.pushOnlinePlaylistViewController(for: indexPath)
+            self.prepareOnlinePlaylistViewController(for: indexPath)
             return
         case .broadcasts:
             switch Section(indexPath.section) {
@@ -332,27 +332,58 @@ extension ResultTableViewController {
         UIApplication.shared.open(url: url)
     }
     
-    private func pushOnlinePlaylistViewController(for indexPath: IndexPath) {
+    private func prepareOnlinePlaylistViewController(for indexPath: IndexPath) {
         guard let streamId = self.channels[indexPath.row].attributes.streams.first?.id else {
             self.showAlert("Отсутсвует поток для воспроизведения")
             return
         }
         
+        do {
+            let playableKey = "playable"
+            let asset = try LACStream.Online.urlAsset(for: streamId)
+            
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            self.activityIndicator.startAnimating()
+            asset.loadValuesAsynchronously(forKeys: [playableKey]) {
+                DispatchQueue.main.async { [weak self] in
+                    self?.configureStopAnimating()
+                    let message: String
+                    var error: NSError? = nil
+                    let status = asset.statusOfValue(forKey: playableKey, error: &error)
+                    switch status {
+                    case .loaded:
+                        print("Sucessfully loaded.")
+                        let channelName = self?.channels[indexPath.row].attributes.name ?? "Канал без имени"
+                        self?.pushOnlinePlaylistViewController(for: streamId, with: asset, channelName: channelName)
+                        return
+                    case .loading:
+                        message = "The property \"isPlayable\" is not fully loaded."
+                    case .failed:
+                        message = error?.localizedDescription ?? "Unknown error"
+                    case .cancelled:
+                        message = "The attempt to load the property \"isPlayable\" was cancelled."
+                    case .unknown:
+                        message = "The property \"isPlayable\" status is unknown."
+                    @unknown default:
+                        fatalError("Unknown loading case for the property \"isPlayable\".")
+                    }
+                    self?.showAlert(message)
+                }
+            }
+        } catch {
+            self.showAlert(error)
+        }
+    }
+    
+    private func pushOnlinePlaylistViewController(for streamId: Int, with asset: AVURLAsset, channelName: String) {
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.activityIndicator.startAnimating()
         self.apiClient.getOnlinePlaylist(for: streamId) { [weak self] (result) in
             self?.configureStopAnimating()
             switch result {
             case let .success(playlist):
-                let asset: AVURLAsset
-                do {
-                    asset = try LACStream.Online.urlAsset(for: streamId)
-                } catch {
-                    self?.showAlert(error)
-                    return
-                }
                 let playlistController = PlaylistTableViewController(playlist: playlist, urlAsset: asset)
-                playlistController.title = self?.channels[indexPath.row].attributes.name ?? "Канал без имени"
+                playlistController.title = channelName
                 self?.navigationController?.pushViewController(playlistController, animated: true)
             case let .failure(error):
                 self?.showAlert(error)
@@ -589,7 +620,6 @@ extension ResultTableViewController {
         }
         
         let startDate = Date().addingTimeInterval(-3.days)
-//        let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
         let dateInterval = LACDateInterval(start: startDate, duration: 7.days, timeZone: timeZone)
         self.apiClient.requestBroadcasts(channelId: channelId, dateInterval: dateInterval) { [weak self] (result) in
             guard let self = self else { return }
