@@ -13,6 +13,7 @@
 
 - [Содержание](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 - [Установка](#%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0)
+- [Сетевые запросы](#%D0%A1%D0%B5%D1%82%D0%B5%D0%B2%D1%8B%D0%B5-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D1%8B)
 - [Кэширование запросов](#%D0%BA%D1%8D%D1%88%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%BE%D0%B2)
 - [Интервал времени ожидания запроса](#%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D0%B0%D0%BB-%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8-%D0%BE%D0%B6%D0%B8%D0%B4%D0%B0%D0%BD%D0%B8%D1%8F-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%B0)
 - [Примеры использования](#%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F)
@@ -40,6 +41,11 @@
 ``` ruby
 pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 ```
+
+## Сетевые запросы
+Сетевые запросы осуществляются с помощью стандартной библиотеки Apple [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) (также см. «[URL Loading System](https://developer.apple.com/documentation/foundation/url_loading_system)»). При инициализации клиента есть возможность задания собственного экзепляра URLSession. По умолчанию используется синглтон [`URLSession.shared`](https://developer.apple.com/documentation/foundation/urlsession/1409000-shared).
+
+Для сетевых запросов используется метод [`dataTask(with:completionHandler:)`](https://developer.apple.com/documentation/foundation/urlsession/1407613-datatask).
 
 ## Кэширование запросов
 Кэширование запросов осуществляется в соответсвии параметром политики кэширования установленным для 
