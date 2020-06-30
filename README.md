@@ -35,17 +35,19 @@
 <!-- /TOC -->
 
 ## Установка
-
 Для установки используется менджер зависимостей [CocoaPods](https://cocoapods.org/). Для интеграции модуля **LimeAPIClient** в проект Xcode добавьте строку в `Podfile`:
 
 ``` ruby
 pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ## Сетевые запросы
 Сетевые запросы осуществляются с помощью стандартной библиотеки Apple [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) (также см. «[URL Loading System](https://developer.apple.com/documentation/foundation/url_loading_system)»). При инициализации клиента есть возможность задания собственного экзепляра URLSession. По умолчанию используется синглтон [`URLSession.shared`](https://developer.apple.com/documentation/foundation/urlsession/1409000-shared).
 
 Для сетевых запросов используется метод [`dataTask(with:completionHandler:)`](https://developer.apple.com/documentation/foundation/urlsession/1407613-datatask).
+
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ## Кэширование запросов
 Кэширование запросов осуществляется в соответсвии параметром политики кэширования установленным для 
@@ -62,8 +64,12 @@ pod 'LimeAPIClient', git: 'https://github.com/LimeHD/ios-api-module.git'
 Размер кэша в соответствии с установленными по умолчанию значениями для [`URLCache.shared`](https://developer.apple.com/documentation/foundation/urlcache/1413377-shared).  
 Для более подробной информации см. документацию Apple: [Accessing Cached Data](https://developer.apple.com/documentation/foundation/url_loading_system/accessing_cached_data).
 
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
+
 ## Интервал времени ожидания запроса
 Для запросов установлен [интервал времени ожидания](https://developer.apple.com/documentation/foundation/nsurlrequest/1418229-timeoutinterval) равный 10 сек.
+
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ## Примеры использования
 Перед использованием необходимо добавить в файл модуль `LimeAPIClient`
@@ -73,6 +79,8 @@ import LimeAPIClient
 Все сетевые запросы осуществляются в одельном потоке (см. официальную документацию Apple по классу `URLSession` в разделе «[Asynchronicity and URL Sessions](https://developer.apple.com/documentation/foundation/urlsession/)»).
 После выполнения запроса ответ передается в главную очередь [`DispatchQueue.main`](https://developer.apple.com/documentation/dispatch/dispatchqueue/1781006-main).
 
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
+
 ### Конфигурирование клиента
 Конфигурирования клиента `LimeAPIClient` осуществлятся один раз до начала использования запросов
 ``` swift
@@ -80,6 +88,7 @@ let language = Locale.preferredLanguages.first ?? "ru-RU"
 let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION, language: language)
 LimeAPIClient.configuration = configuration
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Cоздание новой сессии
 ``` swift
@@ -135,6 +144,7 @@ struct JSONAPIError: Decodable, Equatable {
     }
 }
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Получение баннера, рекомендованного данному устройству и приложению
 Пример запроса
@@ -163,6 +173,7 @@ struct BannerAndDevice.Banner: Decodable {
     let delay: Int
 }
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Снятие (удаление) пометки «нежелательный» с баннера
 Пример запроса
@@ -184,6 +195,7 @@ struct BanBanner: Decodable {
     let result: String
 }
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Пометить баннер как «нежелательный» и больше его не показывать
 Пример запроса
@@ -201,6 +213,8 @@ apiClient.banBanner(bannerId: BANNER_ID) { (result) in
 ```
 В ответ приходит результат выполнения запроса. Тип данных `BanBanner` ([см. выше](#banbanner)).
 
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
+
 ### Получить баннер (информацию о нём)
 Пример запроса
 ``` swift
@@ -216,6 +230,8 @@ apiClient.getBanner(bannerId: BANNER_ID) { (result) in
 }
 ```
 В ответ приходит баннер. Тип данных `BannerAndDevice.Banner` ([см. выше](#banner-and-device-banner)).
+
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Получение списка каналов
 Пример запроса
@@ -252,6 +268,7 @@ struct Channel: Decodable {
     }
 }
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Получение списка каналов по группе id
 > **Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения параметра `defaultChannelGroupId` ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
@@ -269,6 +286,8 @@ apiClient.requestChannelsByGroupId { (result) in
 }
 ```
 В ответ приходит список каналов в виде массива. Тип данных `Channel` ([см. выше](#channel)).
+
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Получение программы передач
 Пример запроса
@@ -304,6 +323,7 @@ struct Broadcast: Decodable {
     }
 }
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Проверка работоспособности сервиса
 Пример запроса
@@ -329,6 +349,7 @@ struct Ping: Decodable {
     let hostname: String
 }
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Получение AVURLAsset на онлайн поток
 > **Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения  общей ссылки на онлайн потоки ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
@@ -367,6 +388,7 @@ self.present(playerViewController, animated: true) {
     playerViewController.player!.play()
 }
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Получение URLRequest на онлайн поток
 > **Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения  общей ссылки на онлайн потоки ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
@@ -396,6 +418,7 @@ do {
     return
 }
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Получение AVURLAsset на поток архива
 > **Внимание!** Перед выполеннием запроса необходимо инициализировать `LimeAPIClient` для задания сервера API.
@@ -428,6 +451,7 @@ self.present(playerViewController, animated: true) {
     playerViewController.player!.play()
 }
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Получение AVURLAsset на поток архива с помощью broadcast
 После получения [программы передач](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87) можно непосредственно использовать полученные данные для получения ссылки для [`AVPlayer`](https://developer.apple.com/documentation/avfoundation/avplayer) на поток архива. Метод возвращает ссылку на поток архива в формате [`AVURLAsset`](https://developer.apple.com/documentation/avfoundation/avurlasset). Описание типа данных `Broadcast` [см. выше](#broadcast).
@@ -456,3 +480,4 @@ self.present(playerViewController, animated: true) {
     playerViewController.player!.play()
 }
 ```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
