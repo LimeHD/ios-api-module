@@ -27,6 +27,7 @@
     - [Получение программы передач](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87)
     - [Проверка работоспособности сервиса](#%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BE%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%B0)
     - [Получение ссылки на онлайн поток](#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8-%D0%BD%D0%B0-%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD-%D0%BF%D0%BE%D1%82%D0%BE%D0%BA)
+    - [Получение URL-запроса на онлайн поток](#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-URL-%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%B0-%D0%BD%D0%B0-%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD-%D0%BF%D0%BE%D1%82%D0%BE%D0%BA)
     - [Получение ссылки на поток архива](#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8-%D0%BD%D0%B0-%D0%BF%D0%BE%D1%82%D0%BE%D0%BA-%D0%B0%D1%80%D1%85%D0%B8%D0%B2%D0%B0)
     - [Получение ссылки на поток архива с помощью broadcast](#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B8-%D0%BD%D0%B0-%D0%BF%D0%BE%D1%82%D0%BE%D0%BA-%D0%B0%D1%80%D1%85%D0%B8%D0%B2%D0%B0-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-broadcast)
 
@@ -247,7 +248,7 @@ struct Channel: Decodable {
 ```
 
 ### Получение списка каналов по группе id
-**Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения параметра `defaultChannelGroupId` ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
+> **Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения параметра `defaultChannelGroupId` ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
 
 Пример запроса
 ``` swift
@@ -324,7 +325,7 @@ struct Ping: Decodable {
 ```
 
 ### Получение ссылки на онлайн поток
-**Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения  общей ссылки на онлайн потоки ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
+> **Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения  общей ссылки на онлайн потоки ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
 
 Получение ссылки для [`AVPlayer`](https://developer.apple.com/documentation/avfoundation/avplayer) на онлайн поток. Возвращает ссылку на онлайн поток в формате [`AVURLAsset`](https://developer.apple.com/documentation/avfoundation/avurlasset).
 
@@ -361,8 +362,37 @@ self.present(playerViewController, animated: true) {
 }
 ```
 
+### Получение URL-запроса на онлайн поток
+> **Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения  общей ссылки на онлайн потоки ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
+
+Получение URL-запроса на онлайн поток [`URLRequest`](https://developer.apple.com/documentation/foundation/urlrequest) для использования в [`WKWebView`](https://developer.apple.com/documentation/webkit/wkwebview).
+
+Пример запроса
+``` swift
+iimport LimeAPIClient
+// Запрос новой сессии для получения ссылки на онлайн-поток
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+apiClient.session { (result) in
+   switch result {
+   case .success(let session):
+       print(session)
+   case .failure(let error):
+       print(error)
+   }
+}
+
+let streamId = 44
+let request: URLRequest
+do {
+    request = try LACStream.Online.request(for: streamId)
+} catch {
+    print(error)
+    return
+}
+```
+
 ### Получение ссылки на поток архива
-**Внимание!** Перед выполеннием запроса необходимо инициализировать `LimeAPIClient` для задания сервера API.
+> **Внимание!** Перед выполеннием запроса необходимо инициализировать `LimeAPIClient` для задания сервера API.
 
 Получение ссылки для [`AVPlayer`](https://developer.apple.com/documentation/avfoundation/avplayer) на поток архива. Возвращает ссылку на поток архива в формате [`AVURLAsset`](https://developer.apple.com/documentation/avfoundation/avurlasset).
 

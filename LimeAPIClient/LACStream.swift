@@ -116,6 +116,43 @@ public extension LACStream.Online {
         }
         return LACStream.urlAsset(url)
     }
+    
+    /// Создание URL-запроса на онлайн поток для [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview).
+    /// - Parameter streamId: id онлайн потока
+    /// - Throws: Возращает ошибку в случае неверной ссылки на поток (не была запрошена новая сессия)
+    /// - Returns: Возвращает URL-запрос на онлайн поток в формате [URLRequest](https://developer.apple.com/documentation/foundation/urlrequest)
+    ///
+    /// Перед использованием необходимо сделать запрос новой сессии для получения ссылки на онлайн поток.
+    /// Сессия запрашивается один раз за все время запуска приложения.
+    ///
+    /// Пример использования:
+    /// ```
+    /// import LimeAPIClient
+    ///
+    /// // Запрос новой сессии для получения ссылки на онлайн-поток
+    /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+    /// apiClient.session { (result) in
+    ///    switch result {
+    ///    case .success(let session):
+    ///        print(session)
+    ///    case .failure(let error):
+    ///        print(error)
+    ///    }
+    /// }
+    ///
+    /// let streamId = 44
+    /// let request: URLRequest
+    /// do {
+    ///     request = try LACStream.Online.request(for: streamId)
+    /// } catch {
+    ///     print(error)
+    ///     return
+    /// }
+    
+    static func request(for streamId: Int) throws -> URLRequest {
+        let path = try LACStream.Online.endpoint(for: streamId)
+        return try URLRequest(path: path)
+    }
 }
 
 public extension LACStream.Archive {

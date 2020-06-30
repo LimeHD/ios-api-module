@@ -10,14 +10,43 @@ import XCTest
 @testable import LimeAPIClient
 
 class LACStreamTests: XCTestCase {
+    let streamId = 44
+    
+    func test_onlineEndpoint_runBeforeSession_throws() throws {
+        let expectedError = LACStream.Error.sessionError
+        
+        LimeAPIClient.configuration = nil
+        XCTAssertThrowsError(try LACStream.Online.endpoint(for: self.streamId))
+        
+        do {
+            _ = try LACStream.Online.endpoint(for: self.streamId)
+        } catch {
+            let actualError = try XCTUnwrap(error as? LACStream.Error)
+            XCTAssertEqual(actualError, expectedError)
+            XCTAssertNotNil(actualError.localizedDescription)
+        }
+    }
+    
+    func test_onlineEndpoint_returnsCorrectValue() throws {
+        let expectedPath = "https://api.iptv2021.com/v1/streams/\(self.streamId)/redirect"
+        
+        try self.runSession(with: SessionExample.correct)
+        
+        XCTAssertNoThrow(try LACStream.Online.endpoint(for: self.streamId))
+        
+        let actualPath = try LACStream.Online.endpoint(for: self.streamId)
+        
+        XCTAssertEqual(expectedPath, actualPath)
+    }
+    
     func test_onlineUrlAsset_runBeforeSession_throws() throws {
         let expectedError = LACStream.Error.sessionError
         
         LimeAPIClient.configuration = nil
-        XCTAssertThrowsError(try LACStream.Online.endpoint(for: 44))
+        XCTAssertThrowsError(try LACStream.Online.urlAsset(for: self.streamId))
         
         do {
-            _ = try LACStream.Online.endpoint(for: 44)
+            _ = try LACStream.Online.urlAsset(for: self.streamId)
         } catch {
             let actualError = try XCTUnwrap(error as? LACStream.Error)
             XCTAssertEqual(actualError, expectedError)
@@ -31,11 +60,11 @@ class LACStreamTests: XCTestCase {
         
         try self.runSession(with: SessionExample.failedEndpoint(endpointPath))
         
-        XCTAssertNoThrow(try LACStream.Online.endpoint(for: 44))
-        XCTAssertThrowsError(try LACStream.Online.urlAsset(for: 44))
+        XCTAssertNoThrow(try LACStream.Online.endpoint(for: self.streamId))
+        XCTAssertThrowsError(try LACStream.Online.urlAsset(for: self.streamId))
         
         do {
-            _ = try LACStream.Online.urlAsset(for: 44)
+            _ = try LACStream.Online.urlAsset(for: self.streamId)
         } catch {
             let actualError = try XCTUnwrap(error as? LACStream.Error)
             XCTAssertEqual(actualError, expectedError)
@@ -61,17 +90,43 @@ class LACStreamTests: XCTestCase {
     }
     
     func test_onlineUrlAsset_returnsCorrectValue() throws {
-        let streamId = 44
         try self.runSession(with: SessionExample.correct)
         
-        XCTAssertNoThrow(try LACStream.Online.endpoint(for: streamId))
-        XCTAssertNoThrow(try LACStream.Online.urlAsset(for: streamId))
+        XCTAssertNoThrow(try LACStream.Online.endpoint(for: self.streamId))
+        XCTAssertNoThrow(try LACStream.Online.urlAsset(for: self.streamId))
         
-        let asset = try LACStream.Online.urlAsset(for: streamId)
-        let path = "https://api.iptv2021.com/v1/streams/\(streamId)/redirect"
+        let asset = try LACStream.Online.urlAsset(for: self.streamId)
+        let path = "https://api.iptv2021.com/v1/streams/\(self.streamId)/redirect"
         let url = try XCTUnwrap(URL(string: path))
         
         XCTAssertEqual(asset.url, url)
+    }
+    
+    func test_onlineRequest_runBeforeSession_throws() throws {
+        let expectedError = LACStream.Error.sessionError
+        
+        LimeAPIClient.configuration = nil
+        XCTAssertThrowsError(try LACStream.Online.request(for: 44))
+        
+        do {
+            _ = try LACStream.Online.request(for: 44)
+        } catch {
+            let actualError = try XCTUnwrap(error as? LACStream.Error)
+            XCTAssertEqual(actualError, expectedError)
+            XCTAssertNotNil(actualError.localizedDescription)
+        }
+    }
+    
+    func test_onlineRequest_returnsCorrectRequest() throws {
+        try self.runSession(with: SessionExample.correct)
+        let path = "https://api.iptv2021.com/v1/streams/\(self.streamId)/redirect"
+        let expectedRequest = try URLRequest(path: path)
+        
+        XCTAssertNoThrow(try LACStream.Online.request(for: self.streamId))
+        
+        let actualRequest = try LACStream.Online.request(for: self.streamId)
+        
+        XCTAssertEqual(actualRequest, expectedRequest)
     }
     
     func test_archiveUrlAsset_runBeforeAPIClientInit_throws() throws {
