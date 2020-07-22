@@ -90,9 +90,9 @@ class EndPointTests: XCTestCase {
     }
     
     func test_findBanner_creatsCorrectEndPoint() {
-        self.sut = EndPoint.Factory.Banner.find()
+        self.sut = EndPoint.Banner.find()
         
-        XCTAssertEqual(self.sut.path, "v1/banners/recommended/\(EndPoint.Factory.Banner.Request.find.rawValue)")
+        XCTAssertEqual(self.sut.path, "v1/banners/recommended/\(EndPoint.Banner.Request.find.rawValue)")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.json)
         XCTAssertEqual(self.sut.parameters, self.bannerParameters)
     }
@@ -107,15 +107,15 @@ class EndPointTests: XCTestCase {
     }
     
     func test_nextBanner_creatsCorrectEndPoint() {
-        self.sut = EndPoint.Factory.Banner.next()
+        self.sut = EndPoint.Banner.next()
         
-        XCTAssertEqual(self.sut.path, "v1/banners/recommended/\(EndPoint.Factory.Banner.Request.next.rawValue)")
+        XCTAssertEqual(self.sut.path, "v1/banners/recommended/\(EndPoint.Banner.Request.next.rawValue)")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.json)
         XCTAssertEqual(self.sut.parameters, self.bannerParameters)
     }
     
     func test_deleteBannerBan_creatsCorrectEndPoint() {
-        self.sut = EndPoint.Factory.Banner.deleteBan(bannerId)
+        self.sut = EndPoint.Banner.deleteBan(bannerId)
         let parameters = EndPoint.Parameters(url: ["device_id" : Device.id])
         
         XCTAssertEqual(self.sut.path, "v1/banners/\(self.bannerId)/ban")
@@ -125,7 +125,7 @@ class EndPointTests: XCTestCase {
     }
     
     func test_banBanner_creatsCorrectEndPoint() {
-        self.sut = EndPoint.Factory.Banner.ban(bannerId)
+        self.sut = EndPoint.Banner.ban(bannerId)
         let parameters = EndPoint.Parameters(body: ["device_id" : Device.id])
         
         XCTAssertEqual(self.sut.path, "v1/banners/\(self.bannerId)/ban")
@@ -135,7 +135,7 @@ class EndPointTests: XCTestCase {
     }
     
     func test_bannerInfo_creatsCorrectEndPoint() {
-        self.sut = EndPoint.Factory.Banner.info(bannerId)
+        self.sut = EndPoint.Banner.info(bannerId)
         let parameters = EndPoint.Parameters(url: ["device_id" : Device.id])
         
         XCTAssertEqual(self.sut.path, "v1/banners/\(self.bannerId)")

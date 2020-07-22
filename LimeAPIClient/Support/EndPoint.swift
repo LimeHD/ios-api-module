@@ -46,13 +46,10 @@ struct EndPoint {
     }
     
     struct Factory { }
+    struct Banner { }
 }
 
 extension EndPoint.Factory {
-    struct Banner {
-        private init() { }
-    }
-    
     struct Channels {
         private init() { }
     }
@@ -119,21 +116,21 @@ extension EndPoint.Factory {
 
 // MARK: - Banner Factory
 
-extension EndPoint.Factory.Banner {
+extension EndPoint.Banner {
     enum Request: String {
         case find
         case next
     }
     
     static func find() -> EndPoint {
-        return EndPoint.Factory.Banner.request(.find)
+        return EndPoint.Banner.request(.find)
     }
     
     static func next() -> EndPoint {
-        return EndPoint.Factory.Banner.request(.next)
+        return EndPoint.Banner.request(.next)
     }
     
-    private static func request(_ request: EndPoint.Factory.Banner.Request) -> EndPoint {
+    private static func request(_ request: EndPoint.Banner.Request) -> EndPoint {
         let urlParameters = [
             "device_id" : Device.id,
             "app_id" : EndPoint.appId,

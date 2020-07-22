@@ -253,7 +253,7 @@ public extension LimeAPIClient {
     /// }
     /// ```
     func findBanner(completion: @escaping ApiResult<BannerAndDevice>) {
-        self.request(BannerAndDevice.self, endPoint: EndPoint.Factory.Banner.find()) { (result) in
+        self.request(BannerAndDevice.self, endPoint: EndPoint.Banner.find()) { (result) in
             completion(result)
         }
     }
@@ -275,7 +275,7 @@ public extension LimeAPIClient {
     /// }
     /// ```
     func nextBanner(completion: @escaping ApiResult<BannerAndDevice.Banner>) {
-        self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Factory.Banner.next()) { (result) in
+        self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Banner.next()) { (result) in
             completion(result)
         }
     }
@@ -298,7 +298,7 @@ public extension LimeAPIClient {
     /// }
     /// ```
     func deleteBanFromBanner(bannerId: Int, completion: @escaping ApiResult<BanBanner>) {
-        let endPoint = EndPoint.Factory.Banner.deleteBan(bannerId)
+        let endPoint = EndPoint.Banner.deleteBan(bannerId)
         self.handleBanBannerRequest(endPoint: endPoint, completion: completion)
     }
     
@@ -320,7 +320,7 @@ public extension LimeAPIClient {
     /// }
     /// ```
     func banBanner(bannerId: Int, completion: @escaping ApiResult<BanBanner>) {
-        let endPoint = EndPoint.Factory.Banner.ban(bannerId)
+        let endPoint = EndPoint.Banner.ban(bannerId)
         self.handleBanBannerRequest(endPoint: endPoint, completion: completion)
     }
     
@@ -342,7 +342,7 @@ public extension LimeAPIClient {
     /// }
     /// ```
     func getBanner(bannerId: Int, completion: @escaping ApiResult<BannerAndDevice.Banner>) {
-        self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Factory.Banner.info(bannerId)) { (result) in
+        self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Banner.info(bannerId)) { (result) in
             completion(result)
         }
     }
