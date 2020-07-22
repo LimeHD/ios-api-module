@@ -42,11 +42,24 @@ class EndPointTests: XCTestCase {
     
     func test_channelsByGroupId_creatsCorrectEndPoint() {
         let defaultChannelGroupId = "105"
-        self.sut = EndPoint.Channels.byGroupId(defaultChannelGroupId)
+        let cacheKey = "test"
+        let timeZone = TimeZone(secondsFromGMT: 3.hours)
+        let timeZonePicker = LACTimeZonePicker.previous
+        self.sut = EndPoint.Channels.byGroupId(defaultChannelGroupId, cacheKey: cacheKey, timeZone: timeZone, timeZonePicker: timeZonePicker)
+        let urlParameters = [
+            "locale" : EndPoint.languageDesignator,
+            "cache_key" : cacheKey,
+            "time_zone" : timeZone?.utcString ?? "",
+            "time_zone_picker" : timeZonePicker.rawValue
+        ]
+        let parameters = EndPoint.Parameters(url: urlParameters)
         
         XCTAssertEqual(self.sut.path, "v1/channels/by_group/\(defaultChannelGroupId)")
         XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.jsonAPI)
-        XCTAssertEqual(self.sut.parameters.url["locale"], LimeAPIClient.configuration?.languageDesignator ?? "")
+        let locale = LimeAPIClient.configuration?.languageDesignator
+        XCTAssertFalse(locale?.isEmpty ?? true)
+        XCTAssertFalse(timeZone?.utcString.isEmpty ?? true)
+        XCTAssertEqual(self.sut.parameters, parameters)
     }
     
     func test_broadcasts_creatsCorrectEndPoint() {

@@ -59,6 +59,7 @@
 		4E61C65D24A602FE00A1BF58 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E61C65C24A602FE00A1BF58 /* UINavigationController.swift */; };
 		4E68A3FD246BDA6000D332BD /* LimeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */; };
 		4E68A421246C27CF00D332BD /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68A420246C27CF00D332BD /* HTTPClient.swift */; };
+		4E6D74B624C81930000C261D /* LACTimeZonePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D74B524C81930000C261D /* LACTimeZonePicker.swift */; };
 		4E6D91C4246D111900BB7C69 /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */; };
 		4E6D91C6246D162700BB7C69 /* HTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C5246D162700BB7C69 /* HTTPClientTests.swift */; };
 		4E6D91C8246D772D00BB7C69 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91C7246D772D00BB7C69 /* EndPoint.swift */; };
@@ -184,6 +185,7 @@
 		4E61C65C24A602FE00A1BF58 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		4E68A3FC246BDA6000D332BD /* LimeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimeAPIClient.swift; sourceTree = "<group>"; };
 		4E68A420246C27CF00D332BD /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		4E6D74B524C81930000C261D /* LACTimeZonePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACTimeZonePicker.swift; sourceTree = "<group>"; };
 		4E6D91C3246D111900BB7C69 /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
 		4E6D91C5246D162700BB7C69 /* HTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTests.swift; sourceTree = "<group>"; };
 		4E6D91C7246D772D00BB7C69 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				4E54C5F62477E54500AAF223 /* LACConfiguration.swift */,
 				4E5014E3247316AC00A8DA1F /* LACDateInterval.swift */,
 				4E81FEE7249A52860061F7FB /* LACStream.swift */,
+				4E6D74B524C81930000C261D /* LACTimeZonePicker.swift */,
 			);
 			path = LimeAPIClient;
 			sourceTree = "<group>";
@@ -642,6 +645,7 @@
 				4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */,
 				4E54C5F72477E54500AAF223 /* LACConfiguration.swift in Sources */,
 				4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */,
+				4E6D74B624C81930000C261D /* LACTimeZonePicker.swift in Sources */,
 				4E5643682472CB7D00CDD18F /* CharacterSet.swift in Sources */,
 				4E56436C2472D4EA00CDD18F /* Date.swift in Sources */,
 				4E75B1BD246E67AD0061E143 /* LACApp.swift in Sources */,
