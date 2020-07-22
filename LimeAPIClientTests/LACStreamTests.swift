@@ -106,10 +106,10 @@ class LACStreamTests: XCTestCase {
         let expectedError = LACStream.Error.sessionError
         
         LimeAPIClient.configuration = nil
-        XCTAssertThrowsError(try LACStream.Online.request(for: 44))
+        XCTAssertThrowsError(try LACStream.Online.request(for: self.streamId))
         
         do {
-            _ = try LACStream.Online.request(for: 44)
+            _ = try LACStream.Online.request(for: self.streamId)
         } catch {
             let actualError = try XCTUnwrap(error as? LACStream.Error)
             XCTAssertEqual(actualError, expectedError)
