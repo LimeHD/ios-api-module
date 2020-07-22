@@ -32,11 +32,11 @@ extension URLRequest {
 
 //MARK: LimeAPIClientHandlers
 
-enum URLRequestError: Error, LocalizedError, Equatable {
+public enum URLRequestError: Error, LocalizedError, Equatable {
     case emptyUrl
     case invalidUrl(_ url: String)
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .emptyUrl:
             let key = "Отсутствует url"

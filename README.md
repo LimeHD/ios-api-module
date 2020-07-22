@@ -429,7 +429,7 @@ do {
 [К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Получение AVURLAsset на поток архива
-> **Внимание!** Перед выполеннием запроса необходимо инициализировать `LimeAPIClient` для задания сервера API.
+> **Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения  общей ссылки на архивные потоки ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
 
 Получение ссылки для [`AVPlayer`](https://developer.apple.com/documentation/avfoundation/avplayer) на поток архива. Возвращает ссылку на поток архива в формате [`AVURLAsset`](https://developer.apple.com/documentation/avfoundation/avurlasset).
 
@@ -438,8 +438,16 @@ do {
 import LimeAPIClient
 import AVKit
 
-// Инициализация LimeAPIClient для задания адреса сервера API
+// Запрос новой сессии для получения ссылки на архивный поток
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+apiClient.session { (result) in
+   	switch result {
+    case .success(let session):
+       	print(session)
+   	case .failure(let error):
+       	print(error)
+   	}
+}
 
 let streamId = 44
 let start = 1592568300
@@ -462,6 +470,9 @@ self.present(playerViewController, animated: true) {
 [К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
 
 ### Получение AVURLAsset на поток архива с помощью broadcast
+
+> **Внимание!** Перед выполеннием запроса необходимо создать успешную новую сессию для получения  общей ссылки на архивные потоки ([см. выше](#c%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BD%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B5%D1%81%D1%81%D0%B8%D0%B8)).
+
 После получения [программы передач](#%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B-%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D1%87) можно непосредственно использовать полученные данные для получения ссылки для [`AVPlayer`](https://developer.apple.com/documentation/avfoundation/avplayer) на поток архива. Метод возвращает ссылку на поток архива в формате [`AVURLAsset`](https://developer.apple.com/documentation/avfoundation/avurlasset). Описание типа данных `Broadcast` [см. выше](#broadcast).
 
 Пример запроса
@@ -469,8 +480,16 @@ self.present(playerViewController, animated: true) {
 import LimeAPIClient
 import AVKit
 
-// Инициализация LimeAPIClient для задания адреса сервера API
+// Запрос новой сессии для получения ссылки на архивный поток
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+apiClient.session { (result) in
+   	switch result {
+    case .success(let session):
+       	print(session)
+   	case .failure(let error):
+       	print(error)
+   	}
+}
 
 let streamId = 44
 let asset: AVURLAsset

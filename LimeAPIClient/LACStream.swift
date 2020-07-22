@@ -12,7 +12,6 @@ public struct LACStream {
     public enum Error: Swift.Error, Equatable {
         case sessionError
         case invalidUrl(_ url: String)
-        case emptyBaseUrl
         case emptyArchiveUrl
         case emptyBroadcastStartAt
         case emptyBroadcastDuration
@@ -40,9 +39,6 @@ extension LACStream.Error: LocalizedError {
         case .invalidUrl(let url):
             let key = "Недопустимое значение ссылки на поток: \(url)"
             return NSLocalizedString(key, comment: "Недопустимое значение ссылки на поток")
-        case .emptyBaseUrl:
-            let key = "Отсутсвует ссылка на сервер API (baseUrl)"
-            return NSLocalizedString(key, comment: "Отсутсвует ссылка на сервер API")
         case .emptyArchiveUrl:
             let key = "Сбой при создании ссылки на поток архива"
             return NSLocalizedString(key, comment: key)
@@ -182,8 +178,16 @@ public extension LACStream.Archive {
     /// import LimeAPIClient
     /// import AVKit
     ///
-    /// // Инициализация LimeAPIClient для задания адреса сервера API
+    /// // Запрос новой сессии для получения ссылки на архивный поток
     /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+    /// apiClient.session { (result) in
+    ///    switch result {
+    ///    case .success(let session):
+    ///        print(session)
+    ///    case .failure(let error):
+    ///        print(error)
+    ///    }
+    /// }
     ///
     /// let streamId = 44
     /// let start = 1592568300
@@ -205,11 +209,10 @@ public extension LACStream.Archive {
     /// }
     /// ```
     static func urlAsset(for streamId: Int, start: Int, duration: Int) throws -> AVURLAsset {
-        if LACStream.baseUrl.isEmpty {
-            throw LACStream.Error.emptyBaseUrl
-        }
+        let streamPath = try LACStream.Archive.endpoint(for: streamId)
         let endPoint = EndPoint.Factory.archiveStream(for: streamId, start: start, duration: duration)
-        guard let url = try URLRequest(baseUrl: LACStream.baseUrl, endPoint: endPoint).url else {
+        let request = try URLRequest(path: streamPath, endPoint: endPoint)
+        guard let url = request.url else {
             throw LACStream.Error.emptyArchiveUrl
         }
         return LACStream.urlAsset(url)
@@ -229,8 +232,16 @@ public extension LACStream.Archive {
     /// import LimeAPIClient
     /// import AVKit
     ///
-    /// // Инициализация LimeAPIClient для задания адреса сервера API
+    /// // Запрос новой сессии для получения ссылки на архивный поток
     /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+    /// apiClient.session { (result) in
+    ///    switch result {
+    ///    case .success(let session):
+    ///        print(session)
+    ///    case .failure(let error):
+    ///        print(error)
+    ///    }
+    /// }
     ///
     /// let streamId = 44
     /// let asset: AVURLAsset

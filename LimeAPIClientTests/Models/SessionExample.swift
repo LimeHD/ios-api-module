@@ -40,7 +40,7 @@ struct SessionExample {
             "session_id": "a6a718c37c13344da71cbc8edbf1ef00fb68620a",
             "current_time": "2020-06-03T14:13:09+03:00",
             "stream_endpoint": \"\(endpoint)\",
-            "archive_endpoint": "https://api.iptv2021.com/v1/streams/${stream_id}/archive_redirect",
+            "archive_endpoint": \"\(endpoint)\",
             "default_channel_group_id": 1,
             "settings": {
                 "is_ad_start": false,

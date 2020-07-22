@@ -166,10 +166,10 @@ class LACStreamTests: XCTestCase {
     
     //MARK: - Archive: UrlAsset
     
-    func test_archiveUrlAsset_runBeforeAPIClientInit_throws() throws {
-        let expectedError = LACStream.Error.emptyBaseUrl
+    func test_archiveUrlAsset_runBeforeSession_throws() throws {
+        let expectedError = LACStream.Error.sessionError
         
-        LACStream.baseUrl = ""
+        LimeAPIClient.configuration = nil
         XCTAssertThrowsError(try LACStream.Archive.urlAsset(for: 1, start: 10, duration: 100))
         
         do {
@@ -181,8 +181,26 @@ class LACStreamTests: XCTestCase {
         }
     }
     
+    func test_archiveUrlAsset_invalidUrl_throws() throws {
+        let endpointPath = "INVALID URL"
+        let expectedError = URLRequestError.invalidUrl(endpointPath)
+        
+        try self.runSession(with: SessionExample.failedEndpoint(endpointPath))
+        
+        XCTAssertNoThrow(try LACStream.Archive.endpoint(for: self.streamId))
+        XCTAssertThrowsError(try LACStream.Archive.urlAsset(for: 1, start: 10, duration: 100))
+        
+        do {
+            _ = try LACStream.Archive.urlAsset(for: 1, start: 10, duration: 100)
+        } catch {
+            let actualError = try XCTUnwrap(error as? URLRequestError)
+            XCTAssertEqual(actualError, expectedError)
+            XCTAssertNotNil(actualError.localizedDescription)
+        }
+    }
+    
     func test_archiveUrlAsset_returnsCorrectValue() throws {
-        _ = LimeAPIClient(baseUrl: "https://limehd.tv/")
+        try self.runSession(with: SessionExample.correct)
         
         let streamId = 1
         let start = 10
@@ -190,8 +208,10 @@ class LACStreamTests: XCTestCase {
         XCTAssertNoThrow(try LACStream.Archive.urlAsset(for: streamId, start: start, duration: duration))
         
         let asset = try LACStream.Archive.urlAsset(for: streamId, start: start, duration: duration)
+        let streamPath = try LACStream.Archive.endpoint(for: streamId)
         let endPoint = EndPoint.Factory.archiveStream(for: streamId, start: start, duration: duration)
-        let url = try XCTUnwrap(try URLRequest(baseUrl: LACStream.baseUrl, endPoint: endPoint).url)
+        let request = try URLRequest(path: streamPath, endPoint: endPoint)
+        let url = try XCTUnwrap(request.url)
 
         XCTAssertEqual(asset.url.baseURL, url.baseURL)
         XCTAssertEqual(asset.url.queryDictionary, url.queryDictionary)
@@ -202,7 +222,7 @@ class LACStreamTests: XCTestCase {
     func test_archiveUrlAssetFromBroadcast_emptyStartAt_throws() throws {
         let expectedError = LACStream.Error.emptyBroadcastStartAt
         
-        _ = LimeAPIClient(baseUrl: "https://limehd.tv/")
+        try self.runSession(with: SessionExample.correct)
         
         let broadcast = self.getBroadcast()
         
@@ -227,7 +247,7 @@ class LACStreamTests: XCTestCase {
     func test_archiveUrlAssetFromBroadcast_emptyDuration_throws() throws {
         let expectedError = LACStream.Error.emptyBroadcastDuration
         
-        _ = LimeAPIClient(baseUrl: "https://limehd.tv/")
+        try self.runSession(with: SessionExample.correct)
         
         let broadcast = self.getBroadcast(startAt: "2020-06-02T00:00:00+03:00")
         
@@ -243,7 +263,7 @@ class LACStreamTests: XCTestCase {
     }
     
     func test_archiveUrlAssetFromBroadcast_returnsCorrectValue() throws {
-        _ = LimeAPIClient(baseUrl: "https://limehd.tv/")
+        try self.runSession(with: SessionExample.correct)
         
         let broadcast = self.getBroadcast(startAt: "2020-06-02T00:00:00+03:00", finishAt: "2020-06-02T15:00:00+03:00")
         XCTAssertNoThrow(try LACStream.Archive.urlAsset(for: 1, broadcast: broadcast))
@@ -252,7 +272,9 @@ class LACStreamTests: XCTestCase {
         let start = try XCTUnwrap(broadcast.startAtUnix)
         let duration = try XCTUnwrap(broadcast.duration)
         let endPoint = EndPoint.Factory.archiveStream(for: 1, start: start, duration: duration)
-        let url = try XCTUnwrap(try URLRequest(baseUrl: LACStream.baseUrl, endPoint: endPoint).url)
+        let streamPath = try LACStream.Archive.endpoint(for: streamId)
+        let request = try URLRequest(path: streamPath, endPoint: endPoint)
+        let url = try XCTUnwrap(request.url)
 
         XCTAssertEqual(asset.url.baseURL, url.baseURL)
         XCTAssertEqual(asset.url.queryDictionary, url.queryDictionary)
