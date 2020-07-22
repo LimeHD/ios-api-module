@@ -104,14 +104,15 @@ apiClient.session { (result) in
 ```
 При успешном запросе в ответ приходит тип данных `Session`:
 ``` swift
-struct Session: Decodable {
+struct Session: Decodable, Equatable {
     let sessionId: String
     let currentTime: String
     let streamEndpoint: String
+  	let archiveEndpoint: String
     let defaultChannelGroupId: Int
     let settings: Settings
     
-    struct Settings: Decodable {
+    struct Settings: Decodable, Equatable {
         let isAdStart: Bool
         let isAdFirstStart: Bool
         let isAdOnlStart: Bool
@@ -122,6 +123,10 @@ struct Session: Decodable {
         let isAdArhFullOut: Bool
         let isAdArhPauseOut: Bool
         let adMinTimeout: Int
+    }
+  	
+  	struct Meta: Decodable, Equatable {
+        let policyId: Int
     }
 }
 ```

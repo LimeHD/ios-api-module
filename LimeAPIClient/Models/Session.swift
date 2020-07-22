@@ -12,8 +12,10 @@ public struct Session: Decodable, Equatable {
     public let sessionId: String
     public let currentTime: String
     public let streamEndpoint: String
+    public let archiveEndpoint: String
     public let defaultChannelGroupId: Int
     public let settings: Settings
+    public let meta: Meta
     
     public struct Settings: Decodable, Equatable {
         public let isAdStart: Bool
@@ -26,5 +28,9 @@ public struct Session: Decodable, Equatable {
         public let isAdArhFullOut: Bool
         public let isAdArhPauseOut: Bool
         public let adMinTimeout: Int
+    }
+    
+    public struct Meta: Decodable, Equatable {
+        public let policyId: Int
     }
 }

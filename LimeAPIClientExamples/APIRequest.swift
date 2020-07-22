@@ -82,6 +82,7 @@ extension APIRequest.Results {
             APIRequest.Result(title: "session id", detail: session.sessionId),
             APIRequest.Result(title: "current time", detail: session.currentTime),
             APIRequest.Result(title: "stream endpoint", detail: session.streamEndpoint),
+            APIRequest.Result(title: "archive endpoint", detail: session.archiveEndpoint),
             APIRequest.Result(title: "default channel group id", detail: session.defaultChannelGroupId.string),
             APIRequest.Result(title: "is ad start: \(settings.isAdStart)", detail: "Показывать рекламу при старте приложения"),
             APIRequest.Result(title: "is ad first start: \(settings.isAdFirstStart)",
@@ -101,7 +102,8 @@ extension APIRequest.Results {
             APIRequest.Result(title: "is ad arh pause out: \(settings.isAdArhPauseOut)",
                 detail: "Показывать рекламу при выходе из паузы при трансляции архива"),
             APIRequest.Result(title: "ad min timeout: \(settings.adMinTimeout)",
-                detail: "Следующаяя реклама покажется не раньше чем через это количество секунд")
+                detail: "Следующаяя реклама покажется не раньше чем через это количество секунд"),
+            APIRequest.Result(title: "policy id", detail: session.meta.policyId.string)
         ]
     }
     
