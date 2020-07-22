@@ -441,12 +441,12 @@ import AVKit
 // Запрос новой сессии для получения ссылки на архивный поток
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.session { (result) in
-   	switch result {
+    switch result {
     case .success(let session):
-       	print(session)
-   	case .failure(let error):
-       	print(error)
-   	}
+        print(session)
+    case .failure(let error):
+        print(error)
+    }
 }
 
 let streamId = 44
@@ -483,12 +483,12 @@ import AVKit
 // Запрос новой сессии для получения ссылки на архивный поток
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.session { (result) in
-   	switch result {
+    switch result {
     case .success(let session):
-       	print(session)
-   	case .failure(let error):
-       	print(error)
-   	}
+        print(session)
+    case .failure(let error):
+        print(error)
+    }
 }
 
 let streamId = 44
