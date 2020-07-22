@@ -135,7 +135,36 @@ class LACStreamTests: XCTestCase {
         XCTAssertEqual(actualRequest, expectedRequest)
     }
     
-    //MARK: - Archive
+    //MARK: - Archive: Endpoint
+    
+    func test_archiveEndpoint_runBeforeSession_throws() throws {
+        let expectedError = LACStream.Error.sessionError
+        
+        LimeAPIClient.configuration = nil
+        XCTAssertThrowsError(try LACStream.Archive.endpoint(for: self.streamId))
+        
+        do {
+            _ = try LACStream.Archive.endpoint(for: self.streamId)
+        } catch {
+            let actualError = try XCTUnwrap(error as? LACStream.Error)
+            XCTAssertEqual(actualError, expectedError)
+            XCTAssertNotNil(actualError.localizedDescription)
+        }
+    }
+    
+    func test_archiveEndpoint_returnsCorrectValue() throws {
+        let expectedPath = "https://api.iptv2021.com/v1/streams/\(self.streamId)/archive_redirect"
+        
+        try self.runSession(with: SessionExample.correct)
+        
+        XCTAssertNoThrow(try LACStream.Archive.endpoint(for: self.streamId))
+        
+        let actualPath = try LACStream.Archive.endpoint(for: self.streamId)
+        
+        XCTAssertEqual(expectedPath, actualPath)
+    }
+    
+    //MARK: - Archive: UrlAsset
     
     func test_archiveUrlAsset_runBeforeAPIClientInit_throws() throws {
         let expectedError = LACStream.Error.emptyBaseUrl

@@ -156,6 +156,17 @@ public extension LACStream.Online {
 }
 
 public extension LACStream.Archive {
+    private static var endpoint: String {
+        LimeAPIClient.configuration?.archiveEndpoint.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    }
+    static internal func endpoint(for streamId: Int) throws -> String {
+        let path = LACStream.Archive.endpoint
+        if path.isEmpty {
+            throw LACStream.Error.sessionError
+        }
+        return path.replacingOccurrences(of: "${stream_id}", with: streamId.string)
+    }
+    
     /// Получение ссылки для [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) на поток архива
     /// - Parameters:
     ///   - streamId: id потока на архив

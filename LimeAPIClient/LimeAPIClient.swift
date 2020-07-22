@@ -104,6 +104,7 @@ public final class LimeAPIClient {
             case .success(let session):
                 LimeAPIClient.configuration?.sessionId = session.sessionId
                 LimeAPIClient.configuration?.streamEndpoint = session.streamEndpoint
+                LimeAPIClient.configuration?.archiveEndpoint = session.archiveEndpoint
                 LimeAPIClient.configuration?.defaultChannelGroupId = session.defaultChannelGroupId.string
                 completion(.success(session))
             case .failure(let error):
