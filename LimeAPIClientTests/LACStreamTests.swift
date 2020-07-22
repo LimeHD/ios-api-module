@@ -12,6 +12,8 @@ import XCTest
 class LACStreamTests: XCTestCase {
     let streamId = 44
     
+    //MARK: - Online: Endpoint
+    
     func test_onlineEndpoint_runBeforeSession_throws() throws {
         let expectedError = LACStream.Error.sessionError
         
@@ -38,6 +40,8 @@ class LACStreamTests: XCTestCase {
         
         XCTAssertEqual(expectedPath, actualPath)
     }
+    
+    //MARK: - Online: UrlAsset
     
     func test_onlineUrlAsset_runBeforeSession_throws() throws {
         let expectedError = LACStream.Error.sessionError
@@ -102,6 +106,8 @@ class LACStreamTests: XCTestCase {
         XCTAssertEqual(asset.url, url)
     }
     
+    //MARK: - Online: Request
+    
     func test_onlineRequest_runBeforeSession_throws() throws {
         let expectedError = LACStream.Error.sessionError
         
@@ -128,6 +134,8 @@ class LACStreamTests: XCTestCase {
         
         XCTAssertEqual(actualRequest, expectedRequest)
     }
+    
+    //MARK: - Archive
     
     func test_archiveUrlAsset_runBeforeAPIClientInit_throws() throws {
         let expectedError = LACStream.Error.emptyBaseUrl
@@ -159,6 +167,8 @@ class LACStreamTests: XCTestCase {
         XCTAssertEqual(asset.url.baseURL, url.baseURL)
         XCTAssertEqual(asset.url.queryDictionary, url.queryDictionary)
     }
+    
+    //MARK: - Archive from Broadcast
     
     func test_archiveUrlAssetFromBroadcast_emptyStartAt_throws() throws {
         let expectedError = LACStream.Error.emptyBroadcastStartAt
