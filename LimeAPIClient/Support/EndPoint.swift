@@ -47,13 +47,10 @@ struct EndPoint {
     
     struct Factory { }
     struct Banner { }
+    struct Channels { }
 }
 
 extension EndPoint.Factory {
-    struct Channels {
-        private init() { }
-    }
-    
     static func session() -> EndPoint {
         let parameters = EndPoint.Parameters(
             body: ["app_id" : EndPoint.appId]
@@ -177,7 +174,7 @@ extension EndPoint.Banner {
 
 // MARK: - Сhannels Factory
 
-extension EndPoint.Factory.Channels {
+extension EndPoint.Channels {
     static func path(_ path: String) -> EndPoint {
         let urlParameters = [
             "locale" : EndPoint.languageDesignator
@@ -192,14 +189,14 @@ extension EndPoint.Factory.Channels {
     }
     
     static func test() -> EndPoint {
-        EndPoint.Factory.Channels.path("v1/channels/test")
+        EndPoint.Channels.path("v1/channels/test")
     }
     
     static func all() -> EndPoint {
-        EndPoint.Factory.Channels.path("v1/channels")
+        EndPoint.Channels.path("v1/channels")
     }
     
     static func byGroupId(_ defaultChannelGroupId: String) -> EndPoint {
-        EndPoint.Factory.Channels.path("v1/channels/by_group/\(defaultChannelGroupId)")
+        EndPoint.Channels.path("v1/channels/by_group/\(defaultChannelGroupId)")
     }
 }

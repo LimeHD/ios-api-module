@@ -131,7 +131,7 @@ public final class LimeAPIClient {
     /// }
     /// ```
     public func requestChannels(completion: @escaping ApiResult<[Channel]>) {
-        self.request(JSONAPIObject<[Channel], String>.self, endPoint: EndPoint.Factory.Channels.all()) { (result) in
+        self.request(JSONAPIObject<[Channel], String>.self, endPoint: EndPoint.Channels.all()) { (result) in
             self.handleJSONAPIResult(result, completion)
         }
     }
@@ -162,7 +162,7 @@ public final class LimeAPIClient {
             completion(.failure(error))
             return
         }
-        self.request(JSONAPIObject<[Channel], String>.self, endPoint: EndPoint.Factory.Channels.byGroupId(defaultChannelGroupId)) { (result) in
+        self.request(JSONAPIObject<[Channel], String>.self, endPoint: EndPoint.Channels.byGroupId(defaultChannelGroupId)) { (result) in
             self.handleJSONAPIResult(result, completion)
         }
     }
