@@ -137,6 +137,9 @@ public final class LimeAPIClient {
     }
     
     /// Запрос списка каналов, доступных для приложения
+    /// - Parameter cacheKey: ключ для сброса кеша
+    /// - Parameter timeZone: часовой пояс
+    /// - Parameter timeZonePicker: выбор часового пояса при отсутствии потока в часовом поясе `timeZone`, действует только если указан `timeZone`
     /// - Parameter completion: обработка результатов запроса
     ///
     /// - Attention: Перед выполеннием запроса необходимо создать успешную новую сессию для получения параметра `defaultChannelGroupId`
@@ -145,7 +148,10 @@ public final class LimeAPIClient {
     /// ```
     /// // BASE_URL - адрес  сервера  API
     /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-    /// apiClient.requestChannelsByGroupId { (result) in
+    /// let cacheKey = "test"
+    /// let timeZone = TimeZone(secondsFromGMT: 3.hours)
+    /// let timeZonePicker = LACTimeZonePicker.previous
+    /// apiClient.requestChannelsByGroupId(cacheKey: cacheKey, timeZone: timeZone, timeZonePicker: timeZonePicker) { (result) in
     ///    switch result {
     ///    case .success(let channels):
     ///        print(channels)
@@ -154,7 +160,7 @@ public final class LimeAPIClient {
     ///    }
     /// }
     /// ```
-    public func requestChannelsByGroupId(completion: @escaping ApiResult<[Channel]>) {
+    public func requestChannelsByGroupId(cacheKey: String = "", timeZone: TimeZone? = nil, timeZonePicker: LACTimeZonePicker = .previous, completion: @escaping ApiResult<[Channel]>) {
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         guard !defaultChannelGroupId.isEmpty else {
             let error = APIError.unknownChannelsGroupId
@@ -162,7 +168,12 @@ public final class LimeAPIClient {
             completion(.failure(error))
             return
         }
-        self.request(JSONAPIObject<[Channel], String>.self, endPoint: EndPoint.Channels.byGroupId(defaultChannelGroupId)) { (result) in
+        let endPoint = EndPoint.Channels.byGroupId(
+            defaultChannelGroupId,
+            cacheKey: cacheKey,
+            timeZone: timeZone?.utcString ?? "",
+            timeZonePicker: timeZonePicker.rawValue)
+        self.request(JSONAPIObject<[Channel], String>.self, endPoint: endPoint) { (result) in
             self.handleJSONAPIResult(result, completion)
         }
     }

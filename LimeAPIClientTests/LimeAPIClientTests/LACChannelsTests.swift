@@ -95,7 +95,10 @@ extension LimeAPIClientTests {
         
         try self.runSessionToGetAPIValues()
         
-        self.sut.requestChannelsByGroupId { (result) in
+        let cacheKey = "test"
+        let timeZone = TimeZone(secondsFromGMT: 3.hours)
+        let timeZonePicker = LACTimeZonePicker.previous
+        self.sut.requestChannelsByGroupId(cacheKey: cacheKey, timeZone: timeZone, timeZonePicker: timeZonePicker) { (result) in
             completion = self.callAPICompletion(result)
         }
         

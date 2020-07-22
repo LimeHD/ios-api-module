@@ -196,14 +196,14 @@ extension EndPoint.Channels {
         EndPoint.Channels.path("v1/channels")
     }
     
-    static func byGroupId(_ defaultChannelGroupId: String, cacheKey: String = "", timeZone: TimeZone? = nil, timeZonePicker: LACTimeZonePicker = .previous) -> EndPoint {
+    static func byGroupId(_ defaultChannelGroupId: String, cacheKey: String, timeZone: String, timeZonePicker: String) -> EndPoint {
         var urlParameters = ["locale" : EndPoint.languageDesignator]
         if !cacheKey.isEmpty {
             urlParameters["cache_key"] = cacheKey
         }
-        if let timeZone = timeZone {
-            urlParameters["time_zone"] = timeZone.utcString
-            urlParameters["time_zone_picker"] = timeZonePicker.rawValue
+        if !timeZone.isEmpty {
+            urlParameters["time_zone"] = timeZone
+            urlParameters["time_zone_picker"] = timeZonePicker
         }
         let parameters = EndPoint.Parameters(url: urlParameters)
         return EndPoint(

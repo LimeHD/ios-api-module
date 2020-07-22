@@ -8,10 +8,10 @@
 
 import Foundation
 
-/// Параметр `TimeZonePicker` при запросе `requestChannelsByGroupId`
+/// Параметр `TimeZonePicker` при запросе `func requestChannelsByGroupId(...)`.
 /// Что отдавать если поток с нужным часовым поясом не найден. Действует только если указан часовой пояс
 public enum LACTimeZonePicker: String {
-    /// Параметр по умолчанию для `TimeZonePicker` при запросе `requestChannelsByGroupId`
+    /// Параметр по умолчанию для `TimeZonePicker` при запросе `func requestChannelsByGroupId(...)`
     case previous
     case next
     case nothing

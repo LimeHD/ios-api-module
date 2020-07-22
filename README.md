@@ -276,7 +276,10 @@ struct Channel: Decodable {
 Пример запроса
 ``` swift
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-apiClient.requestChannelsByGroupId { (result) in
+let cacheKey = "test"
+let timeZone = TimeZone(secondsFromGMT: 3.hours)
+let timeZonePicker = LACTimeZonePicker.previous
+apiClient.requestChannelsByGroupId(cacheKey: cacheKey, timeZone: timeZone, timeZonePicker: timeZonePicker) { (result) in
     switch result {
     case .success(let channels):
         print(channels)
