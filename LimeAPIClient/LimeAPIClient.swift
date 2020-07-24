@@ -47,11 +47,17 @@ public enum APIError: Error, LocalizedError, Equatable {
 
 /// Общий клиент для работы с Лайм API. 
 public final class LimeAPIClient {
+    static var isVerboseEnabled = false
     let baseUrl: String
     let session: URLSession
     let mainQueue: Dispatchable
     /// Значения конфигурации клиента
     public static var configuration: LACConfiguration?
+    
+    /// Включает журналирование результатов запрос в консоли XCode
+    public static func verbose() {
+        LimeAPIClient.isVerboseEnabled = true
+    }
     
     /// Инициализация клиента для работы с Лайм API
     /// - Parameters:
@@ -165,8 +171,9 @@ public final class LimeAPIClient {
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         guard !defaultChannelGroupId.isEmpty else {
             let error = APIError.unknownChannelsGroupId
-            print("\(module)\n\(#function)\n\(error.localizedDescription)")
             completion(.failure(error))
+            guard LimeAPIClient.isVerboseEnabled else { return }
+            print("\(module)\n\(#function)\n\(error.localizedDescription)")
             return
         }
         let endPoint = EndPoint.Channels.byGroupId(
@@ -537,6 +544,7 @@ extension LimeAPIClient {
     }
     
     private static func log(_ request: URLRequest, message: String) {
+        guard LimeAPIClient.isVerboseEnabled else { return }
         let url = request.url?.absoluteString ?? "(пустое значение ulr)"
         print("\(module)\n\(url)\n\(message)")
     }
