@@ -10,8 +10,9 @@ import UIKit
 
 let module = NSStringFromClass(LimeAPIClient.self).components(separatedBy:".")[0]
 
-public typealias ApiResult<T: Decodable> = (Result<T, Error>) -> Void
-public typealias ApiImageResult = (Result<UIImage, Error>) -> Void
+public typealias DecodableCompletion<T: Decodable> = (Result<T, Error>) -> Void
+public typealias ImageResult = Result<UIImage, Error>
+public typealias ImageCompletion = (ImageResult) -> Void
 
 public enum APIError: Error, LocalizedError, Equatable {
     case unknownChannelsGroupId
@@ -104,7 +105,7 @@ public final class LimeAPIClient {
     ///    }
     /// }
     /// ```
-    public func session(completion: @escaping ApiResult<Session>) {
+    public func session(completion: @escaping DecodableCompletion<Session>) {
         self.request(Session.self, endPoint: EndPoint.Factory.session()) { (result) in
             switch result {
             case .success(let session):
@@ -137,7 +138,7 @@ public final class LimeAPIClient {
     ///    }
     /// }
     /// ```
-    public func requestChannels(completion: @escaping ApiResult<[Channel]>) {
+    public func requestChannels(completion: @escaping DecodableCompletion<[Channel]>) {
         self.request(JSONAPIObject<[Channel], String>.self, endPoint: EndPoint.Channels.all()) { (result) in
             self.handleJSONAPIResult(result, completion)
         }
@@ -167,7 +168,7 @@ public final class LimeAPIClient {
     ///    }
     /// }
     /// ```
-    public func requestChannelsByGroupId(cacheKey: String = "", timeZone: TimeZone? = nil, timeZonePicker: LACTimeZonePicker = .previous, completion: @escaping ApiResult<[Channel]>) {
+    public func requestChannelsByGroupId(cacheKey: String = "", timeZone: TimeZone? = nil, timeZonePicker: LACTimeZonePicker = .previous, completion: @escaping DecodableCompletion<[Channel]>) {
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         guard !defaultChannelGroupId.isEmpty else {
             let error = APIError.unknownChannelsGroupId
@@ -213,7 +214,7 @@ public final class LimeAPIClient {
     public func requestBroadcasts(
         channelId: Int,
         dateInterval: LACDateInterval,
-        completion: @escaping ApiResult<[Broadcast]>
+        completion: @escaping DecodableCompletion<[Broadcast]>
     ) {
         let timeZone = dateInterval.timeZone
         let start = RFC3339Date(date: dateInterval.start, timeZone: timeZone).string
@@ -245,7 +246,7 @@ public final class LimeAPIClient {
     ///    }
     /// }
     /// ```
-    public func ping(key: String = "", completion: @escaping ApiResult<Ping>) {
+    public func ping(key: String = "", completion: @escaping DecodableCompletion<Ping>) {
         self.request(Ping.self, endPoint: EndPoint.Factory.ping(key: key)) { (result) in
             completion(result)
         }
@@ -271,7 +272,7 @@ public extension LimeAPIClient {
     ///    }
     /// }
     /// ```
-    func findBanner(completion: @escaping ApiResult<BannerAndDevice>) {
+    func findBanner(completion: @escaping DecodableCompletion<BannerAndDevice>) {
         self.request(BannerAndDevice.self, endPoint: EndPoint.Banner.find()) { (result) in
             completion(result)
         }
@@ -293,7 +294,7 @@ public extension LimeAPIClient {
     ///    }
     /// }
     /// ```
-    func nextBanner(completion: @escaping ApiResult<BannerAndDevice.Banner>) {
+    func nextBanner(completion: @escaping DecodableCompletion<BannerAndDevice.Banner>) {
         self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Banner.next()) { (result) in
             completion(result)
         }
@@ -316,7 +317,7 @@ public extension LimeAPIClient {
     ///    }
     /// }
     /// ```
-    func deleteBanFromBanner(bannerId: Int, completion: @escaping ApiResult<BanBanner>) {
+    func deleteBanFromBanner(bannerId: Int, completion: @escaping DecodableCompletion<BanBanner>) {
         let endPoint = EndPoint.Banner.deleteBan(bannerId)
         self.handleBanBannerRequest(endPoint: endPoint, completion: completion)
     }
@@ -338,7 +339,7 @@ public extension LimeAPIClient {
     ///    }
     /// }
     /// ```
-    func banBanner(bannerId: Int, completion: @escaping ApiResult<BanBanner>) {
+    func banBanner(bannerId: Int, completion: @escaping DecodableCompletion<BanBanner>) {
         let endPoint = EndPoint.Banner.ban(bannerId)
         self.handleBanBannerRequest(endPoint: endPoint, completion: completion)
     }
@@ -360,13 +361,13 @@ public extension LimeAPIClient {
     ///    }
     /// }
     /// ```
-    func getBanner(bannerId: Int, completion: @escaping ApiResult<BannerAndDevice.Banner>) {
+    func getBanner(bannerId: Int, completion: @escaping DecodableCompletion<BannerAndDevice.Banner>) {
         self.request(BannerAndDevice.Banner.self, endPoint: EndPoint.Banner.info(bannerId)) { (result) in
             completion(result)
         }
     }
     
-    func getImage(with path: String, completion: @escaping ApiImageResult) {
+    func getImage(with path: String, completion: @escaping ImageCompletion) {
         self.requestImage(with: path) { (result) in
             switch result {
             case .success(let image):
@@ -429,7 +430,7 @@ public extension LimeAPIClient {
 typealias JSONAPIResult<T: Decodable, U: Decodable> = Result<JSONAPIObject<[T], U>, Error>
 
 extension LimeAPIClient {
-    private func request<T: Decodable>(_ type: T.Type, endPoint: EndPoint, completion: @escaping ApiResult<T>) {
+    private func request<T: Decodable>(_ type: T.Type, endPoint: EndPoint, completion: @escaping DecodableCompletion<T>) {
         let request: URLRequest
         do {
             request = try URLRequest(baseUrl: self.baseUrl, endPoint: endPoint)
@@ -446,7 +447,7 @@ extension LimeAPIClient {
         }
     }
     
-    private func dataTask<T: Decodable>(with request: URLRequest, _ type: T.Type, completion: @escaping ApiResult<T>) {
+    private func dataTask<T: Decodable>(with request: URLRequest, _ type: T.Type, completion: @escaping DecodableCompletion<T>) {
         HTTPClient(self.session).dataTask(with: request) { (result) in
             switch result {
             case .success(let result):
@@ -476,7 +477,7 @@ extension LimeAPIClient {
         }
     }
     
-    private func handleJSONAPIResult<T: Decodable, U: Decodable>(_ result: JSONAPIResult<T, U>, _ completion: @escaping ApiResult<[T]>) {
+    private func handleJSONAPIResult<T: Decodable, U: Decodable>(_ result: JSONAPIResult<T, U>, _ completion: @escaping DecodableCompletion<[T]>) {
         switch result {
         case .success(let result):
             completion(.success(result.data))
@@ -485,13 +486,13 @@ extension LimeAPIClient {
         }
     }
     
-    private func handleBanBannerRequest(endPoint: EndPoint, completion: @escaping ApiResult<BanBanner>) {
+    private func handleBanBannerRequest(endPoint: EndPoint, completion: @escaping DecodableCompletion<BanBanner>) {
         self.request(BanBanner.self, endPoint: endPoint) { (result) in
             completion(result)
         }
     }
     
-    private func decodeError<T>(_ data: Data, _ response: HTTPURLResponse, _ completion: @escaping ApiResult<T>) {
+    private func decodeError<T>(_ data: Data, _ response: HTTPURLResponse, _ completion: @escaping DecodableCompletion<T>) {
         do {
             let jsonAPIError = try JSONAPIError(decoding: data)
             let error = APIError.jsonAPIError(response.localizedStatusCode, error: jsonAPIError)
@@ -505,7 +506,7 @@ extension LimeAPIClient {
     
     //MARK: - Image Request Methods
     
-    private func requestImage(with path: String, completion: @escaping ApiImageResult) {
+    private func requestImage(with path: String, completion: @escaping ImageCompletion) {
         let request: URLRequest
         do {
             request = try URLRequest(path: path)
