@@ -67,6 +67,7 @@ class ResultTableViewController: UITableViewController {
         self.configureAppearance()
         self.tableView.keyboardDismissMode = .onDrag
         self.hideKeyboardWhenTappedAround()
+        LimeAPIClient.verbose()
         
         switch self.request {
         case
@@ -89,6 +90,11 @@ class ResultTableViewController: UITableViewController {
             return
         case .broadcasts:
             self.parameters = [APIRequest.Parameter(name: "Канал")]
+            return
+        case .deepClicks:
+            self.parameters = [
+                APIRequest.Parameter(name: "query", detail: "Строка запроса", keyboardType: .default),
+                APIRequest.Parameter(name: "path", detail: "Путь запроса", keyboardType: .default)]
             return
         }
         
@@ -175,6 +181,8 @@ class ResultTableViewController: UITableViewController {
             self.requestChannelsByGroupId()
         case .broadcasts:
             self.requestBroadcasts()
+        case .deepClicks:
+            self.deepClicks()
         }
     }
     
@@ -633,6 +641,29 @@ extension ResultTableViewController {
                 self.broadcasts = broadcasts
                 self.tableView.reloadData()
                 print(broadcasts)
+            case .failure(let error):
+                self.showAlert(error)
+            }
+        }
+    }
+    
+    private func deepClicks() {
+        let queryIndexPath = IndexPath(row: 0, section: Section.parameters.rawValue)
+        let queryCell = self.tableView.cellForRow(at: queryIndexPath) as? ParameterCell
+        let query = queryCell?.parameterValueTextField.text ?? ""
+        
+        let pathIndexPath = IndexPath(row: 1, section: Section.parameters.rawValue)
+        let pathCell = self.tableView.cellForRow(at: pathIndexPath) as? ParameterCell
+        let path = pathCell?.parameterValueTextField.text ?? ""
+        
+        self.apiClient.deepClicks(query: query, path: path) { [weak self] (result) in
+            guard let self = self else { return }
+            self.configureStopAnimating()
+            
+            switch result {
+            case .success(let response):
+                self.results = [APIRequest.Result(title: "Ответ сервера", detail: response)]
+                self.tableView.reloadData()
             case .failure(let error):
                 self.showAlert(error)
             }

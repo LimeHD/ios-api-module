@@ -15,6 +15,7 @@
 		4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5014E5247319F400A8DA1F /* TimeInterval.swift */; };
 		4E54C5F72477E54500AAF223 /* LACConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54C5F62477E54500AAF223 /* LACConfiguration.swift */; };
 		4E54C5F92477F8DF00AAF223 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E54C5F82477F8DF00AAF223 /* Session.swift */; };
+		4E5582CD24E289E00022E930 /* LACDeepClicksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5582CC24E289E00022E930 /* LACDeepClicksTests.swift */; };
 		4E560CC8248795CC006A644A /* DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CC7248795CC006A644A /* DispatchQueue.swift */; };
 		4E560CCA2487B3A8006A644A /* HTTPURLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */; };
 		4E560CCC2487BE0D006A644A /* SessionExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E560CCB2487BE0D006A644A /* SessionExample.swift */; };
@@ -138,6 +139,7 @@
 		4E5014E5247319F400A8DA1F /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		4E54C5F62477E54500AAF223 /* LACConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACConfiguration.swift; sourceTree = "<group>"; };
 		4E54C5F82477F8DF00AAF223 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		4E5582CC24E289E00022E930 /* LACDeepClicksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACDeepClicksTests.swift; sourceTree = "<group>"; };
 		4E560CC7248795CC006A644A /* DispatchQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueue.swift; sourceTree = "<group>"; };
 		4E560CC92487B3A8006A644A /* HTTPURLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPURLResponse.swift; sourceTree = "<group>"; };
 		4E560CCB2487BE0D006A644A /* SessionExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionExample.swift; sourceTree = "<group>"; };
@@ -457,6 +459,7 @@
 				4E9192742488E66800974C02 /* LACBannersTests.swift */,
 				4E835E48248F99EE0011E0E0 /* LACBroadcastsTests.swift */,
 				4E9192762488E88300974C02 /* LACChannelsTests.swift */,
+				4E5582CC24E289E00022E930 /* LACDeepClicksTests.swift */,
 				4E5A27E524A0D5C900128AD9 /* LACImageTests.swift */,
 				4E5A27E724A0D6D600128AD9 /* LACPlaylistTests.swift */,
 			);
@@ -694,6 +697,7 @@
 				4E560CCF2487C346006A644A /* ChannelExample.swift in Sources */,
 				4E47BD1124A1DF1800D98B1A /* RFC3339DateTests.swift in Sources */,
 				4E579585246AE3D20009D306 /* LimeAPIClientTests.swift in Sources */,
+				4E5582CD24E289E00022E930 /* LACDeepClicksTests.swift in Sources */,
 				4E5A27E424A0CE3500128AD9 /* UIImage.swift in Sources */,
 				4E9192772488E88300974C02 /* LACChannelsTests.swift in Sources */,
 				4E8CD1C22486680C00648E24 /* URLTests.swift in Sources */,

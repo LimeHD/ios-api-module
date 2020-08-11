@@ -10,6 +10,8 @@ import UIKit
 
 let module = NSStringFromClass(LimeAPIClient.self).components(separatedBy:".")[0]
 
+public typealias StringResult = Result<String, Error>
+public typealias StringCompletion = (StringResult) -> Void
 public typealias DecodableCompletion<T: Decodable> = (Result<T, Error>) -> Void
 public typealias ImageResult = Result<UIImage, Error>
 public typealias ImageCompletion = (ImageResult) -> Void
@@ -251,6 +253,34 @@ public final class LimeAPIClient {
             completion(result)
         }
     }
+    
+    /// Запрос для deep clicks
+    /// - Parameters:
+    ///   - query: cтрока запроса
+    ///   - path: путь запроса
+    ///   - completion: обработка результатов запроса
+    ///
+    /// Пример запроса:
+    /// ```
+    /// // BASE_URL - адрес  сервера  API
+    /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+    /// // QUERY - cтрока запроса
+    /// // PATH - путь запроса
+    /// apiClient.deepClicks(query: QUERY, path: PATH) { (result) in
+    ///    switch result {
+    ///    case .success(let message):
+    ///        print(message)
+    ///    case .failure(let error):
+    ///        print(error)
+    ///    }
+    /// }
+    /// ```
+    public func deepClicks(query: String, path: String, completion: @escaping StringCompletion) {
+        let endPoint = EndPoint.Factory.deepClicks(query: query, path: path)
+        self.request(endPoint) { (result) in
+            completion(result)
+        }
+    }
 }
 
 // MARK: - Banners
@@ -430,6 +460,8 @@ public extension LimeAPIClient {
 typealias JSONAPIResult<T: Decodable, U: Decodable> = Result<JSONAPIObject<[T], U>, Error>
 
 extension LimeAPIClient {
+    //MARK: - Decodable Requests Methods
+    
     private func request<T: Decodable>(_ type: T.Type, endPoint: EndPoint, completion: @escaping DecodableCompletion<T>) {
         let request: URLRequest
         do {
@@ -467,12 +499,7 @@ extension LimeAPIClient {
                     completion(.failure(error))
                 }
             case .failure(let error):
-                if let error = error as? HTTPClient.Error,
-                    case let .wrongStatusCode(data, response) = error {
-                    self.decodeError(data, response, completion)
-                } else {
-                    completion(.failure(error))
-                }
+                self.handleErorr(error, completion)
             }
         }
     }
@@ -492,6 +519,15 @@ extension LimeAPIClient {
         }
     }
     
+    private func handleErorr<T: Decodable>(_ error: Error, _ completion: @escaping DecodableCompletion<T>) {
+        if let error = error as? HTTPClient.Error,
+            case let .wrongStatusCode(data, response) = error {
+            self.decodeError(data, response, completion)
+        } else {
+            completion(.failure(error))
+        }
+    }
+    
     private func decodeError<T>(_ data: Data, _ response: HTTPURLResponse, _ completion: @escaping DecodableCompletion<T>) {
         do {
             let jsonAPIError = try JSONAPIError(decoding: data)
@@ -501,6 +537,37 @@ extension LimeAPIClient {
             let message = String(decoding: data, as: UTF8.self)
             let error = APIError.wrongStatusCode(response.localizedStatusCode, error: message)
             completion(.failure(error))
+        }
+    }
+    
+    //MARK: - String Request Methods
+    
+    private func request(_ endPoint: EndPoint, completion: @escaping StringCompletion) {
+        let request: URLRequest
+        do {
+            request = try URLRequest(baseUrl: self.baseUrl, endPoint: endPoint)
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        
+        self.dataTask(with: request) { (result) in
+            if case .failure(let error) = result {
+                LimeAPIClient.log(request, message: error.localizedDescription)
+            }
+            self.mainQueue.async { completion(result) }
+        }
+    }
+    
+    private func dataTask(with request: URLRequest, completion: @escaping StringCompletion) {
+        HTTPClient(self.session).dataTask(with: request) { (result) in
+            switch result {
+            case .success(let result):
+                let message = String(decoding: result.data, as: UTF8.self)
+                completion(.success(message))
+            case .failure(let error):
+                self.handleErorr(error, completion)
+            }
         }
     }
     
