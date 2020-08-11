@@ -109,6 +109,31 @@ extension EndPoint.Factory {
             parameters: parameters
         )
     }
+    
+    /// Создание `EndPoint` для запроса `deep_clicks`
+    /// - Parameters:
+    ///   - query: cтрока запроса
+    ///   - path: путь запроса
+    /// - Returns: `EndPoint` с параметрами для сетевого запроса `deep_clicks`
+    ///
+    /// В параметры запроса также входят `app_id` и `device_id`.
+    /// `app_id` - задается при инициализации клиента `LimeAPIClient`.
+    /// Параметр `device_id` - `LimeAPIClient` получает от устройства самостоятельно
+    static func deepClicks(query: String, path: String) -> EndPoint {
+        let bodyParameters = [
+            "app_id" : EndPoint.appId,
+            "query" : query,
+            "path" : path,
+            "device_id" : Device.id
+        ]
+        let parameters = EndPoint.Parameters(body: bodyParameters)
+        return EndPoint(
+            path: "v1/deep_clicks",
+            acceptHeader: HTTP.Header.Accept.json,
+            httpMethod: HTTP.Method.post,
+            parameters: parameters
+        )
+    }
 }
 
 // MARK: - Banner Factory

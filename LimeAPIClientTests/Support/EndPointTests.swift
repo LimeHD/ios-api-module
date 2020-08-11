@@ -172,4 +172,23 @@ class EndPointTests: XCTestCase {
         XCTAssertTrue(self.sut.acceptHeader.isEmpty)
         XCTAssertEqual(self.sut.parameters, parameters)
     }
+    
+    func test_deepClicks_creatsCorrectEndPoint() {
+        let query = "Query"
+        let path = "Path"
+        self.sut = EndPoint.Factory.deepClicks(query: query, path: path)
+        
+        let bodyParameters = [
+            "app_id" : EndPoint.appId,
+            "query" : query,
+            "path" : path,
+            "device_id" : Device.id
+        ]
+        let parameters = EndPoint.Parameters(body: bodyParameters)
+        
+        XCTAssertEqual(self.sut.path, "v1/deep_clicks")
+        XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.json)
+        XCTAssertEqual(self.sut.httpMethod, HTTP.Method.post)
+        XCTAssertEqual(self.sut.parameters, parameters)
+    }
 }
