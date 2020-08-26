@@ -281,6 +281,42 @@ public final class LimeAPIClient {
             completion(result)
         }
     }
+    
+    /// Запрос для получения информации о реферальной программе пользователя
+    /// - Parameters:
+    ///   - xToken: токен пользователя
+    ///   - remoteIP: удаленный IP-адрес для тестирования
+    ///   - completion: обработка результатов запроса
+    ///
+    /// Пример запроса:
+    /// ```
+    /// // Задание параметров конфигурации
+    /// // Язык ожидаемого контента, который указывается запросе
+    /// let language = Locale.preferredLanguages.first ?? "ru-RU"
+    /// // APPLICATION_ID можно получить с помощью LACApp.id -
+    /// // (идентификатор пакета, который определяется ключом CFBundleIdentifier)
+    /// let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION, language: language)
+    /// LimeAPIClient.configuration = configuration
+    ///
+    /// // BASE_URL - адрес  сервера  API
+    /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+    /// // X_TOKEN - токен пользователя
+    /// // REMOTE_IP - удаленный IP-адрес для тестирования (опционально)
+    /// apiClient.referral(xToken: X_TOKEN, remoteIP: REMOTE_IP) { (result) in
+    ///    switch result {
+    ///    case .success(let referral):
+    ///        print(referral)
+    ///    case .failure(let error):
+    ///        print(error)
+    ///    }
+    /// }
+    /// ```
+    public func referral(xToken: String, remoteIP: String = "", completion: @escaping DecodableCompletion<Referral>) {
+        let endPoint = EndPoint.Factory.referral(xToken: xToken, remoteIP: remoteIP)
+        self.request(Referral.self, endPoint: endPoint) { (result) in
+            completion(result)
+        }
+    }
 }
 
 // MARK: - Banners
