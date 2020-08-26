@@ -352,7 +352,6 @@
 				4E835E45248F72FB0011E0E0 /* LACConfigurationTests.swift */,
 				4E8CD1CB24867F7300648E24 /* LACDateIntervalTests.swift */,
 				4E5A27E924A0E3A600128AD9 /* LACStreamTests.swift */,
-				4E835BF4247417AC00C8DD96 /* Services */,
 				4E560CCD2487BE30006A644A /* Models */,
 				4E5B0C95247C006200DDE6BA /* Support */,
 				4E5B0C98247C07F000DDE6BA /* Extensions */,
@@ -446,13 +445,6 @@
 				4E6D91CE246D7E5200BB7C69 /* URLRequest.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		4E835BF4247417AC00C8DD96 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		4E835E47248F99B50011E0E0 /* LimeAPIClientTests */ = {
