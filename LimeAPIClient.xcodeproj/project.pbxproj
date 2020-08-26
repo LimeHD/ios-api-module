@@ -34,6 +34,7 @@
 		4E5795A0246AE61C0009D306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E57959F246AE61C0009D306 /* Assets.xcassets */; };
 		4E5795A3246AE61C0009D306 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E5795A1246AE61C0009D306 /* LaunchScreen.storyboard */; };
 		4E57EEE024F687E300F71CC6 /* Referral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E57EEDF24F687E300F71CC6 /* Referral.swift */; };
+		4E57EEE224F689FE00F71CC6 /* ReferralExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E57EEE124F689FE00F71CC6 /* ReferralExample.swift */; };
 		4E5913CE247560CA009BAAA1 /* Broadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5913CD247560CA009BAAA1 /* Broadcast.swift */; };
 		4E59F2DC247700B800F3456F /* LACAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59F2DB247700B800F3456F /* LACAppTests.swift */; };
 		4E5A27E424A0CE3500128AD9 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5A27E324A0CE3500128AD9 /* UIImage.swift */; };
@@ -164,6 +165,7 @@
 		4E5795A2246AE61C0009D306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4E5795A4246AE61C0009D306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E57EEDF24F687E300F71CC6 /* Referral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Referral.swift; sourceTree = "<group>"; };
+		4E57EEE124F689FE00F71CC6 /* ReferralExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralExample.swift; sourceTree = "<group>"; };
 		4E5913CD247560CA009BAAA1 /* Broadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broadcast.swift; sourceTree = "<group>"; };
 		4E59F2DB247700B800F3456F /* LACAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACAppTests.swift; sourceTree = "<group>"; };
 		4E5A27E324A0CE3500128AD9 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				4EFC6E4B2476B49A009D6CF7 /* JSONAPIErrorExample.swift */,
 				4E607C4C248E205900F9BEB7 /* JSONAPIErrorTests.swift */,
 				4E91926E2488D23B00974C02 /* PingExample.swift */,
+				4E57EEE124F689FE00F71CC6 /* ReferralExample.swift */,
 				4E560CCB2487BE0D006A644A /* SessionExample.swift */,
 			);
 			path = Models;
@@ -684,6 +687,7 @@
 				4E560CD12487E596006A644A /* BroadcastExample.swift in Sources */,
 				4E5B0C97247C07E400DDE6BA /* StringTests.swift in Sources */,
 				4E9192732488DC4C00974C02 /* DispatchQueueTests.swift in Sources */,
+				4E57EEE224F689FE00F71CC6 /* ReferralExample.swift in Sources */,
 				4E6D91C6246D162700BB7C69 /* HTTPClientTests.swift in Sources */,
 				4E835E49248F99EE0011E0E0 /* LACBroadcastsTests.swift in Sources */,
 				4E47BD0F24A1D1A500D98B1A /* URL.swift in Sources */,
