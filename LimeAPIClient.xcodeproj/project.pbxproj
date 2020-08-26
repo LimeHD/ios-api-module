@@ -33,6 +33,7 @@
 		4E57959E246AE6180009D306 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E57959C246AE6180009D306 /* Main.storyboard */; };
 		4E5795A0246AE61C0009D306 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E57959F246AE61C0009D306 /* Assets.xcassets */; };
 		4E5795A3246AE61C0009D306 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E5795A1246AE61C0009D306 /* LaunchScreen.storyboard */; };
+		4E57EEE024F687E300F71CC6 /* Referral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E57EEDF24F687E300F71CC6 /* Referral.swift */; };
 		4E5913CE247560CA009BAAA1 /* Broadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5913CD247560CA009BAAA1 /* Broadcast.swift */; };
 		4E59F2DC247700B800F3456F /* LACAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E59F2DB247700B800F3456F /* LACAppTests.swift */; };
 		4E5A27E424A0CE3500128AD9 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5A27E324A0CE3500128AD9 /* UIImage.swift */; };
@@ -162,6 +163,7 @@
 		4E57959F246AE61C0009D306 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E5795A2246AE61C0009D306 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4E5795A4246AE61C0009D306 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4E57EEDF24F687E300F71CC6 /* Referral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Referral.swift; sourceTree = "<group>"; };
 		4E5913CD247560CA009BAAA1 /* Broadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broadcast.swift; sourceTree = "<group>"; };
 		4E59F2DB247700B800F3456F /* LACAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACAppTests.swift; sourceTree = "<group>"; };
 		4E5A27E324A0CE3500128AD9 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				4E835BEE2473EFE300C8DD96 /* JSONAPIError.swift */,
 				4E75B1C2246EBADC0061E143 /* JSONAPIObject.swift */,
 				4E835BEC2473D50700C8DD96 /* Ping.swift */,
+				4E57EEDF24F687E300F71CC6 /* Referral.swift */,
 				4E54C5F82477F8DF00AAF223 /* Session.swift */,
 			);
 			path = Models;
@@ -647,6 +650,7 @@
 				4E68A3FD246BDA6000D332BD /* LimeAPIClient.swift in Sources */,
 				4E75B1C5246EBBE60061E143 /* Channel.swift in Sources */,
 				4E54C5F72477E54500AAF223 /* LACConfiguration.swift in Sources */,
+				4E57EEE024F687E300F71CC6 /* Referral.swift in Sources */,
 				4E5014E6247319F400A8DA1F /* TimeInterval.swift in Sources */,
 				4E6D74B624C81930000C261D /* LACTimeZonePicker.swift in Sources */,
 				4E5643682472CB7D00CDD18F /* CharacterSet.swift in Sources */,
