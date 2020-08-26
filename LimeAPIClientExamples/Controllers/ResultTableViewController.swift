@@ -75,7 +75,8 @@ class ResultTableViewController: UITableViewController {
         .findBanner,
         .nextBanner,
         .channels,
-        .channelsByGroupId:
+        .channelsByGroupId,
+        .users:
             break
         case
         .deleteBanFromBanner,
@@ -183,6 +184,8 @@ class ResultTableViewController: UITableViewController {
             self.requestBroadcasts()
         case .deepClicks:
             self.deepClicks()
+        case .users:
+            break
         }
     }
     

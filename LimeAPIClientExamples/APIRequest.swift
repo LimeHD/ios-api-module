@@ -21,6 +21,7 @@ enum APIRequest: String {
     case channelsByGroupId = "channels by group id"
     case broadcasts
     case deepClicks = "deep clicks"
+    case users
     
     var detail: String {
         switch self {
@@ -46,6 +47,8 @@ enum APIRequest: String {
             return "Программа передач"
         case .deepClicks:
             return "Создание deep сlicks для реферальной программы"
+        case .users:
+            return "Информация о реферальной программе пользователя"
         }
     }
     

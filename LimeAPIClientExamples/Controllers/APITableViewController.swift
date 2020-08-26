@@ -30,7 +30,8 @@ class APITableViewController: UITableViewController {
                 .channels, .channelsByGroupId
             ]),
             API(section: "broadcasts", requests: [.broadcasts]),
-            API(section: "deep clicks", requests: [.deepClicks])
+            API(section: "deep clicks", requests: [.deepClicks]),
+            API(section: "users", requests: [.users])
         ]
         
         self.tableView.removeExtraEmptyCells()
