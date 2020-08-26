@@ -191,4 +191,22 @@ class EndPointTests: XCTestCase {
         XCTAssertEqual(self.sut.httpMethod, HTTP.Method.post)
         XCTAssertEqual(self.sut.parameters, parameters)
     }
+    
+    func test_referral_creatsCorrectEndPoint() {
+        let xToken = "xToken"
+        let remoteIP = "remoteIP"
+        self.sut = EndPoint.Factory.referral(xToken: xToken, remoteIP: remoteIP)
+        
+        let urlParameters = [
+            "X-Token" : xToken,
+            "remote_ip" : remoteIP,
+            "app_id" : EndPoint.appId
+        ]
+        let parameters = EndPoint.Parameters(url: urlParameters)
+        
+        XCTAssertEqual(self.sut.path, "v1/users/referral")
+        XCTAssertEqual(self.sut.acceptHeader, HTTP.Header.Accept.json)
+        XCTAssertEqual(self.sut.httpMethod, HTTP.Method.get)
+        XCTAssertEqual(self.sut.parameters, parameters)
+    }
 }

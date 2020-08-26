@@ -117,7 +117,7 @@ extension EndPoint.Factory {
     /// - Returns: `EndPoint` с параметрами для сетевого запроса `deep_clicks`
     ///
     /// В параметры запроса также входят `app_id` и `device_id`.
-    /// `app_id` - задается при инициализации клиента `LimeAPIClient`.
+    /// `app_id` - задается при конфигурировании клиента `LimeAPIClient`.
     /// Параметр `device_id` - `LimeAPIClient` получает от устройства самостоятельно
     static func deepClicks(query: String, path: String) -> EndPoint {
         let bodyParameters = [
@@ -131,6 +131,28 @@ extension EndPoint.Factory {
             path: "v1/deep_clicks",
             acceptHeader: HTTP.Header.Accept.json,
             httpMethod: HTTP.Method.post,
+            parameters: parameters
+        )
+    }
+    
+    /// Создание `EndPoint` для запроса информации о реферальной программе пользователя
+    /// - Parameters:
+    ///   - xToken: токен пользователя
+    ///   - remoteIP: удаленный IP-адрес для тестирования
+    /// - Returns: `EndPoint` с параметрами для запроса информации о реферальной программе пользователя
+    ///
+    /// В параметры запроса также входит `app_id`,
+    /// который задается при конфигурировании клиента `LimeAPIClient`.
+    static func referral(xToken: String, remoteIP: String) -> EndPoint {
+        let urlParameters = [
+            "X-Token" : xToken,
+            "remote_ip" : remoteIP,
+            "app_id" : EndPoint.appId
+        ]
+        let parameters = EndPoint.Parameters(url: urlParameters)
+        return EndPoint(
+            path: "v1/users/referral",
+            acceptHeader: HTTP.Header.Accept.json,
             parameters: parameters
         )
     }
