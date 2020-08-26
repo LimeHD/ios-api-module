@@ -13,4 +13,5 @@ public struct Referral: Decodable, Equatable {
     public let shareUrl: String
     public let userReferralUrl: String
     public let userReferralUrlExpiredAt: String
+    public let referralsCount: Int
 }

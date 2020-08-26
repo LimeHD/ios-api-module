@@ -10,10 +10,12 @@ import LimeAPIClient
 
 extension Referral {
     var apiRequestResult: [APIRequest.Result] {
-    [
-        APIRequest.Result(title: "current time", detail: self.currentTime),
-        APIRequest.Result(title: "share url", detail: self.shareUrl),
-        APIRequest.Result(title: "user referral url", detail: self.userReferralUrl),
-        APIRequest.Result(title: "user referral url expired at", detail: self.userReferralUrlExpiredAt)
-    ]
+        [
+            APIRequest.Result(title: "current time", detail: self.currentTime),
+            APIRequest.Result(title: "share url", detail: self.shareUrl),
+            APIRequest.Result(title: "user referral url", detail: self.userReferralUrl),
+            APIRequest.Result(title: "user referral url expired at", detail: self.userReferralUrlExpiredAt),
+            APIRequest.Result(title: "referrals count", detail: self.referralsCount.string)
+        ]
+    }
 }
