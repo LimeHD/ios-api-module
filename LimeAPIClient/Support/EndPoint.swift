@@ -137,15 +137,14 @@ extension EndPoint.Factory {
     
     /// Создание `EndPoint` для запроса информации о реферальной программе пользователя
     /// - Parameters:
-    ///   - xToken: токен пользователя
     ///   - remoteIP: удаленный IP-адрес для тестирования
     /// - Returns: `EndPoint` с параметрами для запроса информации о реферальной программе пользователя
     ///
-    /// В параметры запроса также входит `app_id`,
-    /// который задается при конфигурировании клиента `LimeAPIClient`.
-    static func referral(xToken: String, remoteIP: String) -> EndPoint {
+    /// В параметры запроса также входят `app_id` и `X-Token`
+    /// `app_id` задается при конфигурировании клиента `LimeAPIClient`.
+    /// `X-Token` задется непосредственно при запросе и передается в `HEADER` запроса
+    static func referral(remoteIP: String) -> EndPoint {
         let urlParameters = [
-            "X-Token" : xToken,
             "remote_ip" : remoteIP,
             "app_id" : EndPoint.appId
         ]

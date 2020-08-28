@@ -57,6 +57,9 @@ public final class LimeAPIClient {
     /// Значения конфигурации клиента
     public static var configuration: LACConfiguration?
     
+    /// Токен пользователя
+    public static var xToken = ""
+    
     /// Включает журналирование результатов запрос в консоли XCode
     public static func verbose() {
         LimeAPIClient.isVerboseEnabled = true
@@ -312,7 +315,8 @@ public final class LimeAPIClient {
     /// }
     /// ```
     public func referral(xToken: String, remoteIP: String = "", completion: @escaping DecodableCompletion<Referral>) {
-        let endPoint = EndPoint.Factory.referral(xToken: xToken, remoteIP: remoteIP)
+        LimeAPIClient.xToken = xToken
+        let endPoint = EndPoint.Factory.referral(remoteIP: remoteIP)
         self.request(Referral.self, endPoint: endPoint) { (result) in
             completion(result)
         }
