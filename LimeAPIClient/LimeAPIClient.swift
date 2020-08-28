@@ -653,7 +653,8 @@ extension LimeAPIClient {
     
     private static func log(_ request: URLRequest, message: String) {
         guard LimeAPIClient.isVerboseEnabled else { return }
+        let configuration = HTTP.headers.description
         let url = request.url?.absoluteString ?? "(пустое значение ulr)"
-        print("\(module)\n\(url)\n\(message)")
+        print("\(module) \(configuration)\n\(url)\n\(message)")
     }
 }
