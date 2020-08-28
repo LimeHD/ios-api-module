@@ -193,12 +193,10 @@ class EndPointTests: XCTestCase {
     }
     
     func test_referral_creatsCorrectEndPoint() {
-        let xToken = "xToken"
         let remoteIP = "remoteIP"
-        self.sut = EndPoint.Factory.referral(xToken: xToken, remoteIP: remoteIP)
+        self.sut = EndPoint.Factory.referral(remoteIP: remoteIP)
         
         let urlParameters = [
-            "X-Token" : xToken,
             "remote_ip" : remoteIP,
             "app_id" : EndPoint.appId
         ]
