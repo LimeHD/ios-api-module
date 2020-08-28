@@ -33,6 +33,7 @@
     - [Получение AVURLAsset на поток архива](#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-AVURLAsset-%D0%BD%D0%B0-%D0%BF%D0%BE%D1%82%D0%BE%D0%BA-%D0%B0%D1%80%D1%85%D0%B8%D0%B2%D0%B0)
     - [Получение AVURLAsset на поток архива с помощью broadcast](#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-AVURLAsset-%D0%BD%D0%B0-%D0%BF%D0%BE%D1%82%D0%BE%D0%BA-%D0%B0%D1%80%D1%85%D0%B8%D0%B2%D0%B0-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-broadcast)
     - [Запрос deep clicks](#%D0%97%D0%B0%D0%BF%D1%80%D0%BE%D1%81-deep-clicks)
+    - [Получение информации о реферальной программе пользователя](#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%B8-%D0%BE-%D1%80%D0%B5%D1%84%D0%B5%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B9-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B5-%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8F)
 
 <!-- /TOC -->
 
@@ -102,6 +103,7 @@ LimeAPIClient.configuration = configuration
 
 ### Cоздание новой сессии
 ``` swift
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.session { (result) in
     switch result {
@@ -164,6 +166,7 @@ struct JSONAPIError: Decodable, Equatable {
 ### Получение баннера, рекомендованного данному устройству и приложению
 Пример запроса
 ``` swift
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.nextBanner { (result) in
     switch result {
@@ -176,7 +179,7 @@ apiClient.nextBanner { (result) in
 ```
 <a id="banner-and-device-banner"></a>В ответ приходит баннер. Тип данных `BannerAndDevice.Banner`:
 ``` swift
-struct BannerAndDevice.Banner: Decodable {
+struct BannerAndDevice.Banner: Decodable, Equatable {
     let id: Int
     let imageUrl: String
     let title: String
@@ -193,6 +196,7 @@ struct BannerAndDevice.Banner: Decodable {
 ### Снятие (удаление) пометки «нежелательный» с баннера
 Пример запроса
 ``` swift
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // Параметр bannerId - ID Баннера для модификации, тип данных Int
 apiClient.deleteBanFromBanner(bannerId: BANNER_ID) { (result) in
@@ -206,7 +210,7 @@ apiClient.deleteBanFromBanner(bannerId: BANNER_ID) { (result) in
 ```
 <a id="banbanner"></a>В ответ приходит результат выполнения запроса. Тип данных `BanBanner`:
 ``` swift
-struct BanBanner: Decodable {
+struct BanBanner: Decodable, Equatable {
     let result: String
 }
 ```
@@ -215,6 +219,7 @@ struct BanBanner: Decodable {
 ### Пометить баннер как «нежелательный» и больше его не показывать
 Пример запроса
 ``` swift
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // Параметр bannerId - ID Баннера для модификации, тип данных Int
 apiClient.banBanner(bannerId: BANNER_ID) { (result) in
@@ -233,6 +238,7 @@ apiClient.banBanner(bannerId: BANNER_ID) { (result) in
 ### Получить баннер (информацию о нём)
 Пример запроса
 ``` swift
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // Параметр bannerId - ID Баннера для модификации, тип данных Int
 apiClient.getBanner(bannerId: BANNER_ID) { (result) in
@@ -251,6 +257,7 @@ apiClient.getBanner(bannerId: BANNER_ID) { (result) in
 ### Получение списка каналов
 Пример запроса
 ``` swift
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.requestChannels { (result) in
     switch result {
@@ -263,19 +270,19 @@ apiClient.requestChannels { (result) in
 ```
 <a id="channel"></a>В ответ приходит список каналов в виде массива. Тип данных `Channel`:
 ``` swift
-struct Channel: Decodable {
+struct Channel: Decodable, Equatable {
     let id: String
     let type: String
     let attributes: Attributes
     
-    struct Attributes: Decodable {
+    struct Attributes: Decodable, Equatable {
         let name: String?
         let imageUrl: String?
         let description: String?
         let streams: [Stream]
     }
     
-    struct Stream: Decodable {
+    struct Stream: Decodable, Equatable {
         let id: Int
         let timeZone: String
         let archiveHours: Int
@@ -290,6 +297,7 @@ struct Channel: Decodable {
 
 Пример запроса
 ``` swift
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 let cacheKey = "test"
 let timeZone = TimeZone(secondsFromGMT: 3.hours)
@@ -310,6 +318,7 @@ apiClient.requestChannelsByGroupId(cacheKey: cacheKey, timeZone: timeZone, timeZ
 ### Получение программы передач
 Пример запроса
 ``` swift
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 let startDate = Date().addingTimeInterval(-8.days)
 let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
@@ -325,14 +334,14 @@ apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { (resul
 ```
 <a id="broadcast"></a>В ответ приходит список телепередач в виде массива. Тип данных `Broadcast`:
 ``` swift
-struct Broadcast: Decodable {
+struct Broadcast: Decodable, Equatable {
     let id: String
     let type: String
     let attributes: Attributes
     var startAtUnix: Int? { get }
     var duration: Int? { get }
     
-    struct Attributes: Decodable {
+    struct Attributes: Decodable, Equatable {
         let title: String
         let detail: String
         let rating: Int?
@@ -346,6 +355,7 @@ struct Broadcast: Decodable {
 ### Проверка работоспособности сервиса
 Пример запроса
 ``` swift
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // Параметр key - опциональный, тип данных String, 
 // используется для разнообразия запросов и обхода кэша
@@ -360,7 +370,7 @@ apiClient.ping(key: KEY) { (result) in
 ```
 При успешном запросе в ответ приходит тип данных `Ping`:
 ``` swift
-struct Ping: Decodable {
+struct Ping: Decodable, Equatable {
     let result: String
     let time: String
     let version: String
@@ -380,6 +390,7 @@ import LimeAPIClient
 import AVKit
 
 // Запрос новой сессии для получения ссылки на онлайн-поток
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.session { (result) in
    switch result {
@@ -417,6 +428,7 @@ self.present(playerViewController, animated: true) {
 ``` swift
 iimport LimeAPIClient
 // Запрос новой сессии для получения ссылки на онлайн-поток
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.session { (result) in
    switch result {
@@ -449,6 +461,7 @@ import LimeAPIClient
 import AVKit
 
 // Запрос новой сессии для получения ссылки на архивный поток
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.session { (result) in
     switch result {
@@ -491,6 +504,7 @@ import LimeAPIClient
 import AVKit
 
 // Запрос новой сессии для получения ссылки на архивный поток
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 apiClient.session { (result) in
     switch result {
@@ -521,13 +535,13 @@ self.present(playerViewController, animated: true) {
 
 ### Запрос deep clicks
 
-Отправка запроса на создание `deep clicks`. При успешном запросе в ответ приходит тип данных [`String`](https://developer.apple.com/documentation/swift/string).
+Отправка запроса на создание `deep clicks` - отправка сообщения об установке по реферальной ссылке. При успешном запросе в ответ приходит тип данных [`String`](https://developer.apple.com/documentation/swift/string).
 
 Пример запроса
 ``` swift
 import LimeAPIClient
-import AVKit
 
+// BASE_URL - адрес  сервера  API
 let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // QUERY - cтрока запроса
 // PATH - путь запроса
@@ -538,6 +552,37 @@ apiClient.deepClicks(query: QUERY, path: PATH) { (result) in
    case .failure(let error):
        print(error)
    }
+}
+```
+[К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
+
+### Получение информации о реферальной программе пользователя
+
+Пример запроса
+``` swift
+import LimeAPIClient
+
+// BASE_URL - адрес  сервера  API
+let apiClient = LimeAPIClient(baseUrl: BASE_URL)
+// X_TOKEN - токен пользователя
+// REMOTE_IP - удаленный IP-адрес для тестирования (опционально)
+apiClient.referral(xToken: X_TOKEN, remoteIP: REMOTE_IP) { (result) in
+    switch result {
+    case .success(let referral):
+        print(referral)
+    case .failure(let error):
+        print(error)
+    }
+}
+```
+При успешном запросе в ответ приходит тип данных `Referral`:
+``` swift
+struct Referral: Decodable, Equatable {
+    let currentTime: String
+    let shareUrl: String
+    let userReferralUrl: String
+    let userReferralUrlExpiredAt: String
+    let referralsCount: Int
 }
 ```
 [К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
