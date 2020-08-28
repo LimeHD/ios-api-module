@@ -185,7 +185,7 @@ class ResultTableViewController: UITableViewController {
         case .deepClicks:
             self.deepClicks()
         case .users:
-            break
+            self.referral()
         }
     }
     
@@ -667,6 +667,23 @@ extension ResultTableViewController {
             case .success(let response):
                 self.results = [APIRequest.Result(title: "Ответ сервера", detail: response)]
                 self.tableView.reloadData()
+                print(response)
+            case .failure(let error):
+                self.showAlert(error)
+            }
+        }
+    }
+    
+    private func referral() {
+        self.apiClient.referral(xToken: X_TOKEN) { [weak self] (result) in
+            guard let self = self else { return }
+            self.configureStopAnimating()
+            
+            switch result {
+            case .success(let referral):
+                self.results = referral.apiRequestResult
+                self.tableView.reloadData()
+                print(referral)
             case .failure(let error):
                 self.showAlert(error)
             }
