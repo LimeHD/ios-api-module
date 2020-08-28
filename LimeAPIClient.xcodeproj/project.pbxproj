@@ -71,6 +71,7 @@
 		4E6D91CF246D7E5200BB7C69 /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91CE246D7E5200BB7C69 /* URLRequest.swift */; };
 		4E6D91D1246D846F00BB7C69 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91D0246D846F00BB7C69 /* String.swift */; };
 		4E6D91D3246D84A000BB7C69 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6D91D2246D84A000BB7C69 /* Character.swift */; };
+		4E7142D124F8FBF000C04643 /* LACRefarralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7142D024F8FBF000C04643 /* LACRefarralTests.swift */; };
 		4E75B1BB246E67150061E143 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BA246E67150061E143 /* Device.swift */; };
 		4E75B1BD246E67AD0061E143 /* LACApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BC246E67AD0061E143 /* LACApp.swift */; };
 		4E75B1BF246E77300061E143 /* LACSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E75B1BE246E77300061E143 /* LACSettings.swift */; };
@@ -201,6 +202,7 @@
 		4E6D91CE246D7E5200BB7C69 /* URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
 		4E6D91D0246D846F00BB7C69 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4E6D91D2246D84A000BB7C69 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		4E7142D024F8FBF000C04643 /* LACRefarralTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACRefarralTests.swift; sourceTree = "<group>"; };
 		4E75B1BA246E67150061E143 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		4E75B1BC246E67AD0061E143 /* LACApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACApp.swift; sourceTree = "<group>"; };
 		4E75B1BE246E77300061E143 /* LACSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LACSettings.swift; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				4E5582CC24E289E00022E930 /* LACDeepClicksTests.swift */,
 				4E5A27E524A0D5C900128AD9 /* LACImageTests.swift */,
 				4E5A27E724A0D6D600128AD9 /* LACPlaylistTests.swift */,
+				4E7142D024F8FBF000C04643 /* LACRefarralTests.swift */,
 			);
 			path = LimeAPIClientTests;
 			sourceTree = "<group>";
@@ -685,6 +688,7 @@
 				4E835E46248F72FB0011E0E0 /* LACConfigurationTests.swift in Sources */,
 				4E9192712488D4FC00974C02 /* BannerExample.swift in Sources */,
 				4E8CD1C62486771C00648E24 /* IntTests.swift in Sources */,
+				4E7142D124F8FBF000C04643 /* LACRefarralTests.swift in Sources */,
 				4E91926F2488D23B00974C02 /* PingExample.swift in Sources */,
 				4E560CCC2487BE0D006A644A /* SessionExample.swift in Sources */,
 				4E560CD12487E596006A644A /* BroadcastExample.swift in Sources */,
