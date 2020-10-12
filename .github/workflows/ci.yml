@@ -20,4 +20,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: iOS - ${{ matrix.destination }}
-        run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -project "LimeAPIClient.xcodeproj" -scheme "LimeAPIClient" -destination "${{ matrix.destination }}" clean test | xcpretty
+        run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build -sdk iphoneos -scheme "LimeAPIClient" -destination "${{ matrix.destination }}" clean test | xcpretty
