@@ -89,7 +89,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "LimeAPIClient/**/*.{h,m,swift}"
+  spec.source_files  = "Sources/LimeAPIClient/**/*.{h,m,swift}"
   # spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
@@ -132,5 +132,6 @@ Pod::Spec.new do |spec|
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
+  spec.dependency "HTTPURLRequest"
 
 end
