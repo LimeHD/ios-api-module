@@ -22,6 +22,7 @@ public struct BannerAndDevice: Decodable, Equatable {
         public let packId: Int?
         public let detailUrl: String
         public let delay: Int
+        public let buttonText: String
     }
     
     public struct Device: Decodable, Equatable {

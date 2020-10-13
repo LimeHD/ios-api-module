@@ -19,7 +19,8 @@ let BannerAndDeviceExample = """
         "type": 20,
         "pack_id": 10,
         "detail_url": "",
-        "delay": 3
+        "delay": 3,
+        "button_text": "Смотреть"
     },
     "device": {
         "id": "123",
@@ -41,7 +42,8 @@ let BannerExample = """
     "type": 20,
     "pack_id": 10,
     "detail_url": "",
-    "delay": 3
+    "delay": 3,
+    "button_text": "Смотреть"
 }
 """
 
