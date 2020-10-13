@@ -85,7 +85,7 @@ extension LimeAPIClientTests {
         let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
         LimeAPIClient.setIdentification(identification)
         let configuration = LACConfiguration(language: Device.language)
-        LimeAPIClient.configuration = configuration
+        LimeAPIClient.setConfiguration(configuration)
         
         self.runSessionRequest(data.raw, self.response200)
     }

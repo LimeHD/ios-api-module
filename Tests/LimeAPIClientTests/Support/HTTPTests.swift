@@ -49,7 +49,7 @@ class HTTPTests: XCTestCase {
         let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
         LimeAPIClient.setIdentification(identification)
         let configuration = LACConfiguration(language: Device.language)
-        LimeAPIClient.configuration = configuration
+        LimeAPIClient.setConfiguration(configuration)
         let baseUrl = "https://limehd.tv/"
         let session = MockURLSession()
         let queue = MockDispatchQueue()

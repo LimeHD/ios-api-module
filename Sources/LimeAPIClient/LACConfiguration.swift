@@ -15,7 +15,7 @@ import Foundation
 /// // Язык ожидаемого контента, который указывается запросе
 /// let language = Locale.preferredLanguages.first ?? "ru-RU"
 /// let configuration = LACConfiguration(language: language)
-/// LimeAPIClient.configuration = configuration
+/// LimeAPIClient.setConfiguration(configuration)
 /// ```
 public struct LACConfiguration {
     /// Язык ожидаемого контента, который указывается в запросе.
@@ -43,7 +43,7 @@ public struct LACConfiguration {
     /// ```
     /// let language = Locale.preferredLanguages.first ?? "ru-RU"
     /// let configuration = LACConfiguration(language: language)
-    /// LimeAPIClient.configuration = configuration
+    /// LimeAPIClient.setConfiguration(configuration)
     /// ```
     public init(language: String) {
         self.language = language

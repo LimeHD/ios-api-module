@@ -17,7 +17,7 @@ class LACStreamTests: XCTestCase {
     func test_onlineEndpoint_runBeforeSession_throws() throws {
         let expectedError = LACStream.Error.sessionError
         
-        LimeAPIClient.configuration = nil
+        LimeAPIClient.setConfiguration(nil)
         XCTAssertThrowsError(try LACStream.Online.endpoint(for: self.streamId))
         
         do {
@@ -46,7 +46,7 @@ class LACStreamTests: XCTestCase {
     func test_onlineUrlAsset_runBeforeSession_throws() throws {
         let expectedError = LACStream.Error.sessionError
         
-        LimeAPIClient.configuration = nil
+        LimeAPIClient.setConfiguration(nil)
         XCTAssertThrowsError(try LACStream.Online.urlAsset(for: self.streamId))
         
         do {
@@ -81,7 +81,7 @@ class LACStreamTests: XCTestCase {
         let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
         LimeAPIClient.setIdentification(identification)
         let configuration = LACConfiguration(language: "ru")
-        LimeAPIClient.configuration = configuration
+        LimeAPIClient.setConfiguration(configuration)
         
         let data = try XCTUnwrap(session.data(using: .utf8))
         let session = MockURLSession()
@@ -112,7 +112,7 @@ class LACStreamTests: XCTestCase {
     func test_onlineRequest_runBeforeSession_throws() throws {
         let expectedError = LACStream.Error.sessionError
         
-        LimeAPIClient.configuration = nil
+        LimeAPIClient.setConfiguration(nil)
         XCTAssertThrowsError(try LACStream.Online.request(for: self.streamId))
         
         do {
@@ -141,7 +141,7 @@ class LACStreamTests: XCTestCase {
     func test_archiveEndpoint_runBeforeSession_throws() throws {
         let expectedError = LACStream.Error.sessionError
         
-        LimeAPIClient.configuration = nil
+        LimeAPIClient.setConfiguration(nil)
         XCTAssertThrowsError(try LACStream.Archive.endpoint(for: self.streamId))
         
         do {
@@ -170,7 +170,7 @@ class LACStreamTests: XCTestCase {
     func test_archiveUrlAsset_runBeforeSession_throws() throws {
         let expectedError = LACStream.Error.sessionError
         
-        LimeAPIClient.configuration = nil
+        LimeAPIClient.setConfiguration(nil)
         XCTAssertThrowsError(try LACStream.Archive.urlAsset(for: 1, start: 10, duration: 100))
         
         do {

@@ -33,7 +33,8 @@ class LimeAPIClientTests: XCTestCase {
         self.session = nil
         self.sut = nil
         super.tearDown()
-        LimeAPIClient.configuration = nil
+        LimeAPIClient.setIdentification(nil)
+        LimeAPIClient.setConfiguration(nil)
     }
     
     func test_setIdentification_setsValue() {
@@ -48,7 +49,7 @@ class LimeAPIClientTests: XCTestCase {
     
     func test_beforeUse_sets_configuration() {
         let configuration = LACConfiguration(language: Device.language)
-        LimeAPIClient.configuration = configuration
+        LimeAPIClient.setConfiguration(configuration)
         XCTAssertNotNil(LimeAPIClient.configuration)
     }
     
@@ -244,7 +245,7 @@ extension LimeAPIClientTests {
         let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
         LimeAPIClient.setIdentification(identification)
         let configuration = LACConfiguration(language: Device.language)
-        LimeAPIClient.configuration = configuration
+        LimeAPIClient.setConfiguration(configuration)
         XCTAssertNotNil(LimeAPIClient.configuration)
         
         self.sut.session { (result) in }

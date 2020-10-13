@@ -54,7 +54,7 @@ public struct LimeAPIClient {
     let session: URLSession
     let mainQueue: Dispatchable
     /// Значения конфигурации клиента
-    public static var configuration: LACConfiguration?
+    static var configuration: LACConfiguration?
     /// Значения идентификаторов клиента
     static var identification: LACIdentification?
     
@@ -66,11 +66,15 @@ public struct LimeAPIClient {
         LimeAPIClient.isVerboseEnabled = true
     }
     
-    
     /// Устанавливает значения идентификаторов клиента
     /// - Parameter identification: идентификаторы клиента
-    public static func setIdentification(_ identification: LACIdentification) {
+    public static func setIdentification(_ identification: LACIdentification?) {
         LimeAPIClient.identification = identification
+    }
+    /// Устанавливает значения конфигурацию клиента
+    /// - Parameter configuration: конфигурация клиента
+    public static func setConfiguration(_ configuration: LACConfiguration?) {
+        LimeAPIClient.configuration = configuration
     }
     
     /// Инициализация клиента для работы с Лайм API
@@ -82,13 +86,16 @@ public struct LimeAPIClient {
     ///
     /// Пример инициализации:
     /// ```
+    /// // Задание идентификаторов
+    /// let identification = LACIdentification(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION)
+    /// LimeAPIClient.setIdentification(identification)
     /// // Задание параметров конфигурации
     /// // Язык ожидаемого контента, который указывается запросе
     /// let language = Locale.preferredLanguages.first ?? "ru-RU"
     /// // APPLICATION_ID можно получить с помощью LACApp.id -
     /// // (идентификатор пакета, который определяется ключом CFBundleIdentifier)
-    /// let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION, language: language)
-    /// LimeAPIClient.configuration = configuration
+    /// let configuration = LACConfiguration(language: language)
+    /// LimeAPIClient.setConfiguration(configuration)
     ///
     /// // Непосредственно инициализация
     /// // BASE_URL - адрес  сервера  API
@@ -301,13 +308,16 @@ public struct LimeAPIClient {
     ///
     /// Пример запроса:
     /// ```
+    /// // Задание идентификаторов
+    /// let identification = LACIdentification(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION)
+    /// LimeAPIClient.setIdentification(identification)
     /// // Задание параметров конфигурации
     /// // Язык ожидаемого контента, который указывается запросе
     /// let language = Locale.preferredLanguages.first ?? "ru-RU"
     /// // APPLICATION_ID можно получить с помощью LACApp.id -
     /// // (идентификатор пакета, который определяется ключом CFBundleIdentifier)
-    /// let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION, language: language)
-    /// LimeAPIClient.configuration = configuration
+    /// let configuration = LACConfiguration(language: language)
+    /// LimeAPIClient.setConfiguration(configuration)
     ///
     /// // BASE_URL - адрес  сервера  API
     /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)

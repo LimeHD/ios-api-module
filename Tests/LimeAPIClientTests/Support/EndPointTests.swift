@@ -18,11 +18,11 @@ class EndPointTests: XCTestCase {
         let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
         LimeAPIClient.setIdentification(identification)
         let configuration = LACConfiguration(language: "zh-Hans_HK")
-        LimeAPIClient.configuration = configuration
+        LimeAPIClient.setConfiguration(configuration)
     }
     
     override func tearDown() {
-        LimeAPIClient.configuration = nil
+        LimeAPIClient.setConfiguration(nil)
         super.tearDown()
     }
     
