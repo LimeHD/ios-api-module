@@ -35,18 +35,20 @@ class HTTPTests: XCTestCase {
         XCTAssertEqual(self.sut.headers["X-Device-Name"], deviceName)
         let deviceId = Device.id
         XCTAssertEqual(self.sut.headers["X-Device-Id"], deviceId)
-        let appId = LimeAPIClient.configuration?.appId ?? ""
+        let appId = LimeAPIClient.identification?.appId ?? ""
         XCTAssertEqual(self.sut.headers["X-App-Id"], appId)
         let appVersion = LACApp.version
         XCTAssertEqual(self.sut.headers["X-App-Version"], appVersion)
-        let key = LimeAPIClient.configuration?.apiKey ?? ""
+        let key = LimeAPIClient.identification?.apiKey ?? ""
         XCTAssertEqual(self.sut.headers["X-Access-Key"], key)
-        let sessionId = LimeAPIClient.configuration?.sessionId ?? ""
+        let sessionId = LimeAPIClient.identification?.sessionId ?? ""
         XCTAssertEqual(self.sut.headers["X-Session-Id"], sessionId)
     }
     
     func configureLimeAPIClient() throws {
-        let configuration = LACConfiguration(appId: "APPLICATION_ID", apiKey: "API_KEY.APPLICATION", language: Device.language)
+        let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
+        LimeAPIClient.setIdentification(identification)
+        let configuration = LACConfiguration(language: Device.language)
         LimeAPIClient.configuration = configuration
         let baseUrl = "https://limehd.tv/"
         let session = MockURLSession()

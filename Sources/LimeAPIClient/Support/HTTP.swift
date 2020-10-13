@@ -27,10 +27,10 @@ public struct HTTP {
             "X-Platform":       "ios",
             "X-Device-Name":    Device.name,
             "X-Device-Id":      Device.id,
-            "X-App-Id":         LimeAPIClient.configuration?.appId ?? "",
+            "X-App-Id":         LimeAPIClient.identification?.appId ?? "",
             "X-App-Version":    LACApp.version,
-            "X-Access-Key":     LimeAPIClient.configuration?.apiKey ?? "",
-            "X-Session-Id":     LimeAPIClient.configuration?.sessionId ?? "",
+            "X-Access-Key":     LimeAPIClient.identification?.apiKey ?? "",
+            "X-Session-Id":     LimeAPIClient.identification?.sessionId ?? "",
             "X-Token":          LimeAPIClient.xToken
         ]
     }

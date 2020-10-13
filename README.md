@@ -106,8 +106,10 @@ LimeAPIClient.verbose()
 ### Конфигурирование клиента
 Конфигурирования клиента `LimeAPIClient` осуществлятся один раз до начала использования запросов
 ``` swift
+let identification = LACIdentification(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION)
+LimeAPIClient.setIdentification(identification)
 let language = Locale.preferredLanguages.first ?? "ru-RU"
-let configuration = LACConfiguration(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION, language: language)
+let configuration = LACConfiguration(language: language)
 LimeAPIClient.configuration = configuration
 ```
 [К содержанию](#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)

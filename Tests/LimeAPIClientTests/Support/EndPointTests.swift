@@ -15,7 +15,9 @@ class EndPointTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        let configuration = LACConfiguration(appId: "TEST", apiKey: "TEST_KEY", language: "zh-Hans_HK")
+        let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
+        LimeAPIClient.setIdentification(identification)
+        let configuration = LACConfiguration(language: "zh-Hans_HK")
         LimeAPIClient.configuration = configuration
     }
     
@@ -113,7 +115,7 @@ class EndPointTests: XCTestCase {
     var bannerParameters: EndPoint.Parameters {
         let urlParameters = [
             "device_id" : Device.id,
-            "app_id" : LimeAPIClient.configuration?.appId ?? "",
+            "app_id" : LimeAPIClient.identification?.appId ?? "",
             "platform" : "ios"
         ]
         return EndPoint.Parameters(url: urlParameters)

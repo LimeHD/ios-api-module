@@ -36,8 +36,18 @@ class LimeAPIClientTests: XCTestCase {
         LimeAPIClient.configuration = nil
     }
     
+    func test_setIdentification_setsValue() {
+        let appId = "APP_ID"
+        let apiKey = "API_KEY"
+        let identification = LACIdentification(appId: appId, apiKey: apiKey)
+    
+        LimeAPIClient.setIdentification(identification)
+        XCTAssertNotNil(LimeAPIClient.identification)
+        XCTAssertEqual(LimeAPIClient.identification, identification)
+    }
+    
     func test_beforeUse_sets_configuration() {
-        let configuration = LACConfiguration(appId: "TEST_ID", apiKey: "TEST_API", language: Device.language)
+        let configuration = LACConfiguration(language: Device.language)
         LimeAPIClient.configuration = configuration
         XCTAssertNotNil(LimeAPIClient.configuration)
     }
@@ -231,8 +241,9 @@ extension LimeAPIClientTests {
     
     func test_session_successfulSessionSetsDefaultChannelGroupId() throws {
         let data = try generateJSONData(Session.self, string: SessionExample.correct)
-        
-        let configuration = LACConfiguration(appId: "TEST_ID", apiKey: "TEST_API", language: Device.language)
+        let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
+        LimeAPIClient.setIdentification(identification)
+        let configuration = LACConfiguration(language: Device.language)
         LimeAPIClient.configuration = configuration
         XCTAssertNotNil(LimeAPIClient.configuration)
         

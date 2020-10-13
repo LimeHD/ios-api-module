@@ -9,8 +9,6 @@
 import UIKit
 import HTTPURLRequest
 
-let module = NSStringFromClass(LimeAPIClient.self).components(separatedBy:".")[0]
-
 public typealias StringResult = Result<String, Error>
 public typealias StringCompletion = (StringResult) -> Void
 public typealias DecodableCompletion<T: Decodable> = (Result<T, Error>) -> Void
@@ -50,13 +48,15 @@ public enum APIError: Error, LocalizedError, Equatable {
 }
 
 /// Общий клиент для работы с Лайм API. 
-public final class LimeAPIClient {
+public struct LimeAPIClient {
     static var isVerboseEnabled = false
     let baseUrl: String
     let session: URLSession
     let mainQueue: Dispatchable
     /// Значения конфигурации клиента
     public static var configuration: LACConfiguration?
+    /// Значения идентификаторов клиента
+    static var identification: LACIdentification?
     
     /// Токен пользователя
     public static var xToken = ""
@@ -64,6 +64,13 @@ public final class LimeAPIClient {
     /// Включает журналирование результатов запрос в консоли XCode
     public static func verbose() {
         LimeAPIClient.isVerboseEnabled = true
+    }
+    
+    
+    /// Устанавливает значения идентификаторов клиента
+    /// - Parameter identification: идентификаторы клиента
+    public static func setIdentification(_ identification: LACIdentification) {
+        LimeAPIClient.identification = identification
     }
     
     /// Инициализация клиента для работы с Лайм API
@@ -115,7 +122,7 @@ public final class LimeAPIClient {
         self.request(Session.self, endPoint: EndPoint.Factory.session()) { (result) in
             switch result {
             case .success(let session):
-                LimeAPIClient.configuration?.sessionId = session.sessionId
+                LimeAPIClient.identification?.sessionId = session.sessionId
                 LimeAPIClient.configuration?.streamEndpoint = session.streamEndpoint
                 LimeAPIClient.configuration?.archiveEndpoint = session.archiveEndpoint
                 LimeAPIClient.configuration?.defaultChannelGroupId = session.defaultChannelGroupId.string
@@ -180,7 +187,7 @@ public final class LimeAPIClient {
             let error = APIError.unknownChannelsGroupId
             completion(.failure(error))
             guard LimeAPIClient.isVerboseEnabled else { return }
-            print("\(module)\n\(#function)\n\(error.localizedDescription)")
+            print("\(LimeAPIClient.self)\n\(#function)\n\(error.localizedDescription)")
             return
         }
         let endPoint = EndPoint.Channels.byGroupId(
@@ -653,6 +660,6 @@ extension LimeAPIClient {
         guard LimeAPIClient.isVerboseEnabled else { return }
         let configuration = HTTP.headers.description
         let url = request.url?.absoluteString ?? "(пустое значение ulr)"
-        print("\(module) \(configuration)\n\(url)\n\(message)")
+        print("\(LimeAPIClient.self) \(configuration)\n\(url)\n\(message)")
     }
 }

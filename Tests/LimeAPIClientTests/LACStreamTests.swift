@@ -78,8 +78,9 @@ class LACStreamTests: XCTestCase {
     
     func runSession(with session: String) throws {
         let baseUrl = "https://limehd.tv/"
-        
-        let configuration = LACConfiguration(appId: "TEST_ID", apiKey: "TEST_API", language: "ru")
+        let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
+        LimeAPIClient.setIdentification(identification)
+        let configuration = LACConfiguration(language: "ru")
         LimeAPIClient.configuration = configuration
         
         let data = try XCTUnwrap(session.data(using: .utf8))

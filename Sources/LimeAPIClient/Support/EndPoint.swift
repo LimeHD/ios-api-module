@@ -14,7 +14,7 @@ struct EndPoint {
     let httpMethod: String
     let parameters: EndPoint.Parameters
     static var appId: String {
-        LimeAPIClient.configuration?.appId ?? ""
+        LimeAPIClient.identification?.appId ?? ""
     }
     static var languageDesignator: String {
         LimeAPIClient.configuration?.languageDesignator ?? ""
