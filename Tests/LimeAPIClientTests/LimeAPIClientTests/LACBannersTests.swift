@@ -13,7 +13,7 @@ extension LimeAPIClientTests {
     func test_findBanner_wrongResponseData_callsCompletionWithFailure() {
         var completion: APICompletion<BannerAndDevice>?
         
-        self.sut.findBanner { (result) in
+        LimeAPIClient.findBanner { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -28,7 +28,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<BannerAndDevice>?
         let data = try generateJSONData(BannerAndDevice.self, string: BannerAndDeviceExample)
         
-        self.sut.findBanner { (result) in
+        LimeAPIClient.findBanner { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -43,7 +43,7 @@ extension LimeAPIClientTests {
     func test_nextBanner_wrongResponseData_callsCompletionWithFailure() {
         var completion: APICompletion<BannerAndDevice.Banner>?
         
-        self.sut.nextBanner { (result) in
+        LimeAPIClient.nextBanner { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -58,7 +58,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<BannerAndDevice.Banner>?
         let data = try generateJSONData(BannerAndDevice.Banner.self, string: BannerExample)
         
-        self.sut.nextBanner { (result) in
+        LimeAPIClient.nextBanner { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -73,7 +73,7 @@ extension LimeAPIClientTests {
     func test_deleteBanFromBanner_wrongResponseData_callsCompletionWithFailure() {
         var completion: APICompletion<BanBanner>?
         
-        self.sut.deleteBanFromBanner(bannerId: 68) { (result) in
+        LimeAPIClient.deleteBanFromBanner(bannerId: 68) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -88,7 +88,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<BanBanner>?
         let data = try generateJSONData(BanBanner.self, string: BanBannerExample)
         
-        self.sut.deleteBanFromBanner(bannerId: 68) { (result) in
+        LimeAPIClient.deleteBanFromBanner(bannerId: 68) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -103,7 +103,7 @@ extension LimeAPIClientTests {
     func test_banBanner_wrongResponseData_callsCompletionWithFailure() {
         var completion: APICompletion<BanBanner>?
         
-        self.sut.banBanner(bannerId: 68) { (result) in
+        LimeAPIClient.banBanner(bannerId: 68) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -118,7 +118,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<BanBanner>?
         let data = try generateJSONData(BanBanner.self, string: BanBannerExample)
         
-        self.sut.banBanner(bannerId: 68) { (result) in
+        LimeAPIClient.banBanner(bannerId: 68) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -133,7 +133,7 @@ extension LimeAPIClientTests {
     func test_getBanner_wrongResponseData_callsCompletionWithFailure() {
         var completion: APICompletion<BannerAndDevice.Banner>?
         
-        self.sut.getBanner(bannerId: 68) { (result) in
+        LimeAPIClient.getBanner(bannerId: 68) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -148,7 +148,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<BannerAndDevice.Banner>?
         let data = try generateJSONData(BannerAndDevice.Banner.self, string: BannerExample)
         
-        self.sut.getBanner(bannerId: 68) { (result) in
+        LimeAPIClient.getBanner(bannerId: 68) { (result) in
             completion = self.callAPICompletion(result)
         }
         

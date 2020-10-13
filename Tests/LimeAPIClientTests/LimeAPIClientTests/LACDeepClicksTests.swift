@@ -17,8 +17,7 @@ extension LimeAPIClientTests {
         
         let configuration = LACConfiguration(baseUrl: "", language: "ru", session: self.session, mainQueue: queue)
         LimeAPIClient.setConfiguration(configuration)
-        self.sut = LimeAPIClient()
-        self.sut.deepClicks(query: "Test query", path: "Test path") { (result) in
+        LimeAPIClient.deepClicks(query: "Test query", path: "Test path") { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -36,7 +35,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<String>?
         let expectedError = HTTPURLRequest.Error.emptyData
         
-        self.sut.deepClicks(query: "Test query", path: "Test path") { (result) in
+        LimeAPIClient.deepClicks(query: "Test query", path: "Test path") { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -56,7 +55,7 @@ extension LimeAPIClientTests {
         let response = try self.response(500)
         let message = String(decoding: data, as: UTF8.self)
         let expectedError = APIError.wrongStatusCode(response.localizedStatusCode, error: message)
-        self.sut.deepClicks(query: "Test query", path: "Test path") { (result) in
+        LimeAPIClient.deepClicks(query: "Test query", path: "Test path") { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -75,7 +74,7 @@ extension LimeAPIClientTests {
         let message = "Test"
         let data = try XCTUnwrap(message.data(using: .utf8))
 
-        self.sut.deepClicks(query: "Test query", path: "Test path") { (result) in
+        LimeAPIClient.deepClicks(query: "Test query", path: "Test path") { (result) in
             completion = self.callAPICompletion(result)
         }
 

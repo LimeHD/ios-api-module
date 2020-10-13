@@ -13,7 +13,7 @@ extension LimeAPIClientTests {
     func test_requestBroadcasts_wrongResponseData_callsCompletionWithFailure() {
         var completion: APICompletion<[Broadcast]>?
         
-        self.sut.requestBroadcasts(channelId: 105, dateInterval: self.testDateInterval) { (result) in
+        LimeAPIClient.requestBroadcasts(channelId: 105, dateInterval: self.testDateInterval) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -34,7 +34,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<[Broadcast]>?
         let data = try generateJSONData(JSONAPIObject<[Broadcast], Broadcast.Meta>.self, string: BroadcastExample)
         
-        self.sut.requestBroadcasts(channelId: 105, dateInterval: self.testDateInterval) { (result) in
+        LimeAPIClient.requestBroadcasts(channelId: 105, dateInterval: self.testDateInterval) { (result) in
             completion = self.callAPICompletion(result)
         }
         

@@ -116,9 +116,7 @@ LimeAPIClient.setConfiguration(configuration)
 
 ### Cоздание новой сессии
 ``` swift
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-apiClient.session { (result) in
+LimeAPIClient.session { (result) in
     switch result {
     case .success(let session):
         print(session)
@@ -179,9 +177,7 @@ struct JSONAPIError: Decodable, Equatable {
 ### Получение баннера, рекомендованного данному устройству и приложению
 Пример запроса
 ``` swift
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-apiClient.nextBanner { (result) in
+LimeAPIClient.nextBanner { (result) in
     switch result {
     case .success(let banner):
         print(banner)
@@ -209,10 +205,8 @@ struct BannerAndDevice.Banner: Decodable, Equatable {
 ### Снятие (удаление) пометки «нежелательный» с баннера
 Пример запроса
 ``` swift
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // Параметр bannerId - ID Баннера для модификации, тип данных Int
-apiClient.deleteBanFromBanner(bannerId: BANNER_ID) { (result) in
+LimeAPIClient.deleteBanFromBanner(bannerId: BANNER_ID) { (result) in
     switch result {
     case .success(let banBanner):
         print(banBanner)
@@ -232,10 +226,8 @@ struct BanBanner: Decodable, Equatable {
 ### Пометить баннер как «нежелательный» и больше его не показывать
 Пример запроса
 ``` swift
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // Параметр bannerId - ID Баннера для модификации, тип данных Int
-apiClient.banBanner(bannerId: BANNER_ID) { (result) in
+LimeAPIClient.banBanner(bannerId: BANNER_ID) { (result) in
     switch result {
     case .success(let banBanner):
         print(banBanner)
@@ -251,10 +243,8 @@ apiClient.banBanner(bannerId: BANNER_ID) { (result) in
 ### Получить баннер (информацию о нём)
 Пример запроса
 ``` swift
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // Параметр bannerId - ID Баннера для модификации, тип данных Int
-apiClient.getBanner(bannerId: BANNER_ID) { (result) in
+LimeAPIClient.getBanner(bannerId: BANNER_ID) { (result) in
     switch result {
     case .success(let banner):
         print(banner)
@@ -270,9 +260,7 @@ apiClient.getBanner(bannerId: BANNER_ID) { (result) in
 ### Получение списка каналов
 Пример запроса
 ``` swift
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-apiClient.requestChannels { (result) in
+LimeAPIClient.requestChannels { (result) in
     switch result {
     case .success(let channels):
         print(channels)
@@ -310,12 +298,10 @@ struct Channel: Decodable, Equatable {
 
 Пример запроса
 ``` swift
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 let cacheKey = "test"
 let timeZone = TimeZone(secondsFromGMT: 3.hours)
 let timeZonePicker = LACTimeZonePicker.previous
-apiClient.requestChannelsByGroupId(cacheKey: cacheKey, timeZone: timeZone, timeZonePicker: timeZonePicker) { (result) in
+LimeAPIClient.requestChannelsByGroupId(cacheKey: cacheKey, timeZone: timeZone, timeZonePicker: timeZonePicker) { (result) in
     switch result {
     case .success(let channels):
         print(channels)
@@ -331,12 +317,10 @@ apiClient.requestChannelsByGroupId(cacheKey: cacheKey, timeZone: timeZone, timeZ
 ### Получение программы передач
 Пример запроса
 ``` swift
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 let startDate = Date().addingTimeInterval(-8.days)
 let timeZone = TimeZone(secondsFromGMT: 3.hours) ?? TimeZone.current
 let dateInterval = LACDateInterval(start: startDate, duration: 15.days, timeZone: timeZone)
-apiClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { (result) in
+LimeAPIClient.requestBroadcasts(channelId: 105, dateInterval: dateInterval) { (result) in
     switch result {
     case .success(let broadcasts):
         print(broadcasts)
@@ -368,11 +352,9 @@ struct Broadcast: Decodable, Equatable {
 ### Проверка работоспособности сервиса
 Пример запроса
 ``` swift
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // Параметр key - опциональный, тип данных String, 
 // используется для разнообразия запросов и обхода кэша
-apiClient.ping(key: KEY) { (result) in
+LimeAPIClient.ping(key: KEY) { (result) in
     switch result {
     case .success(let ping):
         print(ping)
@@ -403,9 +385,7 @@ import LimeAPIClient
 import AVKit
 
 // Запрос новой сессии для получения ссылки на онлайн-поток
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-apiClient.session { (result) in
+LimeAPIClient.session { (result) in
    switch result {
    case .success(let session):
        print(session)
@@ -441,9 +421,7 @@ self.present(playerViewController, animated: true) {
 ``` swift
 iimport LimeAPIClient
 // Запрос новой сессии для получения ссылки на онлайн-поток
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-apiClient.session { (result) in
+LimeAPIClient.session { (result) in
    switch result {
    case .success(let session):
        print(session)
@@ -474,9 +452,7 @@ import LimeAPIClient
 import AVKit
 
 // Запрос новой сессии для получения ссылки на архивный поток
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-apiClient.session { (result) in
+LimeAPIClient.session { (result) in
     switch result {
     case .success(let session):
         print(session)
@@ -517,9 +493,7 @@ import LimeAPIClient
 import AVKit
 
 // Запрос новой сессии для получения ссылки на архивный поток
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-apiClient.session { (result) in
+LimeAPIClient.session { (result) in
     switch result {
     case .success(let session):
         print(session)
@@ -554,11 +528,9 @@ self.present(playerViewController, animated: true) {
 ``` swift
 import LimeAPIClient
 
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // QUERY - cтрока запроса
 // PATH - путь запроса
-apiClient.deepClicks(query: QUERY, path: PATH) { (result) in
+LimeAPIClient.deepClicks(query: QUERY, path: PATH) { (result) in
    switch result {
    case .success(let message):
        print(message)
@@ -575,11 +547,9 @@ apiClient.deepClicks(query: QUERY, path: PATH) { (result) in
 ``` swift
 import LimeAPIClient
 
-// BASE_URL - адрес  сервера  API
-let apiClient = LimeAPIClient(baseUrl: BASE_URL)
 // X_TOKEN - токен пользователя
 // REMOTE_IP - удаленный IP-адрес для тестирования (опционально)
-apiClient.referral(xToken: X_TOKEN, remoteIP: REMOTE_IP) { (result) in
+LimeAPIClient.referral(xToken: X_TOKEN, remoteIP: REMOTE_IP) { (result) in
     switch result {
     case .success(let referral):
         print(referral)

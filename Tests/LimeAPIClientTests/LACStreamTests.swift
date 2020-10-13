@@ -86,8 +86,7 @@ class LACStreamTests: XCTestCase {
         let queue = MockDispatchQueue()
         let configuration = LACConfiguration(baseUrl: baseUrl, language: "ru", session: session, mainQueue: queue)
         LimeAPIClient.setConfiguration(configuration)
-        let apiClient = LimeAPIClient()
-        apiClient.session { (_) in }
+        LimeAPIClient.session { (_) in }
         
         let url = try XCTUnwrap(URL(string: baseUrl))
         let response = HTTPURLResponse(url: url, statusCode: 200)

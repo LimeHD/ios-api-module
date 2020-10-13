@@ -13,7 +13,7 @@ extension LimeAPIClientTests {
     func test_requestChannels_wrongResponseData_callsCompletionWithFailure() {
         var completion: APICompletion<[Channel]>?
         
-        self.sut.requestChannels { (result) in
+        LimeAPIClient.requestChannels { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -28,7 +28,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<[Channel]>?
         let data = try generateJSONData(JSONAPIObject<[Channel], String>.self, string: ChannelExample)
         
-        self.sut.requestChannels { (result) in
+        LimeAPIClient.requestChannels { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -44,7 +44,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<[Channel]>?
         let expectedError = APIError.unknownChannelsGroupId
         
-        self.sut.requestChannelsByGroupId { (result) in
+        LimeAPIClient.requestChannelsByGroupId { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -65,7 +65,7 @@ extension LimeAPIClientTests {
         
         try self.runSessionToGetAPIValues()
         
-        self.sut.requestChannelsByGroupId { (result) in
+        LimeAPIClient.requestChannelsByGroupId { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -99,7 +99,7 @@ extension LimeAPIClientTests {
         let cacheKey = "test"
         let timeZone = TimeZone(secondsFromGMT: 3.hours)
         let timeZonePicker = LACTimeZonePicker.previous
-        self.sut.requestChannelsByGroupId(cacheKey: cacheKey, timeZone: timeZone, timeZonePicker: timeZonePicker) { (result) in
+        LimeAPIClient.requestChannelsByGroupId(cacheKey: cacheKey, timeZone: timeZone, timeZonePicker: timeZonePicker) { (result) in
             completion = self.callAPICompletion(result)
         }
         

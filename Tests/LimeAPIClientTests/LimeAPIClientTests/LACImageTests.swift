@@ -15,7 +15,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<UIImage>?
         let expectedError = APIError.incorrectImageData
         
-        self.sut.getImage(with: "IMAGE_URL") { (result) in
+        LimeAPIClient.getImage(with: "IMAGE_URL") { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -35,7 +35,7 @@ extension LimeAPIClientTests {
         let response = try self.response(500)
         let dataResponse = DataResponse(data: data, response: response)
         let expectedError = HTTPURLRequest.Error.wrongStatusCode(dataResponse)
-        self.sut.getImage(with: self.baseUrl) { (result) in
+        LimeAPIClient.getImage(with: self.baseUrl) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -52,7 +52,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<UIImage>?
         let expectedError = URLRequestError.invalidUrl("")
         
-        self.sut.getImage(with: "") { (result) in
+        LimeAPIClient.getImage(with: "") { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -71,7 +71,7 @@ extension LimeAPIClientTests {
         let image = try XCTUnwrap(UIImage(color: .black))
         let data = try XCTUnwrap(image.pngData())
 
-        self.sut.getImage(with: "IMAGE_URL") { (result) in
+        LimeAPIClient.getImage(with: "IMAGE_URL") { (result) in
             completion = self.callAPICompletion(result)
         }
 

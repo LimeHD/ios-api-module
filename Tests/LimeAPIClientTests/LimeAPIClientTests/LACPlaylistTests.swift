@@ -15,7 +15,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<String>?
         let expectedError = LACStream.Error.sessionError
         
-        self.sut.getOnlinePlaylist(for: 44) { (result) in
+        LimeAPIClient.getOnlinePlaylist(for: 44) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -36,7 +36,7 @@ extension LimeAPIClientTests {
         let dataResponse = DataResponse(data: data, response: response)
         let expectedError = HTTPURLRequest.Error.wrongStatusCode(dataResponse)
         try self.runSessionToGetAPIValues()
-        self.sut.getOnlinePlaylist(for: 44) { (result) in
+        LimeAPIClient.getOnlinePlaylist(for: 44) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -55,7 +55,7 @@ extension LimeAPIClientTests {
         let string = "TEST"
         let data = string.data(using: .utf8)
         try self.runSessionToGetAPIValues()
-        self.sut.getOnlinePlaylist(for: 44) { (result) in
+        LimeAPIClient.getOnlinePlaylist(for: 44) { (result) in
             completion = self.callAPICompletion(result)
         }
 
@@ -73,8 +73,7 @@ extension LimeAPIClientTests {
         
         let configiration = LACConfiguration(baseUrl: "", language: "ru", session: self.session, mainQueue: self.queue)
         LimeAPIClient.setConfiguration(configiration)
-        self.sut = LimeAPIClient()
-        self.sut.getArchivePlaylist(for: 44, startAt: 10, duration: 300) { (result) in
+        LimeAPIClient.getArchivePlaylist(for: 44, startAt: 10, duration: 300) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -93,7 +92,7 @@ extension LimeAPIClientTests {
         let string = "TEST"
         let data = string.data(using: .utf8)
 
-        self.sut.getArchivePlaylist(for: 44, startAt: 10, duration: 300) { (result) in
+        LimeAPIClient.getArchivePlaylist(for: 44, startAt: 10, duration: 300) { (result) in
             completion = self.callAPICompletion(result)
         }
 
@@ -122,7 +121,7 @@ extension LimeAPIClientTests {
         let attributes = Broadcast.Attributes(title: "", detail: "", rating: nil, startAt: startAt, finishAt: finishAt)
         let broadcast = Broadcast(id: "", type: "", attributes: attributes)
         
-        self.sut.getArchivePlaylist(for: 44, broadcast: broadcast) { (result) in
+        LimeAPIClient.getArchivePlaylist(for: 44, broadcast: broadcast) { (result) in
             completion = self.callAPICompletion(result)
         }
 

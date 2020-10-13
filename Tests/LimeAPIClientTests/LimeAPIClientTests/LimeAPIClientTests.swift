@@ -16,7 +16,6 @@ class LimeAPIClientTests: XCTestCase {
         let error: Error?
     }
     
-    var sut: LimeAPIClient!
     var baseUrl = "https://limehd.tv/"
     var url = URL(string: "https://limehd.tv/")!
     var session: MockURLSession!
@@ -28,12 +27,10 @@ class LimeAPIClientTests: XCTestCase {
         self.queue = MockDispatchQueue()
         let configuration = LACConfiguration(baseUrl: self.baseUrl, language: "ru", session: self.session, mainQueue: self.queue)
         LimeAPIClient.setConfiguration(configuration)
-        self.sut = LimeAPIClient()
     }
     
     override func tearDown() {
         self.session = nil
-        self.sut = nil
         super.tearDown()
         LimeAPIClient.setIdentification(nil)
         LimeAPIClient.setConfiguration(nil)
@@ -68,7 +65,6 @@ class LimeAPIClientTests: XCTestCase {
     func test_request_emptyBaseUrl_callsCompletionWithFailure() {
         let configuration = LACConfiguration(baseUrl: "", language: "ru", session: self.session)
         LimeAPIClient.setConfiguration(configuration)
-        self.sut = LimeAPIClient()
         self.runRequestChannels { (calledCompletion, data, error) in
             XCTAssertTrue(calledCompletion)
             XCTAssertNil(data)
@@ -85,7 +81,7 @@ class LimeAPIClientTests: XCTestCase {
         var receivedChannels: [Channel]? = nil
         var receivedError: Error? = nil
         
-        self.sut.requestChannels() { (result) in
+        LimeAPIClient.requestChannels() { (result) in
             calledCompletion = true
             
             switch result {
@@ -103,7 +99,6 @@ class LimeAPIClientTests: XCTestCase {
         let url = "]ч"
         let configuration = LACConfiguration(baseUrl: url, language: "ru", session: self.session)
         LimeAPIClient.setConfiguration(configuration)
-        self.sut = LimeAPIClient()
         self.runRequestChannels { (calledCompletion, data, error) in
             XCTAssertTrue(calledCompletion)
             XCTAssertNil(data)
@@ -117,7 +112,7 @@ class LimeAPIClientTests: XCTestCase {
         var completion: APICompletion<Session>?
         let expectedError = HTTPURLRequest.Error.emptyData
         
-        self.sut.session { (result) in
+        LimeAPIClient.session { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -167,7 +162,7 @@ class LimeAPIClientTests: XCTestCase {
     @discardableResult
     func runSessionRequest(_ data: Data?, _ response: HTTPURLResponse?) -> APICompletion<Session>? {
         var completion: APICompletion<Session>?
-        self.sut.session { (result) in
+        LimeAPIClient.session { (result) in
             completion = self.callAPICompletion(result)
         }
         self.session.lastTask?.completionHandler(data, response, nil)
@@ -256,7 +251,7 @@ extension LimeAPIClientTests {
         LimeAPIClient.setConfiguration(configuration)
         XCTAssertNotNil(LimeAPIClient.configuration)
         
-        self.sut.session { (result) in }
+        LimeAPIClient.session { (result) in }
         
         self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
         
@@ -268,7 +263,7 @@ extension LimeAPIClientTests {
         let data = try generateJSONData(Session.self, string: SessionExample.correct)
         LimeAPIClient.setConfiguration(nil)
         
-        self.sut.session { (result) in }
+        LimeAPIClient.session { (result) in }
         
         self.session.lastTask?.completionHandler(data.raw, self.response200, nil)
         
@@ -283,7 +278,7 @@ extension LimeAPIClientTests {
     func test_ping_wrongResponseData_callsCompletionWithFailure() {
         var completion: APICompletion<Ping>?
         
-        self.sut.ping { (result) in
+        LimeAPIClient.ping { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -298,7 +293,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<Ping>?
         let data = try generateJSONData(Ping.self, string: PingExample)
         
-        self.sut.ping { (result) in
+        LimeAPIClient.ping { (result) in
             completion = self.callAPICompletion(result)
         }
         

@@ -53,8 +53,7 @@ class HTTPTests: XCTestCase {
         let queue = MockDispatchQueue()
         let configuration = LACConfiguration(baseUrl: baseUrl, language: Device.language, session: session, mainQueue: queue)
         LimeAPIClient.setConfiguration(configuration)
-        let apiClient = LimeAPIClient()
-        apiClient.session { (_) in }
+        LimeAPIClient.session { (_) in }
         let url = try XCTUnwrap(URL(string: baseUrl))
         let response = HTTPURLResponse(url: url, statusCode: 200)
         let data = try XCTUnwrap(SessionExample.correct.data(using: .utf8))

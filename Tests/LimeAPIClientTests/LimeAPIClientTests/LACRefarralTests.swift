@@ -13,7 +13,7 @@ extension LimeAPIClientTests {
     func test_referral_setsXToken() {
         let xToken = "xToken"
         
-        self.sut.referral(xToken: xToken) { (_) in }
+        LimeAPIClient.referral(xToken: xToken) { (_) in }
         self.session.lastTask?.completionHandler(Data(), self.response200, nil)
         
         XCTAssertEqual(LimeAPIClient.xToken, xToken)
@@ -25,7 +25,7 @@ extension LimeAPIClientTests {
         let xToken = "xToken"
         var completion: APICompletion<Referral>?
         
-        self.sut.referral(xToken: xToken) { (result) in
+        LimeAPIClient.referral(xToken: xToken) { (result) in
             completion = self.callAPICompletion(result)
         }
         
@@ -41,7 +41,7 @@ extension LimeAPIClientTests {
         var completion: APICompletion<Referral>?
         let data = try generateJSONData(Referral.self, string: ReferralExample)
         
-        self.sut.referral(xToken: xToken) { (result) in
+        LimeAPIClient.referral(xToken: xToken) { (result) in
             completion = self.callAPICompletion(result)
         }
         
