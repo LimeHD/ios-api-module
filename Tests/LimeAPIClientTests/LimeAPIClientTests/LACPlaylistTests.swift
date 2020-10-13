@@ -44,9 +44,10 @@ extension LimeAPIClientTests {
         
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
-        let actualError = try XCTUnwrap(completion?.error as? HTTPURLRequest.Error)
+        XCTAssertNotNil(completion?.error)
+        let actualError = completion?.error as? HTTPURLRequest.Error
         XCTAssertEqual(actualError, expectedError)
-        XCTAssertNotNil(actualError.localizedDescription)
+        XCTAssertNotNil(actualError?.localizedDescription)
     }
     
     func test_getOnlinePlaylist_correctResponseData_callsCompletionWithSuccess() throws {
@@ -70,7 +71,9 @@ extension LimeAPIClientTests {
         var completion: APICompletion<String>?
         let expectedError = URLRequestError.emptyUrl
         
-        self.sut = LimeAPIClient(baseUrl: "", session: self.session, mainQueue: self.queue)
+        let configiration = LACConfiguration(baseUrl: "", language: "ru", session: self.session, mainQueue: self.queue)
+        LimeAPIClient.setConfiguration(configiration)
+        self.sut = LimeAPIClient()
         self.sut.getArchivePlaylist(for: 44, startAt: 10, duration: 300) { (result) in
             completion = self.callAPICompletion(result)
         }

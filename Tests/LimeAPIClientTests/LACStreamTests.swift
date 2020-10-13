@@ -80,13 +80,13 @@ class LACStreamTests: XCTestCase {
         let baseUrl = "https://limehd.tv/"
         let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
         LimeAPIClient.setIdentification(identification)
-        let configuration = LACConfiguration(language: "ru")
-        LimeAPIClient.setConfiguration(configuration)
         
         let data = try XCTUnwrap(session.data(using: .utf8))
         let session = MockURLSession()
         let queue = MockDispatchQueue()
-        let apiClient = LimeAPIClient(baseUrl: baseUrl, session: session, mainQueue: queue)
+        let configuration = LACConfiguration(baseUrl: baseUrl, language: "ru", session: session, mainQueue: queue)
+        LimeAPIClient.setConfiguration(configuration)
+        let apiClient = LimeAPIClient()
         apiClient.session { (_) in }
         
         let url = try XCTUnwrap(URL(string: baseUrl))

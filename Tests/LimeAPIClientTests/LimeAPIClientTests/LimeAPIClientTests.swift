@@ -26,7 +26,9 @@ class LimeAPIClientTests: XCTestCase {
         super.setUp()
         self.session = MockURLSession()
         self.queue = MockDispatchQueue()
-        self.sut = LimeAPIClient(baseUrl: self.baseUrl, session: self.session, mainQueue: queue)
+        let configuration = LACConfiguration(baseUrl: self.baseUrl, language: "ru", session: self.session, mainQueue: self.queue)
+        LimeAPIClient.setConfiguration(configuration)
+        self.sut = LimeAPIClient()
     }
     
     override func tearDown() {
@@ -43,26 +45,30 @@ class LimeAPIClientTests: XCTestCase {
         let identification = LACIdentification(appId: appId, apiKey: apiKey)
     
         LimeAPIClient.setIdentification(identification)
+        
         XCTAssertNotNil(LimeAPIClient.identification)
         XCTAssertEqual(LimeAPIClient.identification, identification)
     }
     
-    func test_beforeUse_sets_configuration() {
-        let configuration = LACConfiguration(language: Device.language)
+    func test_setConfiguration_setsValue() {
+        let configuration = LACConfiguration(baseUrl: self.baseUrl, language: Device.language)
         LimeAPIClient.setConfiguration(configuration)
+        
+        XCTAssertNotNil(LimeAPIClient.configuration)
+        XCTAssertEqual(LimeAPIClient.configuration?.baseUrl, LACStream.baseUrl)
+    }
+    
+    func test_beforeUse_sets_configuration() {
+        let configuration = LACConfiguration(baseUrl: self.baseUrl, language: Device.language)
+        LimeAPIClient.setConfiguration(configuration)
+        
         XCTAssertNotNil(LimeAPIClient.configuration)
     }
     
-    func test_init_sets_baseUrl() {
-        XCTAssertEqual(self.sut.baseUrl, self.baseUrl)
-    }
-    
-    func test_init_sets_session() {
-        XCTAssertEqual(self.sut.session, self.session)
-    }
-    
     func test_request_emptyBaseUrl_callsCompletionWithFailure() {
-        self.sut = LimeAPIClient(baseUrl: "", session: self.session)
+        let configuration = LACConfiguration(baseUrl: "", language: "ru", session: self.session)
+        LimeAPIClient.setConfiguration(configuration)
+        self.sut = LimeAPIClient()
         self.runRequestChannels { (calledCompletion, data, error) in
             XCTAssertTrue(calledCompletion)
             XCTAssertNil(data)
@@ -95,7 +101,9 @@ class LimeAPIClientTests: XCTestCase {
     
     func test_request_invalidBaseUrl_callsCompletionWithFailure() {
         let url = "]ч"
-        self.sut = LimeAPIClient(baseUrl: url, session: self.session)
+        let configuration = LACConfiguration(baseUrl: url, language: "ru", session: self.session)
+        LimeAPIClient.setConfiguration(configuration)
+        self.sut = LimeAPIClient()
         self.runRequestChannels { (calledCompletion, data, error) in
             XCTAssertTrue(calledCompletion)
             XCTAssertNil(data)
@@ -244,7 +252,7 @@ extension LimeAPIClientTests {
         let data = try generateJSONData(Session.self, string: SessionExample.correct)
         let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
         LimeAPIClient.setIdentification(identification)
-        let configuration = LACConfiguration(language: Device.language)
+        let configuration = LACConfiguration(baseUrl: self.baseUrl, language: Device.language, session: self.session, mainQueue: self.queue)
         LimeAPIClient.setConfiguration(configuration)
         XCTAssertNotNil(LimeAPIClient.configuration)
         
@@ -258,6 +266,7 @@ extension LimeAPIClientTests {
     
     func test_session_emptyConfigurationNotSetsDefaultChannelGroupId() throws {
         let data = try generateJSONData(Session.self, string: SessionExample.correct)
+        LimeAPIClient.setConfiguration(nil)
         
         self.sut.session { (result) in }
         

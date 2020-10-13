@@ -15,7 +15,9 @@ extension LimeAPIClientTests {
         var completion: APICompletion<String>?
         let expectedError = URLRequestError.emptyUrl
         
-        self.sut = LimeAPIClient(baseUrl: "", session: self.session, mainQueue: queue)
+        let configuration = LACConfiguration(baseUrl: "", language: "ru", session: self.session, mainQueue: queue)
+        LimeAPIClient.setConfiguration(configuration)
+        self.sut = LimeAPIClient()
         self.sut.deepClicks(query: "Test query", path: "Test path") { (result) in
             completion = self.callAPICompletion(result)
         }

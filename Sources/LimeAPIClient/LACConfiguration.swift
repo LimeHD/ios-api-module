@@ -18,6 +18,12 @@ import Foundation
 /// LimeAPIClient.setConfiguration(configuration)
 /// ```
 public struct LACConfiguration {
+    /// Адрес сервера API
+    let baseUrl: String
+    /// Координатор сетевых запросов
+    let session: URLSession
+    /// Очередь для отправки ответа
+    let mainQueue: Dispatchable
     /// Язык ожидаемого контента, который указывается в запросе.
     ///
     /// Описание см.: [Language and Locale IDs](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html#//apple_ref/doc/uid/10000171i-CH15).
@@ -37,15 +43,27 @@ public struct LACConfiguration {
     
     /// Инициализация конфигурации клиента `LimeAPIClient`
     /// - Parameters:
-    ///   - language: Язык ожидаемого контента, который указывается в запросе
+    ///   - baseUrl: адрес  сервера  API
+    ///   - language: язык ожидаемого контента, который указывается в запросе
+    ///   - session: используется значение по умолчанию `URLSession.shared`
+    ///   - mainQueue: очередь для возвращения запроса, по умолчанию используется значение `DispatchQueue.main`
     ///
     /// Пример инициализации:
     /// ```
     /// let language = Locale.preferredLanguages.first ?? "ru-RU"
-    /// let configuration = LACConfiguration(language: language)
+    /// // BASE_URL - адрес  сервера  API
+    /// let configuration = LACConfiguration(baseUrl: BASE_URL, language: language)
     /// LimeAPIClient.setConfiguration(configuration)
     /// ```
-    public init(language: String) {
+    public init(
+        baseUrl: String,
+        language: String,
+        session: URLSession = URLSession.shared,
+        mainQueue: Dispatchable = DispatchQueue.main
+    ) {
+        self.baseUrl = baseUrl
         self.language = language
+        self.session = session
+        self.mainQueue = mainQueue
     }
 }

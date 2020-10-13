@@ -48,12 +48,12 @@ class HTTPTests: XCTestCase {
     func configureLimeAPIClient() throws {
         let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
         LimeAPIClient.setIdentification(identification)
-        let configuration = LACConfiguration(language: Device.language)
-        LimeAPIClient.setConfiguration(configuration)
         let baseUrl = "https://limehd.tv/"
         let session = MockURLSession()
         let queue = MockDispatchQueue()
-        let apiClient = LimeAPIClient(baseUrl: baseUrl, session: session, mainQueue: queue)
+        let configuration = LACConfiguration(baseUrl: baseUrl, language: Device.language, session: session, mainQueue: queue)
+        LimeAPIClient.setConfiguration(configuration)
+        let apiClient = LimeAPIClient()
         apiClient.session { (_) in }
         let url = try XCTUnwrap(URL(string: baseUrl))
         let response = HTTPURLResponse(url: url, statusCode: 200)

@@ -20,6 +20,7 @@ public enum APIError: Error, LocalizedError, Equatable {
     case jsonAPIError(_ statusCode: String, error: JSONAPIError)
     case wrongStatusCode(_ statusCode: String, error: String)
     case incorrectImageData
+    case emptyConfiguration
     case emptyBroadcastStartAt
     case emptyBroadcastDuration
     
@@ -37,6 +38,9 @@ public enum APIError: Error, LocalizedError, Equatable {
         case .incorrectImageData:
             let key = "Полученный формат данных изображения не поддерживается системой"
             return NSLocalizedString(key, comment: "Неверный формат данных")
+        case .emptyConfiguration:
+            let key = "Отсутствуют параметры конфигурации"
+            return NSLocalizedString(key, comment: key)
         case .emptyBroadcastStartAt:
             let key = "Отсутствует время начала передачи"
             return NSLocalizedString(key, comment: key)
@@ -50,9 +54,6 @@ public enum APIError: Error, LocalizedError, Equatable {
 /// Общий клиент для работы с Лайм API. 
 public struct LimeAPIClient {
     static var isVerboseEnabled = false
-    let baseUrl: String
-    let session: URLSession
-    let mainQueue: Dispatchable
     /// Значения конфигурации клиента
     static var configuration: LACConfiguration?
     /// Значения идентификаторов клиента
@@ -75,39 +76,11 @@ public struct LimeAPIClient {
     /// - Parameter configuration: конфигурация клиента
     public static func setConfiguration(_ configuration: LACConfiguration?) {
         LimeAPIClient.configuration = configuration
+        LACStream.baseUrl = configuration?.baseUrl ?? ""
     }
     
     /// Инициализация клиента для работы с Лайм API
-    /// - Parameters:
-    ///   - baseUrl: адрес  сервера  API
-    ///   - session: используется значение по умолчанию `URLSession.shared`
-    ///   - mainQueue: очередь для возвращения запроса, по умолчанию используется значение `DispatchQueue.main`
-    
-    ///
-    /// Пример инициализации:
-    /// ```
-    /// // Задание идентификаторов
-    /// let identification = LACIdentification(appId: APPLICATION_ID, apiKey: API_KEY.APPLICATION)
-    /// LimeAPIClient.setIdentification(identification)
-    /// // Задание параметров конфигурации
-    /// // Язык ожидаемого контента, который указывается запросе
-    /// let language = Locale.preferredLanguages.first ?? "ru-RU"
-    /// // APPLICATION_ID можно получить с помощью LACApp.id -
-    /// // (идентификатор пакета, который определяется ключом CFBundleIdentifier)
-    /// let configuration = LACConfiguration(language: language)
-    /// LimeAPIClient.setConfiguration(configuration)
-    ///
-    /// // Непосредственно инициализация
-    /// // BASE_URL - адрес  сервера  API
-    /// let apiClient = LimeAPIClient(baseUrl: BASE_URL)
-    /// ```
-    public init(baseUrl: String, session: URLSession = URLSession.shared, mainQueue: Dispatchable = DispatchQueue.main) {
-        self.baseUrl = baseUrl
-        self.session = session
-        self.mainQueue = mainQueue
-        
-        LACStream.baseUrl = baseUrl
-    }
+    public init() { }
     
     /// Запрос новой сессии
     /// - Parameter completion: обработка результатов запроса
@@ -459,9 +432,9 @@ public extension LimeAPIClient {
         self.requestImage(with: path) { (result) in
             switch result {
             case .success(let image):
-                self.mainQueue.async { completion(.success(image)) }
+                LimeAPIClient.configuration?.mainQueue.async { completion(.success(image)) }
             case .failure(let error):
-                self.mainQueue.async { completion(.failure(error)) }
+                LimeAPIClient.configuration?.mainQueue.async { completion(.failure(error)) }
             }
         }
     }
@@ -485,7 +458,8 @@ public extension LimeAPIClient {
         let endPoint = EndPoint.Factory.archiveStream(for: streamId, start: startAt, duration: duration)
         let request: URLRequest
         do {
-            request = try URLRequest(baseUrl: self.baseUrl, endPoint: endPoint)
+            let baseUrl = try LimeAPIClient.getBaseUrl()
+            request = try URLRequest(baseUrl: baseUrl, endPoint: endPoint)
         } catch {
             completion(.failure(error))
             return
@@ -494,6 +468,13 @@ public extension LimeAPIClient {
         self.requestStringData(with: request) { (result) in
             completion(result)
         }
+    }
+    
+    private static func getBaseUrl() throws -> String {
+        guard let configuration = LimeAPIClient.configuration else {
+            throw APIError.emptyConfiguration
+        }
+        return configuration.baseUrl
     }
     
     func getArchivePlaylist(for streamId: Int, broadcast: Broadcast, completion: @escaping (Result<String, Error>) -> Void) {
@@ -523,7 +504,8 @@ extension LimeAPIClient {
     private func request<T: Decodable>(_ type: T.Type, endPoint: EndPoint, completion: @escaping DecodableCompletion<T>) {
         let request: URLRequest
         do {
-            request = try URLRequest(baseUrl: self.baseUrl, endPoint: endPoint)
+            let baseUrl = LimeAPIClient.configuration?.baseUrl ?? ""
+            request = try URLRequest(baseUrl: baseUrl, endPoint: endPoint)
         } catch {
             completion(.failure(error))
             return
@@ -533,12 +515,19 @@ extension LimeAPIClient {
             if case .failure(let error) = result {
                 LimeAPIClient.log(request, message: error.localizedDescription)
             }
-            self.mainQueue.async { completion(result) }
+            LimeAPIClient.configuration?.mainQueue.async { completion(result) }
         }
     }
     
     private func dataTask<T: Decodable>(with request: URLRequest, _ type: T.Type, completion: @escaping DecodableCompletion<T>) {
-        let httpRequest = HTTPURLRequest(request: request, session: self.session)
+        let session: URLSession
+        do {
+            session = try LimeAPIClient.getSession()
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        let httpRequest = HTTPURLRequest(request: request, session: session)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         httpRequest.dataTask(decoding: T.self, decoder: decoder) { response in
@@ -550,6 +539,13 @@ extension LimeAPIClient {
                 self.handleErorr(error, completion)
             }
         }
+    }
+    
+    private static func getSession() throws -> URLSession {
+        guard let configuration = LimeAPIClient.configuration else {
+            throw APIError.emptyConfiguration
+        }
+        return configuration.session
     }
     
     private func handleJSONAPIResult<T: Decodable, U: Decodable>(_ result: JSONAPIResult<T, U>, _ completion: @escaping DecodableCompletion<[T]>) {
@@ -598,7 +594,8 @@ extension LimeAPIClient {
     private func request(_ endPoint: EndPoint, completion: @escaping StringCompletion) {
         let request: URLRequest
         do {
-            request = try URLRequest(baseUrl: self.baseUrl, endPoint: endPoint)
+            let baseUrl = try LimeAPIClient.getBaseUrl()
+            request = try URLRequest(baseUrl: baseUrl, endPoint: endPoint)
         } catch {
             completion(.failure(error))
             return
@@ -608,12 +605,19 @@ extension LimeAPIClient {
             if case .failure(let error) = result {
                 LimeAPIClient.log(request, message: error.localizedDescription)
             }
-            self.mainQueue.async { completion(result) }
+            LimeAPIClient.configuration?.mainQueue.async { completion(result) }
         }
     }
     
     private func dataTask(with request: URLRequest, completion: @escaping StringCompletion) {
-        let httpRequest = HTTPURLRequest(request: request, session: self.session)
+        let session: URLSession
+        do {
+            session = try LimeAPIClient.getSession()
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        let httpRequest = HTTPURLRequest(request: request, session: session)
         httpRequest.dataTask() { response in
             switch response {
             case let .success(result):
@@ -629,13 +633,15 @@ extension LimeAPIClient {
     
     private func requestImage(with path: String, completion: @escaping ImageCompletion) {
         let request: URLRequest
+        let session: URLSession
         do {
+            session = try LimeAPIClient.getSession()
             request = try URLRequest(path: path)
         } catch {
             completion(.failure(error))
             return
         }
-        let httpRequest = HTTPURLRequest(request: request, session: self.session)
+        let httpRequest = HTTPURLRequest(request: request, session: session)
         httpRequest.dataTask() { response in
             switch response {
             case let .success(result):
@@ -653,15 +659,22 @@ extension LimeAPIClient {
     }
     
     private func requestStringData(with request: URLRequest, completion: @escaping (Result<String, Error>) -> Void) {
-        let httpRequest = HTTPURLRequest(request: request, session: self.session)
+        let session: URLSession
+        do {
+            session = try LimeAPIClient.getSession()
+        } catch {
+            completion(.failure(error))
+            return
+        }
+        let httpRequest = HTTPURLRequest(request: request, session: session)
         httpRequest.dataTask() { response in
             switch response {
             case let .success(result):
                 let playlist = result.data.utf8String
-                self.mainQueue.async { completion(.success(playlist)) }
+                LimeAPIClient.configuration?.mainQueue.async { completion(.success(playlist)) }
             case let .failure(error):
                 LimeAPIClient.log(request, message: error.localizedDescription)
-                self.mainQueue.async { completion(.failure(error)) }
+                LimeAPIClient.configuration?.mainQueue.async { completion(.failure(error)) }
             }
         }
     }

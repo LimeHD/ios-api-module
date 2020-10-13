@@ -12,16 +12,18 @@ import XCTest
 class EndPointTests: XCTestCase {
     var sut: EndPoint!
     let bannerId = 68
+    let baseUrl = "http://example.com/"
     
     override func setUp() {
         super.setUp()
         let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
         LimeAPIClient.setIdentification(identification)
-        let configuration = LACConfiguration(language: "zh-Hans_HK")
+        let configuration = LACConfiguration(baseUrl: self.baseUrl, language: "zh-Hans_HK")
         LimeAPIClient.setConfiguration(configuration)
     }
     
     override func tearDown() {
+        LimeAPIClient.setIdentification(nil)
         LimeAPIClient.setConfiguration(nil)
         super.tearDown()
     }

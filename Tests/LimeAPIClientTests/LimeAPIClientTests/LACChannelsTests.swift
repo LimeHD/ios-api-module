@@ -84,7 +84,7 @@ extension LimeAPIClientTests {
         let data = try generateJSONData(Session.self, string: SessionExample.correct)
         let identification = LACIdentification(appId: "APP_ID", apiKey: "API_KEY")
         LimeAPIClient.setIdentification(identification)
-        let configuration = LACConfiguration(language: Device.language)
+        let configuration = LACConfiguration(baseUrl: self.baseUrl, language: Device.language, session: self.session, mainQueue: self.queue)
         LimeAPIClient.setConfiguration(configuration)
         
         self.runSessionRequest(data.raw, self.response200)
