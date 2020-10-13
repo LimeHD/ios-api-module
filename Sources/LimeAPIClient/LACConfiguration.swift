@@ -44,7 +44,7 @@ public struct LACConfiguration {
     /// Инициализация конфигурации клиента `LimeAPIClient`
     /// - Parameters:
     ///   - baseUrl: адрес  сервера  API
-    ///   - language: язык ожидаемого контента, который указывается в запросе
+    ///   - language: язык ожидаемого контента, который указывается в запросе по умолчанию значение Locale.preferredLanguages.first ?? "ru-RU"
     ///   - session: используется значение по умолчанию `URLSession.shared`
     ///   - mainQueue: очередь для возвращения запроса, по умолчанию используется значение `DispatchQueue.main`
     ///
@@ -57,7 +57,7 @@ public struct LACConfiguration {
     /// ```
     public init(
         baseUrl: String,
-        language: String,
+        language: String = Device.language,
         session: URLSession = URLSession.shared,
         mainQueue: Dispatchable = DispatchQueue.main
     ) {
