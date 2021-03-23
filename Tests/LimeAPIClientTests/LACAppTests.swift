@@ -22,5 +22,15 @@ class LACAppTests: XCTestCase {
         let expectedVersion = version ?? ""
         XCTAssertEqual(LACApp.version, expectedVersion)
     }
+    
+    func test_versionCode_createsCorrectValue() {
+        let versions = ["1.7.3", "2.0.0", "1", "1.10.2"]
+        let expectedVersions = ["10703", "20000", "10000", "11002"]
+        
+        let actualVersions = versions.map { LACApp.versionCode(from: $0) }
+            
+        XCTAssertEqual(actualVersions, expectedVersions)
+    }
+    
 
 }

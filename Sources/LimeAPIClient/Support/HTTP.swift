@@ -23,15 +23,16 @@ public struct HTTP {
     
     public static var headers: [String: String] {
         return [
-            "Accept-Language":  LimeAPIClient.configuration?.language ?? "",
-            "X-Platform":       "ios",
-            "X-Device-Name":    Device.name,
-            "X-Device-Id":      Device.id,
-            "X-App-Id":         LimeAPIClient.identification?.appId ?? "",
-            "X-App-Version":    LACApp.version,
-            "X-Access-Key":     LimeAPIClient.identification?.apiKey ?? "",
-            "X-Session-Id":     LimeAPIClient.identification?.sessionId ?? "",
-            "X-Token":          LimeAPIClient.xToken
+            "Accept-Language":    LimeAPIClient.configuration?.language ?? "",
+            "X-Platform":         "ios",
+            "X-Device-Name":      Device.name,
+            "X-Device-Id":        Device.id,
+            "X-App-Id":           LimeAPIClient.identification?.appId ?? "",
+            "X-App-Version":      LACApp.version,
+            "X-App-Version-Code": LACApp.versionCode(),
+            "X-Access-Key":       LimeAPIClient.identification?.apiKey ?? "",
+            "X-Session-Id":       LimeAPIClient.identification?.sessionId ?? "",
+            "X-Token":            LimeAPIClient.xToken
         ]
     }
 }
