@@ -538,8 +538,7 @@ extension LimeAPIClient {
     }
     
     private static func handleErorr<T: Decodable>(_ error: Error, _ completion: @escaping DecodableCompletion<T>) {
-        if let error = error as? HTTPURLRequest.Error,
-            case let .wrongStatusCode(dataResponse) = error {
+        if let dataResponse = error.httpURLRequest?.unsuccessfulHTTPStatusCodeData {
             LimeAPIClient.decodeError(dataResponse, completion)
         } else {
             completion(.failure(error))

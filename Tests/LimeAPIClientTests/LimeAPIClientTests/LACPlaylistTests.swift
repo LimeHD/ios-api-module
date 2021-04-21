@@ -34,7 +34,7 @@ extension LimeAPIClientTests {
         let data = Data()
         let response = try self.response(500)
         let dataResponse = DataResponse(data: data, response: response)
-        let expectedError = HTTPURLRequest.Error.wrongStatusCode(dataResponse)
+        let expectedError = HTTPURLRequest.Error.unsuccessfulHTTPStatusCode(dataResponse)
         try self.runSessionToGetAPIValues()
         LimeAPIClient.getOnlinePlaylist(for: 44) { (result) in
             completion = self.callAPICompletion(result)
