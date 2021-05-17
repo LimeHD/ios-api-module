@@ -49,13 +49,12 @@ extension LimeAPIClientTests {
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
-    func test_deepClicks_givenStatusCodeError_callsCompletionWithFailure() throws {
+    func test_deepClicks_givenStatusCodeError_callsFailure() throws {
         var completion: APICompletion<String>?
         let data = Data()
         let response = try self.response(500)
-        let message = String(decoding: data, as: UTF8.self)
-        let expectedError = LimeAPIClient.Error.wrongStatusCode(response.localizedStatusCode, error: message)
-        LimeAPIClient.deepClicks(query: "Test query", path: "Test path") { (result) in
+        let expectedError = "Unsuccessful HTTP status code: 500 - internal server error."
+        LimeAPIClient.deepClicks(query: "Test query", path: "Test path") { result in
             completion = self.callAPICompletion(result)
         }
         
@@ -64,9 +63,8 @@ extension LimeAPIClientTests {
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
         XCTAssertNotNil(completion?.error)
-        let actualError = try XCTUnwrap(completion?.error as? LimeAPIClient.Error)
-        XCTAssertEqual(actualError, expectedError)
-        XCTAssertNotNil(actualError.localizedDescription)
+        let actualError = completion?.error?.httpURLRequest
+        XCTAssertEqual(actualError?.localizedDescription, expectedError)
     }
     
     func test_deepClicks_correctResponseData_callsCompletionWithSuccess() throws {

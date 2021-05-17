@@ -502,28 +502,20 @@ extension LimeAPIClient {
     }
     
     private static func handleErorr<T: Decodable>(_ error: Swift.Error, _ completion: @escaping DecodableCompletion<T>) {
-        if let dataResponse = error.httpURLRequest?.unsuccessfulHTTPStatusCodeData {
-            LimeAPIClient.decodeError(dataResponse, completion)
+        if let dataResponse = error.httpURLRequest?.unsuccessfulHTTPStatusCodeData,
+           let jsonAPIError = LimeAPIClient.decodeError(dataResponse) {
+            let error = Error.jsonAPIError(jsonAPIError, statusCode: dataResponse.response.localizedStatusCode)
+            completion(.failure(error))
         } else {
             completion(.failure(error))
         }
     }
     
-    private static func decodeError<T>(_ dataResponse: DataResponse, _ completion: @escaping DecodableCompletion<T>) {
+    private static func decodeError(_ dataResponse: DataResponse) -> JSONAPIError? {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let data = dataResponse.data
-        let response = dataResponse.response
-        let jsonAPIErrorResult = data.decoding(type: JSONAPIError.self, decoder: decoder)
-        switch jsonAPIErrorResult {
-        case let .success(jsonAPIError):
-            let error = Error.jsonAPIError(jsonAPIError, statusCode: response.localizedStatusCode)
-            completion(.failure(error))
-        case .failure:
-            let message = data.utf8String
-            let error = Error.wrongStatusCode(response.localizedStatusCode, error: message)
-            completion(.failure(error))
-        }
+        
+        return dataResponse.data.decoding(type: JSONAPIError.self, decoder: decoder).success
     }
     
     //MARK: - String Request Methods

@@ -179,18 +179,16 @@ class LimeAPIClientTests: XCTestCase {
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
-    func test_dataTask_givenStatusCodeError_callsCompletionWithFailure() throws {
+    func test_dataTask_givenStatusCodeError_callsFailure() throws {
         let data = Data()
-        let message = String(decoding: data, as: UTF8.self)
         let response = try self.response(500)
-        let expectedError = LimeAPIClient.Error.wrongStatusCode(response.localizedStatusCode, error: message)
+        let expectedError = "Unsuccessful HTTP status code: 500 - internal server error."
         let completion = self.runSessionRequest(data, response)
         
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
-        let actualError = try XCTUnwrap(completion?.error as? LimeAPIClient.Error)
-        XCTAssertEqual(actualError, expectedError)
-        XCTAssertNotNil(actualError.localizedDescription)
+        let actualError = completion?.error?.httpURLRequest
+        XCTAssertEqual(actualError?.localizedDescription, expectedError)
     }
 }
 
