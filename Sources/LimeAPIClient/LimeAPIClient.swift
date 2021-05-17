@@ -417,7 +417,7 @@ public extension LimeAPIClient {
     
     static func getArchivePlaylist(for streamId: Int, broadcast: Broadcast, completion: @escaping (Result<String, Swift.Error>) -> Void) {
         guard let startAt = broadcast.startAtUnix else {
-            let error = Error.emptyBroadcastStartAt
+            let error = Error.emptyBroadcastStartTimestamp
             completion(.failure(error))
             return
         }

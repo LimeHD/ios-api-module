@@ -105,7 +105,7 @@ extension LimeAPIClientTests {
     }
     
     func test_getArchivePlaylistFromBroadcast_emptyStartAt_callsCompletionWithFailure() throws {
-        let expectedError = LimeAPIClient.Error.emptyBroadcastStartAt
+        let expectedError = LimeAPIClient.Error.emptyBroadcastStartTimestamp
         let completion = self.runGetArchivePlaylistFromBroadcast()
 
         XCTAssertNotNil(completion)

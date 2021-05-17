@@ -14,7 +14,7 @@ public extension LimeAPIClient {
         case wrongStatusCode(_ statusCode: String, error: String)
         case incorrectImageData
         case emptyConfiguration
-        case emptyBroadcastStartAt
+        case emptyBroadcastStartTimestamp
         case emptyBroadcastDuration
     }
     
@@ -43,7 +43,7 @@ extension LimeAPIClient.Error: LocalizedError {
         case .emptyConfiguration:
             let key = "Отсутствуют параметры конфигурации"
             return NSLocalizedString(key, comment: key)
-        case .emptyBroadcastStartAt:
+        case .emptyBroadcastStartTimestamp:
             let key = "Отсутствует время начала передачи"
             return NSLocalizedString(key, comment: key)
         case .emptyBroadcastDuration:
