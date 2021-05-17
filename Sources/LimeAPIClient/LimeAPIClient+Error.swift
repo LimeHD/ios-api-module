@@ -11,7 +11,6 @@ public extension LimeAPIClient {
     enum Error: Swift.Error, Equatable {
         case unknownChannelsGroupID
         case jsonAPIError(_ error: JSONAPIError, statusCode: String)
-        case wrongStatusCode(_ statusCode: String, error: String)
         case incorrectImageData
         case emptyConfiguration
         case emptyBroadcastStartTimestamp
@@ -33,9 +32,6 @@ extension LimeAPIClient.Error: LocalizedError {
                 errorDescription = " Ошибка: \(errorTitle)"
             }
             let key = "Неуспешный ответ состояния HTTP: \(statusCode).\(errorDescription)"
-            return NSLocalizedString(key, comment: statusCode)
-        case let .wrongStatusCode(statusCode, error: error):
-            let key = "Неуспешный ответ состояния HTTP: \(statusCode). Ошибка: \(error)"
             return NSLocalizedString(key, comment: statusCode)
         case .incorrectImageData:
             let key = "Полученный формат данных изображения не поддерживается системой"
