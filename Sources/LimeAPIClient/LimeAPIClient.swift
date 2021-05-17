@@ -30,7 +30,11 @@ public enum APIError: Error, LocalizedError, Equatable {
             let key = "Отсутствует id группы каналов. Возможно необходимо сделать запрос новой сессии"
             return NSLocalizedString(key, comment: "Отсутствует id группы каналов")
         case let .jsonAPIError(statusCode, error: error):
-            let key = "Неуспешный ответ состояния HTTP: \(statusCode). Ошибка: \(error)"
+            var errorDescription = " Неизвестная ошибка."
+            if let errorTitle = error.errors.first?.title {
+                errorDescription = " Ошибка: \(errorTitle)"
+            }
+            let key = "Неуспешный ответ состояния HTTP: \(statusCode).\(errorDescription)"
             return NSLocalizedString(key, comment: statusCode)
         case let .wrongStatusCode(statusCode, error: error):
             let key = "Неуспешный ответ состояния HTTP: \(statusCode). Ошибка: \(error)"
