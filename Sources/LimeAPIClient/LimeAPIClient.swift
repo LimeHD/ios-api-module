@@ -120,7 +120,7 @@ public struct LimeAPIClient {
     public static func requestChannelsByGroupId(cacheKey: String = "", timeZone: TimeZone? = nil, timeZonePicker: LACTimeZonePicker = .previous, completion: @escaping DecodableCompletion<[Channel]>) {
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         guard !defaultChannelGroupId.isEmpty else {
-            let error = Error.unknownChannelsGroupId
+            let error = Error.unknownChannelsGroupID
             completion(.failure(error))
             guard LimeAPIClient.isVerboseEnabled else { return }
             print("\(LimeAPIClient.self)\n\(#function)\n\(error.localizedDescription)")

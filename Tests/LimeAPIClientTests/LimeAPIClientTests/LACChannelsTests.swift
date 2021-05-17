@@ -42,7 +42,7 @@ extension LimeAPIClientTests {
     
     func test_requestChannelsByGroupId_runBeforeSession_callsCompletionWithFailure() throws {
         var completion: APICompletion<[Channel]>?
-        let expectedError = LimeAPIClient.Error.unknownChannelsGroupId
+        let expectedError = LimeAPIClient.Error.unknownChannelsGroupID
         
         LimeAPIClient.requestChannelsByGroupId { (result) in
             completion = self.callAPICompletion(result)
