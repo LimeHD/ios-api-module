@@ -105,13 +105,13 @@ extension LimeAPIClientTests {
     }
     
     func test_getArchivePlaylistFromBroadcast_emptyStartAt_callsCompletionWithFailure() throws {
-        let expectedError = APIError.emptyBroadcastStartAt
+        let expectedError = LimeAPIClient.APIError.emptyBroadcastStartAt
         let completion = self.runGetArchivePlaylistFromBroadcast()
 
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
         XCTAssertNotNil(completion?.error)
-        let actualError = try XCTUnwrap(completion?.error as? APIError)
+        let actualError = try XCTUnwrap(completion?.error as? LimeAPIClient.APIError)
         XCTAssertEqual(actualError, expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }
@@ -130,13 +130,13 @@ extension LimeAPIClientTests {
     }
     
     func test_getArchivePlaylistFromBroadcast_emptyDuration_callsCompletionWithFailure() throws {
-        let expectedError = APIError.emptyBroadcastDuration
+        let expectedError = LimeAPIClient.APIError.emptyBroadcastDuration
         let completion = self.runGetArchivePlaylistFromBroadcast(startAt: "2020-06-02T00:00:00+03:00")
 
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
         XCTAssertNotNil(completion?.error)
-        let actualError = try XCTUnwrap(completion?.error as? APIError)
+        let actualError = try XCTUnwrap(completion?.error as? LimeAPIClient.APIError)
         XCTAssertEqual(actualError, expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }

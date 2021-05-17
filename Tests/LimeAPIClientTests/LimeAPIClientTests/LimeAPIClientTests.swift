@@ -139,12 +139,12 @@ class LimeAPIClientTests: XCTestCase {
         
         XCTAssertNotNil(result.completion)
         XCTAssertNil(result.completion?.data)
-        let actualError = try XCTUnwrap(result.completion?.error as? APIError)
+        let actualError = try XCTUnwrap(result.completion?.error as? LimeAPIClient.APIError)
         XCTAssertEqual(actualError, result.expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }
     
-    typealias APIErrorResult = (expectedError: APIError, completion: APICompletion<Session>?)
+    typealias APIErrorResult = (expectedError: LimeAPIClient.APIError, completion: APICompletion<Session>?)
     
     func generateJSONAPIError(_ jsonAPIError: String) throws -> APIErrorResult {
         let data = try XCTUnwrap(jsonAPIError.data(using: .utf8))
@@ -153,7 +153,7 @@ class LimeAPIClientTests: XCTestCase {
         let jsonAPIError = data.decoding(type: JSONAPIError.self, decoder: decoder).success!
         
         let response = try self.response(500)
-        let apiError = APIError.jsonAPIError(response.localizedStatusCode, error: jsonAPIError)
+        let apiError = LimeAPIClient.APIError.jsonAPIError(response.localizedStatusCode, error: jsonAPIError)
         
         let completion = self.runSessionRequest(data, response)
         return (apiError, completion)
@@ -174,7 +174,7 @@ class LimeAPIClientTests: XCTestCase {
         
         XCTAssertNotNil(result.completion)
         XCTAssertNil(result.completion?.data)
-        let actualError = try XCTUnwrap(result.completion?.error as? APIError)
+        let actualError = try XCTUnwrap(result.completion?.error as? LimeAPIClient.APIError)
         XCTAssertEqual(actualError, result.expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }
@@ -183,12 +183,12 @@ class LimeAPIClientTests: XCTestCase {
         let data = Data()
         let message = String(decoding: data, as: UTF8.self)
         let response = try self.response(500)
-        let expectedError = APIError.wrongStatusCode(response.localizedStatusCode, error: message)
+        let expectedError = LimeAPIClient.APIError.wrongStatusCode(response.localizedStatusCode, error: message)
         let completion = self.runSessionRequest(data, response)
         
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
-        let actualError = try XCTUnwrap(completion?.error as? APIError)
+        let actualError = try XCTUnwrap(completion?.error as? LimeAPIClient.APIError)
         XCTAssertEqual(actualError, expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }

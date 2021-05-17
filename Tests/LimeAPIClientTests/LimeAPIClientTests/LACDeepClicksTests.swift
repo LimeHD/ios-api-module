@@ -54,7 +54,7 @@ extension LimeAPIClientTests {
         let data = Data()
         let response = try self.response(500)
         let message = String(decoding: data, as: UTF8.self)
-        let expectedError = APIError.wrongStatusCode(response.localizedStatusCode, error: message)
+        let expectedError = LimeAPIClient.APIError.wrongStatusCode(response.localizedStatusCode, error: message)
         LimeAPIClient.deepClicks(query: "Test query", path: "Test path") { (result) in
             completion = self.callAPICompletion(result)
         }
@@ -64,7 +64,7 @@ extension LimeAPIClientTests {
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
         XCTAssertNotNil(completion?.error)
-        let actualError = try XCTUnwrap(completion?.error as? APIError)
+        let actualError = try XCTUnwrap(completion?.error as? LimeAPIClient.APIError)
         XCTAssertEqual(actualError, expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }

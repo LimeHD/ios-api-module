@@ -7,15 +7,21 @@
 
 import Foundation
 
-public enum APIError: Error, LocalizedError, Equatable {
-    case unknownChannelsGroupId
-    case jsonAPIError(_ statusCode: String, error: JSONAPIError)
-    case wrongStatusCode(_ statusCode: String, error: String)
-    case incorrectImageData
-    case emptyConfiguration
-    case emptyBroadcastStartAt
-    case emptyBroadcastDuration
+public extension LimeAPIClient {
+    enum APIError: Error, Equatable {
+        case unknownChannelsGroupId
+        case jsonAPIError(_ statusCode: String, error: JSONAPIError)
+        case wrongStatusCode(_ statusCode: String, error: String)
+        case incorrectImageData
+        case emptyConfiguration
+        case emptyBroadcastStartAt
+        case emptyBroadcastDuration
+    }
     
+    
+}
+
+extension LimeAPIClient.APIError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .unknownChannelsGroupId:
