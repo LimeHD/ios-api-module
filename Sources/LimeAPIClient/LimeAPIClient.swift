@@ -120,7 +120,7 @@ public struct LimeAPIClient {
     public static func requestChannelsByGroupId(cacheKey: String = "", timeZone: TimeZone? = nil, timeZonePicker: LACTimeZonePicker = .previous, completion: @escaping DecodableCompletion<[Channel]>) {
         let defaultChannelGroupId = LimeAPIClient.configuration?.defaultChannelGroupId ?? ""
         guard !defaultChannelGroupId.isEmpty else {
-            let error = APIError.unknownChannelsGroupId
+            let error = Error.unknownChannelsGroupId
             completion(.failure(error))
             guard LimeAPIClient.isVerboseEnabled else { return }
             print("\(LimeAPIClient.self)\n\(#function)\n\(error.localizedDescription)")
@@ -377,7 +377,7 @@ public extension LimeAPIClient {
         }
     }
     
-    static func getOnlinePlaylist(for streamId: Int, completion: @escaping (Result<String, Error>) -> Void) {
+    static func getOnlinePlaylist(for streamId: Int, completion: @escaping (Result<String, Swift.Error>) -> Void) {
         let request: URLRequest
         do {
             let path = try LACStream.Online.endpoint(for: streamId)
@@ -392,7 +392,7 @@ public extension LimeAPIClient {
         }
     }
     
-    static func getArchivePlaylist(for streamId: Int, startAt: Int, duration: Int, completion: @escaping (Result<String, Error>) -> Void) {
+    static func getArchivePlaylist(for streamId: Int, startAt: Int, duration: Int, completion: @escaping (Result<String, Swift.Error>) -> Void) {
         let endPoint = EndPoint.Factory.archiveStream(for: streamId, start: startAt, duration: duration)
         let request: URLRequest
         do {
@@ -410,19 +410,19 @@ public extension LimeAPIClient {
     
     private static func getBaseUrl() throws -> String {
         guard let configuration = LimeAPIClient.configuration else {
-            throw APIError.emptyConfiguration
+            throw Error.emptyConfiguration
         }
         return configuration.baseUrl
     }
     
-    static func getArchivePlaylist(for streamId: Int, broadcast: Broadcast, completion: @escaping (Result<String, Error>) -> Void) {
+    static func getArchivePlaylist(for streamId: Int, broadcast: Broadcast, completion: @escaping (Result<String, Swift.Error>) -> Void) {
         guard let startAt = broadcast.startAtUnix else {
-            let error = APIError.emptyBroadcastStartAt
+            let error = Error.emptyBroadcastStartAt
             completion(.failure(error))
             return
         }
         guard let duration = broadcast.duration else {
-            let error = APIError.emptyBroadcastDuration
+            let error = Error.emptyBroadcastDuration
             completion(.failure(error))
             return
         }
@@ -481,7 +481,7 @@ extension LimeAPIClient {
     
     private static func getSession() throws -> URLSession {
         guard let configuration = LimeAPIClient.configuration else {
-            throw APIError.emptyConfiguration
+            throw Error.emptyConfiguration
         }
         return configuration.session
     }
@@ -501,7 +501,7 @@ extension LimeAPIClient {
         }
     }
     
-    private static func handleErorr<T: Decodable>(_ error: Error, _ completion: @escaping DecodableCompletion<T>) {
+    private static func handleErorr<T: Decodable>(_ error: Swift.Error, _ completion: @escaping DecodableCompletion<T>) {
         if let dataResponse = error.httpURLRequest?.unsuccessfulHTTPStatusCodeData {
             LimeAPIClient.decodeError(dataResponse, completion)
         } else {
@@ -517,11 +517,11 @@ extension LimeAPIClient {
         let jsonAPIErrorResult = data.decoding(type: JSONAPIError.self, decoder: decoder)
         switch jsonAPIErrorResult {
         case let .success(jsonAPIError):
-            let error = APIError.jsonAPIError(response.localizedStatusCode, error: jsonAPIError)
+            let error = Error.jsonAPIError(response.localizedStatusCode, error: jsonAPIError)
             completion(.failure(error))
         case .failure:
             let message = data.utf8String
-            let error = APIError.wrongStatusCode(response.localizedStatusCode, error: message)
+            let error = Error.wrongStatusCode(response.localizedStatusCode, error: message)
             completion(.failure(error))
         }
     }
@@ -585,7 +585,7 @@ extension LimeAPIClient {
                 if let image = result.data.image {
                     completion(.success(image))
                 } else {
-                    let error = APIError.incorrectImageData
+                    let error = Error.incorrectImageData
                     completion(.failure(error))
                 }
             case let .failure(error):
@@ -595,7 +595,7 @@ extension LimeAPIClient {
         }
     }
     
-    private static func requestStringData(with request: URLRequest, completion: @escaping (Result<String, Error>) -> Void) {
+    private static func requestStringData(with request: URLRequest, completion: @escaping (Result<String, Swift.Error>) -> Void) {
         let session: URLSession
         do {
             session = try LimeAPIClient.getSession()
@@ -622,4 +622,6 @@ extension LimeAPIClient {
         let url = request.url?.absoluteString ?? "(пустое значение ulr)"
         print("\(LimeAPIClient.self) \(configuration)\n\(url)\n\(message)")
     }
+    
+    
 }

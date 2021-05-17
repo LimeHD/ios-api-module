@@ -13,7 +13,7 @@ import XCTest
 extension LimeAPIClientTests {
     func test_getImage_wrongResponseData_callsCompletionWithFailure() throws {
         var completion: APICompletion<UIImage>?
-        let expectedError = LimeAPIClient.APIError.incorrectImageData
+        let expectedError = LimeAPIClient.Error.incorrectImageData
         
         LimeAPIClient.getImage(with: "IMAGE_URL") { (result) in
             completion = self.callAPICompletion(result)
@@ -24,7 +24,7 @@ extension LimeAPIClientTests {
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
         XCTAssertNotNil(completion?.error)
-        let actualError = try XCTUnwrap(completion?.error as? LimeAPIClient.APIError)
+        let actualError = try XCTUnwrap(completion?.error as? LimeAPIClient.Error)
         XCTAssertEqual(actualError, expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }

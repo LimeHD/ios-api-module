@@ -8,7 +8,7 @@
 import Foundation
 
 public extension LimeAPIClient {
-    enum APIError: Error, Equatable {
+    enum Error: Swift.Error, Equatable {
         case unknownChannelsGroupId
         case jsonAPIError(_ statusCode: String, error: JSONAPIError)
         case wrongStatusCode(_ statusCode: String, error: String)
@@ -21,7 +21,7 @@ public extension LimeAPIClient {
     
 }
 
-extension LimeAPIClient.APIError: LocalizedError {
+extension LimeAPIClient.Error: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .unknownChannelsGroupId:

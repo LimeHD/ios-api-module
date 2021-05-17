@@ -42,7 +42,7 @@ extension LimeAPIClientTests {
     
     func test_requestChannelsByGroupId_runBeforeSession_callsCompletionWithFailure() throws {
         var completion: APICompletion<[Channel]>?
-        let expectedError = LimeAPIClient.APIError.unknownChannelsGroupId
+        let expectedError = LimeAPIClient.Error.unknownChannelsGroupId
         
         LimeAPIClient.requestChannelsByGroupId { (result) in
             completion = self.callAPICompletion(result)
@@ -55,7 +55,7 @@ extension LimeAPIClientTests {
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
         XCTAssertNotNil(completion?.error)
-        let actualError = try XCTUnwrap(completion?.error as? LimeAPIClient.APIError)
+        let actualError = try XCTUnwrap(completion?.error as? LimeAPIClient.Error)
         XCTAssertEqual(actualError, expectedError)
         XCTAssertNotNil(actualError.localizedDescription)
     }
@@ -76,7 +76,7 @@ extension LimeAPIClientTests {
         XCTAssertNotNil(completion)
         XCTAssertNil(completion?.data)
         XCTAssertNotNil(completion?.error)
-        let apiError = completion?.error as? LimeAPIClient.APIError
+        let apiError = completion?.error as? LimeAPIClient.Error
         XCTAssertNil(apiError)
     }
     
