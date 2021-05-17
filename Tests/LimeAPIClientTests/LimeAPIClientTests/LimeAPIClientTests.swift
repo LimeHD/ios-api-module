@@ -153,7 +153,7 @@ class LimeAPIClientTests: XCTestCase {
         let jsonAPIError = data.decoding(type: JSONAPIError.self, decoder: decoder).success!
         
         let response = try self.response(500)
-        let apiError = LimeAPIClient.Error.jsonAPIError(response.localizedStatusCode, error: jsonAPIError)
+        let apiError = LimeAPIClient.Error.jsonAPIError(jsonAPIError, statusCode: response.localizedStatusCode)
         
         let completion = self.runSessionRequest(data, response)
         return (apiError, completion)

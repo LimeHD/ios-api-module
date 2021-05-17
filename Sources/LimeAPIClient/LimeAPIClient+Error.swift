@@ -10,7 +10,7 @@ import Foundation
 public extension LimeAPIClient {
     enum Error: Swift.Error, Equatable {
         case unknownChannelsGroupID
-        case jsonAPIError(_ statusCode: String, error: JSONAPIError)
+        case jsonAPIError(_ error: JSONAPIError, statusCode: String)
         case wrongStatusCode(_ statusCode: String, error: String)
         case incorrectImageData
         case emptyConfiguration
@@ -27,7 +27,7 @@ extension LimeAPIClient.Error: LocalizedError {
         case .unknownChannelsGroupID:
             let key = "Отсутствует id группы каналов. Возможно необходимо сделать запрос новой сессии"
             return NSLocalizedString(key, comment: "Отсутствует id группы каналов")
-        case let .jsonAPIError(statusCode, error: error):
+        case let .jsonAPIError(error, statusCode: statusCode):
             var errorDescription = " Неизвестная ошибка."
             if let errorTitle = error.errors.first?.title {
                 errorDescription = " Ошибка: \(errorTitle)"

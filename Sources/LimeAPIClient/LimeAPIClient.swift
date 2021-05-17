@@ -517,7 +517,7 @@ extension LimeAPIClient {
         let jsonAPIErrorResult = data.decoding(type: JSONAPIError.self, decoder: decoder)
         switch jsonAPIErrorResult {
         case let .success(jsonAPIError):
-            let error = Error.jsonAPIError(response.localizedStatusCode, error: jsonAPIError)
+            let error = Error.jsonAPIError(jsonAPIError, statusCode: response.localizedStatusCode)
             completion(.failure(error))
         case .failure:
             let message = data.utf8String
