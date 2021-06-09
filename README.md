@@ -288,7 +288,7 @@ struct Channel: Decodable, Equatable {
         let id: Int
         let timeZone: String
         let archiveHours: Int
-        let contentType: String
+        let contentType: String?
     }
 }
 ```
