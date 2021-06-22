@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import HTTPURLRequest
+import Networker
 
 public typealias StringResult = Result<String, Error>
 public typealias StringCompletion = (StringResult) -> Void

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import HTTPURLRequest
+import Networker
 @testable import LimeAPIClient
 
 class LimeAPIClientTests: XCTestCase {
